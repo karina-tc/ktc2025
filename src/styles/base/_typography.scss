@@ -83,9 +83,9 @@ p {
     
     &[data-language]:before {
       content: attr(data-language);
-      position: absolute;
+      position: fixed;
       top: -6px;
-      right: 1rem;
+      left: 1rem;
       font-size: 12px;
       padding: 0.5rem 0.5rem 0.25rem;
       background: var(--color-lines);
