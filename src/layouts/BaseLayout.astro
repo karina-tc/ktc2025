@@ -9,17 +9,17 @@ import Footer from "../components/Footer.astro";
 
 // Props
 interface Props {
-  title: string;
-  description: string;
+	title: string;
+	description: string;
 	includeNavigation?: boolean;
 	includeFooter?: boolean;
 }
 
 const {
-  title,
-  description,
-  includeNavigation = true,
-  includeFooter = true,
+	title,
+	description,
+	includeNavigation = true,
+	includeFooter = true,
 } = Astro.props;
 ---
 
@@ -36,3 +36,8 @@ const {
 		{includeFooter && <Footer />}
 	</body>
 </html>
+
+<script>
+	import setupIntersectionObserver from "../scripts/intersection-observer";
+	setupIntersectionObserver();
+</script>

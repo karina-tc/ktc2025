@@ -68,7 +68,7 @@ const navItems = [
 
 				<Subtitle title="Get Started" />
 
-				<ul class="list-section">
+				<ul class="list-section" data-intersection-observer={true}>
 					{
 						navItems.map(({ icon, alt, text, href, type, data }) => (
 							<li>
@@ -94,7 +94,7 @@ const navItems = [
 					</form>
 				</dialog>
 
-				<div class="secondary-actions">
+				<div class="secondary-actions" data-intersection-observer={true}>
 					<a class="action-link" href="#">Download CV</a>
 					<button class="action-button" data-copy="hello@karinatovar.com">
 						<span>Email Me</span>
@@ -122,6 +122,7 @@ const navItems = [
 		</div>
 	</div>
 </BaseLayout>
+
 
 <script>
 	document

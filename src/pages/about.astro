@@ -19,7 +19,7 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
   description="Karina Tovar is a Lead Product Designer."
 >
   <!-- About Me Top -->
-  <div class="grid-container">
+  <div class="grid-container" data-intersection-observer={true}>
     <div class="grid-content">
       <div class="text-content">
         <h2>About Me</h2>
@@ -34,12 +34,12 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
     </div>
 
     <div class="visual">
-      <Image src={loop} alt="Loop" />
+      <Image src={loop} alt="Loop" loading="eager" />
     </div>
   </div>
 
   <!-- Currently -->
-  <div class="section-container">
+  <div class="section-container" data-intersection-observer={true}>
     <div class="cards-container">
       <div class="card">
         <h5>currently</h5>
@@ -60,7 +60,7 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
   <div class="spacer-large"></div>
 
   <!-- Philosophy -->
-  <div class="section-container">
+  <div class="section-container" data-intersection-observer={true}>
     <PhilosophySection />
   </div>
 
@@ -68,7 +68,7 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
   <div class="spacer-large"></div>
 
   <!-- Thesis -->
-  <div class="section-container">
+  <div class="section-container" data-intersection-observer={true}>
     <div class="thesis-container">
       <ThesisArtwork />
       <div class="thesis-text">
@@ -104,7 +104,7 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
   <div class="spacer-large"></div>
 
   <!-- Skills -->
-  <div class="section-container">
+  <div class="section-container" data-intersection-observer={true}>
     <SkillsSection />
   </div>
 
@@ -112,7 +112,7 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
   <div class="spacer-large"></div>
 
   <!-- Personal -->
-  <div class="section-container">
+  <div class="section-container" data-intersection-observer={true}>
     <div class="personal-container">
       <div class="personal-text">
         <p>
@@ -146,6 +146,7 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
     </div>
   </div>
 </BaseLayout>
+
 
 <style lang="scss">
   // Breakpoint mixins
