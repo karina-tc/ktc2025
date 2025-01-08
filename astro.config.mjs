@@ -20,4 +20,13 @@ export default defineConfig({
             }
         }
     },
+    markdown: {
+        shikiConfig: {
+            // Use light/dark theme
+            themes: {
+                light: 'rose-pine-dawn',
+                dark: 'rose-pine-moon',
+            }
+        }
+    }
 });
