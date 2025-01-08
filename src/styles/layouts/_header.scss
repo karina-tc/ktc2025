@@ -1,0 +1,39 @@
+.site-header {
+  padding: var(--spacing-8) var(--side-padding);
+  margin-bottom: var(--spacing-16);
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    width: 50px;
+    height: 50px;
+    transition: transform var(--transition-base);
+
+    &:hover {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--spacing-8);
+  list-style: none;
+
+  a {
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color var(--transition-base);
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+}

@@ -1,0 +1,22 @@
+// Breakpoint Variables
+$breakpoint-small: 600px;
+$breakpoint-medium: 720px;
+$breakpoint-large: 1024px;
+
+@mixin mobile {
+  @media (max-width: $breakpoint-small) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $breakpoint-medium) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $breakpoint-large) {
+    @content;
+  }
+} 

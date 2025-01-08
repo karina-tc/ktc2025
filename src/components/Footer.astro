@@ -1,0 +1,74 @@
+---
+
+const social = [
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/karinatovar/' },
+  { name: 'GitHub', url: 'https://github.com/karinatovar' },
+  { name: 'Threads', url: 'https://www.threads.net/@karinatovar' }
+];
+---
+
+<footer class="footer-wrapper">
+  <div class="footer-content">
+    <span class="footer-copyright">© Karina Tovar {new Date().getFullYear()}</span>
+    <div class="footer-links">
+      {social.map((platform, index) => (
+        <>
+          <a href={platform.url} target="_blank" rel="noopener noreferrer">
+            {platform.name}
+          </a>
+          {index < social.length - 1 && <span>·</span>}
+        </>
+      ))}
+    </div>
+  </div>
+  <span>Colophon</span>
+</footer>
+
+<style lang="scss">
+  .footer-wrapper {
+    width: 100%;
+    max-width: var(--content-narrow-plus);
+    padding: var(--spacing-base) var(--spacing-base) var(--spacing-small);
+    margin: var(--spacing-double) auto;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: var(--font-size-small);
+
+    @include tablet {
+      flex-direction: column;
+      gap: var(--spacing-base);
+      align-items: flex-start;
+    }
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-base);
+
+    @include mobile {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .footer-copyright {
+    font-weight: 600;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .footer-links a:hover {
+    text-decoration: underline !important;
+  }
+</style>
