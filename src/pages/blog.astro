@@ -9,8 +9,10 @@ import BlogYearSection from "../components/BlogYearSection.astro";
 //Assets
 import scribble from "../assets/scribbles/loop-down.svg";
 
-// Get all blog posts
-const allPosts = await getCollection("blog");
+// Get all blog posts and filter out drafts
+const allPosts = await getCollection("blog", ({ data }) => {
+  return data.status !== "draft";
+});
 
 // Sort posts by date (newest first)
 const sortedPosts = allPosts.sort(
@@ -107,6 +109,12 @@ type BlogPost = CollectionEntry<"blog">;
     position: relative;
   }
 
+  .blog-posts-listing {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--spacing-double);
+  }
+
   .blog-posts-notes {
     display: flex;
     flex-direction: row;
@@ -178,41 +186,6 @@ type BlogPost = CollectionEntry<"blog">;
 
       &:hover {
         text-decoration: underline;
-      }
-    }
-  }
-
-  // Navigation list
-  .list-section {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    padding: 0;
-
-    li {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: var(--spacing-small);
-      border-bottom: 1px solid var(--color-border);
-      transition: all 0.2s ease;
-
-      &:hover {
-        background-color: var(--color-surface);
-      }
-
-      img {
-        width: 24px;
-        height: 24px;
-      }
-
-      a {
-        color: var(--color-text);
-        text-decoration: none;
-
-        &:hover {
-          text-decoration: underline;
-        }
       }
     }
   }
