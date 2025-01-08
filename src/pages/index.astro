@@ -88,7 +88,8 @@ const navItems = [
 					<form method="dialog">
 						<h3>Philosophy Manifesto</h3>
 						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+							quos.
 						</p>
 						<button>Close</button>
 					</form>
@@ -99,7 +100,12 @@ const navItems = [
 					<button class="action-button" data-copy="hello@karinatovar.com">
 						<span>Email Me</span>
 					</button>
-					<a class="action-link" href={bookingLink} target="_blank" rel="noopener noreferrer">
+					<a
+						class="action-link"
+						href={bookingLink}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						Book a Call
 					</a>
 				</div>
@@ -123,7 +129,6 @@ const navItems = [
 	</div>
 </BaseLayout>
 
-
 <script>
 	document
 		.querySelector(".action-button")
@@ -138,18 +143,22 @@ const navItems = [
 			});
 		});
 
-	const dialog = document.getElementById('philosophy-manifesto') as HTMLDialogElement;
+	const dialog = document.getElementById(
+		"philosophy-manifesto",
+	) as HTMLDialogElement;
 	const html = document.documentElement;
 
 	if (dialog) {
-		dialog.addEventListener('close', () => {
-			html.style.overflow = '';
+		dialog.addEventListener("close", () => {
+			html.style.overflow = "";
 		});
 
-		const openButton = document.querySelector('[data-dialog="philosophy-manifesto"]');
-		openButton?.addEventListener('click', () => {
+		const openButton = document.querySelector(
+			'[data-dialog="philosophy-manifesto"]',
+		);
+		openButton?.addEventListener("click", () => {
 			dialog.showModal();
-			html.style.overflow = 'hidden';
+			html.style.overflow = "hidden";
 		});
 	}
 </script>
@@ -318,11 +327,11 @@ const navItems = [
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		
+
 		// Reset default dialog margins and positioning
 		margin: 0;
 		padding: var(--spacing-base);
-		
+
 		&::backdrop {
 			background: transparent;
 			backdrop-filter: blur(4px);
@@ -352,7 +361,7 @@ const navItems = [
 			background: var(--color-surface);
 			border: 1px solid var(--color-border);
 			border-radius: 4px;
-			
+
 			&:hover {
 				background: var(--color-surface-hover);
 			}

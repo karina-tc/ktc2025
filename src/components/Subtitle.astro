@@ -3,22 +3,27 @@ import Divider from "./Divider.astro";
 
 interface Props {
   title: string;
+  description?: string;
   dividerWidth?: number;
   dividerHeight?: number;
   dividerColor?: string;
 }
 
-const { 
-  title, 
-  dividerWidth = 82, 
-  dividerHeight = 6, 
-  dividerColor = "var(--color-accent)" 
+const {
+  title,
+  description,
+  dividerWidth = 82,
+  dividerHeight = 6,
+  dividerColor = "var(--color-accent)",
 } = Astro.props;
 ---
 
 <div class="subtitle">
   <Divider color={dividerColor} width={dividerWidth} height={dividerHeight} />
-  <h3>{title}</h3>
+  <h3>
+    <span>{title}</span>
+    {description && <span class="description">&nbsp;·&nbsp;{description}</span>}
+  </h3>
 </div>
 
 <style lang="scss">
@@ -26,7 +31,15 @@ const {
     margin: var(--spacing-base) 0 0;
 
     h3 {
+      display: flex;
+      align-items: center;
+      justify-content: start;
       margin: var(--spacing-base) 0;
     }
+
+    .description {
+      opacity: 0.75;
+    }
   }
-</style> 
+</style>
+

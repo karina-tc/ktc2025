@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Subtitle from "./Subtitle.astro";
+
+interface Props {
+  year: string;
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { year, posts } = Astro.props;
+const thoughtText = posts.length === 1 ? 'Thought' : 'Thoughts';
+---
+
+<div class="year-section">
+  <Subtitle title={year} description={`${posts.length} ${thoughtText}`} />
+  <ul class="list-section" data-intersection-observer={true}>
+    {posts.map((post) => (
+      <li>
+        <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+        <span>{post.data.publishDate.toLocaleDateString('en-US', { 
+          month: 'short',
+          day: 'numeric'
+        })}</span>
+      </li>
+    ))}
+  </ul>
+</div> 
+
+<style lang="scss">
+  .list-section {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-small);
+      border-bottom: 1px solid var(--color-border);
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: var(--color-surface);
+      }
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
+
+      a {
+        color: var(--color-text);
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+</style> 

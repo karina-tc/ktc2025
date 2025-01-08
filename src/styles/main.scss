@@ -1,10 +1,8 @@
-@import 'base/reset';
-@import 'base/typography';
-@import 'base/breakpoints';
-@import 'layouts/container';
-@import 'layouts/header';
-@import 'components/project_card';
-@import 'components/footer';
+@use '@styles/base/variables' as *;
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/breakpoints';
+@use 'layouts/container';
 
 body,
 html {
@@ -15,6 +13,7 @@ html {
 
 main {
   max-width: 100vw;
+  min-height: calc(100vh - 340px);
   overflow-x: hidden;
   position: relative;
 }
