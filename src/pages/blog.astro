@@ -94,43 +94,6 @@ type BlogPost = CollectionEntry<"blog">;
   // Breakpoint mixins
   @use "../styles/base/_breakpoints.scss" as *;
 
-  // Main container
-  .grid-container {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    gap: var(--spacing-base);
-    max-width: var(--content-narrow-plus);
-    margin: 0 auto;
-    padding: var(--spacing-base);
-    position: relative;
-
-    @include tablet {
-      grid-template-columns: 1fr;
-      padding: var(--spacing-base);
-    }
-
-    @include mobile {
-      padding: var(--spacing-base);
-    }
-  }
-
-  // Content area
-  .grid-content {
-    .text-content {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-base);
-
-      h2 {
-        margin-bottom: var(--spacing-base);
-      }
-
-      h1 {
-        margin-bottom: var(--spacing-small);
-      }
-    }
-  }
-
   .visual {
     display: flex;
     justify-content: center;

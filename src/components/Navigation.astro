@@ -8,7 +8,7 @@ const pathname = new URL(Astro.request.url).pathname;
     <Atom />
     <ul class="nav-list">
       <li>
-        <a href="/" class={pathname === "/" ? "active" : ""}>Introduction</a>
+        <a href="/" class={pathname === "/" ? "active" : ""}>Intro</a>
       </li>
       <li>
         <a href="/about" class={pathname.startsWith("/about") ? "active" : ""}

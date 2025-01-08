@@ -55,8 +55,8 @@ const navItems = [
 	title="Karina Tovar"
 	description="Karina Tovar is a Lead Product Designer."
 >
-	<div class="container">
-		<div class="content">
+	<div class="grid-container">
+		<div class="grid-content">
 			<div class="text-content">
 				<h2>Karina Tovar</h2>
 				<h1>Pixel Philosopher Cautious Technologist</h1>
@@ -166,43 +166,6 @@ const navItems = [
 <style lang="scss">
 	// Breakpoint mixins
 	@import "../styles/base/_breakpoints.scss";
-
-	// Main container
-	.container {
-		display: grid;
-		grid-template-columns: 3fr 2fr;
-		gap: var(--spacing-base);
-		max-width: var(--content-narrow-plus);
-		margin: 0 auto;
-		padding: var(--spacing-base);
-		position: relative;
-
-		@include tablet {
-			grid-template-columns: 1fr;
-			padding: var(--spacing-base);
-		}
-
-		@include mobile {
-			padding: var(--spacing-base);
-		}
-	}
-
-	// Content area
-	.content {
-		.text-content {
-			display: flex;
-			flex-direction: column;
-			gap: var(--spacing-base);
-
-			h2 {
-				margin-bottom: var(--spacing-base);
-			}
-
-			h1 {
-				margin-bottom: var(--spacing-small);
-			}
-		}
-	}
 
 	// Navigation list
 	.list-section {

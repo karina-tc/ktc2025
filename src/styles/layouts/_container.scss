@@ -1,3 +1,6 @@
+// Breakpoint mixins
+@use "../base/_breakpoints.scss" as *;
+
 .container {
   width: 100%;
   max-width: var(--max-width);
@@ -8,4 +11,50 @@
 .content-container {
   max-width: var(--content-width);
   margin: 0 auto;
+}
+
+// Section container
+.section-container {
+  width: 100%;
+  max-width: var(--content-narrow-plus);
+  margin: 0 auto;
+  padding: var(--spacing-base);
+  position: relative;
+}
+
+// Grid container
+.grid-container {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--spacing-base);
+  max-width: var(--content-narrow-plus);
+  margin: 0 auto;
+  padding: var(--spacing-base);
+  position: relative;
+  
+  @include tablet {
+    grid-template-columns: 1fr;
+    padding: var(--spacing-base);
+  }
+  
+  @include mobile {
+    padding: var(--spacing-base);
+    }
+  }
+  
+// Content area
+.grid-content {
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-base);
+
+    h2 {
+      margin-bottom: var(--spacing-base);
+    }
+
+    h1 {
+      margin-bottom: var(--spacing-small);
+    }
+  }
 }
