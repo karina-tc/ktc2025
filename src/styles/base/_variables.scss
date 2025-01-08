@@ -50,13 +50,14 @@
   --color-surface: #F6EFE8;
   --color-border: #EBD4BD;
   // Typography
-  --font-serif: 'Instrument Serif', serif;
-  --font-headings: 'Instrument Serif', sans-serif;
+  --font-sans: 'Instrument Sans', sans-serif;
+  --font-headings: 'Instrument Serif', serif;
   --font-body: 'Newsreader', serif;
   --line-height-tight: .9;
   --line-height-normal: 1.6;
 
   // Font Sizes
+  --font-size-xxs: 10px;
   --font-size-small: 14px;
   --font-size-base: 18px;
   --font-size-large: 20px;

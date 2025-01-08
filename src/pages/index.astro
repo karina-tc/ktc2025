@@ -1,6 +1,9 @@
 ---
+// Components
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Divider from "../components/Divider.astro";
+import Subtitle from "../components/Subtitle.astro";
+
+// Assets
 import { Image } from "astro:assets";
 import hand from "../assets/illustrations/hand.svg";
 import sheet from "../assets/illustrations/sheet.svg";
@@ -11,6 +14,7 @@ import column2 from "../assets/artwork/column2.png";
 import column3 from "../assets/artwork/column3.png";
 import column4 from "../assets/artwork/column4.png";
 
+// Data
 const bookingLink =
 	"https://cal.com/karina-tovar-djofxs/quick-chat?month=2025-01&date=2025-01-28";
 
@@ -42,10 +46,7 @@ const navItems = [
 					Every product needs to be crafted for human joy.
 				</p>
 
-				<div class="subtitle">
-					<Divider color="var(--color-accent)" width={82} height={6} />
-					<h3>Get Started</h3>
-				</div>
+				<Subtitle title="Get Started" />
 
 				<ul class="list-section">
 					{
@@ -137,6 +138,14 @@ const navItems = [
 			display: flex;
 			flex-direction: column;
 			gap: var(--spacing-base);
+
+			h2 {
+				margin-bottom: var(--spacing-base);
+			}
+
+			h1 {
+				margin-bottom: var(--spacing-small);
+			}
 		}
 	}
 
@@ -225,16 +234,6 @@ const navItems = [
 					animation-delay: #{($i - 1) * 2}s;
 				}
 			}
-		}
-	}
-
-	// Subtitle section
-	.subtitle {
-		margin: var(--spacing-base) 0 0;
-
-		h3 {
-			margin: var(--spacing-small) 0;
-			font-size: var(--font-size-xl);
 		}
 	}
 

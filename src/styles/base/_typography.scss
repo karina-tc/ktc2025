@@ -11,6 +11,7 @@ h1 {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-family: var(--font-headings);
   margin-bottom: var(--spacing-8);
+  line-height: 1;
 }
 
 h2 {
@@ -21,6 +22,12 @@ h2 {
 h3 {
   font-size: clamp(1rem, 3vw, 1.25rem);
   margin-bottom: var(--spacing-4);
+}
+
+h4 {
+  font-size: clamp(.8rem, 3vw, 1.1rem);
+  margin-bottom: var(--spacing-4);
+  font-weight: 500;
 }
 
 p {

@@ -1,0 +1,305 @@
+---
+// Components
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+
+// Assets
+import loop from "../assets/scribbles/loop.svg";
+import personal from "../assets/brand/personal.png";
+import signature from "../assets/brand/life-is-good.svg";
+
+// Partials
+import PhilosophySection from "../components/_partials/PhilosophySection.astro";
+import ThesisArtwork from "../components/_partials/ThesisArtwork.astro";
+import SkillsSection from "../components/_partials/SkillsSection.astro";
+---
+
+<BaseLayout
+  title="Karina Tovar | About Me"
+  description="Karina Tovar is a Lead Product Designer."
+>
+  <!-- About Me Top -->
+  <div class="grid-container">
+    <div class="grid-content">
+      <div class="text-content">
+        <h2>About Me</h2>
+        <h1>Building high tech joyful solutions</h1>
+        <p>
+          I am an artist, turned product designer, who likes to code and make
+          things. That just means that I am obsessed over how technology can be
+          used to make people truly happier. One pixel, one bit, one thought at
+          a time.
+        </p>
+      </div>
+    </div>
+
+    <div class="visual">
+      <Image src={loop} alt="Loop" />
+    </div>
+  </div>
+
+  <!-- Currently -->
+  <div class="section-container">
+    <div class="cards-container">
+      <div class="card">
+        <h5>currently</h5>
+        <p>Tropic App</p>
+      </div>
+      <div class="card">
+        <h5>role</h5>
+        <p>Lead Product Designer</p>
+      </div>
+      <div class="card">
+        <h5>location</h5>
+        <p>East Coast, USA</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spacer -->
+  <div class="spacer-large"></div>
+
+  <!-- Philosophy -->
+  <div class="section-container">
+    <PhilosophySection />
+  </div>
+
+  <!-- Spacer -->
+  <div class="spacer-large"></div>
+
+  <!-- Thesis -->
+  <div class="section-container">
+    <div class="thesis-container">
+      <ThesisArtwork />
+      <div class="thesis-text">
+        <div>
+          <p>
+            As a designer, I want to build a world where each person is not
+            called a user, but seen as a breathing human being who just wants to
+            feel safe, secure, connected, cared for and happy.
+          </p>
+          <p>
+            These are things that are constantly in my mind as a designer.
+            Specially now as a parent. All I want for my kid and everyone else
+            is joy and the hope for a prosperous future.
+          </p>
+        </div>
+        <div>
+          <p>
+            Products that build for happiness will ultimately be successful. The
+            reason, people pay money for a solution is to have an easier life
+            managing their day to day.
+          </p>
+          <p>
+            Whether that is writing Purchase Orders. Analyzing trends in their
+            revenue. Understanding their workforce’s morale, etc... your
+            customer’s happiness is your success.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spacer -->
+  <div class="spacer-large"></div>
+
+  <!-- Skills -->
+  <div class="section-container">
+    <SkillsSection />
+  </div>
+
+  <!-- Spacer -->
+  <div class="spacer-large"></div>
+
+  <!-- Personal -->
+  <div class="section-container">
+    <div class="personal-container">
+      <div class="personal-text">
+        <p>
+          Outside of work, I like to watch dark psychological thrillers. Watch
+          soccer games and baking shows. I enjoy time away from my keyboard by
+          playing with my kid and talking walks with my dog.
+        </p>
+        <p>
+          I live in the East Coast of the USA with my wife and right now its a
+          bit cold where we are. I am happy to enjoy the every day. While
+          working very hard for my family.
+        </p>
+      </div>
+      <figure class="personal-image">
+        <Image
+          src={personal}
+          alt="Picture of my family"
+          draggable={false}
+          loading="lazy"
+        />
+      </figure>
+    </div>
+
+    <div class="signature-container">
+      <Image
+        src={signature}
+        alt="Signature"
+        draggable={false}
+        loading="lazy"
+      />
+    </div>
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  // Breakpoint mixins
+  @import "../styles/base/_breakpoints.scss";
+
+  .section-container {
+    width: 100%;
+    max-width: var(--content-narrow-plus);
+    margin: 0 auto;
+    padding: var(--spacing-base);
+    position: relative;
+  }
+
+  // Main container
+  .grid-container {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: var(--spacing-base);
+    max-width: var(--content-narrow-plus);
+    margin: 0 auto;
+    padding: var(--spacing-base);
+    position: relative;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      padding: var(--spacing-base);
+    }
+
+    @include mobile {
+      padding: var(--spacing-base);
+    }
+  }
+
+  // Content area
+  .grid-content {
+    .text-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-base);
+
+      h2 {
+        margin-bottom: var(--spacing-base);
+      }
+
+      h1 {
+        margin-bottom: var(--spacing-small);
+      }
+    }
+  }
+
+  // Visual section
+  .visual {
+  }
+
+  // Cards container
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-base);
+
+    @include tablet {
+      grid-template-columns: 1fr;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+
+      background-color: var(--color-surface);
+      padding: var(--spacing-small);
+      border-radius: var(--spacing-small);
+
+      h5 {
+        font-size: var(--font-size-xxs);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-family: var(--font-sans);
+        margin: 4px 0;
+      }
+    }
+  }
+
+  .thesis-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-base);
+    align-items: center;
+    justify-content: center;
+
+    .thesis-text {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-base);
+
+      @include tablet {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      p {
+        margin: 0 0 var(--spacing-base);
+      }
+    }
+  }
+
+  .personal-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-base);
+    align-items: center;
+    justify-content: center;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+    }
+
+    .personal-text {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-base);
+
+      @include tablet {
+        margin-bottom: var(--spacing-base);
+      }
+    }
+
+    .personal-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: var(--spacing-small);
+      }
+    }
+  }
+
+  .signature-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: var(--spacing-quad);
+
+    img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+    }
+  }
+</style>
+

@@ -1,0 +1,32 @@
+---
+import Divider from "./Divider.astro";
+
+interface Props {
+  title: string;
+  dividerWidth?: number;
+  dividerHeight?: number;
+  dividerColor?: string;
+}
+
+const { 
+  title, 
+  dividerWidth = 82, 
+  dividerHeight = 6, 
+  dividerColor = "var(--color-accent)" 
+} = Astro.props;
+---
+
+<div class="subtitle">
+  <Divider color={dividerColor} width={dividerWidth} height={dividerHeight} />
+  <h3>{title}</h3>
+</div>
+
+<style lang="scss">
+  .subtitle {
+    margin: var(--spacing-base) 0 0;
+
+    h3 {
+      margin: var(--spacing-base) 0;
+    }
+  }
+</style> 
