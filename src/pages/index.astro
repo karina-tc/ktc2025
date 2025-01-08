@@ -57,10 +57,7 @@ const bookingLink = "https://cal.com/karina-tovar-djofxs/quick-chat?month=2025-0
 				</ul>
 				<div class="secondary-actions">
 					<a class="action-link" href="#">Download CV</a>
-					<button 
-						class="action-button" 
-						data-copy="hello@karinatovar.com"
-					>
+					<button class="action-button" data-copy="hello@karinatovar.com">
 						<span>Email Me</span>
 					</button>
 					<a class="action-link" href={bookingLink} target="_blank" rel="noopener noreferrer">Book a Call</a>
@@ -135,10 +132,14 @@ const bookingLink = "https://cal.com/karina-tovar-djofxs/quick-chat?month=2025-0
 			}
 		}
 
-		.action-button span {
-			border-bottom: 1px solid;
-			&:hover {
-				border-bottom-color: var(--color-accent) !important;
+		.action-button {
+			width: 80px;
+			span {
+				text-align: center;
+				border-bottom: 1px solid;
+				&:hover {
+					border-bottom-color: var(--color-accent) !important;
+				}
 			}
 		}
 	}
