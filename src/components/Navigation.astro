@@ -64,6 +64,11 @@ const pathname = new URL(Astro.request.url).pathname;
       flex-direction: column;
       gap: var(--spacing-base);
       align-items: flex-start;
+      padding: 0 var(--spacing-base);
+    }
+
+    @include mobile {
+      padding: 0;
     }
   }
 

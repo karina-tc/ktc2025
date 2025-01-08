@@ -16,7 +16,13 @@ $breakpoint-large: 1024px;
 }
 
 @mixin desktop {
-  @media (min-width: $breakpoint-large) {
+  @media (max-width: $breakpoint-large) {
     @content;
   }
 } 
+
+@mixin desktop-reverse {
+  @media (min-width: $breakpoint-large) {
+    @content;
+  }
+}

@@ -1,8 +1,16 @@
 ---
-const { include_classes = "" } = Astro.props;
+interface Props {
+  include_classes?: string;
+  size?: string;
+}
+
+const { 
+  include_classes = "", 
+  size = "60px" 
+} = Astro.props;
 ---
 
-<div class={`atom-container ${include_classes}`}>
+<div class={`atom-container ${include_classes}`} style={`width: ${size}; height: ${size};`}>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="140"
@@ -79,8 +87,6 @@ const { include_classes = "" } = Astro.props;
     display: inline-block;
     position: relative;
     transition: transform 0.3s ease-in-out;
-    width: 60px;
-    height: 60px;
   }
 
   .atom {

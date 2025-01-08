@@ -5,3 +5,26 @@
 @import 'layouts/header';
 @import 'components/project_card';
 @import 'components/footer';
+
+body,
+html {
+  @include mobile {
+    padding: 0 10px;
+  }
+}
+
+main {
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.action-link {
+  text-decoration: underline 1px;
+  text-underline-offset: 4px;
+
+  &:hover {
+    text-decoration-color: var(--color-accent) !important;
+  }
+}
+
