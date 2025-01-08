@@ -19,15 +19,35 @@ const bookingLink =
 	"https://cal.com/karina-tovar-djofxs/quick-chat?month=2025-01&date=2025-01-28";
 
 const navItems = [
-	{ icon: hand, alt: "Hand", text: "Read philosophy manifesto", href: "#" },
+	{
+		icon: hand,
+		alt: "Hand",
+		text: "Read philosophy manifesto",
+		href: "#",
+		type: "button",
+		data: "philosophy-manifesto",
+	},
 	{
 		icon: scribble,
 		alt: "Scribble",
 		text: "Look at my most recent work",
 		href: "/work",
+		type: "link",
 	},
-	{ icon: flower, alt: "Flower", text: "Learn about me", href: "/about" },
-	{ icon: sheet, alt: "Sheet", text: "Read my posts and notes", href: "/blog" },
+	{
+		icon: flower,
+		alt: "Flower",
+		text: "Learn about me",
+		href: "/about",
+		type: "link",
+	},
+	{
+		icon: sheet,
+		alt: "Sheet",
+		text: "Read my posts and notes",
+		href: "/blog",
+		type: "link",
+	},
 ];
 ---
 
@@ -50,26 +70,36 @@ const navItems = [
 
 				<ul class="list-section">
 					{
-						navItems.map(({ icon, alt, text, href }) => (
+						navItems.map(({ icon, alt, text, href, type, data }) => (
 							<li>
 								<Image src={icon} alt={alt} />
-								<a href={href}>{text}</a>
+								{type === "link" ? (
+									<a href={href}>{text}</a>
+								) : (
+									<button data-dialog="philosophy-manifesto">
+										<span>{text}</span>
+									</button>
+								)}
 							</li>
 						))
 					}
 				</ul>
+				<dialog id="philosophy-manifesto" class="manifesto-dialog">
+					<form method="dialog">
+						<h3>Philosophy Manifesto</h3>
+						<p>
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+						</p>
+						<button>Close</button>
+					</form>
+				</dialog>
 
 				<div class="secondary-actions">
 					<a class="action-link" href="#">Download CV</a>
 					<button class="action-button" data-copy="hello@karinatovar.com">
 						<span>Email Me</span>
 					</button>
-					<a
-						class="action-link"
-						href={bookingLink}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
+					<a class="action-link" href={bookingLink} target="_blank" rel="noopener noreferrer">
 						Book a Call
 					</a>
 				</div>
@@ -106,6 +136,21 @@ const navItems = [
 				}, 2000);
 			});
 		});
+
+	const dialog = document.getElementById('philosophy-manifesto') as HTMLDialogElement;
+	const html = document.documentElement;
+
+	if (dialog) {
+		dialog.addEventListener('close', () => {
+			html.style.overflow = '';
+		});
+
+		const openButton = document.querySelector('[data-dialog="philosophy-manifesto"]');
+		openButton?.addEventListener('click', () => {
+			dialog.showModal();
+			html.style.overflow = 'hidden';
+		});
+	}
 </script>
 
 <style lang="scss">
@@ -177,9 +222,24 @@ const navItems = [
 				color: var(--color-text);
 				text-decoration: none;
 				width: 100%;
+				height: 24px;
+				margin-top: -2px;
 
 				&:hover {
 					text-decoration: underline;
+				}
+			}
+
+			button {
+				width: 100%;
+				height: 24px;
+				padding: 0;
+				margin-top: 1px;
+				text-align: left;
+
+				&:hover span {
+					text-decoration: underline 1px;
+					text-underline-offset: 4px;
 				}
 			}
 		}
@@ -246,6 +306,64 @@ const navItems = [
 		25%,
 		100% {
 			opacity: 0;
+		}
+	}
+
+	.manifesto-dialog {
+		padding: var(--spacing-base);
+		border: none;
+		max-width: 32rem;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		
+		// Reset default dialog margins and positioning
+		margin: 0;
+		padding: var(--spacing-base);
+		
+		&::backdrop {
+			background: transparent;
+			backdrop-filter: blur(4px);
+		}
+
+		@include mobile {
+			top: auto;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			width: 100%;
+			max-width: 100%;
+			transform: none;
+			border-radius: 12px 12px 0 0;
+			animation: slideUp 0.3s ease-out;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-base);
+		}
+
+		button {
+			align-self: flex-end;
+			padding: var(--spacing-small) var(--spacing-base);
+			background: var(--color-surface);
+			border: 1px solid var(--color-border);
+			border-radius: 4px;
+			
+			&:hover {
+				background: var(--color-surface-hover);
+			}
+		}
+	}
+
+	@keyframes slideUp {
+		from {
+			transform: translateY(100%);
+		}
+		to {
+			transform: translateY(0);
 		}
 	}
 </style>
