@@ -58,3 +58,25 @@
     }
   }
 }
+
+.attached-image {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-base);
+  justify-content: center;
+  align-items: center;
+
+  margin: var(--spacing-double) 0;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-base);
+  }
+
+  figcaption {
+    font-size: var(--font-size-small);
+    text-align: left;
+    width: 100%;
+  }
+}

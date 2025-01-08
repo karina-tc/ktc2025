@@ -1,0 +1,49 @@
+---
+interface Props {
+  title: string;
+  tags: string[];
+  startedDate?: Date;
+  publishDate?: Date;
+}
+
+const { title, tags, startedDate, publishDate } = Astro.props;
+---
+
+<div class="post-header">
+  <h2>{tags.includes("notebook") ? "Notebook" : "Thought"}</h2>
+  <h1>{title}</h1>
+  <div class="post-meta">
+    {
+      startedDate &&
+        `Started: ${startedDate.toLocaleDateString("en-US", { 
+          month: "short", 
+          day: "numeric", 
+          year: "numeric" 
+        })}`
+    }
+    {startedDate && publishDate && <span>&nbsp;·&nbsp;</span>}
+    {
+      publishDate &&
+        `Updated: ${publishDate.toLocaleDateString("en-US", { 
+          month: "short", 
+          day: "numeric", 
+          year: "numeric" 
+        })}`
+    }
+  </div>
+</div>
+
+<style>
+  .post-header {
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+      margin-bottom: var(--spacing-base);
+    }
+
+    h1 {
+      margin-bottom: var(--spacing-base);
+    }
+  }
+</style> 
