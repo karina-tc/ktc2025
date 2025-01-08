@@ -12,16 +12,16 @@ const { prev, next } = Astro.props;
 <nav class="post-navigation" data-intersection-observer={true}>
   {
     prev && (
-      <a href={`/blog/${prev.slug}`} class="prev">
-        <span>Previous</span>
+      <a href={`/blog/${prev.slug}`} class="next">
+        <span>Next Up</span>
         <div>{prev.data.title}</div>
       </a>
     )
   }
   {
     next && (
-      <a href={`/blog/${next.slug}`} class="next">
-        <span>Next</span>
+      <a href={`/blog/${next.slug}`} class="prev">
+        <span>Previous</span>
         <div>{next.data.title}</div>
       </a>
     )
@@ -66,12 +66,12 @@ const { prev, next } = Astro.props;
         color: var(--color-text);
       }
 
-      &.next {
-        text-align: right;
+      &.prev {
+        order: 1;
+      }
 
-        &:only-child {
-          grid-column: 2;
-        }
+      &.next {
+        order: 2;
       }
     }
   }
