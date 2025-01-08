@@ -1,9 +1,19 @@
 ---
-// src/pages/index.astro
+// Layouts
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 // Components
 import Divider from "../components/Divider.astro";
+
+// Assets
+import { Image } from "astro:assets";
+import hand from "../assets/illustrations/hand.svg";
+import sheet from "../assets/illustrations/sheet.svg";
+import scribble from "../assets/illustrations/scribble.svg";
+import flower from "../assets/illustrations/flower.svg";
+
+// Data
+const bookingLink = "https://cal.com/karina-tovar-djofxs/quick-chat?month=2025-01&date=2025-01-28";
 ---
 
 <BaseLayout
@@ -27,24 +37,54 @@ import Divider from "../components/Divider.astro";
 					<Divider color="var(--color-accent)" width={82} height={6} />
 					<h3>Get Started</h3>
 				</div>
-				<ul class="primary-actions">
-					<li>Read philosophy manifesto</li>
-					<li>Look at my most recent work</li>
-					<li>Learn about me</li>
-					<li>Read my posts and notes</li>
+				<ul class="list-section">
+					<li>
+						<Image src={hand} alt="Hand" />
+						<a href="#">Read philosophy manifesto</a>
+					</li>
+					<li>
+						<Image src={scribble} alt="Scribble" />
+						<a href="/work">Look at my most recent work</a>
+					</li>
+					<li>
+						<Image src={flower} alt="Flower" />
+						<a href="/about">Learn about me</a>
+					</li>
+					<li>
+						<Image src={sheet} alt="Sheet" />
+						<a href="/blog">Read my posts and notes</a>
+					</li>
 				</ul>
 				<div class="secondary-actions">
-					<a href="#">Download CV</a>
-					<a href="#">Email Me</a>
-					<a href="#">Book a Call</a>
+					<a class="action-link" href="#">Download CV</a>
+					<button 
+						class="action-button" 
+						data-copy="hello@karinatovar.com"
+					>
+						<span>Email Me</span>
+					</button>
+					<a class="action-link" href={bookingLink} target="_blank" rel="noopener noreferrer">Book a Call</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </BaseLayout>
 
+<script>
+	document.querySelector('.action-button')?.addEventListener('click', function(this: HTMLButtonElement) {
+		const email = this.dataset.copy!;
+		navigator.clipboard.writeText(email).then(() => {
+			const originalText = this.querySelector('span')!.textContent;
+			this.querySelector('span')!.textContent = 'Copied!';
+			setTimeout(() => {
+				this.querySelector('span')!.textContent = originalText;
+			}, 2000);
+		});
+	});
+</script>
+
 <style lang="scss">
-	@import '../styles/base/_breakpoints.scss';
+	@import "../styles/base/_breakpoints.scss";
 
 	.grid-container {
 		display: grid;
@@ -86,19 +126,26 @@ import Divider from "../components/Divider.astro";
 
 		margin: var(--spacing-double) 0;
 
-		a {
+		.action-link {
 			text-decoration: underline;
-
+			text-decoration-width: 1px;
+			text-underline-offset: 4px;
 			&:hover {
-				text-decoration-color: var(--color-accent);
+				text-decoration-color: var(--color-accent) !important;
+			}
+		}
+
+		.action-button span {
+			border-bottom: 1px solid;
+			&:hover {
+				border-bottom-color: var(--color-accent) !important;
 			}
 		}
 	}
 
-	ul.primary-actions {
+	ul.list-section {
 		display: flex;
 		flex-direction: column;
-		gap: 12px;
 
 		list-style: none;
 		padding: 0;
@@ -107,13 +154,24 @@ import Divider from "../components/Divider.astro";
 		li {
 			display: flex;
 			align-items: center;
-			gap: 12px;
+			gap: var(--spacing-small);
+			justify-content: start;
 
-			padding: var(--spacing-small) var(--spacing-base);
-			background-color: pink;
-
+			border-bottom: 1px solid var(--color-border);
+			padding: var(--spacing-small) var(--spacing-small);
 			transition: all 0.3s ease-in-out;
+
+			&:hover {
+				background-color: var(--color-surface);
+			}
+
+			a {
+				width: 100%;
+			}
+
+			a:hover {
+				text-decoration: underline;
+			}
 		}
 	}
 </style>
-
