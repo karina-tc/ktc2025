@@ -8,7 +8,7 @@ import Testimonial from "../components/Testimonial.astro";
 // Assets
 import { Image } from "astro:assets";
 import scribble from "../assets/scribbles/loopy.svg";
-import testimonialImage from "../assets/people/javier.png";
+
 // Data
 import { caseStudies } from "../data/caseStudies";
 import { testimonials } from "../data/testimonials";
@@ -18,7 +18,7 @@ import { testimonials } from "../data/testimonials";
   title="Karina Tovar | Work"
   description="Karina Tovar case studies and projects"
 >
-  <div class="grid-container">
+  <div class="grid-container" data-intersection-observer={true}>
     <div class="grid-content">
       <div class="text-content">
         <h2>Recent Work</h2>
@@ -31,7 +31,7 @@ import { testimonials } from "../data/testimonials";
     </div>
 
     <div class="visual">
-      <Image src={scribble} alt="Scribble" width={139} height={239} />
+      <Image src={scribble} alt="Scribble" width={340} height={340} />
     </div>
   </div>
 
