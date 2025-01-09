@@ -12,6 +12,7 @@ import signature from "../assets/brand/life-is-good.svg";
 import PhilosophySection from "../components/_partials/PhilosophySection.astro";
 import ThesisArtwork from "../components/_partials/ThesisArtwork.astro";
 import SkillsSection from "../components/_partials/SkillsSection.astro";
+import PersonalSection from "../components/_partials/PersonalSection.astro";
 ---
 
 <BaseLayout
@@ -39,7 +40,7 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
   </div>
 
   <!-- Currently -->
-  <div class="section-container" data-intersection-observer={true}>
+  <div class="section-container">
     <div class="cards-container">
       <div class="card">
         <h5>currently</h5>
@@ -60,7 +61,7 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
   <div class="spacer-large"></div>
 
   <!-- Philosophy -->
-  <div class="section-container" data-intersection-observer={true}>
+  <div class="section-container">
     <PhilosophySection />
   </div>
 
@@ -68,7 +69,7 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
   <div class="spacer-large"></div>
 
   <!-- Thesis -->
-  <div class="section-container" data-intersection-observer={true}>
+  <div class="section-container">
     <div class="thesis-container">
       <ThesisArtwork />
       <div class="thesis-text">
@@ -104,7 +105,7 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
   <div class="spacer-large"></div>
 
   <!-- Skills -->
-  <div class="section-container" data-intersection-observer={true}>
+  <div class="section-container">
     <SkillsSection />
   </div>
 
@@ -112,33 +113,8 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
   <div class="spacer-large"></div>
 
   <!-- Personal -->
-  <div class="section-container" data-intersection-observer={true}>
-    <div class="personal-container">
-      <div class="personal-text">
-        <p>
-          Outside of work, I like to watch dark psychological thrillers. Watch
-          soccer games and baking shows. I enjoy time away from my keyboard by
-          playing with my kid and talking walks with my dog.
-        </p>
-        <p>
-          I live in the East Coast of the USA with my wife and right now its a
-          bit cold where we are. I am happy to enjoy the every day. While
-          working very hard for my family.
-        </p>
-      </div>
-      <figure class="personal-image">
-        <Image
-          src={personal}
-          alt="Picture of my family"
-          draggable={false}
-          loading="lazy"
-        />
-      </figure>
-    </div>
-
-    <div class="signature-container">
-      <Image src={signature} alt="Signature" draggable={false} loading="lazy" />
-    </div>
+  <div class="section-container">
+    <PersonalSection />
   </div>
 </BaseLayout>
 
@@ -202,53 +178,6 @@ import SkillsSection from "../components/_partials/SkillsSection.astro";
       p {
         margin: 0 0 var(--spacing-base);
       }
-    }
-  }
-
-  .personal-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-base);
-    align-items: center;
-    justify-content: center;
-
-    @include tablet {
-      grid-template-columns: 1fr;
-    }
-
-    .personal-text {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-base);
-
-      @include tablet {
-        margin-bottom: var(--spacing-base);
-      }
-    }
-
-    .personal-image {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      img {
-        width: 100%;
-        height: auto;
-        border-radius: var(--spacing-small);
-      }
-    }
-  }
-
-  .signature-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: var(--spacing-quad);
-
-    img {
-      width: 100%;
-      max-width: 400px;
-      height: auto;
     }
   }
 </style>

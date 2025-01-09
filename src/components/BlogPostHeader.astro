@@ -24,7 +24,7 @@ const { title, tags, startedDate, publishDate } = Astro.props;
     {startedDate && publishDate && <span>&nbsp;·&nbsp;</span>}
     {
       publishDate &&
-        `Updated: ${publishDate.toLocaleDateString("en-US", { 
+        `${startedDate ? 'Updated' : 'Posted'}: ${publishDate.toLocaleDateString("en-US", { 
           month: "short", 
           day: "numeric", 
           year: "numeric" 
