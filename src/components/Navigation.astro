@@ -69,7 +69,7 @@ const pathname = new URL(Astro.request.url).pathname;
 
   .nav-list {
     display: flex;
-    gap: var(--spacing-small);
+    gap: var(--spacing-xsmall);
 
     list-style: none;
     margin: 0;
@@ -77,6 +77,7 @@ const pathname = new URL(Astro.request.url).pathname;
   }
 
   .nav-list a {
+    font-size: var(--font-size-base);
     text-decoration: none;
     color: var(--color-ink);
     padding: 10px 12px 8px;

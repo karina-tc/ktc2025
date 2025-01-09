@@ -3,13 +3,15 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Subtitle from "../components/Subtitle.astro";
 import CaseStudy from "../components/CaseStudy.astro";
+import Testimonial from "../components/Testimonial.astro";
 
 // Assets
 import { Image } from "astro:assets";
 import scribble from "../assets/scribbles/loopy.svg";
-
+import testimonialImage from "../assets/people/javier.png";
 // Data
 import { caseStudies } from "../data/caseStudies";
+import { testimonials } from "../data/testimonials";
 ---
 
 <BaseLayout
@@ -51,6 +53,11 @@ import { caseStudies } from "../data/caseStudies";
   <div class="section-container">
     <div class="section-content">
       <Subtitle title="Testimonials" />
+      <div class="testimonials-listing">
+        {testimonials.map((testimonial) => (
+          <Testimonial {...testimonial} />
+        ))}
+      </div>
     </div>
   </div>
 </BaseLayout>
@@ -75,6 +82,16 @@ import { caseStudies } from "../data/caseStudies";
       display: flex;
       flex-direction: column;
       gap: var(--spacing-quad);
+    }
+  }
+
+  .testimonials-listing {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-base);
+
+    @include tablet {
+      grid-template-columns: repeat(1, 1fr);
     }
   }
 </style>

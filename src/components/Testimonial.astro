@@ -1,0 +1,185 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  quote: {
+    title: string;
+    content: string;
+  };
+  author: {
+    name: string;
+    image: ImageMetadata;
+    currentRole: string;
+    pastRole: string;
+  };
+  reference: {
+    number: string;
+    link?: string;
+  };
+}
+
+const { quote, author, reference } = Astro.props;
+---
+
+<div class="testimonial-item">
+  <div class="testimonial-quote">
+    <h4>{quote.title}</h4>
+    <p>{quote.content}</p>
+  </div>
+  <div class="testimonial-author">
+    <Image
+      src={author.image}
+      alt={author.name}
+      width={60}
+      height={60}
+    />
+    <div class="testimonial-author-info">
+      <p>{author.name}</p>
+      <span class="testimonial-author-role">
+        <p>{author.currentRole}</p>
+        <p>{author.pastRole}</p>
+      </span>
+    </div>
+  </div>
+  <div class="testimonial-reference">
+    <span>{reference.number}</span>
+    {reference.link && (
+      <a href={reference.link} target="_blank" rel="noopener noreferrer">
+        View
+      </a>
+    )}
+  </div>
+</div>
+
+<style lang="scss">
+  .testimonial-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-base);
+    background: var(--color-surface);
+    padding: var(--spacing-base);
+    border-radius: var(--border-radius-base);
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      .testimonial-author .testimonial-author-role p {
+        &:last-child {
+          position: relative;
+          opacity: 1;
+          top: 0;
+          background-color: var(--color-surface);
+        }
+        &:first-child {
+          position: absolute;
+          top: -10px;
+          left: 0;
+          opacity: 0;
+        }
+      }
+    }
+
+    .testimonial-quote {
+      display: flex;
+      flex-direction: column;
+      padding: 0 var(--spacing-small);
+
+      h4 {
+        flex: 1;
+        padding: 0 0 var(--spacing-xsmall);
+        margin: var(--spacing-small) 0 var(--spacing-base);
+        border-bottom: 1px solid var(--color-ink);
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-small);
+      margin-top: auto;
+      padding: 0 var(--spacing-small);
+
+      img {
+        border-radius: 20px;
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+      }
+    }
+
+    .testimonial-author-info {
+      display: flex;
+      flex-direction: column;
+      padding: var(--spacing-small) 0;
+
+      p {
+        font-weight: 500;
+        margin: 0;
+      }
+
+      .testimonial-author-role {
+        display: flex / inline-block;
+        width: 100%;
+        margin: -4px 0 0;
+        overflow: hidden;
+        flex-direction: column;
+        gap: var(--spacing-xsmall);
+        position: relative;
+        overflow: hidden;
+
+        font-size: var(--font-size-small);
+        font-family: var(--font-sans);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+
+        p {
+          margin: 0;
+          transition: all 0.2s ease-in-out;
+
+          &:first-child {
+            position: relative;
+            top: 0;
+            background-color: var(--color-surface);
+          }
+
+          &:last-child {
+            text-transform: none;
+            letter-spacing: 0;
+            position: absolute;
+            top: 10px;
+            left: 0;
+            opacity: 0;
+          }
+        }
+      }
+    }
+
+    .testimonial-reference {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--spacing-small);
+      font-size: var(--font-size-small);
+      font-family: var(--font-sans);
+
+      span {
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        opacity: 0.75;
+      }
+
+      a {
+        font-weight: 600;
+        padding: var(--spacing-small);
+        &:hover {
+          text-decoration: underline;
+          text-underline-offset: 2px;
+          text-decoration-color: var(--color-ink);
+        }
+      }
+    }
+  }
+</style> 
