@@ -1,0 +1,80 @@
+---
+// Components
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Subtitle from "../components/Subtitle.astro";
+import CaseStudy from "../components/CaseStudy.astro";
+
+// Assets
+import { Image } from "astro:assets";
+import scribble from "../assets/scribbles/loopy.svg";
+
+// Data
+import { caseStudies } from "../data/caseStudies";
+---
+
+<BaseLayout
+  title="Karina Tovar | Work"
+  description="Karina Tovar case studies and projects"
+>
+  <div class="grid-container">
+    <div class="grid-content">
+      <div class="text-content">
+        <h2>Recent Work</h2>
+        <h1>A few examples of how I work</h1>
+        <p>
+          This is a collection of case studies and projects that I've worked on
+          that showcase the work I've done.
+        </p>
+      </div>
+    </div>
+
+    <div class="visual">
+      <Image src={scribble} alt="Scribble" width={139} height={239} />
+    </div>
+  </div>
+
+  <div class="section-container">
+    <div class="section-content case-studies" data-intersection-observer={true}>
+      <Subtitle title="Recent Work" />
+      <div class="case-studies-listing">
+        {
+          caseStudies.map((study, index) => (
+            <CaseStudy {...study} reversed={index % 2 !== 0} />
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer-large"></div>
+
+  <div class="section-container">
+    <div class="section-content">
+      <Subtitle title="Testimonials" />
+    </div>
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  // Breakpoint mixins
+  @import "../styles/base/_breakpoints.scss";
+
+  // Visual section
+  .visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .case-studies {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-base);
+
+    .case-studies-listing {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-quad);
+    }
+  }
+</style>

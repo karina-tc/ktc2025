@@ -1,0 +1,178 @@
+---
+import { Image } from "astro:assets";
+import cutout from "../assets/scribbles/cutout.svg";
+
+interface Props {
+  title: string;
+  subtitle: string;
+  description: string;
+  tags: string[];
+  image: ImageMetadata;
+  imageAlt: string;
+  href: string;
+  reversed?: boolean;
+}
+
+const {
+  title,
+  subtitle,
+  description,
+  tags,
+  image,
+  imageAlt,
+  href,
+  reversed = false,
+} = Astro.props;
+---
+
+<div class:list={["case-study", { reversed: reversed }]}>
+  <div class="case-study-cutout">
+    <Image src={cutout} alt="Cutout" width={364} height={40} />
+  </div>
+  <div class="case-study-body">
+    <div class="case-study-content">
+      <h3>{title}</h3>
+      <h2>
+        <a href={href}>{subtitle}</a>
+      </h2>
+      <p>{description}</p>
+      <div class="tags">{tags.join(", ")}</div>
+    </div>
+    <div class="case-study-image">
+      <a href={href}>
+        <Image src={image} alt={imageAlt} width={800} height={500} />
+      </a>
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  @import "../styles/base/_breakpoints.scss";
+
+  .case-study {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: var(--spacing-double);
+    background: var(--color-surface);
+    border-radius: 12px;
+    gap: var(--spacing-base);
+    box-shadow: 0 4px 10px -6px #c3ab95;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 4px 10px -6px #a58c74;
+
+      h2 > a {
+        text-decoration: underline;
+      }
+    }
+
+    &.reversed {
+      .case-study-body {
+        flex-direction: row;
+        .case-study-content {
+          padding: var(--spacing-small) 0 var(--spacing-small)
+            var(--spacing-double);
+        }
+
+        .case-study-image {
+          margin-left: 0;
+          margin-right: var(--spacing-double);
+        }
+      }
+
+      @include tablet {
+        .case-study-body {
+          flex-direction: column-reverse;
+        }
+
+        .case-study-content {
+          padding: var(--spacing-small) !important;
+        }
+      }
+    }
+  }
+
+  .case-study-cutout {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: var(--spacing-small);
+
+    img {
+      width: 360px;
+      min-height: 40px;
+    }
+  }
+
+  .case-study-body {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: var(--spacing-base);
+    align-items: flex-start;
+    position: relative;
+
+    @include tablet {
+      flex-direction: column-reverse;
+      gap: 0;
+      padding: 0 var(--spacing-base);
+
+      .case-study-content {
+        min-width: 100%;
+        padding: 0;
+      }
+
+      .case-study-image {
+        flex: 1;
+        width: 100%;
+        padding: 0 var(--spacing-small);
+        margin: 0 0 var(--spacing-base) !important;
+      }
+    }
+
+    .case-study-content {
+      flex: 1;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--spacing-small) var(--spacing-double) 0 var(--spacing-small);
+
+      h3 {
+        margin-bottom: var(--spacing-base);
+      }
+
+      h2 {
+        line-height: 1.1;
+        margin-bottom: var(--spacing-base);
+        font-family: var(--font-headings);
+      }
+
+      p {
+        font-size: var(--font-size-small);
+        margin-bottom: var(--spacing-base);
+      }
+
+      .tags {
+        font-size: var(--font-size-small);
+        font-weight: 500;
+        opacity: 0.75;
+      }
+    }
+
+    .case-study-image {
+      flex: 1;
+      height: 100%;
+      margin-left: var(--spacing-double);
+
+      img {
+        width: 100%;
+        object-fit: cover;
+        height: auto;
+        border-radius: var(--border-radius-base);
+      }
+    }
+  }
+</style>
