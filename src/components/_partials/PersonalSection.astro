@@ -1,7 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import personal from "../../assets/brand/personal.png";
-import signature from "../../assets/brand/life-is-good.svg";
+import SignatureSection from "./SignatureSection.astro";
+import heartCursor from "../../assets/cursors/heart-emoji.svg";
 ---
 
 <div class="personal-container">
@@ -31,13 +32,22 @@ import signature from "../../assets/brand/life-is-good.svg";
       draggable={false}
       loading="lazy"
     />
-    <figcaption>My beautiful kid and pup</figcaption>
+    <figcaption>
+      My beautiful kid and pup
+      <div class="custom-cursor-hint">
+        <Image
+          src={heartCursor}
+          width={32}
+          height={32}
+          alt="Heart Emoji"
+          draggable={false}
+        />
+      </div>
+    </figcaption>
   </figure>
 </div>
 
-<div class="signature-container">
-  <Image src={signature} alt="Signature" draggable={false} loading="lazy" />
-</div>
+<SignatureSection />
 
 <script>
   document.querySelectorAll(".personal-image").forEach((image) => {
@@ -49,10 +59,7 @@ import signature from "../../assets/brand/life-is-good.svg";
         image.classList.remove("clicked");
       }, 2000);
     };
-
-    // Handle both click and hover
     image.addEventListener("click", activateEmojis);
-    image.addEventListener("mouseenter", activateEmojis);
   });
 </script>
 
@@ -93,14 +100,13 @@ import signature from "../../assets/brand/life-is-good.svg";
       transform: rotate(-2deg);
       background-color: white;
       box-shadow: 0 5px 10px -2px rgba(231, 221, 211);
-      transition: transform 0.3s ease-in-out;
       position: relative;
 
       .emoji-container {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -10%);
+        transform: translate(-55%, -10%);
         display: flex;
         gap: 8px;
         pointer-events: none;
@@ -128,7 +134,7 @@ import signature from "../../assets/brand/life-is-good.svg";
         .emoji-container span {
           opacity: 1;
           transform: translateY(-20px);
-          
+
           @for $i from 1 through 5 {
             &:nth-child(#{$i}) {
               transition-delay: $i * 0.1s;
@@ -149,6 +155,10 @@ import signature from "../../assets/brand/life-is-good.svg";
       }
 
       figcaption {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-small);
+
         width: 100%;
         font-size: var(--font-size-xxs);
         opacity: 0.75;
@@ -158,6 +168,27 @@ import signature from "../../assets/brand/life-is-good.svg";
         letter-spacing: 0.1em;
         font-family: var(--font-sans);
         margin: var(--spacing-base) 0 var(--spacing-small);
+      }
+
+      .custom-cursor-hint {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        margin-top: -2px;
+        transform: rotate(-2deg);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+        img {
+          width: 24px;
+          height: 24px;
+        }
+
+        &:hover img {
+          animation: pulse 1s infinite;
+        }
       }
     }
   }
@@ -187,6 +218,18 @@ import signature from "../../assets/brand/life-is-good.svg";
     100% {
       opacity: 0;
       transform: translateY(-40px) translateX(var(--offset-x, 0));
+    }
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      width: 32px;
+      height: 32px;
+    }
+    50% {
+      width: 40px;
+      height: 40px;
     }
   }
 </style>

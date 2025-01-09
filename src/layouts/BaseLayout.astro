@@ -38,6 +38,18 @@ const {
 </html>
 
 <script>
+	// Store the current URL before any navigation happens
+	document.addEventListener('click', (e) => {
+		const target = e.target as HTMLElement;
+		const link = target.closest('a');
+		
+		if (link && !window.location.pathname.includes('404')) {
+			console.log('Storing current URL before navigation:', window.location.href);
+			sessionStorage.setItem('lastVisitedUrl', window.location.href);
+		}
+	});
+
+	// Setup Intersection Observer
 	import setupIntersectionObserver from "../scripts/intersection-observer";
 	setupIntersectionObserver();
 </script>

@@ -5,11 +5,10 @@ import { getCollection } from "astro:content";
 import BlogPostNavigation from "../../components/BlogPostNavigation.astro";
 import BlogPostImage from "../../components/BlogPostImage.astro";
 import BlogPostHeader from "../../components/BlogPostHeader.astro";
+import SignatureSection from "../../components/_partials/SignatureSection.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  // Sort posts if needed (e.g., by date)
-  // posts.sort((a, b) => b.data.publishDate - a.data.publishDate);
 
   return posts.map((post, index) => ({
     params: { slug: post.slug },
@@ -94,6 +93,8 @@ try {
   <!-- Navigation -->
   <div class="section-container">
     <BlogPostNavigation prev={prev} next={next} />
+
+    <SignatureSection />
   </div>
 </BaseLayout>
 
