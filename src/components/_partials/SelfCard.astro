@@ -1,319 +1,166 @@
 ---
 // Assets
 import { Image } from "astro:assets";
-import karina from "../../assets/brand/karina-arch.png";
+import karina from "../../assets/brand/self-card.png";
+import outline from "../../assets/brand/self-outline.svg";
+import bgCard from "../../assets/backgrounds/bg-card.png";
+import label from "../../assets/brand/self-label.svg";
+import pattern from "../../assets/brand/self-pattern.svg";
+import tags from "../../assets/brand/self-tags.svg";
 ---
 
-<div class="trading-card">
-  <div class="trading-card-label happiness">
-    <span>Happiness</span>
-    <svg
-      width="14"
-      height="48"
-      viewBox="0 0 14 48"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M11.4384 0.644531C11.7146 0.644531 11.9384 0.868389 11.9384 1.14453V5.64453C11.9384 5.92067 11.7146 6.14453 11.4384 6.14453C11.1623 6.14453 10.9384 5.92067 10.9384 5.64453V2.35801C6.84646 6.51433 3.23925 10.7125 1.74333 15.0771C0.949463 17.3933 0.754746 19.7463 1.39712 22.166C2.04065 24.5901 3.53481 27.1204 6.18336 29.7689C8.13384 31.7194 10.9066 34.6549 12.5201 37.7906C13.3284 39.3615 13.8648 41.018 13.8366 42.6504C13.8081 44.3001 13.2028 45.8912 11.792 47.302C11.5967 47.4972 11.2802 47.4972 11.0849 47.302C10.8896 47.1067 10.8896 46.7901 11.0849 46.5949C12.3124 45.3673 12.8127 44.0235 12.8367 42.6331C12.861 41.2254 12.3968 39.7366 11.6309 38.2481C10.096 35.2651 7.42613 32.4259 5.47625 30.476C2.73657 27.7364 1.13016 25.0578 0.430596 22.4226C-0.270127 19.7831 -0.0504601 17.2265 0.797352 14.7528C2.37354 10.154 6.13618 5.80817 10.2374 1.64453H6.93845C6.6623 1.64453 6.43845 1.42067 6.43845 1.14453C6.43845 0.868389 6.6623 0.644531 6.93845 0.644531H11.4384Z"
-        fill="#544339"></path>
-    </svg>
+<figure class="trading-card">
+  <div class="trading-card-tags">
+    <Image src={tags} alt="Tags" draggable={false} loading="lazy" decoding="async" />
   </div>
-  <div class="trading-card-label connection">
-    <span>Connection</span>
-    <svg
-      width="67"
-      height="44"
-      viewBox="0 0 67 44"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M2.4624 10.3175C9.33991 4.53751 18.3827 1.2658 26.2066 1.91054C30.2885 2.24692 34.0236 3.64691 36.9612 6.29401C39.8967 8.93935 42.0723 12.8629 42.9805 18.3122C44.235 25.8391 46.0024 34.1567 52.3533 39.2374C53.9956 40.5513 56.2766 42.193 58.685 43.1577C61.0874 44.1199 63.7286 44.4496 65.9779 42.9501C66.2076 42.797 66.2697 42.4865 66.1165 42.2568C65.9634 42.027 65.6529 41.9649 65.4232 42.1181C63.5765 43.3492 61.332 43.1407 59.0568 42.2294C56.7877 41.3205 54.5991 39.7534 52.978 38.4565C46.9641 33.6454 45.2283 25.7165 43.9669 18.1478C43.0279 12.5136 40.7609 8.37197 37.6306 5.55113C34.5022 2.73206 30.5479 1.2649 26.2887 0.913917C18.1371 0.242169 8.81419 3.64991 1.76252 9.59957L1.93701 6.28432C1.95152 6.00856 1.73974 5.77325 1.46398 5.75873C1.18822 5.74422 0.952904 5.956 0.93839 6.23176L0.701875 10.7255C0.687362 11.0013 0.899144 11.2366 1.1749 11.2511L5.66868 11.4876C5.94445 11.5022 6.17976 11.2904 6.19427 11.0146C6.20879 10.7389 5.997 10.5035 5.72124 10.489L2.4624 10.3175Z"
-        fill="#544339"></path>
-    </svg>
+  <div id="tradingCard" class="trading-card-core">
+    <div class="card-shine"></div>
+    <div class="outline">
+      <Image
+        src={outline}
+        alt="Outline"
+        draggable={false}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <Image
+      class="self"
+      src={karina}
+      alt="Karina"
+      draggable={false}
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="trading-card-stats">
+      <Image
+        src={label}
+        alt="Label"
+        draggable={false}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="pattern">
+      <Image
+        src={pattern}
+        alt="Pattern"
+        draggable={false}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
   </div>
-  <div class="trading-card-label safety">
-    <svg
-      width="69"
-      height="20"
-      viewBox="0 0 69 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M35.3858 1.60441C31.6874 1.23833 27.9397 1.81985 23.5164 3.58914C15.7086 6.71228 6.05934 12.098 1.41928 19.2366C1.26879 19.4681 0.959094 19.5338 0.727564 19.3833C0.496035 19.2328 0.430342 18.9231 0.580837 18.6916C5.39858 11.2797 15.2997 5.79879 23.1451 2.66066C27.688 0.843465 31.5975 0.22455 35.4843 0.609273C39.362 0.9931 43.1802 2.37257 47.5418 4.49283C53.8519 7.56023 60.2106 10.6194 67.0661 10.9554L64.7682 8.6575C64.5729 8.46224 64.5729 8.14565 64.7682 7.95039C64.9634 7.75513 65.28 7.75513 65.4753 7.95039L68.6573 11.1324C68.8525 11.3276 68.8525 11.6442 68.6573 11.8395L65.4753 15.0215C65.28 15.2167 64.9634 15.2167 64.7682 15.0215C64.5729 14.8262 64.5729 14.5096 64.7682 14.3144L67.1234 11.9591C59.9823 11.6367 53.4089 8.45674 47.1047 5.3922C42.7883 3.29397 39.0933 1.97139 35.3858 1.60441Z"
-        fill="#544339"></path>
-    </svg>
-    <span>Safety</span>
-  </div>
-  <div class="trading-card-label security">
-    <svg
-      width="79"
-      height="19"
-      viewBox="0 0 79 19"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M51.0227 4.76132C42.4288 0.574562 29.5264 0.564451 20.5686 3.8976C17.85 4.90914 13.7941 6.8181 10.4283 9.35285C7.49497 11.5619 5.1907 14.1663 4.62004 16.99L6.81217 14.7979C7.00743 14.6026 7.32401 14.6026 7.51927 14.7979C7.71453 14.9931 7.71453 15.3097 7.51927 15.505L4.33729 18.687C4.14203 18.8822 3.82545 18.8822 3.63018 18.687L0.448204 15.505C0.252942 15.3097 0.252942 14.9931 0.448204 14.7979C0.643467 14.6026 0.960049 14.6026 1.15531 14.7979L3.56646 17.209C4.06277 13.8348 6.72845 10.8873 9.82671 8.55404C13.2918 5.94448 17.4411 3.99431 20.2198 2.96037C29.3942 -0.453327 42.585 -0.461716 51.4607 3.86233C60.3331 8.18478 69.2574 8.97428 77.6072 4.79939C77.8542 4.67589 78.1545 4.776 78.278 5.02299C78.4015 5.26998 78.3014 5.57032 78.0544 5.69381C69.358 10.042 60.0981 9.18266 51.0227 4.76132Z"
-        fill="#544339"></path>
-    </svg>
-    <span>Security</span>
-  </div>
-  <div class="trading-card-label growth">
-    <svg
-      width="42"
-      height="49"
-      viewBox="0 0 42 49"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M0.5 1C0.5 0.723858 0.723858 0.5 1 0.5C8.75547 0.5 14.1794 6.90277 17.7385 13.004C19.9292 16.7594 20.772 20.743 21.0715 24.7879C21.2779 27.5768 21.2264 30.4281 21.1754 33.2551C21.1528 34.5069 21.1302 35.754 21.1302 36.9888C21.1302 38.873 21.9714 40.2624 23.3555 41.3147C24.7598 42.3823 26.7211 43.0976 28.9096 43.5682C32.7186 44.3874 37.063 44.4367 39.9895 44.4357L37.6597 42.1059C37.4644 41.9106 37.4644 41.5941 37.6597 41.3988C37.855 41.2035 38.1715 41.2035 38.3668 41.3988L41.5488 44.5808C41.7441 44.776 41.7441 45.0926 41.5488 45.2879L38.3668 48.4699C38.1715 48.6651 37.855 48.6651 37.6597 48.4699C37.4644 48.2746 37.4644 47.958 37.6597 47.7628L39.9866 45.4359C37.0569 45.4373 32.6139 45.3878 28.6994 44.5459C26.4494 44.062 24.3235 43.3068 22.7503 42.1108C21.157 40.8994 20.1302 39.2319 20.1302 36.9888C20.1302 35.7141 20.1532 34.4451 20.1761 33.1821C20.2269 30.3781 20.2771 27.6036 20.0742 24.8617C19.7814 20.9058 18.9624 17.0868 16.8747 13.5078C13.3296 7.4305 8.16289 1.5 1 1.5C0.723858 1.5 0.5 1.27614 0.5 1Z"
-        fill="#544339"></path>
-    </svg>
-    <span>Growth</span>
-  </div>
-  <div class="outline">
-    <svg
-      width="309"
-      height="322"
-      viewBox="0 0 309 322"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M35.8115 174.842C35.9252 177.683 37.9986 180.482 38.4929 183.447C38.8401 185.531 39.1788 187.29 39.1788 189.433C39.1788 193.261 38.0041 198.763 40.8625 201.78C44.2757 205.383 48.1463 207.058 53.2092 208.39C56.3499 209.216 59.3899 209.076 62.6251 209.076C66.8413 209.076 71.2856 209.483 75.4707 208.951C81.8013 208.147 94.2457 204.342 99.6653 209.762C104.46 214.557 109.205 219.143 111.576 225.663C114.426 233.503 120.712 238.882 124.764 246.085C128.692 253.069 133.532 259.225 137.08 266.32C138.515 269.19 140.012 272.076 141.32 275.019C142.345 277.325 144.097 279.237 144.656 281.753C145.111 283.8 145.248 285.666 145.248 287.927C145.248 289.892 146.371 292.228 146.371 294.381"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M33.5649 146.22C33.5649 142.186 35.2485 138.238 35.2485 134.154C35.2485 131.368 33.7047 129.518 33.0036 126.889C32.5248 125.094 30.7588 123.07 30.7588 121.246C30.7588 119.559 31.3142 118.932 33.0036 118.72C34.4076 118.545 36.5569 116.29 37.4934 115.353C39.2333 113.613 40.9853 112.056 42.5443 110.302C43.8202 108.867 43.8236 107.261 44.7892 105.812"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M181.165 96.8357C181.396 98.6852 188.857 94.5909 190.144 94.5909C192.436 94.5909 195.436 93.9026 196.754 96.2745C198.394 99.2259 199.685 100.871 199.685 104.412C199.685 107.831 199.685 111.251 199.685 114.67C199.685 122.687 196.631 130.594 190.955 136.433C187.696 139.784 184.413 142.94 180.604 145.661C179.064 146.761 173.869 149.099 173.869 145.661"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M169.941 101.883C170.384 120.045 183.491 141.729 203.614 141.729"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M136.268 124.895C136.268 136.333 139.848 148.143 144.935 158.318C148.776 165.999 157.788 166.289 165.451 166.986"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M249.072 154.08C255.442 161.456 265.762 166.916 275.013 169.545C283.543 171.968 292.764 172.575 299.27 179.272C303.915 184.054 303.681 188.792 299.55 193.646C295.58 198.312 291.381 199.538 285.551 199.538"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M266.471 172.039C273.54 172.864 295.351 175.946 290.478 188.127C288.616 192.783 285.957 197.907 281.062 199.539"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M259.176 178.211C259.176 180.181 259.566 181.774 260.485 183.542C264.83 191.898 270.618 200.567 272.863 209.795C274.357 215.938 266.286 215.251 261.982 215.251"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M251.88 146.784C254.8 143.539 256.815 139.446 259.176 135.809C261.918 131.584 265.361 127.473 267.563 122.932C271.927 113.932 274.489 106.174 274.328 96.0873C274.21 88.6525 268.334 82.8051 263.946 77.4425C261.464 74.4094 260.298 69.8171 260.298 65.9688"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M195.757 214.129C207.17 220.195 218.933 225.874 232.173 225.228C236.429 225.021 244.906 223.318 247.389 219.18"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M206.421 97.3945C206.671 98.5196 208.718 99.6915 209.508 100.481C212.5 103.474 215.533 106.155 219.017 108.588C224.332 112.299 229.159 116.789 234.482 120.404C239.904 124.087 247.818 129.384 254.685 129.384"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M140.758 320.195C140.469 318.603 138.356 313.896 137.11 312.899C136.395 312.327 136.862 311.371 137.515 311.09C144.04 308.294 149.656 301.166 154.539 296.312C162.523 288.375 170.697 280.414 177.892 271.743C184.119 264.238 189.491 256.241 196.287 249.232C198.835 246.605 205.298 243.052 205.298 238.818"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M215.961 251.168C215.985 253.295 216.294 274.378 219.889 274.178C220.568 274.14 221.052 273.628 221.635 273.336C224.129 272.089 227.031 271.436 229.68 270.623C235.145 268.947 240.35 266.585 245.705 264.637"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M238.971 244.432C242.618 247.378 246.556 249.641 250.569 252.039C252.227 253.03 256.547 254.295 257.46 255.968C260.21 261.01 256.625 265.846 262.386 269.686C266.278 272.281 270.805 273.695 275.138 275.33C280.029 277.175 284.161 280.481 287.859 284.091C294.338 290.416 301.607 295.844 308 302.237"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M117.748 319.078C115.035 319.078 114.381 312.519 114.381 310.597C114.381 307.238 114.942 303.8 114.942 300.557C114.942 297.286 119.798 294.5 121.988 292.513C126.228 288.668 130.231 284.309 133.587 279.668C134.518 278.379 136.351 276.738 136.829 275.303"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M92.494 17.1423C89.3652 17.1423 98.4918 15.3372 101.411 14.2115C106.661 12.187 112.141 9.81797 117.78 9.25411C120.221 9.00997 122.201 7.60164 124.764 7.60164C129.819 7.60164 134.95 6.359 140.01 6.04271C149.532 5.44759 159.118 5.27033 168.507 3.39253C176.851 1.72386 186.807 1.22894 195.196 2.67542C210.152 5.25398 224.727 14.2253 233.795 26.4335C237.029 30.7868 239.339 36.0118 243.43 39.5909C246.689 42.4428 248.926 47.228 251.318 50.8152"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M49.8408 44.0781C46.1657 45.9682 44.3576 47.6899 42.4514 51.3116C39.3777 57.1517 36.6463 63.5422 34.345 69.7381C31.0243 78.6785 28.5287 86.3751 34.6879 94.5875"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M41.9844 95.7123C41.9844 92.2921 47.5301 86.6001 49.8414 91.2226"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M43.1068 101.324C43.1068 96.87 36.5944 87.5569 34.7198 95.9927C34.1946 98.3561 32.4402 100.358 31.9137 102.727C31.3105 105.442 31.3213 108.607 31.3213 111.426"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M73.4121 76.6328C73.4121 72.1988 68.6593 67.3338 64.152 69.337C59.5116 71.3994 58.5532 75.2344 56.4509 79.4389C51.3148 89.7111 47.1378 102.175 51.2441 113.673C52.2789 116.57 53.7922 122.091 57.6981 122.091C61.6831 122.091 65.3672 120.521 66.1475 116.23C67.146 110.738 68.0662 104.887 69.3589 99.3932C70.1785 95.9097 69.7051 92.3296 71.2919 88.9795C72.0048 87.4746 72.6886 85.9367 73.4121 84.4898"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M181.166 93.4664C171.443 93.4664 162.001 91.5596 152.481 89.725C136.786 86.7003 121.982 85.0482 106.056 85.0482C99.4235 85.0482 92.9343 83.9258 86.3203 83.9258"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M28.5152 81.6822C26.3898 81.4461 23.3593 78.8416 21.6559 77.629C19.5945 76.1616 17.27 74.3656 15.4825 72.5781C12.4229 69.5184 11.1599 65.005 8.52967 61.7903C1.70129 53.4445 1.01562 43.8603 1.01562 33.4489C1.01562 30.2384 1.26528 27.493 2.13805 24.4383C2.74583 22.3111 5.25702 17.8425 7.18899 16.706C9.29016 15.47 12.1441 14.6672 14.2042 16.2695C16.4501 18.0164 21.2463 17.5613 24.0254 18.9509C27.2075 20.5419 31.4644 22.4453 33.6908 25.249C36.3346 28.5781 40.2782 32.193 44.2292 33.7295C58.6273 39.3288 72.6779 44.6227 87.7545 48.2899C100.038 51.2779 112.758 52.9239 125.169 55.1804C129.46 55.9606 133.863 55.8664 138.233 55.8664C140.247 55.8664 142.724 56.9888 144.687 56.9888"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-      <path
-        d="M83.5135 21.0698C75.7812 21.0698 68.0489 21.0698 60.3166 21.0698C54.9502 21.0698 48.3931 22.1097 43.1684 20.6645C37.094 18.9844 31.0583 14.8965 24.5859 14.8965"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"></path>
-    </svg>
-  </div>
-  <Image
-    src={karina}
-    alt="Karina"
-    draggable={false}
-    loading="lazy"
-    decoding="async"
-  />
-</div>
+  <figcaption>
+    Hover over me
+  </figcaption>
+</figure>
 
-<style>
+<style define:vars={{ bgCardUrl: `url(${bgCard.src})` }}>
   .trading-card {
     position: relative;
     width: 100%;
-    max-width: 400px;
+    height: 100%;
+    min-height: 500px;
     padding: var(--spacing-base);
 
-    @include mobile {
-      max-width: 300px;
-      transform: scale(0.9);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-small);
+    justify-content: center;
+    align-items: center;
+
+    figcaption {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      opacity: 0.5;
+      font-family: var(--font-sans);
     }
 
-    .trading-card-label {
+    .card-shine {
       position: absolute;
       top: 0;
       left: 0;
-      width: fit-content;
-      height: fit-content;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        125deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 30%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.1) 70%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+    }
+
+    .trading-card-tags {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: 1;
 
       display: flex;
       justify-content: center;
       align-items: center;
-
-      font-size: var(--font-size-small);
-      font-family: var(--font-sans);
-
-      &.happiness {
-        width: 65px;
-        height: 68px;
-        top: -16px;
-        left: calc(50% - 35px);
-
-        flex-direction: column;
+      pointer-events: none;
+      img {
+        width: 100%;
+        max-width: 524px;
+        object-fit: contain;
+        height: auto;
+        display: block;
+        transform: translateY(-9%) translateX(-2%);
       }
+    }
 
-      &.connection {
-        width: 150px;
-        top: 20%;
-        left: calc(0% - 90px);
-        align-items: flex-start;
-        gap: 8px;
+    .trading-card-core {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      height: 450px;
+      overflow: hidden;
+      border-radius: 160px 160px 0 0;
 
-        @include mobile {
-          left: calc(0% - 40px);
-        }
-      }
+      display: flex;
+      justify-content: center;
+      align-items: end;
 
-      &.safety {
-        width: 110px;
-        top: 40%;
-        left: 82%;
-        gap: 8px;
+      transform-style: preserve-3d;
+      transform: perspective(1000px);
+      transition: all 0.1s ease;
 
-        @include mobile {
-          left: 75%;
-        }
-      }
+      background-image: var(--bgCardUrl);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      filter: drop-shadow(0 0 10px rgba(145, 123, 123, 0.5));
+      border: 1px solid var(--color-surface);
 
-      &.security {
-        width: 110px;
-        top: 80%;
-        left: -40px;
-        flex-direction: column;
-        align-items: flex-end;
-
-        @include mobile {
-          left: -20px;
+      &:hover {
+        border: 4px solid var(--color-surface);
+        .trading-card-stats {
+          bottom: 0;
+          opacity: 1;
         }
 
-        span {
-          margin-right: 60px;
-        }
-      }
-
-      &.growth {
-        width: 100px;
-        height: 50px;
-        top: 75%;
-        left: 85%;
-        gap: 8px;
-
-        span {
-          margin-top: 40px;
-        }
-
-        @include mobile {
-          left: 80%;
+        .pattern {
+          opacity: 0.4;
         }
       }
     }
 
-    .outline {
+    .outline,
+    .pattern {
       position: absolute;
-      top: 0;
+      bottom: 0;
       left: 0;
       width: 100%;
       height: 100%;
@@ -321,12 +168,13 @@ import karina from "../../assets/brand/karina-arch.png";
       display: flex;
       justify-content: center;
       align-items: end;
-      transform: translateX(-1px) translateY(-16px);
+    }
 
-      @include mobile {
-        width: 215px;
-        transform: translateX(40px) translateY(26px);
-      }
+    .pattern {
+      mix-blend-mode: color-burn;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 0;
     }
 
     img {
@@ -334,5 +182,85 @@ import karina from "../../assets/brand/karina-arch.png";
       height: auto;
       margin: 0 auto;
     }
+
+    .self {
+      z-index: 1;
+      position: relative;
+      mix-blend-mode: overlay;
+      filter: drop-shadow(0 2px 10px rgba(145, 123, 123, 0.8));
+    }
+
+    .trading-card-stats {
+      position: absolute;
+      bottom: -80px;
+      left: 0;
+      width: 100%;
+      padding: 8px 16px;
+      z-index: 2;
+
+      opacity: 0;
+      transition: all 0.3s ease;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 80%;
+        height: auto;
+      }
+    }
   }
 </style>
+
+<script>
+  const card = document.getElementById("tradingCard");
+  const shine = card.querySelector(".card-shine");
+
+  // Constants for the tilt effect
+  const MAX_ROTATION = 8;
+  const MAX_SHINE_OPACITY = 0.85;
+
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Calculate rotation based on mouse position
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateY = ((x - centerX) / centerX) * MAX_ROTATION;
+    const rotateX = -((y - centerY) / centerY) * MAX_ROTATION;
+
+    // Apply the rotation
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+    // Update shine effect
+    const percentX = (x / rect.width) * 100;
+    const percentY = (y / rect.height) * 100;
+    shine.style.opacity = MAX_SHINE_OPACITY;
+    shine.style.backgroundPosition = `${percentX}% ${percentY}%`;
+  });
+
+  // Reset card when mouse leaves
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+    shine.style.opacity = "0";
+  });
+
+  // Handle touch devices
+  card.addEventListener("touchmove", (e) => {
+    e.preventDefault(); // Prevent scrolling
+    const touch = e.touches[0];
+    const rect = card.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateY = ((x - centerX) / centerX) * MAX_ROTATION;
+    const rotateX = -((y - centerY) / centerY) * MAX_ROTATION;
+
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+</script>
