@@ -393,53 +393,45 @@ import tags from "../../assets/brand/self-tags.svg";
 </style>
 
 <script>
-  const card = document.getElementById("tradingCard");
-  const shine = card.querySelector(".card-shine");
+  (() => {
+    console.log("Script starting");
+    const card = document.getElementById("tradingCard");
+    console.log("Card element:", card);
+    if (!card) return;
+    const shine = card.querySelector(".card-shine") as HTMLElement;
+    console.log("Shine element:", shine);
+    if (!shine) return;
 
-  // Constants for the tilt effect
-  const MAX_ROTATION = 8;
-  const MAX_SHINE_OPACITY = 0.85;
+    const handleMove = (e: MouseEvent | Touch) => {
+      console.log("Mouse move detected", e.clientX, e.clientY);
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-  card.addEventListener("mousemove", (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateY = ((x - centerX) / centerX) * MAX_ROTATION;
+      const rotateX = -((y - centerY) / centerY) * MAX_ROTATION;
 
-    // Calculate rotation based on mouse position
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateY = ((x - centerX) / centerX) * MAX_ROTATION;
-    const rotateX = -((y - centerY) / centerY) * MAX_ROTATION;
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
-    // Apply the rotation
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      const percentX = (x / rect.width) * 100;
+      const percentY = (y / rect.height) * 100;
+      shine.style.opacity = MAX_SHINE_OPACITY.toString();
+      shine.style.backgroundPosition = `${percentX}% ${percentY}%`;
+    };
 
-    // Update shine effect
-    const percentX = (x / rect.width) * 100;
-    const percentY = (y / rect.height) * 100;
-    shine.style.opacity = MAX_SHINE_OPACITY;
-    shine.style.backgroundPosition = `${percentX}% ${percentY}%`;
-  });
+    const MAX_ROTATION = 8;
+    const MAX_SHINE_OPACITY = 0.85;
 
-  // Reset card when mouse leaves
-  card.addEventListener("mouseleave", () => {
-    card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
-    shine.style.opacity = "0";
-  });
-
-  // Handle touch devices
-  card.addEventListener("touchmove", (e) => {
-    e.preventDefault(); // Prevent scrolling
-    const touch = e.touches[0];
-    const rect = card.getBoundingClientRect();
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateY = ((x - centerX) / centerX) * MAX_ROTATION;
-    const rotateX = -((y - centerY) / centerY) * MAX_ROTATION;
-
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  });
+    card.addEventListener("mousemove", (e) => handleMove(e));
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+      shine.style.opacity = "0";
+    });
+    card.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+      handleMove(e.touches[0]);
+    });
+  })();
 </script>
