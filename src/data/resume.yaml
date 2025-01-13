@@ -1,0 +1,80 @@
+workExperience:
+  - year: "Now"
+    companies:
+      - logo: renumerate
+        name: "Renumerate"
+        role: "Fractional Product Designer"
+        period: "November 2024-Present"
+        intro: "Collaborating with Renumerate to define their branding and design strategy, setting the foundation for success in their pre-seed funding journey."
+        achievements:
+          - "Established a brand strategy aligned with product vision to attract early-stage investors."
+          - "Created design frameworks to guide scalable product growth."
+
+  - year: "2024"
+    companies:
+      - logo: tropic
+        name: "Tropic"
+        role: "Lead Product Designer"
+        period: "August 2023-Present"
+        companyUrl: "https://www.tropicapp.io"
+        intro: "Driving product design for Tropic's core offerings, focusing on creating data-driven solutions and improving customer experience."
+        achievements:
+          - "Delivered a new data intelligence product, increasing customer retention by 30% and onboarding enterprise clients."
+          - "Implemented a design debt reduction initiative, reducing UI inconsistencies by 50% and expediting implementation by 35%."
+      
+      - logo: tropic
+        name: "Tropic"
+        role: "Senior Product Designer"
+        period: "August 2023-Present"
+        companyUrl: "https://www.tropicapp.io"
+        intro: "Played a key role in optimizing user experience and scaling Tropic's design systems."
+        achievements:
+          - "Established and scaled a comprehensive design system, reducing component delivery time by 40%."
+          - "Designed and launched a universal search and activity center, achieving a 65% improvement in task completion rates and receiving 92% positive user feedback."
+
+  - year: "2023"
+    companies:
+      - logo: mystery
+        name: "Glue (formerly Mystery)"
+        role: "Senior Product Designer"
+        period: "May 2022-Aug 2023"
+        companyUrl: "https://www.glue.co"
+        intro: "Collaborated with cross-functional teams to develop an AI-powered employee connection engine and redefine the company's brand identity."
+        achievements:
+          - "Partnered with marketing to lead Glue's rebranding, including renaming the company and designing a cohesive visual identity."
+          - "Conducted user and prospect interviews to develop an Ideal Customer Profile (ICP), refining product-market fit."
+          - "Designed and implemented a scalable design system to improve usability, scalability, and overall user experience."
+
+  - year: "2022"
+    companies:
+      - logo: teikametrics
+        name: "Teikametrics"
+        role: "Staff Product Designer"
+        period: "February 2022-May 2022"
+        companyUrl: "https://www.teikametrics.com"
+        intro: "Designed scalable solutions to improve the efficiency and consistency of Teikametrics' product offerings."
+        achievements:
+          - "Launched Teikametrics' first design system, reducing development time by 60%."
+          - "Developed a QA process that decreased post-release bugs by 75% and accelerated release cycles by two weeks."
+
+      - logo: teikametrics
+        name: "Teikametrics"
+        role: "Senior Product Designer"
+        period: "October 2020-February 2022"
+        companyUrl: "https://www.teikametrics.com"
+        intro: "Redesigned core features to enhance usability and engagement."
+        achievements:
+          - "Revamped the analytics dashboard, driving a 43% increase in engagement through improved data visualization."
+
+  - year: "2020"
+    companies:
+      - logo: rejoiner
+        name: "Rejoiner"
+        role: "Product Owner"
+        period: "September 2014-May 2020"
+        companyUrl: "https://www.rejoiner.com"
+        intro: "Led the transformation of Rejoiner from an agency model to a scalable SaaS platform."
+        achievements:
+          - "Transitioned the business to a SaaS model, reducing customer acquisition costs by 40%."
+          - "Managed high-value accounts, generating over $2M in expansion revenue while maintaining a 95% retention rate."
+          - "Built automated workflows, increasing team efficiency by 70% and halving campaign setup times."
