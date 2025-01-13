@@ -224,6 +224,9 @@ import tags from "../../assets/brand/self-tags.svg";
         opacity: 0;
         z-index: 10;
         transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+        will-change: transform;
       }
 
       & .detail {
@@ -439,66 +442,91 @@ import tags from "../../assets/brand/self-tags.svg";
 
 <script>
   (() => {
-    console.log("Script starting");
-    const card = document.getElementById("tradingCard");
-    console.log("Card element:", card);
+    // Constants
+    const SELECTORS = {
+      card: '#tradingCard',
+      shine: '.card-shine',
+      details: '.details'
+    } as const;
+
+    const TRANSFORMS = {
+      default: 'perspective(1000px) rotateX(0deg) rotateY(0deg)',
+      get: (rotateX: number, rotateY: number) => 
+        `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+    } as const;
+
+    const CONFIG = {
+      maxRotation: 8,
+      shineOpacity: 0.25,
+      transitionTiming: '0.3s cubic-bezier(0.215, 0.61, 0.355, 1)'
+    } as const;
+
+    // Element selection with type safety
+    const card = document.querySelector(SELECTORS.card) as HTMLElement;
     if (!card) return;
-    const shine = card.querySelector(".card-shine") as HTMLElement;
-    console.log("Shine element:", shine);
+    const shine = card.querySelector(SELECTORS.shine) as HTMLElement;
     if (!shine) return;
 
+    // Utility functions
+    const calculateRotation = (position: number, center: number) => 
+      ((position - center) / center) * CONFIG.maxRotation;
+
+    const getQuadrant = (x: number, centerX: number, y: number, centerY: number) => ({
+      isLeft: x < centerX,
+      isTop: y < centerY
+    });
+
+    const updateShineClass = (isLeft: boolean, isTop: boolean) => {
+      shine.classList.remove('top-left', 'top-right', 'bottom-left', 'bottom-right');
+      
+      if (isLeft && isTop) shine.classList.add('bottom-right');
+      else if (!isLeft && isTop) shine.classList.add('bottom-left');
+      else if (isLeft && !isTop) shine.classList.add('top-right');
+      else shine.classList.add('top-left');
+    };
+
+    const updateElements = (rotateX: number, rotateY: number) => {
+      card.style.transform = TRANSFORMS.get(rotateX, rotateY);
+      
+      const details = document.querySelector(SELECTORS.details) as HTMLElement;
+      if (details) {
+        details.style.transform = TRANSFORMS.get(-rotateX, -rotateY);
+      }
+
+      shine.style.opacity = CONFIG.shineOpacity.toString();
+    };
+
+    const resetElements = () => {
+      card.style.transform = TRANSFORMS.default;
+      shine.style.opacity = "0";
+      
+      const details = document.querySelector(SELECTORS.details) as HTMLElement;
+      if (details) {
+        details.style.transform = TRANSFORMS.default;
+      }
+    };
+
+    // Event handler
     const handleMove = (e: MouseEvent | Touch) => {
-      console.log("Mouse move detected", e.clientX, e.clientY);
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
-      const rotateY = ((x - centerX) / centerX) * MAX_ROTATION;
-      const rotateX = -((y - centerY) / centerY) * MAX_ROTATION;
 
-      // Determine which quadrant the cursor is in
-      const isLeft = x < centerX;
-      const isTop = y < centerY;
+      const rotateY = calculateRotation(x, centerX);
+      const rotateX = -calculateRotation(y, centerY);
 
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-      // Make sure opacity is being set
-      shine.style.opacity = MAX_SHINE_OPACITY.toString();
-
-      // Remove all classes first
-      shine.classList.remove(
-        "top-left",
-        "top-right",
-        "bottom-left",
-        "bottom-right",
-      );
-
-      // Add the opposite quadrant class
-      if (isLeft && isTop) {
-        shine.classList.add("bottom-right");
-        console.log("Adding bottom-right class");
-      } else if (!isLeft && isTop) {
-        shine.classList.add("bottom-left");
-        console.log("Adding bottom-left class");
-      } else if (isLeft && !isTop) {
-        shine.classList.add("top-right");
-        console.log("Adding top-right class");
-      } else {
-        shine.classList.add("top-left");
-        console.log("Adding top-left class");
-      }
+      const { isLeft, isTop } = getQuadrant(x, centerX, y, centerY);
+      
+      updateShineClass(isLeft, isTop);
+      updateElements(rotateX, rotateY);
     };
 
-    const MAX_ROTATION = 8;
-    const MAX_SHINE_OPACITY = 0.2;
-
+    // Event listeners
     card.addEventListener("mousemove", (e) => handleMove(e));
-    card.addEventListener("mouseleave", () => {
-      card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
-      shine.style.opacity = "0";
-    });
+    card.addEventListener("mouseleave", resetElements);
     card.addEventListener("touchmove", (e) => {
       e.preventDefault();
       handleMove(e.touches[0]);
