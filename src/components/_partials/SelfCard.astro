@@ -5,10 +5,10 @@ interface Props {
   defaultActive?: boolean;
 }
 
-const { 
-  showTags = true, 
-  showShare = true, 
-  defaultActive = false
+const {
+  showTags = true,
+  showShare = true,
+  defaultActive = false,
 } = Astro.props;
 
 // Assets
@@ -188,8 +188,12 @@ import pattern from "../../assets/brand/self-pattern.png";
         <span>Super IC</span>
       </div>
       <div class="detail">
-        <span>Superpower:</span>
-        <span>Focus & Speed</span>
+        <span>Powers:</span>
+        <span>Super Focus / Speed</span>
+      </div>
+      <div class="footer">
+        If this designer has too many gummy bears, she might go into full-on Pepe
+        Silvia mode...
       </div>
     </div>
   </figcaption>
@@ -304,8 +308,6 @@ import pattern from "../../assets/brand/self-pattern.png";
 
         padding: 12px 20px;
         font-weight: 500;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
         color: var(--color-paper);
         font-size: 12px;
         font-family: var(--font-mono);
@@ -314,11 +316,19 @@ import pattern from "../../assets/brand/self-pattern.png";
 
       & .detail {
         width: 100%;
-
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
         display: flex;
         justify-content: space-between;
         align-items: center;
         height: 28px;
+      }
+
+      & .footer {
+        padding: var(--spacing-base) 0 var(--spacing-small);
+        margin-top: var(--spacing-base);
+        border-top: 1px dashed rgba(255, 255, 255, 0.2);
+        font-size: var(--font-size-xsmall);
       }
     }
 
