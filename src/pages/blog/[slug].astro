@@ -6,6 +6,7 @@ import BlogPostNavigation from "../../components/BlogPostNavigation.astro";
 import BlogPostImage from "../../components/BlogPostImage.astro";
 import BlogPostHeader from "../../components/BlogPostHeader.astro";
 import SignatureSection from "../../components/_partials/SignatureSection.astro";
+import type { ImageMetadata } from 'astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -30,14 +31,20 @@ const { post, prev, next } = Astro.props;
 const { Content } = await post.render();
 
 // Dynamic import based on post slug
-let blogImage;
+let blogImage: ImageMetadata | null = null;
 try {
-  const imagePath = `../../assets${post.data.image}`;
-  console.log("Attempting to load image:", {
-    postImage: post.data.image,
-    constructedPath: imagePath,
-  });
-  blogImage = post.data.image ? (await import(imagePath)).default : null;
+  if (post.data.image) {
+    const images = import.meta.glob<{ default: ImageMetadata }>('../../assets/blog/*.{png,jpg,jpeg,webp,avif}');
+    const imagePath = `../../assets/blog/${post.data.image}`;
+    
+    if (images[imagePath]) {
+      const imageModule = await images[imagePath]();
+      blogImage = imageModule.default;
+    } else {
+      console.error(`Image not found: ${imagePath}`);
+      blogImage = null;
+    }
+  }
 } catch (e) {
   console.error("Image import error:", e);
   blogImage = null;
