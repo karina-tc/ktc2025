@@ -30,7 +30,7 @@ const {
 	</head>
 	<body>
 		{includeNavigation && <Navigation />}
-		<main>
+		<main role="main" aria-label="Main Content">
 			<slot />
 		</main>
 		{includeFooter && <Footer />}
