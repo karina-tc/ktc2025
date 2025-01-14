@@ -1,4 +1,9 @@
-import testimonialImage from "../assets/people/javier.png";
+import javierIrigoyen from "../assets/people/javier-irigoyen.png";
+import annaVonClemm from "../assets/people/anna-von-clemm.png";
+import laurentBaumann from "../assets/people/laurent-baumann.png";
+import sheetalBongale from "../assets/people/sheetal-bongale.png";
+import ryanKuczka from "../assets/people/ryan-kuczka.png";
+import michaelViscariello from "../assets/people/michael-viscariello.png";
 
 export interface Testimonial {
   quote: {
@@ -25,7 +30,7 @@ export const testimonials: Testimonial[] = [
     },
     author: {
       name: "Javier Irigoyen R.",
-      image: testimonialImage,
+      image: javierIrigoyen,
       currentRole: "Product at Tiktok Shop",
       pastRole: "Worked together at Teikametrics",
     },
@@ -41,7 +46,7 @@ export const testimonials: Testimonial[] = [
     },
     author: {
       name: "Anna Von Clemm",
-      image: testimonialImage,
+      image: annaVonClemm,
       currentRole: "Product at Raptor Maps",
       pastRole: "Worked together at Glue",
     },
@@ -52,13 +57,13 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote: {
-      title: "Can Do it All",
-      content: "Karina really shines at UX but can do everything from graphic design to video to frontend code. For example, we were short on engineers and she completely re-themed our app over the course of a few days. It's fun to give her a set of requirements and then watch her think big and never put constraints on what she can/can't do.",
+      title: "Super Fast",
+      content: "I have never seen a designer this fast. We would discuss ideas, and the next day Karina would have MULTIPLE flows laid out, ready to be discussed and tweaked. I have worked with and managed many designers in the past. None of them is that fast.",
     },
     author: {
-      name: "Anna Von Clemm",
-      image: testimonialImage,
-      currentRole: "Product at Raptor Maps",
+      name: "Laurent Baumann",
+      image: laurentBaumann,
+      currentRole: "Director of Product Design at Nex",
       pastRole: "Worked together at Glue",
     },
     reference: {
@@ -68,13 +73,13 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote: {
-      title: "Can Do it All",
-      content: "Karina really shines at UX but can do everything from graphic design to video to frontend code. For example, we were short on engineers and she completely re-themed our app over the course of a few days. It's fun to give her a set of requirements and then watch her think big and never put constraints on what she can/can't do.",
+      title: "Deep Understanding",
+      content: "Karina's dedication to researching and understanding the user and their experience sets her apart. She goes above and beyond to gather user insights, ensuring that her designs are rooted in a deep understanding of their needs and expectations.",
     },
     author: {
-      name: "Anna Von Clemm",
-      image: testimonialImage,
-      currentRole: "Product at Raptor Maps",
+      name: "Sheetal Bongale",
+      image: sheetalBongale,
+      currentRole: "Senior Data Analyst at Upshop",
       pastRole: "Worked together at Glue",
     },
     reference: {
@@ -84,14 +89,14 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote: {
-      title: "Can Do it All",
-      content: "Karina really shines at UX but can do everything from graphic design to video to frontend code. For example, we were short on engineers and she completely re-themed our app over the course of a few days. It's fun to give her a set of requirements and then watch her think big and never put constraints on what she can/can't do.",
+      title: "Technical Prowess",
+      content: "While Karina's focus at Rejoiner was on the product ownership and design, she had a solid grasp of the engineering that went into building the product as well. It was not uncommon for me to build out a functional, but bare-bones MVP of a feature and hand it off to Karina, only to come back the next day to a fully stylized and beautiful product.",
     },
     author: {
-      name: "Anna Von Clemm",
-      image: testimonialImage,
-      currentRole: "Product at Raptor Maps",
-      pastRole: "Worked together at Glue",
+      name: "Ryan Kuczka",
+      image: ryanKuczka,
+      currentRole: "Principal Engineer at Red Ventures",
+      pastRole: "Worked together at Rejoiner",
     },
     reference: {
       number: "NO. 005",
@@ -100,14 +105,14 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote: {
-      title: "Can Do it All",
-      content: "Karina really shines at UX but can do everything from graphic design to video to frontend code. For example, we were short on engineers and she completely re-themed our app over the course of a few days. It's fun to give her a set of requirements and then watch her think big and never put constraints on what she can/can't do.",
+      title: "Action Oriented",
+      content: "Karina is one of the most action oriented designers I've ever worked with; no task is too big or small. On top of providing first-class UX designs, she proactively bridged gaps between Product, Design, and Development to ensure projects were successful. Her professionalism and sense for what makes a great user experience is simply astounding.",
     },
     author: {
-      name: "Anna Von Clemm",
-      image: testimonialImage,
-      currentRole: "Product at Raptor Maps",
-      pastRole: "Worked together at Glue",
+      name: "Michael Viscariello",
+      image: michaelViscariello,
+      currentRole: "Product Leader, Data & Growth Advisor",
+      pastRole: "Worked together at Tropic",
     },
     reference: {
       number: "NO. 006",
