@@ -43,15 +43,20 @@
 
 :root {
   // Colors
-  --color-ink: #544339;
-  --color-paper: #FFFBF7;
-  --color-accent: #8B4513;
+  --color-ink: #353132;
+  --color-ink-secondary: #544339;
+  --color-ink-tertiary: #9B8477;
+  --color-paper: #FEF9F3;
+  --color-accent: #D85640;
   --color-lines: #EBD4BD;
-  --color-surface: #F6EFE8;
-  --color-border: #EBD4BD;
+  --color-surface: #F0E9E1;
+  --color-border: #DCCCC3;
   --color-lime: #E1EBA9;
   --color-coal: #060403;
   --color-coal-light: #81766d;
+  --color-coffee: #B29483;
+  --color-gold: #C69E6A;
+  --color-sky: #CDE4F6;
   
   // Typography
   --font-sans: 'Instrument Sans', sans-serif;

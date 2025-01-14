@@ -5,7 +5,9 @@ const pathname = new URL(Astro.request.url).pathname;
 
 <nav class="nav-container">
   <div class="nav-content">
-    <Atom />
+    <a class="nav-logo" href="/">
+      <Atom color="var(--color-coffee)" />
+    </a>
     <ul class="nav-list">
       <li>
         <a href="/" class={pathname === "/" ? "active" : ""}>Intro</a>
@@ -64,6 +66,26 @@ const pathname = new URL(Astro.request.url).pathname;
       flex-direction: column;
       gap: var(--spacing-base);
       align-items: flex-start;
+    }
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
+
+    &:hover,
+    &:focus {
+      outline: none;
+      border: none;
+
+      :global(.atom-container .atom path) {
+        animation: none !important;
+      }
     }
   }
 
