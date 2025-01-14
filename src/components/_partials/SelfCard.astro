@@ -17,6 +17,7 @@ import karina from "../../assets/brand/self-card.png";
 import outline from "../../assets/brand/self-outline.svg";
 import bgCard from "../../assets/backgrounds/bg-card.png";
 import pattern from "../../assets/brand/self-pattern.png";
+import gummyBear from "../../assets/illustrations/gummy.png";
 ---
 
 <figure class:list={["trading-card", { "is-active": defaultActive }]}>
@@ -192,8 +193,11 @@ import pattern from "../../assets/brand/self-pattern.png";
         <span>Super Focus / Speed</span>
       </div>
       <div class="footer">
-        If this designer has too many gummy bears, she might go into full-on Pepe
-        Silvia mode...
+        <Image src={gummyBear} alt="Gummy Bear" width={100} height={100} />
+        <p>
+          If this designer has too many gummy bears, she might go into full-on
+          Pepe Silvia mode...
+        </p>
       </div>
     </div>
   </figcaption>
@@ -325,10 +329,21 @@ import pattern from "../../assets/brand/self-pattern.png";
       }
 
       & .footer {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--spacing-base);
+
         padding: var(--spacing-base) 0 var(--spacing-small);
         margin-top: var(--spacing-base);
         border-top: 1px dashed rgba(255, 255, 255, 0.2);
         font-size: var(--font-size-xsmall);
+
+        img {
+          max-width: 40px;
+          height: auto;
+          filter: drop-shadow(0 0 10px rgba(145, 123, 123, 0.5));
+          transform-origin: bottom center;
+        }
       }
     }
 
