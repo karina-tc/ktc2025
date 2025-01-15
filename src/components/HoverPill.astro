@@ -1,0 +1,149 @@
+---
+/**
+ * A reusable component that displays text with a hoverable icon animation.
+ * 
+ * @component
+ * @example
+ * ```astro
+ * <HoverPill 
+ *   text="Hello"
+ *   icon={myIcon}
+ *   iconAlt="Description"
+ *   pillType="custom"
+ * />
+ * ```
+ * 
+ * @prop {string} text - The text to display in the pill
+ * @prop {ImageMetadata} icon - The icon to show on hover
+ * @prop {string} iconAlt - Alt text for the icon
+ * @prop {string} [pillType="default"] - CSS class suffix for styling variants
+ * 
+ * @cssvar --pill-bg-color - Background color of the hover icon
+ * @cssvar --pill-icon-color - Color of the icon
+ */
+
+interface Props {
+  text: string;
+  icon: ImageMetadata;
+  iconAlt: string;
+  pillType?: string;
+}
+
+import { Image } from "astro:assets";
+
+const { text, icon, iconAlt, pillType = "default" } = Astro.props;
+---
+
+<strong class:list={["hover-pill", `pill-${pillType}`]} data-testable="hover-pill">
+  <span class="hover-pill-text">
+    {text}
+  </span>
+  <span class="hover-pill-icon">
+    <span class="hover-pill-icon-holder">
+      <Image src={icon} alt={iconAlt} width={40} height={40} />
+    </span>
+  </span>
+</strong>
+
+<style lang="scss">
+  .hover-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    background-color: var(--color-surface);
+
+    .hover-pill-text {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: var(--color-coffee);
+      text-decoration-style: dotted;
+    }
+
+    .hover-pill-icon {
+      position: absolute;
+      top: -250%;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid var(--color-paper);
+      background-color: var(--pill-bg-color, var(--color-accent));
+      overflow: hidden;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+      .hover-pill-icon-holder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 12px;
+
+        position: absolute;
+        bottom: -100%;
+        left: 0;
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+
+      img {
+        transition-delay: 0.3s;
+        transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+
+      svg path { 
+        fill: var(--pill-icon-color, currentColor);
+      }
+    }
+
+    &:hover {
+      .hover-pill-icon {
+        animation: fadeInUp 0.3s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+        --translate-initial: 20%;
+        --translate-final: 0;
+
+        .hover-pill-icon-holder {
+          animation: fadeInUp 0.3s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+          --translate-initial: 0;
+          --translate-final: -100%;
+        }
+
+        img {
+          animation: sway 1s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+      }
+    }
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(var(--translate-initial));
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(var(--translate-final));
+    }
+  }
+
+  @keyframes sway {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(10deg); }
+    45% { transform: rotate(10deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-10deg); }
+    95% { transform: rotate(-10deg); }
+    100% { transform: rotate(0deg); }
+  }
+</style> 
