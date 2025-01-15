@@ -9,7 +9,7 @@ import hand from "../assets/illustrations/hand.svg";
 import sheet from "../assets/illustrations/sheet.svg";
 import scribble from "../assets/illustrations/scribble.svg";
 import flower from "../assets/illustrations/flower.svg";
-import selfCard from "../assets/brand/philosopher.png";
+import selfCard from "../assets/brand/karina-large.png";
 
 // Data
 const bookingLink =
@@ -94,7 +94,12 @@ const navItems = [
 
 				<div class="secondary-actions" data-intersection-observer={true}>
 					<a class="action-link" href="/resume">Get Resume</a>
-					<button class="action-button" data-copy="hello@karinatovar.com" aria-label="Copy email to clipboard" aria-live="polite">
+					<button
+						class="action-button"
+						data-copy="hello@karinatovar.com"
+						aria-label="Copy email to clipboard"
+						aria-live="polite"
+					>
 						<span>Email Me</span>
 					</button>
 					<a
@@ -109,8 +114,8 @@ const navItems = [
 			</div>
 		</div>
 
-		<div class="visual">
-			<Image src={selfCard} alt="Self Card" width={800} draggable={false} />
+		<div class="philosophy-holder">
+			<div class="philosophy-image"></div>
 		</div>
 	</div>
 </BaseLayout>
@@ -133,10 +138,12 @@ const navItems = [
 		"philosophy-manifesto",
 	) as HTMLDialogElement;
 	const html = document.documentElement;
+	const philosophyHolder = document.querySelector(".philosophy-holder");
 
 	if (dialog) {
 		dialog.addEventListener("close", () => {
 			html.style.overflow = "";
+			philosophyHolder?.classList.remove("full-screen");
 		});
 
 		const openButton = document.querySelector(
@@ -145,6 +152,7 @@ const navItems = [
 		openButton?.addEventListener("click", () => {
 			dialog.showModal();
 			html.style.overflow = "hidden";
+			philosophyHolder?.classList.add("full-screen");
 		});
 	}
 </script>
@@ -230,13 +238,63 @@ const navItems = [
 	}
 
 	// Visual section
-	.visual {
-		animation: slideUp 1s ease-in-out;
+	.philosophy-holder {
+		width: 100vw;
+		max-width: 400px;
+		height: 100vh;
+		max-height: 70vh;
+		margin: 100px -40px 0 40px;
+		cursor: pointer;
 
-		img {
-			margin: 100px -40px 0 40px;
-			max-width: 400px;
-			height: auto;
+		overflow: hidden;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: end;
+
+		border-radius: 300px 300px 0 0;
+		animation: slideUp 1s ease-in-out;
+		background: url(../assets/backgrounds/bg04.png) no-repeat center center;
+		background-size: cover;
+		transition: all 0.3s ease-in-out;
+
+		&:hover .philosophy-image {
+			margin-left: 20px;
+		}
+
+		.philosophy-image {
+			width: 100%;
+			min-width: 800px;
+			height: 100%;
+			transform: translateX(150px);
+			mix-blend-mode: overlay;
+			transition: all 0.4s ease-in-out;
+			will-change: margin-left;
+			filter: drop-shadow(-10px 8px 4px rgba(97, 75, 70, 0.5));
+			background: url(../assets/brand/karina-large.png) no-repeat bottom center;
+			background-size: 80%;
+		}
+
+		&.full-screen {
+			max-height: none;
+			max-width: none;
+			position: fixed;
+			margin: 0;
+			border-radius: 0;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 200;
+			background-image: none;
+			background-color: var(--color-surface);
+
+			.philosophy-image {
+				max-width: 600px;
+				margin: 0;
+				transform: none;
+				animation: slideUp 1s ease-in-out;
+			}
 		}
 	}
 
@@ -267,7 +325,6 @@ const navItems = [
 
 		&::backdrop {
 			background: transparent;
-			backdrop-filter: blur(4px);
 		}
 
 		@include mobile {
