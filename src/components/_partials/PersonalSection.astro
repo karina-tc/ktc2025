@@ -1,67 +1,27 @@
 ---
-import { Image } from "astro:assets";
-import personal from "../../assets/brand/personal.png";
+// Components
 import SignatureSection from "./SignatureSection.astro";
-import heartCursor from "../../assets/cursors/heart-emoji.svg";
+import WeatherPill from "../WeatherPill.astro";
+import PersonalImage from "../PersonalImage.astro";
 ---
 
 <div class="personal-container">
   <div class="personal-text">
+    <h2>My Human Side</h2>
     <p>
       Outside of work, I like to watch dark psychological thrillers. Watch
       soccer games and baking shows. I enjoy time away from my keyboard by
       playing with my kid and talking walks with my dog.
     </p>
     <p>
-      I live in the East Coast of the USA with my wife and right now its a bit
-      cold where we are. I am happy to enjoy the every day. While working very
-      hard for my family.
+      I live in the East Coast of the USA with my wife and its <WeatherPill /> where we are. 
+      I am happy to enjoy the every day. While working very hard for my family.
     </p>
   </div>
-  <figure class="personal-image" data-intersection-observer={true}>
-    <div class="emoji-container">
-      <span style="--offset-x: -20%">🥰</span>
-      <span style="--offset-x: 10%">😍</span>
-      <span style="--offset-x: -5%">🥰</span>
-      <span style="--offset-x: 25%">😍</span>
-      <span style="--offset-x: -15%">🥰</span>
-    </div>
-    <Image
-      src={personal}
-      alt="Picture of my family"
-      draggable={false}
-      loading="lazy"
-    />
-    <figcaption>
-      My beautiful kid and pup
-      <div class="custom-cursor-hint">
-        <Image
-          src={heartCursor}
-          width={32}
-          height={32}
-          alt="Heart Emoji"
-          draggable={false}
-        />
-      </div>
-    </figcaption>
-  </figure>
+  <PersonalImage />
 </div>
 
 <SignatureSection />
-
-<script>
-  document.querySelectorAll(".personal-image").forEach((image) => {
-    const activateEmojis = () => {
-      image.classList.remove("clicked");
-      void (image as HTMLElement).offsetWidth;
-      image.classList.add("clicked");
-      setTimeout(() => {
-        image.classList.remove("clicked");
-      }, 2000);
-    };
-    image.addEventListener("click", activateEmojis);
-  });
-</script>
 
 <style lang="scss">
   @import "../../styles/base/_breakpoints.scss";
@@ -86,150 +46,6 @@ import heartCursor from "../../assets/cursors/heart-emoji.svg";
         margin-bottom: var(--spacing-base);
       }
     }
-
-    .personal-image {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      padding: var(--spacing-base);
-      border: 1px solid #ffffffd7;
-      border-radius: var(--spacing-small);
-      overflow: hidden;
-      transform: rotate(-2deg);
-      background-color: white;
-      box-shadow: 0 5px 10px -2px rgba(231, 221, 211);
-      position: relative;
-
-      .emoji-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-55%, -10%);
-        display: flex;
-        gap: 8px;
-        pointer-events: none;
-        z-index: 1;
-        width: 100%;
-        height: 100%;
-
-        span {
-          position: absolute;
-          left: calc(50% + var(--offset-x, 0));
-          opacity: 0;
-          font-size: 24px;
-          transition: all 0.6s ease;
-          transform: translateY(20px);
-        }
-      }
-
-      &.clicked {
-        box-shadow: 0 5px 10px -2px rgb(219, 205, 191);
-
-        img {
-          transform: scale(1.01);
-        }
-
-        .emoji-container span {
-          opacity: 1;
-          transform: translateY(-20px);
-
-          @for $i from 1 through 5 {
-            &:nth-child(#{$i}) {
-              transition-delay: $i * 0.1s;
-              animation: fadeUpAndOut 2s ease-out forwards;
-              animation-delay: $i * 0.1s;
-            }
-          }
-        }
-      }
-
-      img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-        object-position: center;
-        border-radius: 4px;
-        transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-
-      figcaption {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-small);
-
-        width: 100%;
-        font-size: var(--font-size-xxs);
-        opacity: 0.75;
-        font-weight: 600;
-        text-transform: uppercase;
-        text-align: left;
-        letter-spacing: 0.1em;
-        font-family: var(--font-sans);
-        margin: var(--spacing-base) 0 var(--spacing-small);
-      }
-
-      .custom-cursor-hint {
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 40px;
-        height: 40px;
-        margin-top: -2px;
-        transform: rotate(-2deg);
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-        img {
-          width: 24px;
-          height: 24px;
-        }
-
-        &:hover img {
-          animation: pulse 1s infinite;
-        }
-      }
-    }
-  }
-
-  .signature-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: var(--spacing-quad);
-
-    img {
-      width: 100%;
-      max-width: 400px;
-      height: auto;
-    }
-  }
-
-  @keyframes fadeUpAndOut {
-    0% {
-      opacity: 0;
-      transform: translateY(20px) translateX(var(--offset-x, 0));
-    }
-    20% {
-      opacity: 1;
-      transform: translateY(-20px) translateX(var(--offset-x, 0));
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-40px) translateX(var(--offset-x, 0));
-    }
-  }
-
-  @keyframes pulse {
-    0%,
-    100% {
-      width: 32px;
-      height: 32px;
-    }
-    50% {
-      width: 40px;
-      height: 40px;
-    }
   }
 </style>
+

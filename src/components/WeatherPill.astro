@@ -1,0 +1,249 @@
+---
+// Assets
+import { Image } from "astro:assets";
+import CloudRain from "../assets/icons/weather/CloudRain.svg";
+import Sun from "../assets/icons/weather/Sun.svg";
+import Snowflake from "../assets/icons/weather/Snowflake.svg";
+import RainbowCloud from "../assets/icons/weather/RainbowCloud.svg";
+
+type WeatherType = "cold" | "warm" | "hot" | "rain" | "snow";
+
+interface WeatherState {
+  text: string;
+  type: WeatherType;
+  icon: ImageMetadata;
+}
+
+// Default fallback
+let weatherText = "lovely";
+let weatherType = "warm";
+let weatherIcon = RainbowCloud;
+
+// Define shared weather states
+const weatherStates = {
+  default: { text: "lovely", type: "warm", icon: RainbowCloud },
+  veryCold: { text: "very cold", type: "cold", icon: Snowflake },
+  bitCold: { text: "a bit cold", type: "cold", icon: Snowflake },
+  nice: { text: "nice and toasty", type: "warm", icon: RainbowCloud },
+  warm: { text: "warm and sunny", type: "warm", icon: Sun },
+  hot: { text: "very hot", type: "hot", icon: Sun },
+  rain: { text: "raining and warm", type: "rain", icon: CloudRain },
+  snow: { text: "snowing and cold", type: "snow", icon: Snowflake },
+} as const;
+
+// Coordinates for PA
+// Coordinates for PA
+const CITY_LAT = 40.3101;
+const CITY_LONG = -75.1299;
+
+// Get weather info
+function getWeatherInfo(
+  temp: number,
+  rain: number,
+  snow: number,
+): WeatherState {
+  if (rain > 0) return weatherStates.rain;
+  if (snow > 0) return weatherStates.snow;
+  if (temp <= 35) return weatherStates.veryCold;
+  if (temp <= 50) return weatherStates.bitCold;
+  if (temp <= 70) return weatherStates.nice;
+  if (temp <= 90) return weatherStates.warm;
+  return weatherStates.hot;
+}
+
+// Fetch weather data
+try {
+  const response = await fetch(
+    `https://api.open-meteo.com/v1/forecast?latitude=${CITY_LAT}&longitude=${CITY_LONG}&hourly=temperature_2m,rain,snowfall&current_weather=true`,
+  );
+  const data = await response.json();
+
+  // Check if weather data is available
+  if (data.current_weather) {
+    const currentTemp = data.current_weather.temperature;
+    const currentHourIndex = new Date().getHours();
+    const currentRain = data.hourly.rain[currentHourIndex];
+    const currentSnow = data.hourly.snowfall[currentHourIndex];
+
+    const weatherInfo = getWeatherInfo(currentTemp, currentRain, currentSnow);
+    weatherText = weatherInfo.text;
+    weatherType = weatherInfo.type;
+    weatherIcon = weatherInfo.icon as typeof RainbowCloud;
+  }
+} catch (error) {
+  console.error("Failed to fetch weather data:", error);
+}
+---
+
+<strong
+  class:list={["weather-pill", `weather-${weatherType}`]}
+  data-testable="weather-pill">
+  <span class="weather-pill-text">
+    {weatherText}
+  </span>
+  <span class="weather-pill-icon">
+    <span class="weather-pill-icon-holder">
+      <Image src={weatherIcon} alt={weatherType} width={40} height={40} />
+    </span>
+  </span>
+</strong>
+
+<script src="../scripts/weatherTester.ts"></script>
+
+<style lang="scss">
+  .weather-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    background-color: var(--color-surface);
+
+    .weather-pill-text {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: var(--color-coffee);
+      text-decoration-style: dotted;
+    }
+
+    .weather-pill-icon {
+      position: absolute;
+      top: -250%;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid var(--color-paper);
+      background-color: var(--color-accent);
+      overflow: hidden;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+      .weather-pill-icon-holder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 12px;
+
+        position: absolute;
+        bottom: -100%;
+        left: 0;
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+
+      img {
+        transition-delay: 0.3s;
+        transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+    }
+
+    &:hover {
+      .weather-pill-icon {
+        animation: fadeInUp 0.3s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+        --translate-initial: 20%;
+        --translate-final: 0;
+
+        .weather-pill-icon-holder {
+          animation: fadeInUp 0.3s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+          --translate-initial: 0;
+          --translate-final: -100%;
+        }
+
+        img {
+          animation: sway 1s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+      }
+    }
+
+    &.weather-cold {
+      .weather-pill-icon {
+        background-color: #e3f2fd;
+        svg path {
+          fill: #2196f3;
+        }
+      }
+    }
+
+    &.weather-warm {
+      .weather-pill-icon {
+        background-color: #fff8e1;
+        svg path {
+          fill: #ffc107;
+        }
+      }
+    }
+
+    &.weather-hot {
+      .weather-pill-icon {
+        background-color: #ffebee;
+        svg path {
+          fill: #f44336;
+        }
+      }
+    }
+
+    &.weather-rain {
+      .weather-pill-icon {
+        background-color: #f5f5f5;
+        svg path {
+          fill: #9e9e9e;
+        }
+      }
+    }
+
+    &.weather-snow {
+      .weather-pill-icon {
+        background-color: #ffffff;
+        svg path {
+          fill: #e0e0e0;
+        }
+      }
+    }
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(var(--translate-initial));
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(var(--translate-final));
+    }
+  }
+
+  @keyframes sway {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(10deg);
+    }
+    45% {
+      transform: rotate(10deg);
+    }
+    50% {
+      transform: rotate(0deg);
+    }
+    75% {
+      transform: rotate(-10deg);
+    }
+    95% {
+      transform: rotate(-10deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+</style>
