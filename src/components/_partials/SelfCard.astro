@@ -444,8 +444,15 @@ import gummyBear from "../../assets/illustrations/gummy.png";
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
-      filter: drop-shadow(0 0 10px rgba(145, 123, 123, 0.5));
+      box-shadow: 0 0 10px rgba(145, 123, 123, 0.5);
       border: 1px solid var(--color-surface);
+
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      will-change: transform;
     }
 
     .outline,
@@ -485,18 +492,21 @@ import gummyBear from "../../assets/illustrations/gummy.png";
       mix-blend-mode: overlay;
       filter: drop-shadow(0 2px 10px rgba(145, 123, 123, 0.8));
       transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+      
+      transform: translate3d(0, 0, 0);
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      -webkit-transform-style: preserve-3d;
       transform-style: preserve-3d;
-      will-change: transform;
+      
       image-rendering: -webkit-optimize-contrast;
       image-rendering: crisp-edges;
+      
       -webkit-font-smoothing: subpixel-antialiased;
-      -webkit-transform-style: preserve-3d;
-      -webkit-backface-visibility: hidden;
-      -webkit-perspective: 1000;
+      
       perspective: 1000;
-      transform: translateZ(0);
-      -webkit-transform: translateZ(0);
+      -webkit-perspective: 1000;
+      will-change: transform;
 
       &.clone {
         position: absolute;
@@ -576,12 +586,21 @@ import gummyBear from "../../assets/illustrations/gummy.png";
     if (!shine) return;
 
     // Toggle function
-    const toggleActiveState = () => {
+    const toggleActiveState = (e: Event) => {
+      e.stopPropagation(); // Prevent event from bubbling to document
       tradingCard.classList.toggle(ACTIVE_CLASS);
     };
 
-    // Add click handler
+    // Reset function
+    const resetActiveState = () => {
+      if (tradingCard.classList.contains(ACTIVE_CLASS)) {
+        tradingCard.classList.remove(ACTIVE_CLASS);
+      }
+    };
+
+    // Add click handlers
     tradingCard.addEventListener("click", toggleActiveState);
+    document.addEventListener("click", resetActiveState);
 
     // Utility functions
     const calculateRotation = (position: number, center: number) =>
@@ -613,6 +632,16 @@ import gummyBear from "../../assets/illustrations/gummy.png";
 
     const updateElements = (rotateX: number, rotateY: number) => {
       card.style.transform = TRANSFORMS.get(rotateX, rotateY);
+      
+      const shadowX = rotateY * 2;
+      const shadowY = rotateX * 2;
+      const shadowBlur = Math.abs(rotateX + rotateY) * 2.5;
+      card.style.boxShadow = `
+        ${shadowX}px 
+        ${shadowY}px 
+        ${40 + shadowBlur}px 
+        rgba(114, 93, 93, ${0.7 + Math.min(Math.abs(rotateX + rotateY) * 0.03, 0.6)})
+      `;
 
       const details = document.querySelector(SELECTORS.details) as HTMLElement;
       if (details) {
@@ -624,6 +653,7 @@ import gummyBear from "../../assets/illustrations/gummy.png";
 
     const resetElements = () => {
       card.style.transform = TRANSFORMS.default;
+      card.style.boxShadow = '0 0 40px rgba(114, 93, 93, 0.4)';
       shine.style.opacity = "0";
 
       const details = document.querySelector(SELECTORS.details) as HTMLElement;
