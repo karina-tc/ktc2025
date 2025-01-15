@@ -15,6 +15,7 @@ export interface Testimonial {
     image: ImageMetadata;
     currentRole: string;
     pastRole: string;
+    pastCompany: string;
   };
   reference: {
     number: string;
@@ -32,7 +33,8 @@ export const testimonials: Testimonial[] = [
       name: "Javier Irigoyen R.",
       image: javierIrigoyen,
       currentRole: "Product at Tiktok Shop",
-      pastRole: "Worked together at Teikametrics",
+      pastRole: "Worked directly with Javier",
+      pastCompany: "From Teikametrics",
     },
     reference: {
       number: "NO. 001",
@@ -48,7 +50,8 @@ export const testimonials: Testimonial[] = [
       name: "Anna Von Clemm",
       image: annaVonClemm,
       currentRole: "Product at Raptor Maps",
-      pastRole: "Worked together at Glue",
+      pastRole: "Worked directly with Anna",
+      pastCompany: "From Glue",
     },
     reference: {
       number: "NO. 002",
@@ -64,7 +67,8 @@ export const testimonials: Testimonial[] = [
       name: "Laurent Baumann",
       image: laurentBaumann,
       currentRole: "Director of Product Design at Nex",
-      pastRole: "Worked together at Glue",
+      pastRole: "Reported to Laurent",
+      pastCompany: "From Glue",
     },
     reference: {
       number: "NO. 003",
@@ -80,7 +84,8 @@ export const testimonials: Testimonial[] = [
       name: "Sheetal Bongale",
       image: sheetalBongale,
       currentRole: "Senior Data Analyst at Upshop",
-      pastRole: "Worked together at Glue",
+      pastRole: "Worked alongside Sheetal",
+      pastCompany: "From Glue",
     },
     reference: {
       number: "NO. 004",
@@ -96,7 +101,8 @@ export const testimonials: Testimonial[] = [
       name: "Ryan Kuczka",
       image: ryanKuczka,
       currentRole: "Principal Engineer at Red Ventures",
-      pastRole: "Worked together at Rejoiner",
+      pastRole: "Worked directly with Ryan",
+      pastCompany: "From Rejoiner",
     },
     reference: {
       number: "NO. 005",
@@ -112,7 +118,8 @@ export const testimonials: Testimonial[] = [
       name: "Michael Viscariello",
       image: michaelViscariello,
       currentRole: "Product Leader, Data & Growth Advisor",
-      pastRole: "Worked together at Tropic",
+      pastRole: "Worked directly with Michael",
+      pastCompany: "From Tropic",
     },
     reference: {
       number: "NO. 006",

@@ -1,6 +1,13 @@
 ---
 import { Image } from "astro:assets";
 
+// Icons
+import Bookmark from "../assets/icons/bookmark.svg";
+import Briefcase from "../assets/icons/briefcase.svg";
+import CaretLeft from "../assets/icons/caretleft.svg";
+import CaretRight from "../assets/icons/caretright.svg";
+
+// Types
 interface Props {
   include_classes?: string;
   quote: {
@@ -12,12 +19,26 @@ interface Props {
     image: ImageMetadata;
     currentRole: string;
     pastRole: string;
+    pastCompany: string;
   };
   reference: {
     number: string;
     link?: string;
   };
 }
+
+// Generate special ability based on quote title
+const getSpecialAbility = (title: string) => {
+  const abilities: { [key: string]: string } = {
+    "Strategic Builder": "PM SHAPESHIFTING",
+    "Can Do it All": "ULTRA ADAPTABILITY",
+    "Super Fast": "SPEED MASTERY",
+    "Deep Understanding": "USER INSIGHT",
+    "Technical Prowess": "CODE WIZARDRY",
+    "Action Oriented": "RAPID EXECUTION",
+  };
+  return abilities[title] || "SUPER POWER";
+};
 
 const { quote, author, reference, include_classes = "" } = Astro.props;
 ---
@@ -33,11 +54,15 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
       )
     }
   </div>
-  <div class="testimonial-quote">
+  <div class="testimonial-title">
     <h2>{quote.title}</h2>
-    <p>{quote.content}</p>
   </div>
-  <div class="testimonial-footer">
+  <div class="testimonial-holes">
+    <div class="testimonial-hole left"></div>
+    <div class="testimonial-hole right"></div>
+  </div>
+  <div class="testimonial-quote">
+    <p>{quote.content}</p>
     <div class="testimonial-author">
       <Image src={author.image} alt={author.name} width={60} height={60} />
       <div class="testimonial-author-info">
@@ -49,26 +74,40 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
       </div>
     </div>
   </div>
+  <div class="testimonial-special-ability">
+    <div class="block">
+      <Image src={Bookmark} alt="Bookmark" width={20} height={20} />
+      SUPERPOWER: {getSpecialAbility(quote.title)}
+    </div>
+    <div class="block">
+      <Image src={Briefcase} alt="Briefcase" width={20} height={20} />
+      {author.pastCompany}
+    </div>
+    <button type="button" aria-label="Previous" class="block arrow left">
+      <Image src={CaretLeft} alt="Caret Left" width={20} height={20} />
+    </button>
+    <button type="button" aria-label="Next" class="block arrow right">
+      <Image src={CaretRight} alt="Caret Right" width={20} height={20} />
+    </button>
+  </div>
 </div>
 
 <style lang="scss">
   .testimonial-item {
     display: flex;
     flex-direction: column;
-    color: var(--color-paper);
-    background: var(--color-coal-light);
+    color: var(--color-ink-secondary);
+    background: var(--color-surface);
     border: 6px solid var(--color-paper);
     border-radius: 12px;
-    box-shadow: 0 12px 20px -16px var(--color-ink-tertiary);
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
     overflow: hidden;
     position: relative;
-
+    box-shadow: 0px 52px 20px -40px rgba(84, 67, 57, 0.25);
 
     &.active,
     &:hover {
-      background: var(--color-coal);
-      box-shadow: 0 12px 28px -2px var(--color-ink-tertiary);
+      box-shadow: 0px 52px 20px -40px rgba(84, 67, 57, 0.5);
 
       .testimonial-reference span {
         color: var(--color-coffee);
@@ -97,18 +136,37 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
       }
     }
 
+    .testimonial-holes {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      overflow: hidden;
+
+      position: absolute;
+      width: calc(100% + 40px);
+      left: -20px;
+      top: 120px;
+
+      .testimonial-hole {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--color-paper);
+      }
+    }
+
     .testimonial-reference {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: var(--font-size-small);
       font-family: var(--font-sans);
-      color: var(--color-paper);
-      margin: var(--spacing-base) var(--spacing-base) 0;
+      padding: var(--spacing-base) var(--spacing-double) 0;
 
       span {
         text-transform: uppercase;
         letter-spacing: 0.05em;
+        font-weight: 800;
         opacity: 0.75;
         transition: all 0.2s ease-in-out;
       }
@@ -126,36 +184,39 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
       }
     }
 
-    .testimonial-quote {
+    .testimonial-title {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
-      padding: var(--spacing-base) var(--spacing-base) 0;
+      padding: var(--spacing-small) var(--spacing-double) 0;
+      border-bottom: 1px dashed var(--color-coffee);
 
       h2 {
         font-family: var(--font-headings);
         font-size: var(--font-size-massive);
         margin-bottom: var(--spacing-base);
-      }
-
-      p {
-        font-family: var(--font-sans);
+        padding-bottom: var(--spacing-small);
       }
     }
 
-    .testimonial-footer {
+    .testimonial-quote {
+      flex-grow: 1;
       display: flex;
+      gap: var(--spacing-base);
       flex-direction: column;
-      gap: var(--spacing-small);
-      border-top: 1px dashed var(--color-surface);
-      margin: var(--spacing-double) var(--spacing-base) 0;
-      padding: var(--spacing-base) 0 var(--spacing-base);
+      padding: var(--spacing-base) var(--spacing-double);
+
+      p {
+        margin-top: var(--spacing-small);
+        font-family: var(--font-sans);
+      }
     }
 
     .testimonial-author {
       display: flex;
       align-items: center;
-      gap: var(--spacing-small);
+      padding: var(--spacing-small) 0;
+      gap: var(--spacing-base);
 
       img {
         border-radius: 20px;
@@ -168,7 +229,6 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
     .testimonial-author-info {
       display: flex;
       flex-direction: column;
-      color: var(--color-paper);
 
       p {
         font-weight: 500;
@@ -203,6 +263,66 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
             top: 10px;
             left: 0;
             opacity: 0;
+            color: var(--color-ink-tertiary);
+          }
+        }
+      }
+    }
+
+    .testimonial-special-ability {
+      display: flex;
+      align-items: center;
+
+      font-size: var(--font-size-small);
+      font-family: var(--font-mono);
+      color: var(--color-ink-tertiary);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+
+      margin: var(--spacing-small) 0 -6px;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-surface);
+      background: var(--color-paper);
+      transition: all 0.2s ease-in-out;
+
+      .block {
+        display: inline-flex;
+        align-items: center;
+        justify-content: start;
+        gap: var(--spacing-small);
+        padding: 12px var(--spacing-base);
+        border-right: 1px solid var(--color-border);
+
+        &:not(.arrow) {
+          flex-grow: 1;
+        }
+
+        &.arrow {
+          padding: 12px;
+          text-align: center;
+        }
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+
+      @include tablet {
+        flex-direction: column;
+        align-items: start;
+
+        .block {
+          width: 100%;
+          border-right: none;
+          border-bottom: 1px solid var(--color-border);
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          &.arrow {
+            display: none;
           }
         }
       }
