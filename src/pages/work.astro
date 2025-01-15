@@ -54,9 +54,18 @@ import { testimonials } from "../data/testimonials";
     <div class="section-content">
       <Subtitle title="Testimonials" />
       <div class="testimonials-listing">
-        {testimonials.map((testimonial) => (
-          <Testimonial {...testimonial} />
-        ))}
+          {
+            testimonials.map((testimonial) => (
+              <Testimonial
+                {...testimonial}
+                include_classes={
+                  testimonials.indexOf(testimonial) === 0
+                    ? "active expanded"
+                    : ""
+                }
+              />
+          ))
+        }
       </div>
     </div>
   </div>
@@ -86,12 +95,8 @@ import { testimonials } from "../data/testimonials";
   }
 
   .testimonials-listing {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-base);
-
-    @include tablet {
-      grid-template-columns: repeat(1, 1fr);
-    }
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-base);
   }
 </style>

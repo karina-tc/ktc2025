@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 
 interface Props {
+  include_classes?: string;
   quote: {
     title: string;
     content: string;
@@ -18,36 +19,35 @@ interface Props {
   };
 }
 
-const { quote, author, reference } = Astro.props;
+const { quote, author, reference, include_classes = "" } = Astro.props;
 ---
 
-<div class="testimonial-item">
-  <div class="testimonial-quote">
-    <h4>{quote.title}</h4>
-    <p>{quote.content}</p>
-  </div>
-  <div class="testimonial-author">
-    <Image
-      src={author.image}
-      alt={author.name}
-      width={60}
-      height={60}
-    />
-    <div class="testimonial-author-info">
-      <p>{author.name}</p>
-      <span class="testimonial-author-role">
-        <p>{author.currentRole}</p>
-        <p>{author.pastRole}</p>
-      </span>
-    </div>
-  </div>
+<div class:list={["testimonial-item", include_classes]}>
   <div class="testimonial-reference">
     <span>{reference.number}</span>
-    {reference.link && (
-      <a href={reference.link} target="_blank" rel="noopener noreferrer">
-        View
-      </a>
-    )}
+    {
+      reference.link && (
+        <a href={reference.link} target="_blank" rel="noopener noreferrer">
+          View
+        </a>
+      )
+    }
+  </div>
+  <div class="testimonial-quote">
+    <h2>{quote.title}</h2>
+    <p>{quote.content}</p>
+  </div>
+  <div class="testimonial-footer">
+    <div class="testimonial-author">
+      <Image src={author.image} alt={author.name} width={60} height={60} />
+      <div class="testimonial-author-info">
+        <p>{author.name}</p>
+        <span class="testimonial-author-role">
+          <p>{author.currentRole}</p>
+          <p>{author.pastRole}</p>
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -55,19 +55,38 @@ const { quote, author, reference } = Astro.props;
   .testimonial-item {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-base);
-    background: var(--color-surface);
-    padding: var(--spacing-base);
-    border-radius: var(--border-radius-base);
+    color: var(--color-paper);
+    background: var(--color-coal-light);
+    border: 6px solid var(--color-paper);
+    border-radius: 12px;
+    box-shadow: 0 12px 20px -16px var(--color-ink-tertiary);
     transition: all 0.2s ease-in-out;
-    
+    overflow: hidden;
+    position: relative;
+
+
+    &.active,
+    &:hover {
+      background: var(--color-coal);
+      box-shadow: 0 12px 28px -2px var(--color-ink-tertiary);
+
+      .testimonial-reference span {
+        color: var(--color-coffee);
+        opacity: 1;
+      }
+
+      .testimonial-footer {
+        border-top: 1px solid var(--color-coffee);
+      }
+    }
+
     &:hover {
       .testimonial-author .testimonial-author-role p {
         &:last-child {
           position: relative;
           opacity: 1;
           top: 0;
-          background-color: var(--color-surface);
+          background-color: inherit;
         }
         &:first-child {
           position: absolute;
@@ -78,29 +97,65 @@ const { quote, author, reference } = Astro.props;
       }
     }
 
+    .testimonial-reference {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--font-size-small);
+      font-family: var(--font-sans);
+      color: var(--color-paper);
+      margin: var(--spacing-base) var(--spacing-base) 0;
+
+      span {
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        opacity: 0.75;
+        transition: all 0.2s ease-in-out;
+      }
+
+      a {
+        font-weight: 500;
+        padding: var(--spacing-small);
+        text-underline-offset: 4px !important;
+
+        &:hover {
+          text-decoration: underline;
+          text-underline-offset: 2px;
+          text-decoration-color: inherit;
+        }
+      }
+    }
+
     .testimonial-quote {
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
-      padding: 0 var(--spacing-small);
+      padding: var(--spacing-base) var(--spacing-base) 0;
 
-      h4 {
-        flex: 1;
-        padding: 0 0 var(--spacing-xsmall);
-        margin: var(--spacing-small) 0 var(--spacing-base);
-        border-bottom: 1px solid var(--color-ink);
+      h2 {
+        font-family: var(--font-headings);
+        font-size: var(--font-size-massive);
+        margin-bottom: var(--spacing-base);
       }
 
       p {
-        margin: 0;
+        font-family: var(--font-sans);
       }
+    }
+
+    .testimonial-footer {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-small);
+      border-top: 1px dashed var(--color-surface);
+      margin: var(--spacing-double) var(--spacing-base) 0;
+      padding: var(--spacing-base) 0 var(--spacing-base);
     }
 
     .testimonial-author {
       display: flex;
       align-items: center;
       gap: var(--spacing-small);
-      margin-top: auto;
-      padding: 0 var(--spacing-small);
 
       img {
         border-radius: 20px;
@@ -113,7 +168,7 @@ const { quote, author, reference } = Astro.props;
     .testimonial-author-info {
       display: flex;
       flex-direction: column;
-      padding: var(--spacing-small) 0;
+      color: var(--color-paper);
 
       p {
         font-weight: 500;
@@ -140,7 +195,7 @@ const { quote, author, reference } = Astro.props;
           &:first-child {
             position: relative;
             top: 0;
-            background-color: var(--color-surface);
+            background-color: inherit;
           }
 
           &:last-child {
@@ -152,30 +207,5 @@ const { quote, author, reference } = Astro.props;
         }
       }
     }
-
-    .testimonial-reference {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 var(--spacing-small);
-      font-size: var(--font-size-small);
-      font-family: var(--font-sans);
-
-      span {
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        opacity: 0.75;
-      }
-
-      a {
-        font-weight: 600;
-        padding: var(--spacing-small);
-        &:hover {
-          text-decoration: underline;
-          text-underline-offset: 2px;
-          text-decoration-color: var(--color-ink);
-        }
-      }
-    }
   }
-</style> 
+</style>
