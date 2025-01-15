@@ -1,9 +1,9 @@
-import javierIrigoyen from "../assets/people/javier-irigoyen.png";
-import annaVonClemm from "../assets/people/anna-von-clemm.png";
-import laurentBaumann from "../assets/people/laurent-baumann.png";
-import sheetalBongale from "../assets/people/sheetal-bongale.png";
-import ryanKuczka from "../assets/people/ryan-kuczka.png";
-import michaelViscariello from "../assets/people/michael-viscariello.png";
+import javierIrigoyen from "../assets/people/javier-irigoyen-v2.png";
+import annaVonClemm from "../assets/people/anna-von-clemm-v2.png";
+import laurentBaumann from "../assets/people/laurent-baumann-v2.png";
+import sheetalBongale from "../assets/people/sheetal-bongale-v2.png";
+import ryanKuczka from "../assets/people/ryan-kuczka-v2.png";
+import michaelViscariello from "../assets/people/michael-viscariello-v2.png";
 
 const linkedInUrl = "https://www.linkedin.com/in/karina-tovar-castro/details/recommendations/?detailScreenTabIndex=0";
 

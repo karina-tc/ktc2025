@@ -79,7 +79,9 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
   <div class="testimonial-quote">
     <p>{quote.content}</p>
     <div class="testimonial-author">
-      <Image src={author.image} alt={author.name} width={60} height={60} />
+      <div class="testimonial-author-image">
+        <Image src={author.image} alt={author.name} width={100} height={100} />
+      </div>
       <div class="testimonial-author-info">
         <p>{author.name}</p>
         <span class="testimonial-author-role">
@@ -91,18 +93,18 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
   </div>
   <div class="testimonial-special-ability">
     <div class="block">
-      <Image src={Bookmark} alt="Bookmark" width={20} height={20} />
+      <Image src={Bookmark} alt="Bookmark" width={20} height={20} draggable={false} loading="lazy" />
       SUPERPOWER: {getSpecialAbility(quote.title)}
     </div>
     <div class="block">
-      <Image src={Briefcase} alt="Briefcase" width={20} height={20} />
+      <Image src={Briefcase} alt="Briefcase" width={20} height={20} draggable={false} loading="lazy" />
       <a href="/resume" target="_blank">{author.pastCompany}</a>
     </div>
     <button type="button" aria-label="Previous" class="block arrow left">
-      <Image src={CaretLeft} alt="Caret Left" width={20} height={20} />
+      <Image src={CaretLeft} alt="Caret Left" width={20} height={20} draggable={false} loading="lazy" />
     </button>
     <button type="button" aria-label="Next" class="block arrow right">
-      <Image src={CaretRight} alt="Caret Right" width={20} height={20} />
+      <Image src={CaretRight} alt="Caret Right" width={20} height={20} draggable={false} loading="lazy" />
     </button>
   </div>
 </div>
@@ -355,12 +357,22 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
       padding: var(--spacing-small) 0;
       gap: var(--spacing-base);
 
+      .testimonial-author-image {
+        border-radius: 32px;
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        border: 2px solid rgb(255, 255, 255);
+        background: url(../assets/backgrounds/bg02.png) no-repeat center center;
+        background-size: 100px;
+        box-shadow: 0px 8px 12px -6px rgba(123, 108, 108, 0.5);
+      }
+
       img {
-        border-radius: 20px;
-        width: 60px;
-        height: 60px;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        border: 2px solid rgba(255, 255, 255, 0.25);
+        pointer-events: none;
       }
     }
 
