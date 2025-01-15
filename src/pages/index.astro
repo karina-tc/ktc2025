@@ -13,6 +13,7 @@ import column1 from "../assets/artwork/column1.png";
 import column2 from "../assets/artwork/column2.png";
 import column3 from "../assets/artwork/column3.png";
 import column4 from "../assets/artwork/column4.png";
+import selfCard from "../assets/brand/karina-arch.png";
 
 // Data
 const bookingLink =
@@ -113,18 +114,7 @@ const navItems = [
 		</div>
 
 		<div class="visual">
-			<div class="column-container">
-				{
-					[column1, column2, column3, column4].map((column, index) => (
-						<Image
-							src={column}
-							alt={`Column ${index + 1}`}
-							width={600}
-							class="column-image"
-						/>
-					))
-				}
-			</div>
+			<Image src={selfCard} alt="Self Card" width={400} draggable={false} />
 		</div>
 	</div>
 </BaseLayout>
