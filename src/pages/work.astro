@@ -53,19 +53,31 @@ import { testimonials } from "../data/testimonials";
   <div class="section-container">
     <div class="section-content">
       <Subtitle title="Testimonials" />
-      <div class="testimonials-listing">
+      <div class="testimonials-container">
+        <div
+          class="testimonials-listing large-only"
+          data-testimonials-container
+        >
+          <Testimonial
+            {...testimonials[0]}
+            include_classes="active flip"
+            data-index={0}
+            allTestimonials={testimonials}
+          />
+        </div>
+        <div class="testimonials-listing small-only">
           {
-            testimonials.map((testimonial) => (
+            testimonials.map((testimonial, index) => (
               <Testimonial
                 {...testimonial}
-                include_classes={
-                  testimonials.indexOf(testimonial) === 0
-                    ? "active expanded"
-                    : ""
-                }
+                include_classes="active flip"
+                data-index={index}
+                totalTestimonials={testimonials.length}
+                allTestimonials={testimonials}
               />
-          ))
-        }
+            ))
+          }
+        </div>
       </div>
     </div>
   </div>
@@ -94,9 +106,32 @@ import { testimonials } from "../data/testimonials";
     }
   }
 
+  .testimonials-container {
+    position: relative;
+    width: 100%;
+  }
+
   .testimonials-listing {
+    position: relative;
+    flex-direction: column;
+    gap: var(--spacing-double);
+    width: 100%;
+    padding: var(--spacing-base) 0 var(--spacing-triple);
+
+    &.small-only {
+      display: none;
+
+      @include tablet {
+        display: flex;
+      }
+    }
+
+    &.large-only {
       display: flex;
-      flex-direction: column;
-      gap: var(--spacing-base);
+
+      @include tablet {
+        display: none;
+      }
+    }
   }
 </style>

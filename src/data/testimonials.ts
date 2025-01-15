@@ -5,6 +5,8 @@ import sheetalBongale from "../assets/people/sheetal-bongale.png";
 import ryanKuczka from "../assets/people/ryan-kuczka.png";
 import michaelViscariello from "../assets/people/michael-viscariello.png";
 
+const linkedInUrl = "https://www.linkedin.com/in/karina-tovar-castro/details/recommendations/?detailScreenTabIndex=0";
+
 export interface Testimonial {
   quote: {
     title: string;
@@ -38,7 +40,7 @@ export const testimonials: Testimonial[] = [
     },
     reference: {
       number: "NO. 001",
-      link: "#",
+      link: linkedInUrl,
     },
   },
   {
@@ -55,7 +57,7 @@ export const testimonials: Testimonial[] = [
     },
     reference: {
       number: "NO. 002",
-      link: "#",
+      link: linkedInUrl,
     },
   },
   {
@@ -72,7 +74,7 @@ export const testimonials: Testimonial[] = [
     },
     reference: {
       number: "NO. 003",
-      link: "#",
+      link: linkedInUrl,
     },
   },
   {
@@ -89,7 +91,7 @@ export const testimonials: Testimonial[] = [
     },
     reference: {
       number: "NO. 004",
-      link: "#",
+      link: linkedInUrl,
     },
   },
   {
@@ -106,7 +108,7 @@ export const testimonials: Testimonial[] = [
     },
     reference: {
       number: "NO. 005",
-      link: "#",
+      link: linkedInUrl,
     },
   },
   {
@@ -123,7 +125,7 @@ export const testimonials: Testimonial[] = [
     },
     reference: {
       number: "NO. 006",
-      link: "#",
+      link: linkedInUrl,
     },
   },
 ]; 

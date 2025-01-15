@@ -25,6 +25,19 @@ interface Props {
     number: string;
     link?: string;
   };
+  "data-index"?: number;
+  totalTestimonials?: number;
+  allTestimonials: Array<{
+    quote: { title: string; content: string };
+    author: {
+      name: string;
+      image: ImageMetadata;
+      currentRole: string;
+      pastRole: string;
+      pastCompany: string;
+    };
+    reference: { number: string; link?: string };
+  }>;
 }
 
 // Generate special ability based on quote title
@@ -40,10 +53,10 @@ const getSpecialAbility = (title: string) => {
   return abilities[title] || "SUPER POWER";
 };
 
-const { quote, author, reference, include_classes = "" } = Astro.props;
+const { quote, author, reference, include_classes = "", "data-index": index, totalTestimonials = 1, allTestimonials } = Astro.props;
 ---
 
-<div class:list={["testimonial-item", include_classes]}>
+<div class:list={["testimonial-item", include_classes]} data-index={index}>
   <div class="testimonial-header">
     <div class="testimonial-reference">
       <span>{reference.number}</span>
@@ -83,7 +96,7 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
     </div>
     <div class="block">
       <Image src={Briefcase} alt="Briefcase" width={20} height={20} />
-      {author.pastCompany}
+      <a href="/resume" target="_blank">{author.pastCompany}</a>
     </div>
     <button type="button" aria-label="Previous" class="block arrow left">
       <Image src={CaretLeft} alt="Caret Left" width={20} height={20} />
@@ -93,6 +106,108 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
     </button>
   </div>
 </div>
+
+<script define:vars={{ allTestimonials }}>
+  class TestimonialCarousel {
+    constructor() {
+      this.currentIndex = 0;
+      this.card = document.querySelector('.testimonial-item');
+      this.testimonials = allTestimonials;
+      
+      const prevButton = this.card?.querySelector('.arrow.left');
+      const nextButton = this.card?.querySelector('.arrow.right');
+      
+      prevButton?.addEventListener('click', () => this.navigate('prev'));
+      nextButton?.addEventListener('click', () => this.navigate('next'));
+    }
+
+    navigate(direction) {
+      if (!this.card) return;
+
+      // Remove flip class first
+      this.card.classList.remove('flip');
+      
+      // Add flip class back
+      setTimeout(() => {
+        this.card.classList.add('flip');
+      }, 400);
+      
+      // Update content after small delay
+      setTimeout(() => {
+        this.currentIndex = direction === 'next' 
+          ? (this.currentIndex + 1) % this.testimonials.length
+          : (this.currentIndex - 1 + this.testimonials.length) % this.testimonials.length;
+
+        const nextTestimonial = this.testimonials[this.currentIndex];
+        this.updateContent(nextTestimonial);
+      }, 300);
+    }
+
+    updateContent(testimonial) {
+      if (!this.card) return;
+
+      // Update reference
+      const reference = this.card.querySelector('.testimonial-reference');
+      if (reference) {
+        reference.querySelector('span').textContent = testimonial.reference.number;
+        const link = reference.querySelector('a');
+        if (link && testimonial.reference.link) {
+          link.href = testimonial.reference.link;
+        }
+      }
+
+      // Update title
+      const title = this.card.querySelector('.testimonial-title h2');
+      if (title) {
+        title.textContent = testimonial.quote.title;
+      }
+
+      // Update quote
+      const quote = this.card.querySelector('.testimonial-quote > p');
+      if (quote) {
+        quote.textContent = testimonial.quote.content;
+      }
+
+      // Update author
+      const authorName = this.card.querySelector('.testimonial-author-info > p');
+      const authorImage = this.card.querySelector('.testimonial-author img');
+      const authorCurrentRole = this.card.querySelector('.testimonial-author-role p:first-child');
+      const authorPastRole = this.card.querySelector('.testimonial-author-role p:last-child');
+      
+      if (authorName) authorName.textContent = testimonial.author.name;
+      if (authorImage) authorImage.src = testimonial.author.image.src;
+      if (authorCurrentRole) authorCurrentRole.textContent = testimonial.author.currentRole;
+      if (authorPastRole) authorPastRole.textContent = testimonial.author.pastRole;
+
+      // Update special ability
+      const superpower = this.card.querySelector('.testimonial-special-ability .block:first-child');
+      const pastCompany = this.card.querySelector('.testimonial-special-ability .block:nth-child(2)');
+      
+      if (superpower) {
+        const ability = this.getSpecialAbility(testimonial.quote.title);
+        superpower.textContent = `SUPERPOWER: ${ability}`;
+      }
+      
+      if (pastCompany) {
+        pastCompany.textContent = testimonial.author.pastCompany;
+      }
+    }
+
+    getSpecialAbility(title) {
+      const abilities = {
+        "Strategic Builder": "PM SHAPESHIFTING",
+        "Can Do it All": "ULTRA ADAPTABILITY",
+        "Super Fast": "SPEED MASTERY",
+        "Deep Understanding": "USER INSIGHT",
+        "Technical Prowess": "CODE WIZARDRY",
+        "Action Oriented": "RAPID EXECUTION",
+      };
+      return abilities[title] || "SUPER POWER";
+    }
+  }
+
+  new TestimonialCarousel();
+</script>
 
 <style lang="scss">
   .testimonial-item {
@@ -106,6 +221,15 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
     overflow: hidden;
     position: relative;
     box-shadow: 0px 52px 20px -40px rgba(84, 67, 57, 0.25);
+
+    &.flip {
+      .testimonial-header h2 {
+        animation: flipTitle 0.3s ease-in-out forwards;
+      }
+      .testimonial-quote {
+        animation: flipQuote 0.3s ease-in-out forwards;
+      }
+    }
 
     &.active,
     &:hover {
@@ -144,13 +268,6 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
       padding: var(--spacing-base) var(--spacing-double) 0;
       border-bottom: 1px dashed var(--color-coffee);
       transition: all 0.3s ease-in-out;
-      transform-origin: bottom;
-      perspective: 1000px;
-      background: pink;
-      
-      &.flip {
-        animation: flipForward 0.6s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
-      }
 
       .testimonial-reference {
         display: flex;
@@ -190,8 +307,11 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
         h2 {
           font-family: var(--font-headings);
           font-size: var(--font-size-massive);
+          color: var(--color-coffee);
           margin-bottom: var(--spacing-base);
           padding-bottom: var(--spacing-small);
+          transition: all 0.3s ease-in-out;
+          opacity: 0;
         }
       }
     }
@@ -221,7 +341,8 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
       gap: var(--spacing-base);
       flex-direction: column;
       padding: var(--spacing-base) var(--spacing-double);
-
+      opacity: 0;
+      transition: all 0.3s ease-in-out;
       p {
         margin-top: var(--spacing-small);
         font-family: var(--font-sans);
@@ -296,11 +417,14 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
       text-transform: uppercase;
       letter-spacing: 0.05em;
 
-      margin: var(--spacing-small) 0 -6px;
+      margin: var(--spacing-small) 0 -2px;
       border-top: 1px solid var(--color-border);
-      border-bottom: 1px solid var(--color-surface);
       background: var(--color-paper);
       transition: all 0.2s ease-in-out;
+
+      @include tablet {
+        margin: var(--spacing-small) 0 -6px;
+      }
 
       .block {
         display: inline-flex;
@@ -314,9 +438,25 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
           flex-grow: 1;
         }
 
+        a {
+          text-decoration: underline;
+          text-underline-offset: 4px;
+          text-decoration-color: var(--color-coffee);
+
+          &:hover {
+            text-decoration-color: var(--color-accent);
+          }
+        }
+
         &.arrow {
           padding: 12px;
           text-align: center;
+          cursor: pointer;
+          transition: background-color 0.2s ease-in-out;
+
+          &:hover {
+            background-color: var(--color-border);
+          }
         }
 
         &:last-child {
@@ -338,22 +478,57 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
           }
 
           &.arrow {
-            display: none;
+            display: none !important;
           }
         }
       }
     }
+
+    @include desktop {
+      .testimonial-special-ability {
+        .block.arrow {
+          display: inline-flex;
+          cursor: pointer;
+          transition: background-color 0.2s ease-in-out;
+
+          &:hover {
+            background-color: var(--color-border);
+          }
+        }
+      }
+    }
+
+    @include desktop {
+      &.active {
+        display: block !important;
+      }
+      &:not(.active) {
+        display: none !important;
+      }
+    }
   }
 
-  @keyframes flipForward {
+  @keyframes flipTitle {
     0% {
-      transform: rotateX(0deg);
+      color: var(--color-coffee);
+      opacity: 0;
     }
     50% {
-      transform: rotateX(60deg);
+      color: var(--color-coffee);
+      opacity: .5;
     }
     100% {
-      transform: rotateX(0deg);
+      color: var(--color-ink);
+      opacity: 1;
+    }
+  }
+
+  @keyframes flipQuote {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
     }
   }
 </style>

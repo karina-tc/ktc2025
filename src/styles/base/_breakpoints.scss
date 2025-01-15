@@ -15,6 +15,12 @@ $breakpoint-large: 1024px;
   }
 }
 
+@mixin tablet-reverse {
+  @media (min-width: $breakpoint-medium) {
+    @content;
+  }
+}
+
 @mixin desktop {
   @media (max-width: $breakpoint-large) {
     @content;
