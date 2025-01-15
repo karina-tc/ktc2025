@@ -9,11 +9,7 @@ import hand from "../assets/illustrations/hand.svg";
 import sheet from "../assets/illustrations/sheet.svg";
 import scribble from "../assets/illustrations/scribble.svg";
 import flower from "../assets/illustrations/flower.svg";
-import column1 from "../assets/artwork/column1.png";
-import column2 from "../assets/artwork/column2.png";
-import column3 from "../assets/artwork/column3.png";
-import column4 from "../assets/artwork/column4.png";
-import selfCard from "../assets/brand/karina-arch.png";
+import selfCard from "../assets/brand/philosopher.png";
 
 // Data
 const bookingLink =
@@ -114,7 +110,7 @@ const navItems = [
 		</div>
 
 		<div class="visual">
-			<Image src={selfCard} alt="Self Card" width={400} draggable={false} />
+			<Image src={selfCard} alt="Self Card" width={800} draggable={false} />
 		</div>
 	</div>
 </BaseLayout>
@@ -235,28 +231,12 @@ const navItems = [
 
 	// Visual section
 	.visual {
-		@include tablet {
-			display: none;
-		}
+		animation: slideUp 1s ease-in-out;
 
-		.column-container {
-			position: relative;
-			width: 500px;
-			height: 100%;
-		}
-
-		.column-image {
-			position: absolute;
-			top: 0;
-			left: 0;
-			opacity: 0;
-			animation: columnFade 8s steps(1) infinite;
-
-			@for $i from 1 through 4 {
-				&:nth-child(#{$i}) {
-					animation-delay: #{($i - 1) * 2}s;
-				}
-			}
+		img {
+			margin: 100px -40px 0 40px;
+			max-width: 400px;
+			height: auto;
 		}
 	}
 

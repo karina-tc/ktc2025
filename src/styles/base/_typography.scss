@@ -14,6 +14,15 @@ h1 {
   line-height: 1;
 }
 
+h1.mega {
+  font-size: clamp(8rem, 5vw, 4rem);
+  line-height: .9;
+  
+  @media (max-width: 768px) {
+    font-size: 4rem;
+  }
+}
+
 h2 {
   font-size: clamp(1.25rem, 4vw, 1.75rem);
   margin-bottom: var(--spacing-6);
