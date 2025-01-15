@@ -9,9 +9,11 @@ import BlogYearSection from "../components/BlogYearSection.astro";
 //Assets
 import scribble from "../assets/scribbles/loop-down.svg";
 
-// Get all blog posts and filter out drafts
+const isDev = import.meta.env.PUBLIC_SHOW_DRAFTS;
+
+// Get all blog posts and filter drafts only in production
 const allPosts = await getCollection("blog", ({ data }) => {
-  return data.status !== "draft";
+  return isDev ? true : data.status === "published";
 });
 
 // Sort posts by date (newest first)
