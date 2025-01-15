@@ -73,7 +73,7 @@ const navItems = [
 								{type === "link" ? (
 									<a href={href}>{text}</a>
 								) : (
-									<button data-dialog="philosophy-manifesto">
+									<button data-philosophy>
 										<span>{text}</span>
 									</button>
 								)}
@@ -81,16 +81,6 @@ const navItems = [
 						))
 					}
 				</ul>
-				<dialog id="philosophy-manifesto" class="manifesto-dialog">
-					<form method="dialog">
-						<h3>Philosophy Manifesto</h3>
-						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-							quos.
-						</p>
-						<button>Close</button>
-					</form>
-				</dialog>
 
 				<div class="secondary-actions" data-intersection-observer={true}>
 					<a class="action-link" href="/resume">Get Resume</a>
@@ -121,40 +111,21 @@ const navItems = [
 </BaseLayout>
 
 <script>
-	document
-		.querySelector(".action-button")
-		?.addEventListener("click", function (this: HTMLButtonElement) {
-			const email = this.dataset.copy!;
-			navigator.clipboard.writeText(email).then(() => {
-				const originalText = this.querySelector("span")!.textContent;
-				this.querySelector("span")!.textContent = "Copied!";
-				setTimeout(() => {
-					this.querySelector("span")!.textContent = originalText;
-				}, 2000);
-			});
+	// Find all philosophy buttons and attach click handlers
+	document.querySelectorAll('[data-philosophy]').forEach(button => {
+		button.addEventListener('click', () => {
+			// Get reader name from session if it exists
+			const reader = sessionStorage.getItem('reader');
+			const baseUrl = '/philosophy?referrer=index';
+			
+			// Add reader parameter if it exists
+			const url = reader 
+				? `${baseUrl}&reader=${encodeURIComponent(reader)}`
+				: baseUrl;
+				
+			window.location.href = url;
 		});
-
-	const dialog = document.getElementById(
-		"philosophy-manifesto",
-	) as HTMLDialogElement;
-	const html = document.documentElement;
-	const philosophyHolder = document.querySelector(".philosophy-holder");
-
-	if (dialog) {
-		dialog.addEventListener("close", () => {
-			html.style.overflow = "";
-			philosophyHolder?.classList.remove("full-screen");
-		});
-
-		const openButton = document.querySelector(
-			'[data-dialog="philosophy-manifesto"]',
-		);
-		openButton?.addEventListener("click", () => {
-			dialog.showModal();
-			html.style.overflow = "hidden";
-			philosophyHolder?.classList.add("full-screen");
-		});
-	}
+	});
 </script>
 
 <style lang="scss">
