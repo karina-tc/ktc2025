@@ -1,0 +1,107 @@
+---
+status: "draft"
+title: "Making It Rain - Sometimes"
+publishDate: 2025-01-15
+tags: ["notebook"]
+description: "A deep dive into creating a reusable hover pill component with weather information"
+---
+
+import { Image } from "astro:assets";
+import WeatherPill from "../../components/WeatherPill.astro";
+
+## Scratching the Itch
+
+As a way to procrastinate on the actual things I should be doing, I decided to take a weather break. I've seen many personal sites that show some sort of greeting based on the author or the user's weather and location. 
+
+The issue I had with that is that often they feel like too much for something so little. But me being me, I wanted to put an easter egg in my about section that would scratch that itch. But in the most minimal way possible.
+
+My about page already had some text that lend itself for this little easter egg. It was now just a matter of hiding the hint within the text. 
+
+To be honest, this easter egg is more for me to learn than for anyone else. I learn when I play and if I am not playing I get cranky. I guess I have a lot in common with my toddler.
+
+## Starting messy
+
+Sometimes, I am a bad dev. I didn't start with a plan on how I could compose this in small chunks. I just wanted to try and see if I could make it, and pretty much design it in browser.
+
+To start, I just added the structure of the pill and the text. Then the styles. All which are meant to blend into the text.
+
+First, I created a reusable `HoverPill` component that can display any text with a hoverable icon animation:
+
+```astro
+<HoverPill 
+  text="Hello"
+  icon={myIcon}
+  iconAlt="Description"
+  pillType="custom"
+/>
+```
+
+The component uses CSS animations to create a playful hover effect where an icon pops up and sways. The magic happens through carefully timed CSS transitions and transforms:
+
+```scss
+.hover-pill-icon {
+  position: absolute;
+  top: -250%;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+  
+  &:hover {
+    animation: fadeInUp 0.3s forwards;
+  }
+}
+```
+
+## Weather Integration
+
+Then, I created a `WeatherPill` component that uses this base to display weather information. It fetches real-time weather data and shows appropriate icons and colors based on the conditions:
+
+```typescript
+const weatherStates = {
+  veryCold: { text: "very cold", type: "cold", icon: Snowflake },
+  warm: { text: "warm and sunny", type: "warm", icon: Sun },
+  rain: { text: "raining", type: "rain", icon: CloudRain },
+  // ... more states
+}
+```
+
+## Making it Testable
+
+For easy testing, I added a browser console utility that lets you try different weather conditions:
+
+```javascript
+// Test different weather conditions
+setWeatherTemp(75)    // Set temperature to 75°F
+setWeatherRain(0.5)   // Make it rain
+setWeatherSnow(1)     // Make it snow
+```
+
+## Styling with CSS Variables
+
+The weather states are styled using CSS custom properties, making it easy to theme:
+
+```scss
+.pill-weather-cold {
+  --pill-bg-color: #e3f2fd;
+  --pill-icon-color: #2196f3;
+}
+
+.pill-weather-warm {
+  --pill-bg-color: #fff8e1;
+  --pill-icon-color: #ffc107;
+}
+```
+
+## The Result
+
+The final component is both functional and playful - it shows real weather data but with a delightful interaction that makes checking the weather just a bit more fun.
+
+<WeatherPill />
+
+## Key Takeaways
+
+1. **Reusability**: By separating the hover pill logic from the weather functionality, we created a component that can be used for other purposes.
+2. **Playful Interactions**: Simple CSS animations can make a component feel more alive and engaging.
+3. **Testing Utilities**: Adding console commands makes it easy to test different states during development.
+4. **CSS Variables**: Using CSS custom properties allows for flexible theming and maintainable styles.
+
+The source code is available in my site's repository if you want to see how it all works together! 
