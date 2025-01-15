@@ -44,18 +44,20 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
 ---
 
 <div class:list={["testimonial-item", include_classes]}>
-  <div class="testimonial-reference">
-    <span>{reference.number}</span>
-    {
-      reference.link && (
-        <a href={reference.link} target="_blank" rel="noopener noreferrer">
-          View
-        </a>
-      )
-    }
-  </div>
-  <div class="testimonial-title">
-    <h2>{quote.title}</h2>
+  <div class="testimonial-header">
+    <div class="testimonial-reference">
+      <span>{reference.number}</span>
+      {
+        reference.link && (
+          <a href={reference.link} target="_blank" rel="noopener noreferrer">
+            View
+          </a>
+        )
+      }
+    </div>
+    <div class="testimonial-title">
+      <h2>{quote.title}</h2>
+    </div>
   </div>
   <div class="testimonial-holes">
     <div class="testimonial-hole left"></div>
@@ -136,6 +138,64 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
       }
     }
 
+    .testimonial-header {
+      display: flex;
+      flex-direction: column;
+      padding: var(--spacing-base) var(--spacing-double) 0;
+      border-bottom: 1px dashed var(--color-coffee);
+      transition: all 0.3s ease-in-out;
+      transform-origin: bottom;
+      perspective: 1000px;
+      background: pink;
+      
+      &.flip {
+        animation: flipForward 0.6s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+      }
+
+      .testimonial-reference {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: var(--font-size-small);
+        font-family: var(--font-sans);
+        backface-visibility: hidden;
+
+        span {
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-weight: 800;
+          opacity: 0.75;
+          transition: all 0.2s ease-in-out;
+        }
+
+        a {
+          font-weight: 500;
+          padding: var(--spacing-small);
+          text-underline-offset: 4px !important;
+
+          &:hover {
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            text-decoration-color: inherit;
+          }
+        }
+      }
+
+      .testimonial-title {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        backface-visibility: hidden;
+
+        h2 {
+          font-family: var(--font-headings);
+          font-size: var(--font-size-massive);
+          margin-bottom: var(--spacing-base);
+          padding-bottom: var(--spacing-small);
+        }
+      }
+    }
+
     .testimonial-holes {
       display: flex;
       justify-content: space-between;
@@ -145,57 +205,13 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
       position: absolute;
       width: calc(100% + 40px);
       left: -20px;
-      top: 120px;
+      top: 110px;
 
       .testimonial-hole {
         width: 40px;
         height: 40px;
         border-radius: 50%;
         background: var(--color-paper);
-      }
-    }
-
-    .testimonial-reference {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: var(--font-size-small);
-      font-family: var(--font-sans);
-      padding: var(--spacing-base) var(--spacing-double) 0;
-
-      span {
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-weight: 800;
-        opacity: 0.75;
-        transition: all 0.2s ease-in-out;
-      }
-
-      a {
-        font-weight: 500;
-        padding: var(--spacing-small);
-        text-underline-offset: 4px !important;
-
-        &:hover {
-          text-decoration: underline;
-          text-underline-offset: 2px;
-          text-decoration-color: inherit;
-        }
-      }
-    }
-
-    .testimonial-title {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      padding: var(--spacing-small) var(--spacing-double) 0;
-      border-bottom: 1px dashed var(--color-coffee);
-
-      h2 {
-        font-family: var(--font-headings);
-        font-size: var(--font-size-massive);
-        margin-bottom: var(--spacing-base);
-        padding-bottom: var(--spacing-small);
       }
     }
 
@@ -326,6 +342,18 @@ const { quote, author, reference, include_classes = "" } = Astro.props;
           }
         }
       }
+    }
+  }
+
+  @keyframes flipForward {
+    0% {
+      transform: rotateX(0deg);
+    }
+    50% {
+      transform: rotateX(60deg);
+    }
+    100% {
+      transform: rotateX(0deg);
     }
   }
 </style>
