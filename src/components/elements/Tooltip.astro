@@ -1,0 +1,120 @@
+---
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<span class="tooltip-wrapper">
+  <span class="tooltip-trigger group">
+    <span class="tooltip-trigger--text">{text}</span>
+    <span class="tooltip-trigger--highlight"></span>
+  </span>
+  <span class="tooltip-content">
+    <slot />
+  </span>
+</span>
+
+<script>
+  import { createPopper } from "@popperjs/core";
+
+  class Tooltip {
+    constructor(element: HTMLElement) {
+      const trigger = element.querySelector(".tooltip-trigger") as HTMLElement;
+      const content = element.querySelector(".tooltip-content") as HTMLElement;
+
+      createPopper(trigger, content, {
+        placement: "top",
+        modifiers: [
+          {
+            name: "offset",
+            options: {
+              offset: [0, 8],
+            },
+          },
+          {
+            name: "flip",
+            options: {
+              fallbackPlacements: ["bottom", "right", "left"],
+            },
+          },
+        ],
+      });
+    }
+  }
+
+  document.querySelectorAll(".tooltip-wrapper").forEach((tooltip) => {
+    new Tooltip(tooltip as HTMLElement);
+  });
+</script>
+
+<style>
+  .tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+
+    &:hover {
+      .tooltip-trigger--highlight {
+        opacity: 1;
+        width: 100%;
+      }
+    }
+  }
+
+  .tooltip-trigger {
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .tooltip-trigger--text {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px dotted var(--color-ink);
+    transition: underline 0.2s ease-in-out;
+
+    &:hover {
+      border-bottom: 1px solid var(--color-accent);
+    }
+  }
+
+  .tooltip-trigger--highlight {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    color: var(--color-ink);
+    border-radius: 4px;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .tooltip-content {
+    width: fit-content;
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    font-size: var(--font-size-small);
+    font-family: var(--font-sans);
+    border-radius: 12px;
+    padding: 12px;
+    position: absolute;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 12px 0 rgba(99, 87, 87, 0.5);
+    transition:
+      opacity 0.2s ease-in-out,
+      visibility 0.2s ease-in-out,
+      transform 0.2s ease-in-out;
+  }
+
+  .tooltip-wrapper:hover .tooltip-content {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+</style>

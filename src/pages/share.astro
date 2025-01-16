@@ -1,13 +1,13 @@
 ---
 // Components
-import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Atom from "../components/Atom.astro";
 import SelfCard from "../components/_partials/SelfCard.astro";
-import Subtitle from "../components/Subtitle.astro";
+import DetailsSection from "../components/_partials/DetailsSection.astro";
+import QrCode from "../components/QrCode.astro";
 
 // Utils
-import { getReader } from "../utils/reader";
+import { personalInfo } from "../data/metadata";
 
 // Assets
 import qrCode from "../assets/brand/qr-code-transparent.png";
@@ -15,7 +15,7 @@ import qrCode from "../assets/brand/qr-code-transparent.png";
 // Get the referrer and reader from URL params
 const url = Astro.url;
 const referrer = url.searchParams.get("referrer");
-const reader = getReader();
+const reader = url.searchParams.get("reader");
 
 // Default greeting if no reader specified
 const greeting = reader ? `${reader}` : "friend";
@@ -34,36 +34,15 @@ const selectedBg =
 // For debugging
 console.log("Selected background:", selectedBg);
 
-// Add this to your frontmatter
-const details = [
-  { label: "Experience", value: "10 years" },
-  { label: "Level", value: "Super IC" },
-  { label: "Current Role", value: "Lead Product Designer" },
-  { label: "Current Company", value: "Tropic" },
-  { label: "Location", value: "East Coast, USA" },
-];
-
-// Add this to your frontmatter with other constants
-const links = [
-  { href: "/resume", text: "Resume" },
-  { href: "/work", text: "Work Samples" },
-  { href: "/about", text: "About Me" },
-  { href: "/philosophy", text: "My Philosophy" },
-];
-
 const socialLinks = [
   { type: "button", text: "Share", action: "share" },
   {
     type: "link",
     text: "LinkedIn",
-    href: "https://linkedin.com/in/yourusername",
+    href: personalInfo.social.linkedin.url,
   },
-  { type: "link", text: "GitHub", href: "https://github.com/yourusername" },
+  { type: "link", text: "GitHub", href: personalInfo.social.github.url },
 ];
-
-const contactInfo = {
-  email: "karina@karinatovar.com",
-};
 ---
 
 <BaseLayout
@@ -91,52 +70,9 @@ const contactInfo = {
 
       <!-- Right Column -->
       <div class="col-right">
-        <aside class="details-section">
-          <div class="listing">
-            <Subtitle title="My Details" />
-            {
-              details.map(({ label, value }) => (
-                <div class="detail">
-                  <span>{label}:</span>
-                  <span>{value}</span>
-                </div>
-              ))
-            }
-            <div class="footer">
-              <p>
-                To get started, here are the links you need to get to know me
-                better:
-              </p>
-              <ul>
-                {
-                  links.map(({ href, text }) => (
-                    <li>
-                      <a href={href} target="_blank">
-                        {text}
-                      </a>
-                    </li>
-                  ))
-                }
-              </ul>
-              <div class="contact">
-                <p>
-                  If you have any questions, please feel free to reach out to me
-                  directly at:
-                </p>
-                <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
-              </div>
-            </div>
-          </div>
-        </aside>
-
+        <DetailsSection reader={reader} />
         <div class="share-section">
-          <Image
-            src={qrCode}
-            alt="QR Code"
-            width={100}
-            height={100}
-            draggable={false}
-          />
+          <QrCode src={qrCode} />
           {
             socialLinks.map((link) =>
               link.type === "button" ? (
@@ -166,6 +102,55 @@ const contactInfo = {
       greetingElement.textContent = `Hello ${urlReader}`;
     }
   }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const qrButton = document.querySelector(".qr-code") as HTMLButtonElement;
+    const qrPopover = document.getElementById("qr-popover") as HTMLElement;
+
+    // Close popover when clicking outside or on the popover itself
+    qrPopover?.addEventListener("click", (e) => {
+      if (e.target === qrPopover) {
+        qrPopover.hidePopover();
+      }
+    });
+
+    // Close popover with Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && qrPopover?.matches(":popover-open")) {
+        qrPopover.hidePopover();
+      }
+    });
+
+    // Handle backdrop clicks and state changes
+    qrPopover?.addEventListener("beforetoggle", (e: Event) => {
+      const event = e as ToggleEvent;
+      if (event.newState === "closed") {
+        qrButton.style.opacity = "1";
+      } else {
+        qrButton.style.opacity = "0";
+      }
+    });
+
+    // Target the Share button by finding the button with text "Share"
+    const shareButton = Array.from(
+      document.querySelectorAll(".share-section button"),
+    ).find((button) => button.textContent === "Share");
+
+    if (shareButton) {
+      shareButton.addEventListener("click", async () => {
+        const currentUrl = window.location.href;
+        try {
+          await navigator.clipboard.writeText(currentUrl);
+          shareButton.textContent = "Copied!";
+          setTimeout(() => {
+            shareButton.textContent = "Share";
+          }, 2000);
+        } catch (err) {
+          alert("Failed to copy URL");
+        }
+      });
+    }
+  });
 </script>
 
 <style lang="scss" define:vars={{ backgroundUrl: `url(${selectedBg})` }}>
@@ -230,97 +215,6 @@ const contactInfo = {
       gap: var(--spacing-double);
       align-self: start;
 
-      // Aside styles
-      aside {
-        width: 100%;
-        max-width: 420px;
-        margin: 0 auto;
-
-        .listing {
-          position: relative;
-          font-family: var(--font-sans);
-          color: var(--color-ink-secondary);
-          background-color: var(--color-surface);
-          border-radius: 12px;
-          overflow: hidden;
-          padding: var(--spacing-base) var(--spacing-base) var(--spacing-small);
-        }
-
-        // Detail items
-        & .detail {
-          width: 100%;
-          height: 28px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-
-          // Typography
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          font-weight: 500;
-          font-size: var(--font-size-xsmall);
-          font-family: var(--font-mono);
-        }
-
-        // Footer section
-        & .footer {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: var(--spacing-base);
-
-          // Typography and spacing
-          font-size: var(--font-size-small);
-          padding: var(--spacing-base) 0 var(--spacing-small);
-          margin-top: var(--spacing-base);
-          border-top: 1px dashed var(--color-coffee);
-
-          p {
-            line-height: 1.8;
-          }
-
-          // Links list
-          ul {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            list-style: none;
-            margin: -20px 0 var(--spacing-small);
-
-            li {
-              width: 100%;
-              display: flex;
-              justify-content: start;
-              align-items: center;
-              padding: var(--spacing-small) 0;
-              border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
-            }
-          }
-
-          // Contact section
-          .contact {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-top: -20px;
-            padding-top: var(--spacing-base);
-            border-top: 1px dashed var(--color-coffee);
-
-            a {
-              font-weight: 300;
-              font-size: var(--font-size-massive);
-              font-family: var(--font-headings);
-              color: var(--color-ink-tertiary);
-            }
-          }
-        }
-
-        @include desktop-reverse {
-          min-width: 420px;
-        }
-      }
-
       // Share container
       .share-section {
         display: flex;
@@ -374,6 +268,17 @@ const contactInfo = {
           }
         }
       }
+    }
+  }
+
+  @keyframes popover-show {
+    from {
+      transform: scale(0.2);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
     }
   }
 </style>

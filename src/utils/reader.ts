@@ -1,17 +1,14 @@
 // Get reader name from URL or session storage
-export function getReader(): string | null {
+export const getReader = () => {
   if (typeof window === 'undefined') return null;
   
-  // Try URL first
-  const urlParams = new URLSearchParams(window.location.search);
-  const urlReader = urlParams.get('reader');
+  // First check URL
+  const urlReader = new URLSearchParams(window.location.search).get("reader");
+  if (urlReader) return urlReader;
   
-  // Then try session storage
-  const sessionReader = sessionStorage.getItem('reader');
-  
-  // Return first available value
-  return urlReader || sessionReader || null;
-}
+  // Then check session storage
+  return sessionStorage.getItem('reader');
+};
 
 // Save reader name to session storage
 export function setReader(name: string): void {

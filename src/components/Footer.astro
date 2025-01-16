@@ -1,27 +1,47 @@
 ---
+import { personalInfo } from "../data/metadata";
+import Tooltip from "./elements/Tooltip.astro";
 
 const social = [
-  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/karinatovar/' },
-  { name: 'GitHub', url: 'https://github.com/karinatovar' },
-  { name: 'Threads', url: 'https://www.threads.net/@karinatovar' }
+  { name: "LinkedIn", url: personalInfo.social.linkedin.url },
+  { name: "GitHub", url: personalInfo.social.github.url },
+  { name: "Threads", url: personalInfo.social.threads.url },
 ];
 ---
 
 <footer class="footer-wrapper">
   <div class="footer-content">
-    <span class="footer-copyright">© Karina Tovar {new Date().getFullYear()}</span>
+    <span class="footer-copyright"
+      >© Karina Tovar {new Date().getFullYear()}</span
+    >
     <div class="footer-links">
-      {social.map((platform, index) => (
-        <>
-          <a href={platform.url} target="_blank" rel="noopener noreferrer">
-            {platform.name}
-          </a>
-          {index < social.length - 1 && <span>·</span>}
-        </>
-      ))}
+      {
+        social.map((platform, index) => (
+          <>
+            <a href={platform.url} target="_blank" rel="noopener noreferrer">
+              {platform.name}
+            </a>
+            {index < social.length - 1 && <span>·</span>}
+          </>
+        ))
+      }
     </div>
   </div>
-  <span>Colophon</span>
+  <div class="footer-colophon">
+    <Tooltip text="Colophon">
+      <div class="tooltip-wrapper">
+        <p>
+          This website was coded with love, sweat, and tears by yours truly using
+          AstroJs, TypeScript, and Tailwind CSS.
+          <br /><br />
+          I'm using Instrument Serif, Instrument Sans and EB Garamond as fonts.
+          The color palette is inspired by the smell of cholocate cookies.
+        </p>
+      </div>
+    </Tooltip>
+    <span>·</span>
+    <a href="/share">Share Site</a>
+  </div>
 </footer>
 
 <style lang="scss">
@@ -70,5 +90,21 @@ const social = [
 
   .footer-links a:hover {
     text-decoration: underline !important;
+  }
+
+  .tooltip-wrapper {
+    width: fit-content;
+    min-width: 300px;
+    max-width: 300px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-base);
+
+    p {
+      flex: 1;
+      margin: 0;
+    }
   }
 </style>

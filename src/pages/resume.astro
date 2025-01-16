@@ -5,26 +5,29 @@ import { Image } from "astro:assets";
 
 // Data
 import { workExperience, education, otherExperience } from "../data/resume";
+import { personalInfo, getEmailLink } from "../data/metadata";
+
+const resumeFileName = "KarinaTovarCastro_CV.pdf";
 ---
 
 <BaseLayout
-  title="Karina Tovar | Resume"
-  description="Karina Tovar's professional experience and background"
+  title={`${personalInfo.name.full} | Resume`}
+  description={`${personalInfo.name.full}'s professional experience and background`}
 >
   <div class="grid-container" data-intersection-observer={true}>
     <div class="grid-content">
       <div class="text-content">
         <h2>Digital Resume</h2>
-        <h1>Karina Tovar</h1>
+        <h1>{personalInfo.name.full}</h1>
         <p class="subheading">
-          <span><strong>Lead Product Designer</strong></span>
+          <span><strong>{personalInfo.role}</strong></span>
           <em>»</em> 
           <span>
-            <a href="mailto:hello@karinatovar.com">hello@karinatovar.com</a>
+            <a href={getEmailLink()}>{personalInfo.contact.email}</a>
           </span>
           <em>»</em>
           <span>
-            <a href="/KarinaTovarCastro_CV.pdf" target="_blank" rel="noopener noreferrer">
+            <a href={`/${resumeFileName}`} target="_blank" rel="noopener noreferrer">
               Download PDF
             </a>
           </span>
