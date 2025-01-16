@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Atom from "../components/Atom.astro";
 import SelfCard from "../components/_partials/SelfCard.astro";
+import Subtitle from "../components/Subtitle.astro";
 
 // Utils
 import { getReader } from "../utils/reader";
@@ -92,6 +93,7 @@ const contactInfo = {
       <div class="col-right">
         <aside class="details-section">
           <div class="listing">
+            <Subtitle title="My Details" />
             {
               details.map(({ label, value }) => (
                 <div class="detail">
@@ -271,7 +273,7 @@ const contactInfo = {
           font-size: var(--font-size-small);
           padding: var(--spacing-base) 0 var(--spacing-small);
           margin-top: var(--spacing-base);
-          border-top: 1px dashed rgba(255, 255, 255, 0.2);
+          border-top: 1px dashed var(--color-coffee);
 
           p {
             line-height: 1.8;
@@ -301,12 +303,15 @@ const contactInfo = {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            margin-top: -20px;
+            padding-top: var(--spacing-base);
+            border-top: 1px dashed var(--color-coffee);
 
             a {
               font-weight: 300;
               font-size: var(--font-size-massive);
               font-family: var(--font-headings);
-              color: var(--color-paper);
+              color: var(--color-ink-tertiary);
             }
           }
         }
@@ -330,6 +335,10 @@ const contactInfo = {
     :global(.trading-card) {
       padding: 0;
       max-width: 420px;
+    }
+    :global(.subtitle) {
+      margin-top: 10px;
+      font-family: var(--font-headings);
     }
   }
 
