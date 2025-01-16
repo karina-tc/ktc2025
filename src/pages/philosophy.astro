@@ -8,8 +8,16 @@ import { getReader } from "../utils/reader";
 
 // Import Images
 import { Image } from "astro:assets";
-import selfCard from "../assets/brand/karina-large.png";
-import trees from "../assets/backgrounds/trees.png";
+import dumpsterFire from "../assets/icons/emojis/dumpster-fire.gif";
+import thinkingFace from "../assets/icons/emojis/thinking-face.gif";
+import happycat from "../assets/icons/emojis/happy-cat.gif";
+import pandaHug from "../assets/icons/emojis/hug.png";
+import dumbo from "../assets/icons/emojis/dumbo.gif";
+
+// Import Illustrations
+import selfCard from "../assets/brand/karina-profile-min.png";
+import plant from "../assets/illustrations/plant.png";
+import plantOutline from "../assets/illustrations/plant-outline.svg";
 
 // Get the referrer and reader from URL params
 const url = Astro.url;
@@ -39,17 +47,33 @@ console.log("Full URL:", url.toString());
 
     <!-- Content -->
     <div class="manifesto-content">
+      <!-- Facade -->
+      <div class="props">
+        <Image
+          class="facade plant-outline"
+          src={plantOutline}
+          alt="Plant"
+          width={400}
+        />
+        <Image class="facade plant" src={plant} alt="Plant" width={400} />
+        <Image
+          class="facade self"
+          src={selfCard}
+          alt="Karina Tovar"
+          width={800}
+        />
+      </div>
+
       <!-- Header -->
       <div class="manifesto-header">
         <Atom size="100px" />
         <h4>My Philosophy</h4>
-        <h1>More Than Happy Little Pixels</h1>
-
-        <!-- Visual -->
-        <div class="manifesto-visual">
-          <Image class="self" src={selfCard} alt="Karina Tovar" width={400} />
-          <Image class="trees" src={trees} alt="Trees" width={1800} />
-        </div>
+        <h1>
+          Design and tech are only great if they dream big, solve real shit, and
+          leave people smiling.
+        </h1>
+        <h4>If it doesn’t make life better, what’s the point?</h4>
+        <span class="scroll-down">↓</span>
       </div>
 
       <!-- Greeting
@@ -58,66 +82,134 @@ console.log("Full URL:", url.toString());
 
       <!-- Text -->
       <div class="manifesto-text">
-        <p>
-          Design is equal parts dreaming and doing. I ask the wild “what ifs”
-          and the grounded “how the hell do we make this work?” My process is
-          about exploring big ideas without getting lost in the clouds—because
-          at the end of the day, a product needs to work and work well. But it
-          should also feel good. Life is chaotic enough without software adding
-          to the pile.
-        </p>
-        <p>
-          I’m obsessed with simplicity, clarity, and making the complicated feel
-          approachable. Whether I’m turning vendor data into actionable insights
-          or building tools that help someone save time, I focus on cutting the
-          noise and delivering solutions that actually matter. No fluff, no
-          filler—just good design doing its job.
-        </p>
-        <p>
-          But here’s the kicker: I don’t just design for usability. I design for
-          emotion. A product isn’t just a series of tasks; it’s an experience. I
-          want to know how someone feels when they use what I’ve built—relieved,
-          delighted, empowered. Those moments of joy and ease? That’s what I
-          chase. I call them happiness metrics, and I bake them into everything
-          I do.
-        </p>
-        <p>
-          I’ve also got a soft spot for learning (even when it makes me feel
-          like a dummy). Every project is a chance to dive into something new.
-          Whether it’s experimenting with code, wrapping my head around AI, or
-          wrestling with a tricky workflow, I embrace the mess because that’s
-          where growth happens.
-        </p>
-        <p>
-          And I bring my whole self to the work—personality, wit, and all. I’m a
-          pixel philosopher and a cautious technologist, blending strategy,
-          empathy, and a touch of irreverence. My designs are thoughtful and
-          intentional, but never so serious they lose their spark.
-        </p>
-        <h2>Why hire me...</h2>
-        <p>
-          Because I don’t just make good-looking UIs—I build tools that make
-          life easier, better, and sometimes even a little fun. I take messy,
-          complicated problems and turn them into solutions that work hard and
-          feel human. You won’t get bloated, buzzwordy nonsense with me—just
-          bold ideas grounded in what users actually need.
-        </p>
-        <p>
-          So, why me? Because I’ll help you dream bigger, execute smarter, and
-          build products that don’t just meet expectations—they make people’s
-          days suck a little less.
-        </p>
+        <section data-section="introduction">
+          <p>
+            Design is equal parts dreaming and carefully doing. But I always
+            start by just playing. Asking the wild what ifs and the <em
+              >very real</em
+            >: how the hell do we make this work? Or my all time favorite: how
+            may this <em>actually be useful?</em>
+            <span class="inline-emoji"
+              ><Image src={thinkingFace} alt="Thinking face" width={40} /></span
+            >
+          </p>
+          <p>
+            My process is all about exploring big ideas without getting lost in
+            the clouds—because at the end of the day, a product needs to work
+            and do it <em>well</em>. But it should also <em>feel</em> good. Life
+            is chaotic enough that we don't need bad software adding to the s<span
+              class="redacted">hi</span
+            >t pile. <span class="inline-emoji"
+              ><Image src={dumpsterFire} alt="Dumpster fire" width={40} /></span
+            >
+          </p>
+        </section>
+        <section data-section="simplicity">
+          <p>
+            I’m a big fan of simplicity, clarity, and <em
+              >making the complicated feel approachable</em
+            >. Whether I’m turning vendor data into actionable insights,
+            building tools to save money on PPC spend, or crafting complex email
+            marketing campaigns, I focus on cutting the noise and delivering
+            solutions that actually matter. No fluff, no bull<span
+              class="redacted">shit</span
+            >. Just good design doing its job. <em>My job.</em>
+          </p>
+          <p>
+            I sift through the mess so users don’t have to—so they can close
+            their laptops and smile because their day was a good one.
+            <span class="inline-emoji"
+              ><Image src={happycat} alt="Happy cat" width={40} /></span
+            >
+          </p>
+        </section>
+        <section data-section="empathy">
+          <p>
+            But here’s the thing: I don’t just design for usability—we should
+            all just fu<span class="redacted">cki</span>ng do that. I design for
+            emotion. A product isn’t just a series of tasks; it’s an experience.
+          </p>
+          <p>
+            I want to know how someone <em class="light">feels</em> when they use
+            what I’ve built—empowered, delighted, relieved? Maybe I am a weirdo,
+            but those are the moments that I chase.
+            <span class="inline-emoji"
+              ><Image src={pandaHug} alt="Panda hugs" width={40} /></span
+            >
+          </p>
+          <p>
+            I call them <em class="light">happiness metrics</em>, and I bake
+            them into everything I do.
+          </p>
+        </section>
+        <section data-section="learning">
+          <p>
+            I’ve also got a soft spot for <em>always learning</em>. Even when it
+            makes me feel incredibly dumb. Every project is a chance to dive
+            into something new.
+            <span class="inline-emoji"
+              ><Image src={dumbo} alt="Dumbo" width={40} /></span
+            >
+          </p>
+          <p>
+            Whether it’s experimenting with code, wrapping my head around AI
+            systems design, or wrestling with complex finance terminology, I <em
+              >embrace the chaos</em
+            >
+            because that’s where growth happens.
+          </p>
+        </section>
+        <section data-section="personality">
+          <p>
+            On the people side, I always bring my whole self to the work—wit,
+            bad dad jokes, my sophisticated sailor's mouth, and all. I’m not
+            just here to push pixels; I’m here to bring the brains, skills,
+            memes, and joy that make the process feel human and f<span
+              class="redacted">ucki</span
+            >ng fun.
+          </p>
+          <p>
+            It’s this blend that drives me as a self-proclaimed pixel
+            philosopher. And as a cautious technologist, I mix strategy,
+            empathy, and a touch of irreverence to craft designs that are
+            thoughtful and intentional—but never so serious they lose their
+            spark.
+          </p>
+        </section>
+        <section data-section="why-hire-me">
+          <h1>
+            <a href="mailto:hello@karinatovar.com" target="_blank">Hire me</a> if
+            you want to dream big and <em>build bold products</em> that make people’s
+            days <em>suck less</em>.
+          </h1>
+        </section>
+        <section data-section="outro">
+          <p>
+            I don’t just push happy little pixels—I’m here to tackle the kind of
+            problems that make people groan, swear, or roll their eyes at their
+            screens. It’s not about total perfection—it’s about human connection
+            and empowerment.
+          </p>
+          <p>
+            I work tirelessly for those moments when someone clicks a button,
+            finishes a task, and feels like their day just got a little easier.
+            So they can go outside, take a nice walk, enjoy the company of
+            friends. To just be <em>fucking happy</em>.
+          </p>
+          <h2>El fin.</h2>
+        </section>
       </div>
-
-      <!-- Close button -->
-      <button class="close-button" aria-label="Close manifesto">
-        <span>Close</span>
-      </button>
     </div>
+
+    <!-- Close button -->
+    <button class="close-button" aria-label="Close manifesto">
+      <span>Close</span>
+    </button>
   </div>
 </BaseLayout>
 
 <style lang="scss">
+  // Layout & Container
   .manifesto-container {
     width: 100vw;
     position: relative;
@@ -137,62 +229,6 @@ console.log("Full URL:", url.toString());
     animation: fadeIn 0.5s ease-out 0.2s forwards;
   }
 
-  .manifesto-header {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-base);
-
-    h4 {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--color-coffee);
-      font-family: var(--font-sans);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin: var(--spacing-base) 0;
-    }
-
-    h1 {
-      font-size: 100px;
-      line-height: 0.9;
-      max-width: 720px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .manifesto-visual {
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: var(--spacing-base);
-      position: relative;
-      margin-top: var(--spacing-double);
-      background-color: var(--color-paper);
-
-      .self {
-        position: relative;
-        z-index: 2;
-      }
-
-      .trees {
-        mix-blend-mode: multiply;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        opacity: 0.5;
-      }
-    }
-  }
-
   .manifesto-content {
     position: relative;
     margin: 0 auto;
@@ -201,23 +237,172 @@ console.log("Full URL:", url.toString());
     overflow-y: auto;
     opacity: 0;
     animation: fadeIn 0.3s ease-out 0.4s forwards;
-
     scrollbar-width: none;
     -ms-overflow-style: none;
 
     p {
-      font-size: 24px;
+      font-size: clamp(1rem, 2vw, 1.5rem);
       line-height: 1.5;
       font-weight: 400;
       margin: var(--spacing-double) 0;
+
+      em {
+        font-weight: 500;
+        color: var(--color-ink-tertiary);
+
+        &.light {
+          color: var(--color-lime);
+        }
+      }
+    }
+
+    .inline-emoji {
+      display: inline-block;
+      margin: 0 4px;
+      vertical-align: middle;
+      margin-top: -0.2em;
     }
   }
 
-  .manifesto-text {
-    max-width: 720px;
-    margin: 0 auto;
+  // Header
+  .manifesto-header {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding-top: 80px;
+    gap: var(--spacing-base);
+
+    h4 {
+      font-size: clamp(0.7rem, 2vw, 0.9rem);
+      font-weight: 600;
+      color: var(--color-coffee);
+      font-family: var(--font-sans);
+      text-transform: uppercase;
+      text-align: center;
+      max-width: min(720px, 90vw);
+      letter-spacing: 0.1em;
+      line-height: 2;
+      margin: var(--spacing-small) auto;
+
+      &:last-of-type {
+        margin-top: var(--spacing-double);
+      }
+    }
+
+    h1 {
+      font-size: clamp(3rem, 8vw, 5.25rem);
+      line-height: 0.95;
+      max-width: min(720px, 90vw);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .scroll-down {
+      font-size: 40px;
+      font-weight: 600;
+      color: var(--color-coffee);
+      font-family: var(--font-sans);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: -2rem auto var(--spacing-base);
+    }
   }
 
+  // Content Sections
+  .manifesto-text {
+    width: 100%;
+    z-index: 10;
+
+    section {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+
+      &[data-section="introduction"] {
+        background-color: var(--color-surface);
+      }
+      &[data-section="simplicity"] {
+        background-color: var(--color-paper);
+      }
+      &[data-section="empathy"] {
+        background-color: var(--color-ink-secondary);
+        color: var(--color-paper);
+        z-index: 10;
+      }
+      &[data-section="learning"] {
+        background-color: var(--color-paper);
+      }
+      &[data-section="personality"] {
+        background-color: var(--color-surface);
+      }
+      &[data-section="why-hire-me"] {
+        z-index: 10;
+        color: var(--color-paper);
+        background-color: var(--color-chocolate);
+        h1 {
+          font-size: clamp(3rem, 8vw, 4rem);
+          line-height: 0.9;
+          a {
+            text-decoration: underline;
+            text-decoration-color: var(--color-chocolate-light);
+            text-decoration-thickness: 6px;
+            text-underline-offset: 8px;
+            text-decoration-style: dashed;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+              color: var(--color-chocolate-light);
+              text-decoration-color: var(--color-paper);
+            }
+          }
+          em {
+            color: var(--color-chocolate-light);
+          }
+        }
+      }
+      &[data-section="outro"] {
+        h2 {
+          width: 100%;
+          text-align: left;
+          font-size: clamp(2rem, 8vw, 3rem);
+          line-height: 1.2;
+          font-family: var(--font-serif);
+          color: var(--color-coffee);
+          opacity: 0.75;
+        }
+      }
+
+      p,
+      h2,
+      h1 {
+        max-width: 720px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      p {
+        margin-top: var(--spacing-small);
+      }
+
+      &:first-of-type {
+        p:first-of-type::first-letter {
+          float: left;
+          font-size: clamp(3rem, 8vw, 4.5rem);
+          line-height: 0.8;
+          margin: 0.2em 0.1em 0 0;
+          font-family: var(--font-serif);
+          color: var(--color-ink-tertiary);
+        }
+      }
+    }
+  }
+
+  // UI Elements
   .close-button {
     position: fixed;
     top: var(--spacing-base);
@@ -233,6 +418,45 @@ console.log("Full URL:", url.toString());
     }
   }
 
+  // Props & Decorative Elements
+  .props {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+
+    .facade {
+      position: absolute;
+
+      &.plant-outline,
+      &.plant {
+        width: auto;
+        height: 500px;
+        top: calc(100vh - 500px);
+        left: -20px;
+        filter: grayscale(100%);
+      }
+
+      &.plant-outline {
+        z-index: 1;
+      }
+
+      &.self {
+        width: auto;
+        height: 650px;
+        top: calc(100vh - 650px);
+        right: -370px;
+        z-index: 1;
+        filter: grayscale(100%);
+        opacity: 0.75;
+      }
+    }
+  }
+
+  // Animations
   @keyframes expandFromCenter {
     from {
       opacity: 0;
@@ -255,16 +479,7 @@ console.log("Full URL:", url.toString());
     }
   }
 
-  @keyframes expandImage {
-    from {
-      transform: translateX(150px);
-    }
-    to {
-      transform: translateX(0);
-    }
-  }
-
-  // When closing
+  // Closing States
   .manifesto-container.closing {
     animation: collapseToCenter 0.5s cubic-bezier(0.215, 0.61, 0.355, 1)
       forwards;
@@ -297,6 +512,50 @@ console.log("Full URL:", url.toString());
     }
     to {
       opacity: 0;
+    }
+  }
+
+  // Special Effects
+  .redacted {
+    cursor: pointer;
+    position: relative;
+
+    &::before {
+      content: "***********";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      max-height: 28px;
+      color: var(--color-ink);
+      z-index: 1;
+      overflow: hidden;
+      transition: all 0.4s ease-in-out;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      max-height: 28px;
+      background-color: var(--color-coffee);
+      transition: all 0.4s ease-in-out;
+    }
+
+    &:hover {
+      color: var(--color-ink-tertiary);
+      &::before {
+        opacity: 0;
+        top: 20%;
+        transition: none;
+      }
+      &::after {
+        opacity: 0;
+      }
     }
   }
 </style>
