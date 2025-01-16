@@ -201,6 +201,37 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
   </div>
 </BaseLayout>
 
+<script>
+  // Import reader utility
+  import { getReader, setReader } from "../utils/reader";
+
+  const urlReader = new URLSearchParams(window.location.search).get("reader");
+  if (urlReader) {
+    setReader(urlReader);
+    const greetingElement = document.getElementById("greeting");
+    if (greetingElement) {
+      greetingElement.textContent = `MY PHILOSOPHY (HI ${urlReader} 👋)`;
+    }
+  }
+
+  // Existing close button logic
+  const container = document.querySelector(".manifesto-container");
+  const closeButton = document.querySelector(".close-button");
+
+  closeButton?.addEventListener("click", () => {
+    container?.classList.add("closing");
+    // Wait for animation to complete before navigating back
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 500); // Match this with your animation duration
+  });
+
+  // Handle back button
+  window.addEventListener("popstate", () => {
+    container?.classList.add("closing");
+  });
+</script>
+
 <style lang="scss">
   // Layout & Container
   .manifesto-container {
@@ -637,33 +668,4 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
   }
 </style>
 
-<script>
-  // Import reader utility
-  import { getReader, setReader } from "../utils/reader";
 
-  const urlReader = new URLSearchParams(window.location.search).get("reader");
-  if (urlReader) {
-    setReader(urlReader);
-    const greetingElement = document.getElementById("greeting");
-    if (greetingElement) {
-      greetingElement.textContent = `MY PHILOSOPHY (HI ${urlReader} 👋)`;
-    }
-  }
-
-  // Existing close button logic
-  const container = document.querySelector(".manifesto-container");
-  const closeButton = document.querySelector(".close-button");
-
-  closeButton?.addEventListener("click", () => {
-    container?.classList.add("closing");
-    // Wait for animation to complete before navigating back
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 500); // Match this with your animation duration
-  });
-
-  // Handle back button
-  window.addEventListener("popstate", () => {
-    container?.classList.add("closing");
-  });
-</script>

@@ -1,0 +1,377 @@
+---
+// Components
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Atom from "../components/Atom.astro";
+import SelfCard from "../components/_partials/SelfCard.astro";
+
+// Utils
+import { getReader } from "../utils/reader";
+
+// Assets
+import qrCode from "../assets/brand/qr-code-transparent.png";
+
+// Get the referrer and reader from URL params
+const url = Astro.url;
+const referrer = url.searchParams.get("referrer");
+const reader = getReader();
+
+// Default greeting if no reader specified
+const greeting = reader ? `${reader}` : "friend";
+
+// Import all backgrounds in one line using an array
+const backgrounds = await Promise.all(
+  [...Array(4)].map(
+    (_, i) =>
+      import(`../assets/backgrounds/bg${String(i + 1).padStart(2, "0")}.png`),
+  ),
+).then((modules) => modules.map((m) => m.default));
+
+const selectedBg =
+  backgrounds[Math.floor(Math.random() * backgrounds.length)].src;
+
+// For debugging
+console.log("Selected background:", selectedBg);
+
+// Add this to your frontmatter
+const details = [
+  { label: "Experience", value: "10 years" },
+  { label: "Level", value: "Super IC" },
+  { label: "Current Role", value: "Lead Product Designer" },
+  { label: "Current Company", value: "Tropic" },
+  { label: "Location", value: "East Coast, USA" },
+];
+
+// Add this to your frontmatter with other constants
+const links = [
+  { href: "/resume", text: "Resume" },
+  { href: "/work", text: "Work Samples" },
+  { href: "/about", text: "About Me" },
+  { href: "/philosophy", text: "My Philosophy" },
+];
+
+const socialLinks = [
+  { type: "button", text: "Share", action: "share" },
+  {
+    type: "link",
+    text: "LinkedIn",
+    href: "https://linkedin.com/in/yourusername",
+  },
+  { type: "link", text: "GitHub", href: "https://github.com/yourusername" },
+];
+
+// Add with other constants in frontmatter
+const contactInfo = {
+  email: "karina@karinatovar.com",
+};
+---
+
+<BaseLayout
+  title="Share | Karina Tovar"
+  description="Karina Tovar - Lead Product Designer"
+  includeNavigation={false}
+  includeFooter={false}
+>
+  <div class="main-wrapper">
+    <div class="content-wrapper">
+      <div class="greeting-container">
+        <!-- Header -->
+        <Atom />
+        <h4>Karina Tovar</h4>
+        <h1>Hello {greeting}</h1>
+
+        <!-- Self Card -->
+        <SelfCard
+          showTags={false}
+          showDetails={false}
+          defaultActive={true}
+          forceActive={true}
+        />
+      </div>
+
+      <div class="links-container">
+        <!-- Details -->
+        <aside>
+          <div class="listing">
+            {
+              details.map(({ label, value }) => (
+                <div class="detail">
+                  <span>{label}:</span>
+                  <span>{value}</span>
+                </div>
+              ))
+            }
+            <div class="footer">
+              <p>
+                To get started, here are the links you need to get to know me
+                better:
+              </p>
+              <ul>
+                {
+                  links.map(({ href, text }) => (
+                    <li>
+                      <a href={href} target="_blank">
+                        {text}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+              <div class="contact">
+                <p>
+                  If you have any questions, please feel free to reach out to me
+                  directly at:
+                </p>
+                <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Share Container -->
+        <div class="share-container">
+          <!-- QR Code -->
+          <Image
+            src={qrCode}
+            alt="QR Code"
+            width={100}
+            height={100}
+            draggable={false}
+          />
+
+          <!-- Social Links -->
+          {
+            socialLinks.map((link) =>
+              link.type === "button" ? (
+                <button>{link.text}</button>
+              ) : (
+                <a href={link.href} target="_blank" rel="noopener noreferrer">
+                  {link.text}
+                </a>
+              ),
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Import reader utility
+  import { getReader, setReader } from "../utils/reader";
+
+  const urlReader = new URLSearchParams(window.location.search).get("reader");
+  if (urlReader) {
+    setReader(urlReader);
+    const greetingElement = document.getElementById("greeting");
+    if (greetingElement) {
+      greetingElement.textContent = `MY PHILOSOPHY (HI ${urlReader} 👋)`;
+    }
+  }
+</script>
+
+<style lang="scss" define:vars={{ backgroundUrl: `url(${selectedBg})` }}>
+  // Breakpoint mixins
+  @import "../styles/base/_breakpoints.scss";
+
+  .main-wrapper {
+    // Layout
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    min-height: 100vh;
+
+    // Background
+    background-image: var(--backgroundUrl);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #f0f0f0;
+
+    .content-wrapper {
+      // Layout
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-double);
+
+      // Sizing and spacing
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-base) var(--spacing-base);
+
+      // Visual
+      background-color: var(--color-paper);
+      box-shadow: 0 0 20px rgba(114, 93, 93, 0.5);
+
+      // Child containers
+      .greeting-container,
+      .links-container {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+      }
+
+      .greeting-container {
+        padding-bottom: var(--spacing-quad);
+      }
+
+      .links-container {
+        justify-content: center;
+        gap: var(--spacing-base);
+      }
+
+      // Global component styles
+      :global(.trading-card) {
+        padding: var(--spacing-base) 0;
+      }
+
+      // Typography
+      h4 {
+        font-family: var(--font-sans);
+        font-size: var(--font-size-small);
+        font-weight: 600;
+        color: var(--color-coffee);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin: var(--spacing-base) 0 12px;
+      }
+    }
+
+    // Aside styles
+    aside {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+
+      .listing {
+        position: relative;
+        font-family: var(--font-sans);
+        color: var(--color-ink-secondary);
+        background-color: var(--color-surface);
+        border-radius: 12px;
+        overflow: hidden;
+        padding: var(--spacing-base) var(--spacing-base) var(--spacing-small);
+      }
+
+      // Detail items
+      & .detail {
+        width: 100%;
+        height: 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        // Typography
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 500;
+        font-size: var(--font-size-xsmall);
+        font-family: var(--font-mono);
+      }
+
+      // Footer section
+      & .footer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-base);
+
+        // Typography and spacing
+        font-size: var(--font-size-small);
+        padding: var(--spacing-base) 0 var(--spacing-small);
+        margin-top: var(--spacing-base);
+        border-top: 1px dashed rgba(255, 255, 255, 0.2);
+
+        p {
+          line-height: 1.8;
+        }
+
+        img {
+          max-width: 40px;
+          height: auto;
+          filter: drop-shadow(0 0 10px rgba(145, 123, 123, 0.5));
+          transform-origin: bottom center;
+        }
+
+        // Links list
+        ul {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          list-style: none;
+          margin: -20px 0 var(--spacing-small);
+
+          li {
+            width: 100%;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            padding: var(--spacing-small) 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+          }
+        }
+
+        // Contact section
+        .contact {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          a {
+            font-weight: 300;
+            font-size: var(--font-size-massive);
+            font-family: var(--font-headings);
+            color: var(--color-paper);
+          }
+        }
+      }
+
+      @include desktop-reverse {
+        min-width: 420px;
+      }
+    }
+
+    // Share container
+    .share-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-base);
+    }
+  }
+
+  // Responsive styles
+  @include tablet {
+    .main-wrapper {
+      width: 100%;
+
+      .content-wrapper {
+        flex-direction: column;
+        gap: var(--spacing-base);
+        padding: var(--spacing-double) 0 var(--spacing-quad);
+
+        .greeting-container {
+          padding-bottom: 0;
+        }
+
+        .links-container {
+          aside {
+            max-width: 360px;
+
+            .detail {
+              font-size: var(--font-size-xxs);
+            }
+          }
+        }
+      }
+    }
+  }
+</style>

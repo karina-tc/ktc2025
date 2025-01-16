@@ -1,14 +1,16 @@
 ---
 interface Props {
   showTags?: boolean;
-  showShare?: boolean;
+  showDetails?: boolean;
   defaultActive?: boolean;
+  forceActive?: boolean;
 }
 
 const {
   showTags = true,
-  showShare = true,
+  showDetails = true,
   defaultActive = false,
+  forceActive = false,
 } = Astro.props;
 
 // Assets
@@ -20,7 +22,10 @@ import pattern from "../../assets/brand/self-pattern.png";
 import gummyBear from "../../assets/illustrations/gummy.png";
 ---
 
-<figure class:list={["trading-card", { "is-active": defaultActive }]}>
+<figure 
+  class:list={["trading-card", { "is-active": forceActive || defaultActive }]}
+  data-force-active={forceActive}
+>
   <!-- Tags -->
   {
     showTags && (
@@ -177,9 +182,11 @@ import gummyBear from "../../assets/illustrations/gummy.png";
     </div>
   </div>
   <!-- Details -->
-  <figcaption>
-    <span class="hint">Hover over me</span>
-    <div class="details">
+  {
+    showDetails && (
+      <figcaption>
+        <span class="hint">Hover over me</span>
+        <div class="details">
       <div class="detail">
         <span>Experience:</span>
         <span>10 years</span>
@@ -198,9 +205,11 @@ import gummyBear from "../../assets/illustrations/gummy.png";
           If this designer has too many gummy bears, she might go into full-on
           Pepe Silvia mode...
         </p>
-      </div>
-    </div>
-  </figcaption>
+          </div>
+        </div>
+      </figcaption>
+    )
+  }
 </figure>
 
 <style define:vars={{ bgCardUrl: `url(${bgCard.src})` }}>
@@ -585,16 +594,22 @@ import gummyBear from "../../assets/illustrations/gummy.png";
     const shine = card.querySelector(SELECTORS.shine) as HTMLElement;
     if (!shine) return;
 
-    // Toggle function
+    // Modified toggle function
     const toggleActiveState = (e: Event) => {
-      e.stopPropagation(); // Prevent event from bubbling to document
-      tradingCard.classList.toggle(ACTIVE_CLASS);
+      e.stopPropagation();
+      const card = (e.currentTarget as HTMLElement);
+      // Only toggle if not forceActive
+      if (!card.classList.contains('is-active') || !card.hasAttribute('data-force-active')) {
+        card.classList.toggle(ACTIVE_CLASS);
+      }
     };
 
-    // Reset function
+    // Modified reset function
     const resetActiveState = () => {
-      if (tradingCard.classList.contains(ACTIVE_CLASS)) {
-        tradingCard.classList.remove(ACTIVE_CLASS);
+      const card = tradingCard;
+      // Only reset if not forceActive
+      if (card.classList.contains(ACTIVE_CLASS) && !card.hasAttribute('data-force-active')) {
+        card.classList.remove(ACTIVE_CLASS);
       }
     };
 
