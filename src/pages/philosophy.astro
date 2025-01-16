@@ -24,15 +24,8 @@ const url = Astro.url;
 const referrer = url.searchParams.get("referrer");
 const reader = getReader();
 
-// Add console log for debugging
-console.log("URL Params:", { referrer, reader });
-
 // Default greeting if no reader specified
-const greeting = reader ? `Hello ${reader},` : "Hello stranger,";
-console.log("Greeting:", greeting);
-
-// Log the full URL for debugging
-console.log("Full URL:", url.toString());
+const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
 ---
 
 <BaseLayout
@@ -67,7 +60,7 @@ console.log("Full URL:", url.toString());
       <!-- Header -->
       <div class="manifesto-header">
         <Atom size="100px" />
-        <h4>My Philosophy</h4>
+        <h4 id="greeting">MY PHILOSOPHY ({greeting})</h4>
         <h1>
           Design and tech are only great if they dream big, solve real shit, and
           leave people smiling.
@@ -75,10 +68,6 @@ console.log("Full URL:", url.toString());
         <h4>If it doesn’t make life better, what’s the point?</h4>
         <span class="scroll-down">↓</span>
       </div>
-
-      <!-- Greeting
-      <h2 id="greeting">{greeting}</h2>
-      -->
 
       <!-- Text -->
       <div class="manifesto-text">
@@ -141,6 +130,9 @@ console.log("Full URL:", url.toString());
             I call them <em class="light">happiness metrics</em>, and I bake
             them into everything I do.
           </p>
+          <div class="atom-container">
+            <Atom size="140px" color="#c8a083" />
+          </div>
         </section>
         <section data-section="learning">
           <p>
@@ -182,6 +174,7 @@ console.log("Full URL:", url.toString());
             you want to dream big and <em>build bold products</em> that make people’s
             days <em>suck less</em>.
           </h1>
+          <h4>Oh, one more thing...</h4>
         </section>
         <section data-section="outro">
           <p>
@@ -211,7 +204,7 @@ console.log("Full URL:", url.toString());
 <style lang="scss">
   // Layout & Container
   .manifesto-container {
-    width: 100vw;
+    width: 100%;
     position: relative;
     inset: 0;
     z-index: 100;
@@ -237,31 +230,36 @@ console.log("Full URL:", url.toString());
     overflow-y: auto;
     opacity: 0;
     animation: fadeIn 0.3s ease-out 0.4s forwards;
+    // Hide scrollbar
     scrollbar-width: none;
     -ms-overflow-style: none;
 
-    p {
-      font-size: clamp(1rem, 2vw, 1.5rem);
-      line-height: 1.5;
-      font-weight: 400;
-      margin: var(--spacing-double) 0;
+    // Adds scroll snapping
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
 
-      em {
-        font-weight: 500;
-        color: var(--color-ink-tertiary);
+  p {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    line-height: 1.5;
+    font-weight: 400;
+    margin: var(--spacing-double) 0;
 
-        &.light {
-          color: var(--color-lime);
-        }
+    em {
+      font-weight: 500;
+      color: var(--color-ink-tertiary);
+
+      &.light {
+        color: var(--color-lime);
       }
     }
+  }
 
-    .inline-emoji {
-      display: inline-block;
-      margin: 0 4px;
-      vertical-align: middle;
-      margin-top: -0.2em;
-    }
+  .inline-emoji {
+    display: inline-block;
+    margin: 0 4px;
+    vertical-align: middle;
+    margin-top: -0.2em;
   }
 
   // Header
@@ -275,10 +273,14 @@ console.log("Full URL:", url.toString());
     padding-top: 80px;
     gap: var(--spacing-base);
 
+    // Add scroll snapping to header
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+
     h4 {
       font-size: clamp(0.7rem, 2vw, 0.9rem);
       font-weight: 600;
-      color: var(--color-coffee);
+      color: var(--color-ink-tertiary);
       font-family: var(--font-sans);
       text-transform: uppercase;
       text-align: center;
@@ -309,6 +311,10 @@ console.log("Full URL:", url.toString());
       letter-spacing: 0.1em;
       margin: -2rem auto var(--spacing-base);
     }
+
+    @include tablet {
+      padding: 80px var(--spacing-double) var(--spacing-double);
+    }
   }
 
   // Content Sections
@@ -323,6 +329,8 @@ console.log("Full URL:", url.toString());
       flex-direction: column;
       justify-content: center;
       position: relative;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
 
       &[data-section="introduction"] {
         background-color: var(--color-surface);
@@ -331,9 +339,39 @@ console.log("Full URL:", url.toString());
         background-color: var(--color-paper);
       }
       &[data-section="empathy"] {
-        background-color: var(--color-ink-secondary);
         color: var(--color-paper);
+        background-color: var(--color-chocolate);
         z-index: 10;
+
+        em {
+          color: var(--color-chocolate-light);
+        }
+
+        .redacted {
+          color: var(--color-chocolate-light);
+        }
+        .redacted::before {
+          color: var(--color-chocolate);
+        }
+        .redacted::after {
+          background-color: var(--color-chocolate-light);
+        }
+
+        .atom-container {
+          position: absolute;
+          top: 8%;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: -1;
+          opacity: 0.75;
+
+          @include tablet {
+            max-width: 240px;
+            scale: 0.75;
+          }
+        }
       }
       &[data-section="learning"] {
         background-color: var(--color-paper);
@@ -378,11 +416,25 @@ console.log("Full URL:", url.toString());
       }
 
       p,
+      h1,
       h2,
-      h1 {
+      h4 {
         max-width: 720px;
         margin-left: auto;
         margin-right: auto;
+      }
+
+      h4 {
+        width: 100%;
+        text-align: left;
+        font-size: clamp(0.7rem, 2vw, 0.9rem);
+        font-weight: 600;
+        color: var(--color-coffee);
+        font-family: var(--font-sans);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        line-height: 2;
+        margin: var(--spacing-double) auto 0;
       }
 
       p {
@@ -399,6 +451,10 @@ console.log("Full URL:", url.toString());
           color: var(--color-ink-tertiary);
         }
       }
+
+      @include tablet {
+        padding: var(--spacing-double);
+      }
     }
   }
 
@@ -407,14 +463,21 @@ console.log("Full URL:", url.toString());
     position: fixed;
     top: var(--spacing-base);
     right: var(--spacing-base);
+    color: var(--color-ink-tertiary);
+    text-decoration: underline;
+    text-decoration-color: var(--color-ink-tertiary);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
     padding: var(--spacing-small) var(--spacing-base);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 40px;
     cursor: pointer;
-
+    transition: all 0.3s ease-in-out;
     &:hover {
-      background: var(--color-surface-hover);
+      background: rgba(255, 255, 255, 0.5);
+      color: var(--color-ink);
+      text-decoration-color: var(--color-ink);
     }
   }
 
@@ -436,8 +499,13 @@ console.log("Full URL:", url.toString());
         width: auto;
         height: 500px;
         top: calc(100vh - 500px);
-        left: -20px;
+        left: -2vw;
         filter: grayscale(100%);
+
+        @include tablet {
+          left: -5vw;
+          opacity: 0.2;
+        }
       }
 
       &.plant-outline {
@@ -448,11 +516,20 @@ console.log("Full URL:", url.toString());
         width: auto;
         height: 650px;
         top: calc(100vh - 650px);
-        right: -370px;
+        right: -425px;
         z-index: 1;
         filter: grayscale(100%);
         opacity: 0.75;
+
+        @include tablet {
+          right: -55vw;
+          opacity: 0.2;
+        }
       }
+    }
+
+    @include mobile {
+      display: none;
     }
   }
 
@@ -569,7 +646,7 @@ console.log("Full URL:", url.toString());
     setReader(urlReader);
     const greetingElement = document.getElementById("greeting");
     if (greetingElement) {
-      greetingElement.textContent = `Hello ${urlReader},`;
+      greetingElement.textContent = `MY PHILOSOPHY (HI ${urlReader} 👋)`;
     }
   }
 
