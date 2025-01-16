@@ -79,7 +79,7 @@ const contactInfo = {
         <div class="greeting">
           <Atom />
           <h4>Karina Tovar</h4>
-          <h1>Hello {greeting}</h1>
+          <h1 id="greeting">Hello {greeting}</h1>
         </div>
         <SelfCard
           showTags={false}
@@ -163,7 +163,7 @@ const contactInfo = {
     setReader(urlReader);
     const greetingElement = document.getElementById("greeting");
     if (greetingElement) {
-      greetingElement.textContent = `MY PHILOSOPHY (HI ${urlReader} 👋)`;
+      greetingElement.textContent = `Hello ${urlReader}`;
     }
   }
 </script>
