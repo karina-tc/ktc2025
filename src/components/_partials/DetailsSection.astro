@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { details, links, contactInfo } from "../../data/details";
+import Subtitle from "../Subtitle.astro";
 
 interface Props {
   reader?: string | null;
@@ -19,7 +20,7 @@ const appendReader = (href: string) => {
 
 <aside class="details-section">
   <div class="listing">
-    <h2 class="subtitle">Details</h2>
+    <Subtitle title="Details" />
     {
       details.map(({ label, value }) => (
         <div class="detail">
