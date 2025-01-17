@@ -6,7 +6,6 @@ import "../styles/main.scss";
 import CommonHead from "../components/CommonHead.astro";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
-import GoogleAnalytics from "../components/GoogleAnalytics.astro";
 
 // Props
 interface Props {
@@ -27,8 +26,8 @@ const {
 <!doctype html>
 <html lang="en">
 	<head>
+		<meta charset="UTF-8" />
 		<CommonHead title={title} description={description} />
-		<GoogleAnalytics />
 	</head>
 	<body>
 		{includeNavigation && <Navigation />}

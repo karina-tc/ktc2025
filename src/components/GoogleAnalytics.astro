@@ -1,11 +1,12 @@
 ---
 const measurementId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
+const isProd = import.meta.env.PROD;
 ---
 
-<!-- Google Analytics Script -->
 {
-  measurementId && (
+  isProd && measurementId ? (
     <>
+      <!-- Google Analytics Script -->
       <script 
         type="text/partytown" 
         src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
@@ -19,5 +20,7 @@ const measurementId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
         gtag('config', measurementId);
       </script>
     </>
+  ) : (
+    <!-- GA disabled: Development mode -->
   )
 } 
