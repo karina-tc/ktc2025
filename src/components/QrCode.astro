@@ -95,6 +95,7 @@ const { src, size = 72, popoverSize = 400 } = Astro.props;
     box-shadow: 0 0 20px rgba(94, 78, 78, 0.5);
     overflow: visible;
     animation: popover-show 0.3s ease-out;
+    z-index: 1000;
 
     &::after {
       content: "ESC TO CLOSE";
