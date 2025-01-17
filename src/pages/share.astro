@@ -52,38 +52,43 @@ const socialLinks = [
   includeFooter={false}
 >
   <div class="main-wrapper">
-    <div class="content-wrapper">
-      <!-- Left Column -->
-      <div class="col-left">
+    <div class="sections-wrapper">
+      <div class="header-wrapper">
         <div class="greeting">
           <Atom />
           <h4>Karina Tovar</h4>
           <h1 id="greeting">Hello {greeting}</h1>
         </div>
-        <SelfCard
-          showTags={false}
-          showDetails={false}
-          defaultActive={true}
-          forceActive={true}
-        />
       </div>
 
-      <!-- Right Column -->
-      <div class="col-right">
-        <DetailsSection reader={reader} />
-        <div class="share-section">
-          <QrCode src={qrCode} />
-          {
-            socialLinks.map((link) =>
-              link.type === "button" ? (
-                <button>{link.text}</button>
-              ) : (
-                <a href={link.href} target="_blank" rel="noopener noreferrer">
-                  {link.text}
-                </a>
-              ),
-            )
-          }
+      <div class="content-wrapper">
+        <!-- Left Column -->
+        <div class="col-left">
+          <SelfCard
+            showTags={false}
+            showDetails={false}
+            defaultActive={true}
+            forceActive={true}
+          />
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-right">
+          <DetailsSection reader={reader} />
+          <div class="share-section">
+            <QrCode src={qrCode} />
+            {
+              socialLinks.map((link) =>
+                link.type === "button" ? (
+                  <button>{link.text}</button>
+                ) : (
+                  <a href={link.href} target="_blank" rel="noopener noreferrer">
+                    {link.text}
+                  </a>
+                ),
+              )
+            }
+          </div>
         </div>
       </div>
     </div>
@@ -166,13 +171,13 @@ const socialLinks = [
     background-color: #f0f0f0;
   }
 
-  .content-wrapper {
-    // Grid Layout
-    display: grid;
-    grid-template-columns: minmax(auto, 480px) minmax(auto, 420px);
-    gap: var(--spacing-base);
+  .sections-wrapper {
+    // Layout
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: var(--spacing-base);
 
     // Sizing
     width: 100%;
@@ -185,18 +190,19 @@ const socialLinks = [
     background-color: var(--color-paper);
     box-shadow: 0 0 20px rgba(114, 93, 93, 0.5);
 
-    // Column styles
-    .col-left {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      gap: var(--spacing-base);
-      align-self: start;
-      justify-self: start;
+    // Header
+    .header-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+      width: 100%;
+      max-width: 930px;
+      margin: 0 auto;
+      gap: var(--spacing-small);
 
+      // Greeting
       .greeting {
-        display: grid;
-        gap: var(--spacing-small);
-
         h4 {
           font-family: var(--font-sans);
           font-size: var(--font-size-small);
@@ -207,6 +213,24 @@ const socialLinks = [
           margin: var(--spacing-base) 0 12px;
         }
       }
+    }
+  }
+
+  .content-wrapper {
+    // Grid Layout
+    display: grid;
+    grid-template-columns: minmax(auto, 480px) minmax(auto, 420px);
+    gap: var(--spacing-base);
+    align-items: center;
+    justify-content: center;
+
+    // Column styles
+    .col-left {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: var(--spacing-base);
+      align-self: start;
+      justify-self: start;
     }
 
     .col-right {
@@ -227,8 +251,16 @@ const socialLinks = [
 
     // Global component styles
     :global(.trading-card) {
-      padding: 0;
       max-width: 420px;
+      padding: 0;
+    }
+    @include tablet {
+      :global(.trading-card) {
+        padding: var(--spacing-base);
+        max-width: 360px !important;
+        min-height: 420px !important;
+        max-height: 420px !important;
+      }
     }
     :global(.subtitle) {
       margin-top: 10px;
@@ -237,11 +269,6 @@ const socialLinks = [
   }
 
   // Responsive styles
-  @include desktop-reverse {
-    .col-right {
-      margin-top: 250px;
-    }
-  }
   @media screen and (max-width: 1024px) {
     .content-wrapper {
       gap: 0;
@@ -249,17 +276,21 @@ const socialLinks = [
     }
   }
   @media (max-width: 880px) {
+    .sections-wrapper .header-wrapper {
+      max-width: 340px;
+    }
     .content-wrapper {
       grid-template-columns: 1fr;
       grid-template-rows: auto auto;
       padding: var(--spacing-base);
-      gap: var(--spacing-base);
 
       .col-left,
       .col-right {
-        max-width: 360px;
         margin: 0 auto;
         width: 100%;
+      }
+      .col-left {
+        max-width: 340px;
       }
       .col-right {
         aside {
