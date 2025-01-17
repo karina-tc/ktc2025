@@ -1,6 +1,13 @@
 ---
 const measurementId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
 const isProd = import.meta.env.PROD;
+
+// Add this log
+console.log('Build mode:', {
+  isProd,
+  measurementId,
+  mode: import.meta.env.MODE
+});
 ---
 
 {
@@ -21,6 +28,6 @@ const isProd = import.meta.env.PROD;
       </script>
     </>
   ) : (
-    <!-- GA disabled: Development mode -->
+    <!-- GA disabled: Development mode (isProd: {isProd}) -->
   )
 } 
