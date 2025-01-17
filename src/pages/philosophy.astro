@@ -402,6 +402,10 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
             max-width: 240px;
             scale: 0.75;
           }
+
+          @include mobile {
+            display: none;
+          }
         }
       }
       &[data-section="learning"] {
