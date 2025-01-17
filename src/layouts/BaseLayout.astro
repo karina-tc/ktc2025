@@ -28,6 +28,45 @@ const {
 	<head>
 		<meta charset="UTF-8" />
 		<CommonHead title={title} description={description} />
+		
+		<!-- Critical styles to prevent flash -->
+		<style is:inline>
+			body,
+			html {
+				@media (max-width: 768px) {
+					padding: 0 10px;
+				}
+			}
+
+			main {
+				max-width: 100vw;
+				min-height: calc(100vh - 340px);
+				overflow-x: hidden;
+				position: relative;
+			}
+
+			/* Critical navigation styles */
+			.nav-list {
+				display: flex;
+				gap: var(--spacing-xsmall);
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			.nav-list a {
+				text-decoration: none;
+				color: var(--color-ink);
+				padding: 10px 12px 8px;
+				border-radius: 4px;
+			}
+
+			@media (max-width: 768px) {
+				.nav-list {
+					flex-direction: column;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		{includeNavigation && <Navigation />}

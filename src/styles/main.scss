@@ -4,24 +4,12 @@
 @use 'base/breakpoints';
 @use 'layouts/container';
 
-body,
-html {
-  @include tablet {
-    padding: 0 10px;
-  }
-}
-
+// Custom cursor style (non-critical)
 body.cursor-custom {
   cursor: url('/assets/cursor.svg') 16 16, auto;
 }
 
-main {
-  max-width: 100vw;
-  min-height: calc(100vh - 340px);
-  overflow-x: hidden;
-  position: relative;
-}
-
+// Non-critical link styles
 .action-link {
   text-decoration: underline 1px;
   text-underline-offset: 4px;
@@ -31,8 +19,7 @@ main {
   }
 }
 
-
-
+// Animation styles (non-critical)
 [data-intersection-observer] {
   opacity: 0;
   transform: translateY(20px);
