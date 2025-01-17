@@ -82,7 +82,9 @@ const socialLinks = [
             {
               socialLinks.map((link) =>
                 link.type === "button" ? (
-                  <button>{link.text}</button>
+                  <button>
+                    <span>{link.text}</span>
+                  </button>
                 ) : (
                   <a href={link.href} target="_blank" rel="noopener noreferrer">
                     {link.text}
@@ -246,8 +248,24 @@ const socialLinks = [
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
+        padding: 0 var(--spacing-base);
         gap: var(--spacing-base);
+
+        button span {
+          border-bottom: 1px solid var(--color-coffee);
+          &:hover {
+            border-bottom-color: var(--color-accent);
+          }
+        }
+
+        a {
+          text-decoration: underline;
+          text-decoration-color: var(--color-coffee);
+          &:hover {
+            text-decoration-color: var(--color-accent);
+          }
+        }
       }
     }
 
