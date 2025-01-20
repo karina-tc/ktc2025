@@ -1,38 +1,18 @@
 ---
 // Components
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ShareDetails from "../components/_partials/ShareDetails.astro";
 import Atom from "../components/Atom.astro";
-import SelfCard from "../components/_partials/SelfCard.astro";
-import DetailsSection from "../components/_partials/DetailsSection.astro";
-import QrCode from "../components/QrCode.astro";
 
 // Utils
 import { personalInfo } from "../data/metadata";
 
-// Assets
-import qrCode from "../assets/brand/qr-code-transparent.png";
-
-// Get the referrer and reader from URL params
+// Get the reader from URL params
 const url = Astro.url;
-const referrer = url.searchParams.get("referrer");
 const reader = url.searchParams.get("reader");
 
 // Default greeting if no reader specified
 const greeting = reader ? `${reader}` : "friend";
-
-// Import all backgrounds in one line using an array
-const backgrounds = await Promise.all(
-  [...Array(4)].map(
-    (_, i) =>
-      import(`../assets/backgrounds/bg${String(i + 1).padStart(2, "0")}.png`),
-  ),
-).then((modules) => modules.map((m) => m.default));
-
-const selectedBg =
-  backgrounds[Math.floor(Math.random() * backgrounds.length)].src;
-
-// For debugging
-console.log("Selected background:", selectedBg);
 
 const socialLinks = [
   { type: "button", text: "Share", action: "share" },
@@ -52,50 +32,11 @@ const socialLinks = [
   includeFooter={false}
 >
   <div class="main-wrapper">
-    <div class="sections-wrapper">
-      <div class="header-wrapper">
-        <div class="greeting">
-          <a href="/">
-            <Atom />
-          </a>
-          <h4>Karina Tovar</h4>
-          <h1 id="greeting">Hello {greeting}</h1>
-        </div>
-      </div>
-
-      <div class="content-wrapper">
-        <!-- Left Column -->
-        <div class="col-left">
-          <SelfCard
-            showTags={false}
-            showDetails={false}
-            defaultActive={true}
-            forceActive={true}
-          />
-        </div>
-
-        <!-- Right Column -->
-        <div class="col-right">
-          <DetailsSection reader={reader} />
-          <div class="share-section">
-            <QrCode src={qrCode} />
-            {
-              socialLinks.map((link) =>
-                link.type === "button" ? (
-                  <button>
-                    <span>{link.text}</span>
-                  </button>
-                ) : (
-                  <a href={link.href} target="_blank" rel="noopener noreferrer">
-                    {link.text}
-                  </a>
-                ),
-              )
-            }
-          </div>
-        </div>
-      </div>
-    </div>
+    <Atom />
+    <h1 id="greeting">Hello {greeting}</h1>
+    <!-- Details -->
+    <ShareDetails reader={reader} />
+    <span class="artwork-by">Artwork by Van Gogh</span>
   </div>
 </BaseLayout>
 
@@ -113,33 +54,6 @@ const socialLinks = [
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    const qrButton = document.querySelector(".qr-code") as HTMLButtonElement;
-    const qrPopover = document.getElementById("qr-popover") as HTMLElement;
-
-    // Close popover when clicking outside or on the popover itself
-    qrPopover?.addEventListener("click", (e) => {
-      if (e.target === qrPopover) {
-        qrPopover.hidePopover();
-      }
-    });
-
-    // Close popover with Escape key
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && qrPopover?.matches(":popover-open")) {
-        qrPopover.hidePopover();
-      }
-    });
-
-    // Handle backdrop clicks and state changes
-    qrPopover?.addEventListener("beforetoggle", (e: Event) => {
-      const event = e as ToggleEvent;
-      if (event.newState === "closed") {
-        qrButton.style.opacity = "1";
-      } else {
-        qrButton.style.opacity = "0";
-      }
-    });
-
     // Target the Share button by finding the button with text "Share"
     const shareButton = Array.from(
       document.querySelectorAll(".share-section button"),
@@ -162,174 +76,63 @@ const socialLinks = [
   });
 </script>
 
-<style lang="scss" define:vars={{ backgroundUrl: `url(${selectedBg})` }}>
+<style lang="scss">
   // Breakpoint mixins
   @import "../styles/base/_breakpoints.scss";
 
+  h1 {
+    color: var(--color-coffee);
+    font-size: clamp(2.5rem, 5vw, 3rem);
+  }
+
   .main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--spacing-base);
+    padding: var(--spacing-triple) 0;
+
     min-height: 100vh;
-    background-image: var(--backgroundUrl);
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+
+    h4 {
+      font-size: var(--font-size-small);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-ink-tertiary);
+    }
+  }
+
+  .artwork-by {
+    width: 100%;
+    display: flex;
+    font-size: var(--font-size-xsmall);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-paper);
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: var(--spacing-small) var(--spacing-base);
+    border-radius: 2px;
+    backdrop-filter: blur(2px);
+  }
+
+  :global(.subtitle) {
+    margin-top: 10px;
+    font-family: var(--font-headings);
+  }
+
+  :global(main) {
+    background-image: url("https://www.dailyartmagazine.com/wp-content/uploads/2022/05/Vincent_Willem_van_Gogh_128-e1654259258698.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: #f0f0f0;
-  }
-
-  .sections-wrapper {
-    // Layout
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-base);
-
-    // Sizing
-    width: 100%;
-    max-width: 1440px;
-    min-height: 100vh;
-    margin: 0 auto;
-    padding: var(--spacing-double) var(--spacing-base) var(--spacing-quad);
-
-    // Visual
-    background-color: var(--color-paper);
-    box-shadow: 0 0 20px rgba(114, 93, 93, 0.5);
-
-    // Header
-    .header-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-      justify-content: start;
-      width: 100%;
-      max-width: 930px;
-      margin: 0 auto;
-      gap: var(--spacing-small);
-
-      // Greeting
-      .greeting {
-        h4 {
-          font-family: var(--font-sans);
-          font-size: var(--font-size-small);
-          font-weight: 600;
-          color: var(--color-coffee);
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          margin: var(--spacing-base) 0 12px;
-        }
-      }
-    }
-  }
-
-  .content-wrapper {
-    // Grid Layout
-    display: grid;
-    grid-template-columns: minmax(auto, 480px) minmax(auto, 420px);
-    gap: var(--spacing-base);
-    align-items: center;
-    justify-content: center;
-
-    // Column styles
-    .col-left {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      gap: var(--spacing-base);
-      align-self: start;
-      justify-self: start;
-    }
-
-    .col-right {
-      display: grid;
-      grid-template-rows: 1fr auto;
-      gap: var(--spacing-double);
-      align-self: start;
-
-      // Share container
-      .share-section {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 0 var(--spacing-base);
-        gap: var(--spacing-base);
-
-        button span {
-          border-bottom: 1px solid var(--color-coffee);
-          &:hover {
-            border-bottom-color: var(--color-accent);
-          }
-        }
-
-        a {
-          text-decoration: underline;
-          text-decoration-color: var(--color-coffee);
-          &:hover {
-            text-decoration-color: var(--color-accent);
-          }
-        }
-      }
-    }
-
-    // Global component styles
-    :global(.trading-card) {
-      max-width: 420px;
-      padding: 0;
-    }
-    @include tablet {
-      :global(.trading-card) {
-        padding: var(--spacing-base);
-        max-width: 360px !important;
-        min-height: 420px !important;
-        max-height: 420px !important;
-      }
-    }
-    :global(.subtitle) {
-      margin-top: 10px;
-      font-family: var(--font-headings);
-    }
-  }
-
-  // Responsive styles
-  @media screen and (max-width: 1024px) {
-    .content-wrapper {
-      gap: 0;
-      grid-template-columns: minmax(auto, 420px) minmax(auto, 420px);
-    }
-  }
-  @media (max-width: 880px) {
-    .sections-wrapper .header-wrapper {
-      max-width: 340px;
-    }
-    .content-wrapper {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto;
-      padding: var(--spacing-base);
-
-      .col-left,
-      .col-right {
-        margin: 0 auto;
-        width: 100%;
-      }
-      .col-left {
-        max-width: 340px;
-      }
-      .col-right {
-        aside {
-          .detail {
-            font-size: var(--font-size-xxs);
-          }
-        }
-      }
-    }
-  }
-
-  @keyframes popover-show {
-    from {
-      transform: scale(0.2);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
+    background-attachment: fixed;
   }
 </style>
