@@ -1,0 +1,308 @@
+---
+
+---
+
+<!-- Return -->
+<button class="return hidden">
+  <span>← Return</span>
+</button>
+
+<div class="poem-wrapper hidden">
+  <div class="poem-loading">
+    <span>Loading Joy</span>
+    <div class="loading-bar-container">
+      <div class="loading-bar"></div>
+    </div>
+    <span class="loading-percentage">5%</span>
+  </div>
+  <div class="poem">
+    <p>
+      O to make the most jubilant song! Full of music-full of manhood,
+      womanhood, infancy! Full of common employments-full of grain and trees.
+    </p>
+    <p>
+      O for the voices of animals-O for the swiftness and balance of fishes! O
+      for the dropping of raindrops in a song! O for the sunshine and motion of
+      waves in a song!
+    </p>
+    <p>
+      O the joy of my spirit-it is uncaged-it darts like lightning! It is not
+      enough to have this globe or a certain time, I will have thousands of
+      globes and all time.
+    </p>
+    <p>
+      O the engineer's joys! to go with a locomotive! To hear the hiss of steam,
+      the merry shriek, the steam-whistle, the laughing locomotive! To push with
+      resistless way and speed off in the distance.
+    </p>
+    <p>
+      O the gleesome saunter over fields and hillsides! The leaves and flowers
+      of the commonest weeds, the moist fresh stillness of the woods, The
+      exquisite smell of the earth at daybreak, and all through the forenoon.
+    </p>
+    <p class="poem-attribution">– Walt Whitman (extract from A Song of Joys)</p>
+  </div>
+</div>
+
+<script>
+  // Function to simulate typing effect
+  function typePoem(element: HTMLElement, text: string, speed = 50) {
+    const paragraphs = element.querySelectorAll("p:not(.poem-attribution)");
+    const attribution = element.querySelector(".poem-attribution");
+    const loadingPercentage = document.querySelector(".loading-percentage");
+    const loadingBar = document.querySelector(".loading-bar");
+
+    // Calculate total characters for progress bar
+    let totalChars = 0;
+    let typedChars = 0;
+
+    // Store original text in data attributes FIRST
+    paragraphs.forEach((p) => {
+      p.setAttribute("data-text", p.textContent || "");
+      totalChars += (p.textContent || "").length;
+    });
+    if (attribution) {
+      attribution.setAttribute("data-text", attribution.textContent || "");
+      totalChars += (attribution.textContent || "").length;
+    }
+
+    // THEN clear the text
+    paragraphs.forEach((p) => {
+      p.textContent = "";
+    });
+    if (attribution) attribution.textContent = "";
+
+    let currentParagraph = 0;
+    let index = 0;
+
+    function updateProgress() {
+      const percentage = Math.round((typedChars / totalChars) * 100);
+      if (loadingPercentage) {
+        loadingPercentage.textContent = `${percentage}%`;
+      }
+      if (loadingBar) {
+        (loadingBar as HTMLElement).style.width = `${percentage}%`;
+      }
+    }
+
+    function type() {
+      if (currentParagraph < paragraphs.length) {
+        const p = paragraphs[currentParagraph];
+        const originalText = p.getAttribute("data-text") || "";
+
+        if (index < originalText.length) {
+          p.textContent += originalText.charAt(index);
+          typedChars++;
+          updateProgress();
+          index++;
+          setTimeout(type, speed);
+        } else {
+          currentParagraph++;
+          index = 0;
+          if (currentParagraph < paragraphs.length) {
+            setTimeout(type, speed * 10);
+          } else if (attribution) {
+            // Clear attribution before typing it
+            attribution.textContent = "";
+            typeAttribution(
+              attribution as HTMLElement,
+              attribution.getAttribute("data-text") || "",
+            );
+          }
+        }
+      }
+    }
+
+    function typeAttribution(element: HTMLElement, text: string, speed = 50) {
+      let i = 0;
+      function typeAttr() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          typedChars++;
+          updateProgress();
+          i++;
+          setTimeout(typeAttr, speed);
+        }
+      }
+      setTimeout(typeAttr, speed * 20);
+    }
+
+    type();
+  }
+
+  // Show poem
+  const footnote = document.querySelector(".footnote");
+  const poem = document.querySelector(".poem-wrapper");
+  const poemContent = document.querySelector(".poem");
+  const contentWrapper = document.querySelector(".content-wrapper");
+  const detailsWrapper = document.querySelector(".details-wrapper");
+  const returnButton = document.querySelector(".return");
+  const backgroundWrapper = document.querySelector(".background-wrapper");
+
+  footnote?.addEventListener("click", () => {
+    const backgroundWrapper = document.querySelector(".background-wrapper");
+
+    poem?.classList.remove("hidden");
+    returnButton?.classList.remove("hidden");
+    contentWrapper?.classList.add("hidden");
+    detailsWrapper?.classList.add("hidden");
+
+    if (footnote) {
+      footnote.setAttribute("style", "display: none");
+    }
+
+    if (backgroundWrapper) {
+      backgroundWrapper.classList.add("joy");
+    }
+
+    if (poemContent) {
+      typePoem(poemContent as HTMLElement, "");
+    }
+  });
+
+  // Return to content
+  returnButton?.addEventListener("click", () => {
+    poem?.classList.add("hidden");
+    returnButton?.classList.add("hidden");
+    contentWrapper?.classList.remove("hidden");
+    detailsWrapper?.classList.remove("hidden");
+    footnote?.removeAttribute("style");
+    if (backgroundWrapper) {
+      backgroundWrapper.classList.remove("joy");
+    }
+  });
+</script>
+
+<style lang="scss">
+  // Hidden
+  .hidden {
+    display: none !important;
+  }
+
+  // Poem
+  .poem-wrapper {
+    width: 80%;
+    max-width: 720px;
+    min-height: calc(100vh - 200px);
+    margin: 40px auto;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 10px 20px rgba(111, 93, 85, 0.2);
+
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--spacing-base);
+    animation: fadeInUp 0.5s ease-in-out forwards;
+    animation-delay: 0.3s;
+  }
+
+  // Poem loading
+  .poem-loading {
+    width: 100%;
+    margin-bottom: var(--spacing-base);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-base);
+    font-size: var(--font-size-xsmall);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-chocolate);
+
+    span:first-child {
+      width: 110px;
+    }
+
+    span:last-child {
+      width: 40px;
+      text-align: right;
+    }
+
+    .loading-bar-container {
+      position: relative;
+      width: calc(100% - 150px);
+      height: 4px;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .loading-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 2%;
+      background-color: var(--color-chocolate);
+      transition: width 0.3s ease-in-out;
+    }
+  }
+
+  .poem {
+    p {
+      margin: 0 0 var(--spacing-base);
+      font-size: var(--font-size-huge);
+      color: var(--color-ink-secondary);
+
+      &:first-of-type::first-letter {
+        float: left;
+        font-size: 4em;
+        line-height: 0.8;
+        padding-right: 0.1em;
+        margin-bottom: -0.1em;
+        color: var(--color-chocolate);
+      }
+    }
+
+    .poem-attribution {
+      display: block;
+      margin-top: var(--spacing-base);
+      font-size: var(--font-size-xsmall);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-chocolate);
+    }
+  }
+
+  // Return button
+  .return {
+    position: fixed;
+    top: var(--spacing-base);
+    left: var(--spacing-base);
+    font-size: var(--font-size-xsmall);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-paper);
+    background-color: var(--color-chocolate);
+    border-radius: 20px;
+    backdrop-filter: blur(2px);
+    padding: 4px 12px;
+    opacity: 0;
+    animation: fadeInDown 0.5s ease-in-out forwards;
+    animation-delay: 0.3s;
+
+    &:hover {
+      color: var(--color-paper);
+      background-color: var(--color-chocolate);
+    }
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

@@ -7,7 +7,6 @@ import { personalInfo, getEmailLink } from './metadata';
 
 export const details = [
   { label: "Experience", value: "10 years" },
-  { label: "Level", value: "Super IC" },
   { label: "Location", value: "East Coast, USA" },
   { label: "Role", value: "Lead Product Designer" },
   { label: "Company", value: "Tropic" },

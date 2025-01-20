@@ -83,13 +83,14 @@ const appendReader = (href: string) => {
     width: 100%;
 
     .subtitle {
-      font-size: var(--font-size-xxs);
+      font-size: var(--font-size-xsmall);
       font-weight: 600;
       font-family: var(--font-mono);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--color-ink-tertiary);
       margin-bottom: var(--spacing-small);
+      opacity: 0.75;
     }
 
     .listing {
@@ -156,7 +157,7 @@ const appendReader = (href: string) => {
       backdrop-filter: blur(5px);
       border-radius: 12px;
       padding: var(--spacing-base) 0 var(--spacing-small);
-      border-top: 1px dashed rgba(255, 255, 255, 0.5);
+      border-top: 1px dashed var(--color-border);
 
       // Links list
       ul {
@@ -212,7 +213,7 @@ const appendReader = (href: string) => {
         flex-direction: column;
         align-items: flex-start;
         margin-top: -20px;
-        padding: var(--spacing-base);
+        padding: 0 var(--spacing-base) var(--spacing-base);
         border-top: 1px dashed rgba(255, 255, 255, 0.5);
 
         a {

@@ -3,6 +3,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ShareDetails from "../components/_partials/ShareDetails.astro";
 import Atom from "../components/Atom.astro";
+import Poem from "../components/Poem.astro";
 
 // Utils
 import { personalInfo } from "../data/metadata";
@@ -13,16 +14,6 @@ const reader = url.searchParams.get("reader");
 
 // Default greeting if no reader specified
 const greeting = reader ? `${reader}` : "friend";
-
-const socialLinks = [
-  { type: "button", text: "Share", action: "share" },
-  {
-    type: "link",
-    text: "LinkedIn",
-    href: personalInfo.social.linkedin.url,
-  },
-  { type: "link", text: "GitHub", href: personalInfo.social.github.url },
-];
 ---
 
 <BaseLayout
@@ -38,37 +29,6 @@ const socialLinks = [
       <h1 id="greeting">Hello {greeting}</h1>
     </div>
 
-    <!-- Breathing circle -->
-    <div class="breathing-circle hidden">
-      <p>
-        O to make the most jubilant song! Full of music-full of manhood,
-        womanhood, infancy! Full of common employments-full of grain and trees.
-      </p>
-      <p>
-        O for the voices of animals-O for the swiftness and balance of fishes!
-      </p>
-      <p>O for the dropping of raindrops in a song!</p>
-      <p>O for the sunshine and motion of waves in a song!</p>
-      <p>
-        O the joy of my spirit-it is uncaged-it darts like lightning! It is not
-        enough to have this globe or a certain time, I will have thousands of
-        globes and all time.
-      </p>
-      <p>
-        O the engineer’s joys! to go with a locomotive! To hear the hiss of
-        steam, the merry shriek, the steam-whistle, the laughing locomotive! To
-        push with resistless way and speed off in the distance.
-      </p>
-      <p>
-        O the gleesome saunter over fields and hillsides! The leaves and flowers
-        of the commonest weeds, the moist fresh stillness of the woods,
-        hillsides! The leaves and flowers of the commonest weeds, the moist
-        fresh stillness of the woods, The exquisite smell of the earth at
-        daybreak, and all through the forenoon.
-      </p>
-      <span>– Walt Whitman (extract from A Song of Joys)</span>
-    </div>
-
     <!-- Details -->
     <div class="details-wrapper">
       <ShareDetails reader={reader} />
@@ -78,6 +38,9 @@ const socialLinks = [
     <button class="footnote">
       <span>Have a joyful day!</span>
     </button>
+
+    <!-- Poem -->
+    <Poem />
   </div>
 
   <div class="background-wrapper"></div>
@@ -95,21 +58,6 @@ const socialLinks = [
       greetingElement.textContent = `Hello ${urlReader}`;
     }
   }
-
-  // Add breathing animation handler
-  const footnote = document.querySelector(".footnote");
-  const breathingCircle = document.querySelector(".breathing-circle");
-  const contentWrapper = document.querySelector(".content-wrapper");
-  const detailsWrapper = document.querySelector(".details-wrapper");
-
-  footnote?.addEventListener("click", () => {
-    breathingCircle?.classList.remove("hidden");
-    contentWrapper?.classList.add("hidden");
-    detailsWrapper?.classList.add("hidden");
-    if (footnote) {
-      footnote.setAttribute("style", "display: none");
-    }
-  });
 </script>
 
 <style lang="scss">
@@ -117,7 +65,7 @@ const socialLinks = [
 
   // Hidden
   .hidden {
-    display: none;
+    display: none !important;
   }
 
   // Layout
@@ -137,7 +85,7 @@ const socialLinks = [
     opacity: 0;
     animation: fadeInDown 0.5s ease-in-out forwards;
     animation-delay: 0.3s;
-    width: 100%;
+    width: 80%;
     max-width: 420px;
     margin: 0 auto;
     h1 {
@@ -152,7 +100,7 @@ const socialLinks = [
     opacity: 0;
     animation: fadeInUp 0.5s ease-in-out forwards;
     animation-delay: 0.3s;
-    width: 100%;
+    width: 80%;
     max-width: 420px;
     margin: 0 auto;
 
@@ -164,9 +112,9 @@ const socialLinks = [
 
   // Footnote
   .footnote {
-    width: 100%;
+    width: 80%;
     max-width: 420px;
-    margin: var(--spacing-small) auto 0;
+    margin: var(--spacing-small) auto var(--spacing-triple);
     display: flex;
     font-size: var(--font-size-xsmall);
     font-family: var(--font-sans);
@@ -174,8 +122,6 @@ const socialLinks = [
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--color-chocolate);
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 2px;
     backdrop-filter: blur(2px);
     opacity: 0;
     animation: fadeInUp 0.5s ease-in-out forwards;
@@ -213,29 +159,6 @@ const socialLinks = [
     }
   }
 
-  // Breathing circle
-  .breathing-circle {
-    width: 100%;
-    max-width: 720px;
-    margin: 5% auto 0;
-
-    p {
-      margin: 0 0 var(--spacing-base);
-      font-size: var(--font-size-huge);
-    }
-
-    span {
-      display: block;
-      margin-top: var(--spacing-base);
-      font-size: var(--font-size-xsmall);
-      font-family: var(--font-sans);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--color-chocolate);
-    }
-  }
-
   // Background
   .background-wrapper {
     position: fixed;
@@ -245,12 +168,40 @@ const socialLinks = [
     height: 100vh;
     opacity: 0;
     filter: blur(5px);
-    background-image: url("https://cdn.midjourney.com/497b28f6-d510-4ce6-b5a4-b6398bcc2865/0_3.png");
+    background-image: url("../assets/backgrounds/poem/joy01.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     animation: fadeIn 0.5s ease-in-out forwards;
+    transition: background-image 0.5s ease-in-out;
+
+    &.joy {
+      animation: none;
+      opacity: 0.5;
+      filter: blur(5px);
+      background-blend-mode: overlay;
+      animation: joyBg 60s ease-in-out;
+      animation-direction: alternate;
+    }
+  }
+
+  @keyframes joyBg {
+    0%, 15% {
+      background-image: url("../assets/backgrounds/poem/joy02.png");
+    }
+    20%, 35% {
+      background-image: url("../assets/backgrounds/poem/joy03.png");
+    }
+    40%, 55% {
+      background-image: url("../assets/backgrounds/poem/joy04.png");
+    }
+    60%, 75% {
+      background-image: url("../assets/backgrounds/poem/joy05.png");
+    }
+    80%,100% {
+      background-image: url("../assets/backgrounds/poem/joy01.png");
+    }
   }
 
   // Animations
