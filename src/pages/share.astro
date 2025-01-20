@@ -32,15 +32,49 @@ const socialLinks = [
   includeFooter={false}
 >
   <div class="main-wrapper">
+    <!-- Content -->
     <div class="content-wrapper">
       <Atom />
       <h1 id="greeting">Hello {greeting}</h1>
     </div>
+
+    <!-- Breathing circle -->
+    <div class="breathing-circle hidden">
+      <p>
+        O to make the most jubilant song! Full of music-full of manhood,
+        womanhood, infancy! Full of common employments-full of grain and trees.
+      </p>
+      <p>
+        O for the voices of animals-O for the swiftness and balance of fishes!
+      </p>
+      <p>O for the dropping of raindrops in a song!</p>
+      <p>O for the sunshine and motion of waves in a song!</p>
+      <p>
+        O the joy of my spirit-it is uncaged-it darts like lightning! It is not
+        enough to have this globe or a certain time, I will have thousands of
+        globes and all time.
+      </p>
+      <p>
+        O the engineer’s joys! to go with a locomotive! To hear the hiss of
+        steam, the merry shriek, the steam-whistle, the laughing locomotive! To
+        push with resistless way and speed off in the distance.
+      </p>
+      <p>
+        O the gleesome saunter over fields and hillsides! The leaves and flowers
+        of the commonest weeds, the moist fresh stillness of the woods,
+        hillsides! The leaves and flowers of the commonest weeds, the moist
+        fresh stillness of the woods, The exquisite smell of the earth at
+        daybreak, and all through the forenoon.
+      </p>
+      <span>– Walt Whitman (extract from A Song of Joys)</span>
+    </div>
+
     <!-- Details -->
     <div class="details-wrapper">
       <ShareDetails reader={reader} />
     </div>
 
+    <!-- Footnote -->
     <button class="footnote">
       <span>Have a joyful day!</span>
     </button>
@@ -62,31 +96,29 @@ const socialLinks = [
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    // Target the Share button by finding the button with text "Share"
-    const shareButton = Array.from(
-      document.querySelectorAll(".share-section button"),
-    ).find((button) => button.textContent === "Share");
+  // Add breathing animation handler
+  const footnote = document.querySelector(".footnote");
+  const breathingCircle = document.querySelector(".breathing-circle");
+  const contentWrapper = document.querySelector(".content-wrapper");
+  const detailsWrapper = document.querySelector(".details-wrapper");
 
-    if (shareButton) {
-      shareButton.addEventListener("click", async () => {
-        const currentUrl = window.location.href;
-        try {
-          await navigator.clipboard.writeText(currentUrl);
-          shareButton.textContent = "Copied!";
-          setTimeout(() => {
-            shareButton.textContent = "Share";
-          }, 2000);
-        } catch (err) {
-          alert("Failed to copy URL");
-        }
-      });
+  footnote?.addEventListener("click", () => {
+    breathingCircle?.classList.remove("hidden");
+    contentWrapper?.classList.add("hidden");
+    detailsWrapper?.classList.add("hidden");
+    if (footnote) {
+      footnote.setAttribute("style", "display: none");
     }
   });
 </script>
 
 <style lang="scss">
   @import "../styles/base/_breakpoints.scss";
+
+  // Hidden
+  .hidden {
+    display: none;
+  }
 
   // Layout
   .main-wrapper {
@@ -97,9 +129,6 @@ const socialLinks = [
     justify-content: flex-start;
     gap: var(--spacing-base);
     margin: var(--spacing-triple) auto 0;
-    min-height: 100vh;
-    width: 100%;
-    max-width: 420px;
     z-index: 10;
   }
 
@@ -108,7 +137,9 @@ const socialLinks = [
     opacity: 0;
     animation: fadeInDown 0.5s ease-in-out forwards;
     animation-delay: 0.3s;
-
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
     h1 {
       margin: var(--spacing-base) 0;
       color: var(--color-chocolate);
@@ -121,6 +152,9 @@ const socialLinks = [
     opacity: 0;
     animation: fadeInUp 0.5s ease-in-out forwards;
     animation-delay: 0.3s;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
 
     :global(.subtitle) {
       margin-top: 10px;
@@ -128,9 +162,11 @@ const socialLinks = [
     }
   }
 
-  // Artwork attribution
+  // Footnote
   .footnote {
     width: 100%;
+    max-width: 420px;
+    margin: var(--spacing-small) auto 0;
     display: flex;
     font-size: var(--font-size-xsmall);
     font-family: var(--font-sans);
@@ -174,6 +210,29 @@ const socialLinks = [
         height: 100%;
         background-color: var(--color-chocolate);
       }
+    }
+  }
+
+  // Breathing circle
+  .breathing-circle {
+    width: 100%;
+    max-width: 720px;
+    margin: 5% auto 0;
+
+    p {
+      margin: 0 0 var(--spacing-base);
+      font-size: var(--font-size-huge);
+    }
+
+    span {
+      display: block;
+      margin-top: var(--spacing-base);
+      font-size: var(--font-size-xsmall);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-chocolate);
     }
   }
 
