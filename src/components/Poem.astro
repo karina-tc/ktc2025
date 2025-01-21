@@ -1,0 +1,731 @@
+---
+
+---
+
+<!-- Return -->
+<button class="return hidden">
+  <span>← Return</span>
+</button>
+
+<button class="play-button hidden">
+  <span class="play-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+      <rect width="256" height="256" fill="none"></rect>
+      <line
+        x1="48"
+        y1="96"
+        x2="48"
+        y2="160"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="16"></line>
+      <line
+        x1="88"
+        y1="32"
+        x2="88"
+        y2="224"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="16"></line>
+      <line
+        x1="128"
+        y1="64"
+        x2="128"
+        y2="192"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="16"></line>
+      <line
+        x1="168"
+        y1="96"
+        x2="168"
+        y2="160"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="16"></line>
+      <line
+        x1="208"
+        y1="80"
+        x2="208"
+        y2="176"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="16"></line>
+    </svg>
+    <div class="volume-control hidden">
+      <input 
+        type="range" 
+        min="0" 
+        max="100" 
+        value="40" 
+        class="volume-slider"
+      />
+      <div class="volume-tooltip">40%</div>
+    </div>
+  </span>
+  <span class="play-text">Play Music</span>
+</button>
+
+<div class="poem-wrapper hidden">
+  <div class="poem-loading">
+    <span>Loading Joy</span>
+    <div class="loading-bar-container">
+      <div class="loading-bar"></div>
+    </div>
+    <span class="loading-percentage">5%</span>
+  </div>
+  <div class="poem">
+    <p>
+      O to make the most jubilant song! Full of music-full of manhood,
+      womanhood, infancy! Full of common employments-full of grain and trees.
+    </p>
+    <p>
+      O for the voices of animals-O for the swiftness and balance of fishes! O
+      for the dropping of raindrops in a song! O for the sunshine and motion of
+      waves in a song!
+    </p>
+    <p>
+      O the joy of my spirit-it is uncaged-it darts like lightning! It is not
+      enough to have this globe or a certain time, I will have thousands of
+      globes and all time.
+    </p>
+    <p>
+      O the engineer's joys! to go with a locomotive! To hear the hiss of steam,
+      the merry shriek, the steam-whistle, the laughing locomotive! To push with
+      resistless way and speed off in the distance.
+    </p>
+    <p>
+      O the gleesome saunter over fields and hillsides! The leaves and flowers
+      of the commonest weeds, the moist fresh stillness of the woods, The
+      exquisite smell of the earth at daybreak, and all through the forenoon.
+    </p>
+    <p class="poem-attribution">– Walt Whitman (extract from A Song of Joys)</p>
+  </div>
+</div>
+
+<!-- Add ripple element -->
+<div class="ripple hidden"></div>
+
+<script>
+  // Cache DOM elements and initial audio setup
+  const forestAudio = new Audio("/assets/music/forest.mp3");
+  forestAudio.loop = true;
+  forestAudio.volume = 0.4;
+
+  const elements = {
+    footnote: document.querySelector(".footnote"),
+    poem: document.querySelector(".poem-wrapper"),
+    poemContent: document.querySelector(".poem"),
+    contentWrapper: document.querySelector(".content-wrapper"),
+    detailsWrapper: document.querySelector(".details-wrapper"),
+    returnButton: document.querySelector(".return"),
+    backgroundWrapper: document.querySelector(".background-wrapper"),
+    playButton: document.querySelector(".play-button"),
+    volumeControl: document.querySelector(".volume-control"),
+    volumeSlider: document.querySelector(".volume-slider") as HTMLInputElement,
+    playIcon: document.querySelector(".play-icon"),
+    tooltip: document.querySelector(".volume-tooltip"),
+    buttonText: document.querySelector(".play-text"),
+  } as const;
+
+  let volumeTimeout: number;
+
+  // Add state management
+  const state = {
+    isPoemActive: false,
+    poemTimeout: null as number | null,
+  };
+
+  // Utility functions
+  const fadeAudio = (audio: HTMLAudioElement, targetVolume: number, duration = 2000) => {
+    const startVolume = audio.volume;
+    const volumeDiff = targetVolume - startVolume;
+    const interval = 50;
+    const steps = duration / interval;
+    const volumeStep = volumeDiff / steps;
+
+    const fade = setInterval(() => {
+      if ((volumeStep > 0 && audio.volume < targetVolume) || 
+          (volumeStep < 0 && audio.volume > targetVolume)) {
+        audio.volume = Math.max(0, Math.min(1, audio.volume + volumeStep));
+      } else {
+        clearInterval(fade);
+        if (targetVolume === 0) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      }
+    }, interval);
+  };
+
+  const handleVolumeControl = () => {
+    clearTimeout(volumeTimeout);
+    volumeTimeout = setTimeout(() => {
+      elements.volumeControl?.classList.add("hidden");
+      elements.playIcon?.classList.remove("menu-open");
+    }, 2000);
+  };
+
+  // Event Listeners
+  elements.playIcon?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    elements.volumeControl?.classList.toggle("hidden");
+    elements.playIcon?.classList.toggle("menu-open");
+    handleVolumeControl();
+  });
+
+  elements.volumeSlider?.addEventListener("input", (e) => {
+    const volume = parseInt((e.target as HTMLInputElement).value);
+    forestAudio.volume = volume / 100;
+    if (elements.tooltip) {
+      elements.tooltip.textContent = `${volume}%`;
+    }
+    handleVolumeControl();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!elements.playIcon?.contains(e.target as Node)) {
+      elements.volumeControl?.classList.add("hidden");
+      elements.playIcon?.classList.remove("menu-open");
+      clearTimeout(volumeTimeout);
+    }
+  });
+
+  elements.playButton?.addEventListener("click", (e) => {
+    if (e.target === elements.volumeSlider) return;
+
+    if (forestAudio.paused) {
+      forestAudio.play();
+      fadeAudio(forestAudio, 0.4);
+      if (elements.buttonText) elements.buttonText.textContent = "Pause Music";
+      elements.playIcon?.classList.add("playing");
+    } else {
+      fadeAudio(forestAudio, 0);
+      if (elements.buttonText) elements.buttonText.textContent = "Play Music";
+      elements.playIcon?.classList.remove("playing");
+    }
+  });
+
+  // Function to enter poem view
+  const enterPoemView = () => {
+    state.isPoemActive = true;
+    const ripple = document.querySelector(".ripple");
+    ripple?.classList.remove("hidden");
+    ripple?.classList.add("animate");
+    
+    setTimeout(() => {
+      if (!state.isPoemActive) return; // Check if still active
+      elements.poem?.classList.remove("hidden");
+      elements.returnButton?.classList.remove("hidden");
+      elements.playButton?.classList.remove("hidden");
+      elements.contentWrapper?.classList.add("hidden");
+      elements.detailsWrapper?.classList.add("hidden");
+      elements.footnote?.setAttribute("style", "display: none");
+      elements.backgroundWrapper?.classList.add("joy");
+
+      ripple?.classList.remove("animate");
+      ripple?.classList.add("hidden");
+
+      if (elements.poemContent) {
+        typePoem(elements.poemContent as HTMLElement, "");
+      }
+    }, 1500);
+  };
+
+  // Function to exit poem view
+  const exitPoemView = () => {
+    // Clear any pending timeouts
+    if (state.poemTimeout) {
+      clearTimeout(state.poemTimeout);
+      state.poemTimeout = null;
+    }
+    state.isPoemActive = false;
+
+    const ripple = document.querySelector(".ripple");
+    ripple?.classList.remove("hidden");
+    ripple?.classList.add("animate");
+    
+    setTimeout(() => {
+      elements.poem?.classList.add("hidden");
+      elements.returnButton?.classList.add("hidden");
+      elements.playButton?.classList.add("hidden");
+      elements.contentWrapper?.classList.remove("hidden");
+      elements.detailsWrapper?.classList.remove("hidden");
+      elements.footnote?.removeAttribute("style");
+      elements.backgroundWrapper?.classList.remove("joy");
+
+      ripple?.classList.remove("animate");
+      ripple?.classList.add("hidden");
+      
+      fadeAudio(forestAudio, 0);
+      if (elements.buttonText) elements.buttonText.textContent = "Play Music";
+      elements.playIcon?.classList.remove("playing");
+    }, 1500);
+  };
+
+  // Event Listeners
+  elements.footnote?.addEventListener("click", enterPoemView);
+  elements.returnButton?.addEventListener("click", exitPoemView);
+  
+  // ESC key handler
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !elements.poem?.classList.contains("hidden")) {
+      exitPoemView();
+    }
+  });
+
+  // Function to simulate typing effect
+  function typePoem(element: HTMLElement, text: string, speed = 50) {
+    const paragraphs = element.querySelectorAll("p:not(.poem-attribution)");
+    const attribution = element.querySelector(".poem-attribution");
+    const loadingPercentage = document.querySelector(".loading-percentage");
+    const loadingBar = document.querySelector(".loading-bar");
+    const playButton = document.querySelector(".play-button");
+    // Calculate total characters for progress bar
+    let totalChars = 0;
+    let typedChars = 0;
+
+    // Store original text in data attributes FIRST
+    paragraphs.forEach((p) => {
+      p.setAttribute("data-text", p.textContent || "");
+      totalChars += (p.textContent || "").length;
+    });
+    if (attribution) {
+      attribution.setAttribute("data-text", attribution.textContent || "");
+      totalChars += (attribution.textContent || "").length;
+    }
+
+    // THEN clear the text
+    paragraphs.forEach((p) => {
+      p.textContent = "";
+    });
+    if (attribution) attribution.textContent = "";
+
+    let currentParagraph = 0;
+    let index = 0;
+
+    function updateProgress() {
+      const percentage = Math.round((typedChars / totalChars) * 100);
+      if (loadingPercentage) {
+        loadingPercentage.textContent = `${percentage}%`;
+      }
+      if (loadingBar) {
+        (loadingBar as HTMLElement).style.width = `${percentage}%`;
+      }
+    }
+
+    function type() {
+      if (currentParagraph < paragraphs.length) {
+        const p = paragraphs[currentParagraph];
+        const originalText = p.getAttribute("data-text") || "";
+
+        if (index < originalText.length) {
+          p.textContent += originalText.charAt(index);
+          typedChars++;
+          updateProgress();
+          index++;
+          setTimeout(type, speed);
+        } else {
+          currentParagraph++;
+          index = 0;
+          if (currentParagraph < paragraphs.length) {
+            setTimeout(type, speed * 10);
+          } else if (attribution) {
+            // Clear attribution before typing it
+            attribution.textContent = "";
+            typeAttribution(
+              attribution as HTMLElement,
+              attribution.getAttribute("data-text") || "",
+              () => {
+                // Callback after typing is complete
+                setTimeout(() => {
+                  exitPoemView();
+                }, 3000);
+              }
+            );
+          }
+        }
+      }
+    }
+
+    function typeAttribution(element: HTMLElement, text: string, callback?: () => void) {
+      let i = 0;
+      function typeAttr() {
+        if (i < text.length) {
+          if (!state.isPoemActive) return; // Check if still active
+          element.textContent += text.charAt(i);
+          typedChars++;
+          updateProgress();
+          i++;
+          setTimeout(typeAttr, speed);
+        } else if (callback && state.isPoemActive) {
+          // Store timeout reference
+          state.poemTimeout = setTimeout(exitPoemView, 3000);
+        }
+      }
+      setTimeout(typeAttr, speed * 20);
+    }
+
+    type();
+  }
+</script>
+
+<style lang="scss">
+  // Hidden
+  .hidden {
+    display: none !important;
+  }
+
+  // Poem
+  .poem-wrapper {
+    width: 80%;
+    max-width: 720px;
+    min-height: calc(100vh - 200px);
+    margin: 40px auto;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 10px 20px rgba(111, 93, 85, 0.2);
+
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--spacing-base);
+    animation: fadeInUp 0.5s ease-in-out forwards;
+    animation-delay: 0.3s;
+  }
+
+  // Poem loading
+  .poem-loading {
+    width: 100%;
+    margin-bottom: var(--spacing-base);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-base);
+    font-size: var(--font-size-xsmall);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-chocolate);
+
+    span:first-child {
+      width: 110px;
+    }
+
+    span:last-child {
+      width: 40px;
+      text-align: right;
+    }
+
+    .loading-bar-container {
+      position: relative;
+      width: calc(100% - 150px);
+      height: 4px;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .loading-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 2%;
+      background-color: var(--color-chocolate);
+      transition: width 0.3s ease-in-out;
+    }
+  }
+
+  .poem {
+    p {
+      margin: 0 0 var(--spacing-base);
+      font-size: clamp(1rem,2vw,1.25rem);
+      color: var(--color-ink-secondary);
+
+      &:first-of-type::first-letter {
+        float: left;
+        font-size: 4em;
+        line-height: 0.8;
+        padding-right: 0.1em;
+        margin-bottom: -0.1em;
+        color: var(--color-chocolate);
+      }
+    }
+
+    .poem-attribution {
+      display: block;
+      margin-top: var(--spacing-base);
+      font-size: var(--font-size-xsmall);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-chocolate);
+    }
+  }
+
+  // Play button
+  .play-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-small);
+    position: fixed;
+    top: var(--spacing-base);
+    right: var(--spacing-base);
+    padding: 4px 12px;
+
+    .play-icon {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      padding: 8px;
+      border-radius: 100%;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+
+      svg {
+        width: 20px;
+        height: 20px;
+        margin-top: -2px;
+        color: var(--color-chocolate);
+        transition: color 0.2s ease-in-out;
+
+        line {
+          transform-origin: center;
+          transition: all 0.2s ease;
+        }
+      }
+
+      &:hover,
+      &.playing {
+        background-color: var(--color-chocolate);
+        svg {
+          color: var(--color-paper);
+        }
+      }
+
+      &.menu-open {
+        border-radius: 50% 50% 0 0;
+      }
+
+      &.playing {
+        svg line {
+          animation: waveform 1s ease-in-out infinite;
+
+          &:nth-child(2) {
+            animation-delay: 0.1s;
+          }
+          &:nth-child(3) {
+            animation-delay: 0.2s;
+          }
+          &:nth-child(4) {
+            animation-delay: 0.3s;
+          }
+          &:nth-child(5) {
+            animation-delay: 0.4s;
+          }
+          &:nth-child(6) {
+            animation-delay: 0.5s;
+          }
+        }
+      }
+
+      .volume-control {
+        position: absolute;
+        bottom: -70px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-90deg);
+        background: var(--color-chocolate);
+        padding: 16px;
+        border-radius: 40px 0% 0% 40px;
+        transition: all 0.2s ease-in-out;
+        z-index: 100;
+        width: 110px;
+        max-height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.8s ease-in-out;
+        transition-delay: 1s;
+        
+        &.hidden {
+          opacity: 0;
+          max-height: 0;
+          overflow: hidden;
+          transform: translateX(-50%) rotate(-90deg) translateY(10px);
+        }
+
+        .volume-tooltip {
+          position: absolute;
+          top: 50%;
+          right: -24px;
+          transform: translateY(-50%) rotate(90deg);
+          background: var(--color-chocolate);
+          color: var(--color-paper);
+          padding: 2px;
+          border-radius: 4px;
+          font-size: 12px;
+          font-family: var(--font-sans);
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.2s ease-in-out;
+        }
+
+        .volume-slider:hover + .volume-tooltip,
+        .volume-slider:active + .volume-tooltip {
+          opacity: 1;
+        }
+
+        .volume-slider {
+          width: 80px;
+          -webkit-appearance: none;
+          background: var(--color-paper);
+          height: 3px;
+          border-radius: 2px;
+          outline: none;
+
+          &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--color-paper);
+            cursor: pointer;
+            border: 2px solid var(--color-chocolate);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+
+          &::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--color-paper);
+            cursor: pointer;
+            border: 2px solid var(--color-chocolate);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+        }
+      }
+    }
+
+    .play-text {
+      color: var(--color-chocolate);
+      font-size: var(--font-size-xsmall);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: var(--color-chocolate);
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        text-decoration-color: var(--color-accent);
+      }
+    }
+  }
+
+  // Return button
+  .return {
+    position: fixed;
+    top: var(--spacing-base);
+    left: var(--spacing-base);
+    font-size: var(--font-size-xsmall);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-paper);
+    background-color: var(--color-chocolate);
+    border-radius: 20px;
+    backdrop-filter: blur(2px);
+    padding: 4px 12px;
+    opacity: 0;
+    animation: fadeInDown 0.5s ease-in-out forwards;
+    animation-delay: 0.3s;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      color: var(--color-paper);
+      background-color: var(--color-ink-secondary);
+    }
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes waveform {
+    0%,
+    100% {
+      transform: scaleY(0.5);
+    }
+    50% {
+      transform: scaleY(1);
+    }
+  }
+
+  // Ripple effect
+  .ripple {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    filter: blur(10px);
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 1000;
+    pointer-events: none;
+
+    &.animate {
+      animation: rippleEffect 2.2s ease-in forwards;
+    }
+  }
+
+  @keyframes rippleEffect {
+    0% {
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.9;
+    }
+    90% {
+      width: 300vw;
+      height: 300vw;
+      opacity: 1;
+    }
+    100% {
+      width: 300vw;
+      height: 300vw;
+      opacity: 0.9;
+    }
+  }
+</style>
