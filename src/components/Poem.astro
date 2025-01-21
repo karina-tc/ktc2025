@@ -113,6 +113,9 @@
   </div>
 </div>
 
+<!-- Add ripple element -->
+<div class="ripple hidden"></div>
+
 <script>
   // Cache DOM elements and initial audio setup
   const forestAudio = new Audio("/assets/music/forest.mp3");
@@ -136,6 +139,12 @@
   } as const;
 
   let volumeTimeout: number;
+
+  // Add state management
+  const state = {
+    isPoemActive: false,
+    poemTimeout: null as number | null,
+  };
 
   // Utility functions
   const fadeAudio = (audio: HTMLAudioElement, targetVolume: number, duration = 2000) => {
@@ -207,31 +216,71 @@
     }
   });
 
-  elements.returnButton?.addEventListener("click", () => {
-    elements.poem?.classList.add("hidden");
-    elements.returnButton?.classList.add("hidden");
-    elements.playButton?.classList.add("hidden");
-    elements.contentWrapper?.classList.remove("hidden");
-    elements.detailsWrapper?.classList.remove("hidden");
-    elements.footnote?.removeAttribute("style");
-    elements.backgroundWrapper?.classList.remove("joy");
+  // Function to enter poem view
+  const enterPoemView = () => {
+    state.isPoemActive = true;
+    const ripple = document.querySelector(".ripple");
+    ripple?.classList.remove("hidden");
+    ripple?.classList.add("animate");
+    
+    setTimeout(() => {
+      if (!state.isPoemActive) return; // Check if still active
+      elements.poem?.classList.remove("hidden");
+      elements.returnButton?.classList.remove("hidden");
+      elements.playButton?.classList.remove("hidden");
+      elements.contentWrapper?.classList.add("hidden");
+      elements.detailsWrapper?.classList.add("hidden");
+      elements.footnote?.setAttribute("style", "display: none");
+      elements.backgroundWrapper?.classList.add("joy");
 
-    fadeAudio(forestAudio, 0);
-    if (elements.buttonText) elements.buttonText.textContent = "Play Music";
-    elements.playIcon?.classList.remove("playing");
-  });
+      ripple?.classList.remove("animate");
+      ripple?.classList.add("hidden");
 
-  elements.footnote?.addEventListener("click", () => {
-    elements.poem?.classList.remove("hidden");
-    elements.returnButton?.classList.remove("hidden");
-    elements.playButton?.classList.remove("hidden");
-    elements.contentWrapper?.classList.add("hidden");
-    elements.detailsWrapper?.classList.add("hidden");
-    elements.footnote?.setAttribute("style", "display: none");
-    elements.backgroundWrapper?.classList.add("joy");
+      if (elements.poemContent) {
+        typePoem(elements.poemContent as HTMLElement, "");
+      }
+    }, 1500);
+  };
 
-    if (elements.poemContent) {
-      typePoem(elements.poemContent as HTMLElement, "");
+  // Function to exit poem view
+  const exitPoemView = () => {
+    // Clear any pending timeouts
+    if (state.poemTimeout) {
+      clearTimeout(state.poemTimeout);
+      state.poemTimeout = null;
+    }
+    state.isPoemActive = false;
+
+    const ripple = document.querySelector(".ripple");
+    ripple?.classList.remove("hidden");
+    ripple?.classList.add("animate");
+    
+    setTimeout(() => {
+      elements.poem?.classList.add("hidden");
+      elements.returnButton?.classList.add("hidden");
+      elements.playButton?.classList.add("hidden");
+      elements.contentWrapper?.classList.remove("hidden");
+      elements.detailsWrapper?.classList.remove("hidden");
+      elements.footnote?.removeAttribute("style");
+      elements.backgroundWrapper?.classList.remove("joy");
+
+      ripple?.classList.remove("animate");
+      ripple?.classList.add("hidden");
+      
+      fadeAudio(forestAudio, 0);
+      if (elements.buttonText) elements.buttonText.textContent = "Play Music";
+      elements.playIcon?.classList.remove("playing");
+    }, 1500);
+  };
+
+  // Event Listeners
+  elements.footnote?.addEventListener("click", enterPoemView);
+  elements.returnButton?.addEventListener("click", exitPoemView);
+  
+  // ESC key handler
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !elements.poem?.classList.contains("hidden")) {
+      exitPoemView();
     }
   });
 
@@ -297,21 +346,31 @@
             typeAttribution(
               attribution as HTMLElement,
               attribution.getAttribute("data-text") || "",
+              () => {
+                // Callback after typing is complete
+                setTimeout(() => {
+                  exitPoemView();
+                }, 3000);
+              }
             );
           }
         }
       }
     }
 
-    function typeAttribution(element: HTMLElement, text: string, speed = 50) {
+    function typeAttribution(element: HTMLElement, text: string, callback?: () => void) {
       let i = 0;
       function typeAttr() {
         if (i < text.length) {
+          if (!state.isPoemActive) return; // Check if still active
           element.textContent += text.charAt(i);
           typedChars++;
           updateProgress();
           i++;
           setTimeout(typeAttr, speed);
+        } else if (callback && state.isPoemActive) {
+          // Store timeout reference
+          state.poemTimeout = setTimeout(exitPoemView, 3000);
         }
       }
       setTimeout(typeAttr, speed * 20);
@@ -599,10 +658,11 @@
     opacity: 0;
     animation: fadeInDown 0.5s ease-in-out forwards;
     animation-delay: 0.3s;
+    transition: all 0.3s ease-in-out;
 
     &:hover {
       color: var(--color-paper);
-      background-color: var(--color-chocolate);
+      background-color: var(--color-ink-secondary);
     }
   }
 
@@ -624,6 +684,48 @@
     }
     50% {
       transform: scaleY(1);
+    }
+  }
+
+  // Ripple effect
+  .ripple {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    filter: blur(10px);
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 1000;
+    pointer-events: none;
+
+    &.animate {
+      animation: rippleEffect 2.2s ease-in forwards;
+    }
+  }
+
+  @keyframes rippleEffect {
+    0% {
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.9;
+    }
+    90% {
+      width: 300vw;
+      height: 300vw;
+      opacity: 1;
+    }
+    100% {
+      width: 300vw;
+      height: 300vw;
+      opacity: 0.9;
     }
   }
 </style>
