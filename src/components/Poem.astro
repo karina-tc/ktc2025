@@ -1,5 +1,5 @@
 ---
-
+import Atom from "../components/Atom.astro";
 ---
 
 <!-- Return -->
@@ -62,14 +62,9 @@
         stroke-linejoin="round"
         stroke-width="16"></line>
     </svg>
+    <div class="play-icon-tooltip">Volume</div>
     <div class="volume-control hidden">
-      <input 
-        type="range" 
-        min="0" 
-        max="100" 
-        value="40" 
-        class="volume-slider"
-      />
+      <input type="range" min="0" max="100" value="40" class="volume-slider" />
       <div class="volume-tooltip">40%</div>
     </div>
   </span>
@@ -113,14 +108,19 @@
   </div>
 </div>
 
-<!-- Add ripple element -->
+<!-- Pulse -->
+<div class="pulse hidden">
+  <Atom />
+</div>
+
+<!-- Ripple element -->
 <div class="ripple hidden"></div>
 
 <script>
   // Cache DOM elements and initial audio setup
   const forestAudio = new Audio("/assets/music/forest.mp3");
   forestAudio.loop = true;
-  forestAudio.volume = 0.4;
+  forestAudio.volume = 0.2;
 
   const elements = {
     footnote: document.querySelector(".footnote"),
@@ -136,6 +136,7 @@
     playIcon: document.querySelector(".play-icon"),
     tooltip: document.querySelector(".volume-tooltip"),
     buttonText: document.querySelector(".play-text"),
+    pulse: document.querySelector(".pulse"),
   } as const;
 
   let volumeTimeout: number;
@@ -146,8 +147,20 @@
     poemTimeout: null as number | null,
   };
 
+  // Set initial volume slider value to 20
+  if (elements.volumeSlider) {
+    elements.volumeSlider.value = "20";
+  }
+  if (elements.tooltip) {
+    elements.tooltip.textContent = "20%";
+  }
+
   // Utility functions
-  const fadeAudio = (audio: HTMLAudioElement, targetVolume: number, duration = 2000) => {
+  const fadeAudio = (
+    audio: HTMLAudioElement,
+    targetVolume: number,
+    duration = 2000,
+  ) => {
     const startVolume = audio.volume;
     const volumeDiff = targetVolume - startVolume;
     const interval = 50;
@@ -155,8 +168,10 @@
     const volumeStep = volumeDiff / steps;
 
     const fade = setInterval(() => {
-      if ((volumeStep > 0 && audio.volume < targetVolume) || 
-          (volumeStep < 0 && audio.volume > targetVolume)) {
+      if (
+        (volumeStep > 0 && audio.volume < targetVolume) ||
+        (volumeStep < 0 && audio.volume > targetVolume)
+      ) {
         audio.volume = Math.max(0, Math.min(1, audio.volume + volumeStep));
       } else {
         clearInterval(fade);
@@ -222,7 +237,7 @@
     const ripple = document.querySelector(".ripple");
     ripple?.classList.remove("hidden");
     ripple?.classList.add("animate");
-    
+
     setTimeout(() => {
       if (!state.isPoemActive) return; // Check if still active
       elements.poem?.classList.remove("hidden");
@@ -232,9 +247,16 @@
       elements.detailsWrapper?.classList.add("hidden");
       elements.footnote?.setAttribute("style", "display: none");
       elements.backgroundWrapper?.classList.add("joy");
+      elements.pulse?.classList.remove("hidden");
 
       ripple?.classList.remove("animate");
       ripple?.classList.add("hidden");
+
+      // Auto-play music
+      forestAudio.play();
+      fadeAudio(forestAudio, 0.2);
+      if (elements.buttonText) elements.buttonText.textContent = "Pause Music";
+      elements.playIcon?.classList.add("playing");
 
       if (elements.poemContent) {
         typePoem(elements.poemContent as HTMLElement, "");
@@ -254,7 +276,7 @@
     const ripple = document.querySelector(".ripple");
     ripple?.classList.remove("hidden");
     ripple?.classList.add("animate");
-    
+
     setTimeout(() => {
       elements.poem?.classList.add("hidden");
       elements.returnButton?.classList.add("hidden");
@@ -263,10 +285,10 @@
       elements.detailsWrapper?.classList.remove("hidden");
       elements.footnote?.removeAttribute("style");
       elements.backgroundWrapper?.classList.remove("joy");
-
+      elements.pulse?.classList.add("hidden");
       ripple?.classList.remove("animate");
       ripple?.classList.add("hidden");
-      
+
       fadeAudio(forestAudio, 0);
       if (elements.buttonText) elements.buttonText.textContent = "Play Music";
       elements.playIcon?.classList.remove("playing");
@@ -276,7 +298,7 @@
   // Event Listeners
   elements.footnote?.addEventListener("click", enterPoemView);
   elements.returnButton?.addEventListener("click", exitPoemView);
-  
+
   // ESC key handler
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !elements.poem?.classList.contains("hidden")) {
@@ -351,14 +373,18 @@
                 setTimeout(() => {
                   exitPoemView();
                 }, 3000);
-              }
+              },
             );
           }
         }
       }
     }
 
-    function typeAttribution(element: HTMLElement, text: string, callback?: () => void) {
+    function typeAttribution(
+      element: HTMLElement,
+      text: string,
+      callback?: () => void,
+    ) {
       let i = 0;
       function typeAttr() {
         if (i < text.length) {
@@ -452,7 +478,7 @@
   .poem {
     p {
       margin: 0 0 var(--spacing-base);
-      font-size: clamp(1rem,2vw,1.25rem);
+      font-size: clamp(1rem, 2vw, 1.25rem);
       color: var(--color-ink-secondary);
 
       &:first-of-type::first-letter {
@@ -518,6 +544,13 @@
         }
       }
 
+      &:hover {
+        .play-icon-tooltip {
+          opacity: 1;
+          left: -80px;
+        }
+      }
+
       &.menu-open {
         border-radius: 50% 50% 0 0;
       }
@@ -544,6 +577,26 @@
         }
       }
 
+      .play-icon-tooltip {
+        position: absolute;
+        width: 70px;
+        top: 16px;
+        left: -50px;
+        opacity: 0;
+        transform: translateY(-50%) rotate(0deg);
+        background: rgba(255, 255, 255, 0.5);
+        color: var(--color-chocolate);
+        padding: 2px;
+        border-radius: 4px;
+        font-size: var(--font-size-xsmall);
+        font-weight: 600;
+        text-align: center;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-family: var(--font-sans);
+        pointer-events: none;
+      }
+
       .volume-control {
         position: absolute;
         bottom: -70px;
@@ -561,7 +614,7 @@
         justify-content: center;
         transition: all 0.8s ease-in-out;
         transition-delay: 1s;
-        
+
         &.hidden {
           opacity: 0;
           max-height: 0;
@@ -666,6 +719,38 @@
     }
   }
 
+  // Pulse
+  .pulse {
+    position: fixed;
+    top: calc(100% - 150px);
+    left: 50px;
+    width: 100px;
+    height: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      animation: pulsate 2s infinite;
+      border: 1px solid var(--color-paper);
+    }
+
+    @include tablet {
+      display: none !important;
+    }
+  }
+
   @keyframes fadeInDown {
     from {
       opacity: 0;
@@ -726,6 +811,18 @@
       width: 300vw;
       height: 300vw;
       opacity: 0.9;
+    }
+  }
+
+  @keyframes pulsate {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.5;
     }
   }
 </style>
