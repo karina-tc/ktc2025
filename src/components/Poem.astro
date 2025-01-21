@@ -417,7 +417,7 @@ import Atom from "../components/Atom.astro";
     width: 80%;
     max-width: 720px;
     min-height: calc(100vh - 200px);
-    margin: 40px auto;
+    margin: 80px auto;
     padding: 40px;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 20px;
@@ -722,7 +722,7 @@ import Atom from "../components/Atom.astro";
   // Pulse
   .pulse {
     position: fixed;
-    top: 50px;
+    top: 70px;
     left: calc(50% - 50px);
     width: 100px;
     height: 100px;
@@ -734,6 +734,23 @@ import Atom from "../components/Atom.astro";
     align-items: center;
     justify-content: center;
     z-index: 10;
+
+    &::before {
+      content: "BREATHE";
+      position: absolute;
+      top: -40px;
+      left: calc(50% - 60px);
+      z-index: 10;
+      width: 120px;
+      height: 20px;
+      text-align: center;
+      font-size: var(--font-size-xsmall);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-chocolate);
+    }
 
     &::after {
       content: "";
