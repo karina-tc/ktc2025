@@ -80,31 +80,22 @@ import Atom from "../components/Atom.astro";
     <span class="loading-percentage">5%</span>
   </div>
   <div class="poem">
-    <p>
-      O to make the most jubilant song! Full of music-full of manhood,
-      womanhood, infancy! Full of common employments-full of grain and trees.
-    </p>
-    <p>
-      O for the voices of animals-O for the swiftness and balance of fishes! O
-      for the dropping of raindrops in a song! O for the sunshine and motion of
-      waves in a song!
-    </p>
-    <p>
-      O the joy of my spirit-it is uncaged-it darts like lightning! It is not
-      enough to have this globe or a certain time, I will have thousands of
-      globes and all time.
-    </p>
-    <p>
-      O the engineer's joys! to go with a locomotive! To hear the hiss of steam,
-      the merry shriek, the steam-whistle, the laughing locomotive! To push with
-      resistless way and speed off in the distance.
-    </p>
-    <p>
-      O the gleesome saunter over fields and hillsides! The leaves and flowers
-      of the commonest weeds, the moist fresh stillness of the woods, The
-      exquisite smell of the earth at daybreak, and all through the forenoon.
-    </p>
-    <p class="poem-attribution">– Walt Whitman (extract from A Song of Joys)</p>
+    <div class="ghost-text">
+      <p>O to make the most jubilant song! Full of music-full of manhood, womanhood, infancy! Full of common employments-full of grain and trees.</p>
+      <p>O for the voices of animals-O for the swiftness and balance of fishes! O for the dropping of raindrops in a song! O for the sunshine and motion of waves in a song!</p>
+      <p>O the joy of my spirit-it is uncaged-it darts like lightning! It is not enough to have this globe or a certain time, I will have thousands of globes and all time.</p>
+      <p>O the engineer's joys! to go with a locomotive! To hear the hiss of steam, the merry shriek, the steam-whistle, the laughing locomotive! To push with resistless way and speed off in the distance.</p>
+      <p>O the gleesome saunter over fields and hillsides! The leaves and flowers of the commonest weeds, the moist fresh stillness of the woods, The exquisite smell of the earth at daybreak, and all through the forenoon.</p>
+      <p class="poem-attribution">Walt Whitman, A Song of Joys</p>
+    </div>
+    <div class="typed-text">
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p class="poem-attribution"></p>
+    </div>
   </div>
 </div>
 
@@ -308,30 +299,18 @@ import Atom from "../components/Atom.astro";
 
   // Function to simulate typing effect
   function typePoem(element: HTMLElement, text: string, speed = 50) {
-    const paragraphs = element.querySelectorAll("p:not(.poem-attribution)");
-    const attribution = element.querySelector(".poem-attribution");
+    const ghostParagraphs = element.querySelectorAll(".ghost-text p");
+    const typedParagraphs = element.querySelectorAll(".typed-text p");
     const loadingPercentage = document.querySelector(".loading-percentage");
     const loadingBar = document.querySelector(".loading-bar");
-    const playButton = document.querySelector(".play-button");
-    // Calculate total characters for progress bar
+    
     let totalChars = 0;
     let typedChars = 0;
 
-    // Store original text in data attributes FIRST
-    paragraphs.forEach((p) => {
-      p.setAttribute("data-text", p.textContent || "");
+    // Calculate total characters (including attribution)
+    ghostParagraphs.forEach((p) => {
       totalChars += (p.textContent || "").length;
     });
-    if (attribution) {
-      attribution.setAttribute("data-text", attribution.textContent || "");
-      totalChars += (attribution.textContent || "").length;
-    }
-
-    // THEN clear the text
-    paragraphs.forEach((p) => {
-      p.textContent = "";
-    });
-    if (attribution) attribution.textContent = "";
 
     let currentParagraph = 0;
     let index = 0;
@@ -347,12 +326,12 @@ import Atom from "../components/Atom.astro";
     }
 
     function type() {
-      if (currentParagraph < paragraphs.length) {
-        const p = paragraphs[currentParagraph];
-        const originalText = p.getAttribute("data-text") || "";
+      if (currentParagraph < ghostParagraphs.length) {
+        const originalText = ghostParagraphs[currentParagraph].textContent || "";
+        const typedP = typedParagraphs[currentParagraph];
 
         if (index < originalText.length) {
-          p.textContent += originalText.charAt(index);
+          typedP.textContent = originalText.substring(0, index + 1);
           typedChars++;
           updateProgress();
           index++;
@@ -360,50 +339,51 @@ import Atom from "../components/Atom.astro";
         } else {
           currentParagraph++;
           index = 0;
-          if (currentParagraph < paragraphs.length) {
+          if (currentParagraph < ghostParagraphs.length) {
             setTimeout(type, speed * 10);
-          } else if (attribution) {
-            // Clear attribution before typing it
-            attribution.textContent = "";
-            typeAttribution(
-              attribution as HTMLElement,
-              attribution.getAttribute("data-text") || "",
-              () => {
-                // Callback after typing is complete
-                setTimeout(() => {
-                  exitPoemView();
-                }, 3000);
-              },
-            );
+          } else {
+            setTimeout(() => {
+              exitPoemView();
+            }, 3000);
           }
         }
       }
     }
 
-    function typeAttribution(
-      element: HTMLElement,
-      text: string,
-      callback?: () => void,
-    ) {
-      let i = 0;
-      function typeAttr() {
-        if (i < text.length) {
-          if (!state.isPoemActive) return; // Check if still active
-          element.textContent += text.charAt(i);
-          typedChars++;
-          updateProgress();
-          i++;
-          setTimeout(typeAttr, speed);
-        } else if (callback && state.isPoemActive) {
-          // Store timeout reference
-          state.poemTimeout = setTimeout(exitPoemView, 3000);
-        }
-      }
-      setTimeout(typeAttr, speed * 20);
-    }
-
     type();
   }
+
+  // Add scroll handling
+  function handleScroll() {
+    const poemWrapper = document.querySelector('.poem-wrapper');
+    const pulse = document.querySelector('.pulse');
+    
+    if (!poemWrapper || !pulse || poemWrapper.classList.contains('hidden')) return;
+
+    const poemRect = poemWrapper.getBoundingClientRect();
+    
+    if (poemRect.top < 10) {
+      pulse.classList.add('floating');
+    } else if (poemRect.top < window.innerHeight - 30) {
+      pulse.classList.remove('floating');
+    }
+
+    // Keep the console log for verification
+    console.log({
+      poemTop: poemRect.top,
+      windowHeight: window.innerHeight,
+      threshold: window.innerHeight - 200,
+      isFloating: pulse.classList.contains('floating')
+    });
+  }
+
+  // Add scroll listener
+  window.addEventListener('scroll', handleScroll);
+
+  // Clean up scroll listener when navigating away
+  document.addEventListener('astro:before-swap', () => {
+    window.removeEventListener('scroll', handleScroll);
+  });
 </script>
 
 <style lang="scss">
@@ -476,6 +456,19 @@ import Atom from "../components/Atom.astro";
   }
 
   .poem {
+    position: relative;
+
+    .ghost-text {
+      opacity: 0.2;
+    }
+
+    .typed-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
     p {
       margin: 0 0 var(--spacing-base);
       font-size: clamp(1rem, 2vw, 1.25rem);
@@ -726,6 +719,8 @@ import Atom from "../components/Atom.astro";
     left: calc(50% - 50px);
     width: 100px;
     height: 100px;
+    transition: all 0.5s ease-in-out;
+
     max-width: 100px;
     background-color: var(--color-paper);
     border-radius: 50%;
@@ -768,6 +763,13 @@ import Atom from "../components/Atom.astro";
 
     @include tablet {
       display: none !important;
+    }
+
+    &.floating {
+      transform: translateY(-100px);
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
     }
   }
 
@@ -831,18 +833,6 @@ import Atom from "../components/Atom.astro";
       width: 300vw;
       height: 300vw;
       opacity: 0.9;
-    }
-  }
-
-  @keyframes pulsate {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.1);
-      opacity: 0.5;
     }
   }
 </style>
