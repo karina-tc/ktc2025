@@ -11,40 +11,38 @@
     <span class="loading-percentage">5%</span>
   </div>
   <div class="poem">
-    <div class="ghost-text">
+    <div class="poem-text">
       <p>
         O to make the most jubilant song! Full of music-full of manhood,
-        womanhood, infancy! Full of common employments-full of grain and trees.
+        womanhood, <span class="highlight infancy">infancy<em></em></span>! Full
+        of common employments-full of grain and trees.
       </p>
       <p>
         O for the voices of animals-O for the swiftness and balance of fishes! O
-        for the dropping of raindrops in a song! O for the sunshine and motion
-        of waves in a song!
+        for the dropping of <span class="highlight raindrops">raindrops</span> in
+        a song! O for the sunshine and motion of waves in a song!
       </p>
       <p>
-        O the joy of my spirit-it is uncaged-it darts like lightning! It is not
-        enough to have this globe or a certain time, I will have thousands of
-        globes and all time.
+        O the joy of my spirit-it is uncaged-it darts like <span
+          class="highlight lightning">lightning</span
+        >! It is not enough to have this globe or a certain time, I will have
+        thousands of globes and all time.
       </p>
       <p>
-        O the engineer's joys! to go with a locomotive! To hear the hiss of
-        steam, the merry shriek, the steam-whistle, the laughing locomotive! To
-        push with resistless way and speed off in the distance.
+        O the engineer's joys! to go with a <span class="highlight locomotive"
+          >locomotive</span
+        >! To hear the hiss of steam, the merry shriek, the steam-whistle, the
+        laughing locomotive! To push with resistless way and speed off in the
+        distance.
       </p>
       <p>
         O the gleesome saunter over fields and hillsides! The leaves and flowers
-        of the commonest weeds, the moist fresh stillness of the woods, The
-        exquisite smell of the earth at daybreak, and all through the forenoon.
+        of the commonest weeds, the moist fresh stillness of the <span
+          class="highlight woods">woods</span
+        >, The exquisite smell of the earth at daybreak, and all through the
+        forenoon.
       </p>
       <p class="poem-attribution">Walt Whitman, A Song of Joys</p>
-    </div>
-    <div class="typed-text">
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p class="poem-attribution"></p>
     </div>
   </div>
 </div>
@@ -121,41 +119,70 @@
   .poem {
     position: relative;
 
-    .ghost-text {
-      opacity: 0.2;
+    .poem-text {
+      p {
+        margin: 0 0 var(--spacing-base);
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        color: var(--color-ink-secondary);
+
+        &:first-of-type::first-letter {
+          float: left;
+          font-size: 4em;
+          line-height: 0.8;
+          padding-right: 0.1em;
+          margin-bottom: -0.1em;
+          color: var(--color-chocolate);
+        }
+      }
+
+      .poem-attribution {
+        display: block;
+        margin-top: var(--spacing-base);
+        font-size: var(--font-size-xsmall);
+        font-family: var(--font-sans);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-chocolate);
+      }
+    }
+  }
+
+  .poem span.highlight {
+    display: inline-block;
+    padding: 0 12px;
+    border-radius: 40px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: -13px;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: background-color 0.3s ease-in-out;
+
+    &.reveal {
+      background-color: rgba(255, 255, 255, 1);
     }
 
-    .typed-text {
+    em {
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
+      height: 100%;
+      opacity: 0;
+      z-index: 0;
+      background-image: url("../../assets/backgrounds/poem/highlight-infancy.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      transition: all 0.3s ease-in-out;
     }
 
-    p {
-      margin: 0 0 var(--spacing-base);
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--color-ink-secondary);
-
-      &:first-of-type::first-letter {
-        float: left;
-        font-size: 4em;
-        line-height: 0.8;
-        padding-right: 0.1em;
-        margin-bottom: -0.1em;
-        color: var(--color-chocolate);
+    &:hover {
+      em {
+        opacity: 1;
       }
-    }
-
-    .poem-attribution {
-      display: block;
-      margin-top: var(--spacing-base);
-      font-size: var(--font-size-xsmall);
-      font-family: var(--font-sans);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--color-chocolate);
     }
   }
 
