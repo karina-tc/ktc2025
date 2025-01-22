@@ -1,0 +1,171 @@
+---
+
+---
+
+<div class="poem-wrapper hidden">
+  <div class="poem-loading">
+    <span>Loading Joy</span>
+    <div class="loading-bar-container">
+      <div class="loading-bar"></div>
+    </div>
+    <span class="loading-percentage">5%</span>
+  </div>
+  <div class="poem">
+    <div class="ghost-text">
+      <p>
+        O to make the most jubilant song! Full of music-full of manhood,
+        womanhood, infancy! Full of common employments-full of grain and trees.
+      </p>
+      <p>
+        O for the voices of animals-O for the swiftness and balance of fishes! O
+        for the dropping of raindrops in a song! O for the sunshine and motion
+        of waves in a song!
+      </p>
+      <p>
+        O the joy of my spirit-it is uncaged-it darts like lightning! It is not
+        enough to have this globe or a certain time, I will have thousands of
+        globes and all time.
+      </p>
+      <p>
+        O the engineer's joys! to go with a locomotive! To hear the hiss of
+        steam, the merry shriek, the steam-whistle, the laughing locomotive! To
+        push with resistless way and speed off in the distance.
+      </p>
+      <p>
+        O the gleesome saunter over fields and hillsides! The leaves and flowers
+        of the commonest weeds, the moist fresh stillness of the woods, The
+        exquisite smell of the earth at daybreak, and all through the forenoon.
+      </p>
+      <p class="poem-attribution">Walt Whitman, A Song of Joys</p>
+    </div>
+    <div class="typed-text">
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p class="poem-attribution"></p>
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  // Hidden
+  .hidden {
+    display: none !important;
+  }
+
+  // Poem
+  .poem-wrapper {
+    width: 80%;
+    max-width: 720px;
+    min-height: calc(100vh - 200px);
+    margin: 80px auto;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 10px 20px rgba(111, 93, 85, 0.2);
+
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--spacing-base);
+    animation: fadeInUp 0.5s ease-in-out forwards;
+    animation-delay: 0.3s;
+  }
+
+  // Poem loading
+  .poem-loading {
+    width: 100%;
+    margin-bottom: var(--spacing-base);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-base);
+    font-size: var(--font-size-xsmall);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-chocolate);
+
+    span:first-child {
+      width: 110px;
+    }
+
+    span:last-child {
+      width: 40px;
+      text-align: right;
+    }
+
+    .loading-bar-container {
+      position: relative;
+      width: calc(100% - 150px);
+      height: 4px;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .loading-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 2%;
+      background-color: var(--color-chocolate);
+      transition: width 0.3s ease-in-out;
+    }
+  }
+
+  .poem {
+    position: relative;
+
+    .ghost-text {
+      opacity: 0.2;
+    }
+
+    .typed-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    p {
+      margin: 0 0 var(--spacing-base);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--color-ink-secondary);
+
+      &:first-of-type::first-letter {
+        float: left;
+        font-size: 4em;
+        line-height: 0.8;
+        padding-right: 0.1em;
+        margin-bottom: -0.1em;
+        color: var(--color-chocolate);
+      }
+    }
+
+    .poem-attribution {
+      display: block;
+      margin-top: var(--spacing-base);
+      font-size: var(--font-size-xsmall);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-chocolate);
+    }
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+</style>

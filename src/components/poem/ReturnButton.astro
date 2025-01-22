@@ -1,0 +1,40 @@
+---
+
+---
+
+<button class="return hidden">
+  <span>← Return</span>
+</button>
+
+<style lang="scss">
+  // Hidden
+  .hidden {
+    display: none;
+  }
+
+  // Return button
+  .return {
+    position: fixed;
+    top: var(--spacing-base);
+    left: var(--spacing-base);
+    font-size: var(--font-size-xsmall);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-paper);
+    background-color: var(--color-chocolate);
+    border-radius: 20px;
+    backdrop-filter: blur(2px);
+    padding: 4px 12px;
+    opacity: 0;
+    animation: fadeInDown 0.5s ease-in-out forwards;
+    animation-delay: 0.3s;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      color: var(--color-paper);
+      background-color: var(--color-ink-secondary);
+    }
+  }
+</style>
