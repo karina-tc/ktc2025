@@ -1,276 +1,240 @@
 ---
+interface Props {
+  initialVolume?: number;
+}
 
+const { initialVolume = 40 } = Astro.props;
 ---
 
-<button class="play-button hidden">
-  <span class="play-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<div class="play-button hidden">
+  <button 
+    class="play-icon" 
+    aria-label="Toggle volume control"
+    aria-expanded="false"
+    aria-controls="volume-control"
+  >
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 256 256"
+      aria-hidden="true"
+    >
       <rect width="256" height="256" fill="none"></rect>
-      <line
-        x1="48"
-        y1="96"
-        x2="48"
-        y2="160"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="16"></line>
-      <line
-        x1="88"
-        y1="32"
-        x2="88"
-        y2="224"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="16"></line>
-      <line
-        x1="128"
-        y1="64"
-        x2="128"
-        y2="192"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="16"></line>
-      <line
-        x1="168"
-        y1="96"
-        x2="168"
-        y2="160"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="16"></line>
-      <line
-        x1="208"
-        y1="80"
-        x2="208"
-        y2="176"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="16"></line>
+      <line x1="48" y1="96" x2="48" y2="160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+      <line x1="88" y1="32" x2="88" y2="224" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+      <line x1="128" y1="64" x2="128" y2="192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+      <line x1="168" y1="96" x2="168" y2="160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+      <line x1="208" y1="80" x2="208" y2="176" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
     </svg>
-    <div class="play-icon-tooltip">Volume</div>
-    <div class="volume-control hidden">
-      <input type="range" min="0" max="100" value="40" class="volume-slider" />
-      <div class="volume-tooltip">40%</div>
+
+    <div class="play-icon-tooltip" role="tooltip">Volume</div>
+
+    <div 
+      id="volume-control"
+      class="volume-control hidden"
+      aria-label="Volume slider"
+    >
+      <input 
+        type="range" 
+        min="0" 
+        max="100" 
+        value={initialVolume} 
+        class="volume-slider"
+        aria-label="Adjust volume"
+      />
+      <div class="volume-tooltip" role="status" aria-live="polite">{initialVolume}%</div>
     </div>
-  </span>
-  <span class="play-text">Play Music</span>
-</button>
+  </button>
+
+  <button class="play-text">Play Music</button>
+</div>
 
 <style lang="scss">
-  // Hidden
-  .hidden {
-    display: none !important;
-  }
-
-  // Play button
   .play-button {
+    --button-size: 32px;
+    --icon-size: 16px;
+    --transition-speed: 0.2s;
+    
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
     gap: var(--spacing-small);
     position: fixed;
     top: var(--spacing-base);
     right: var(--spacing-base);
     padding: 4px 12px;
+  }
 
-    .play-icon {
-      position: relative;
-      width: 32px;
-      height: 32px;
-      padding: 8px;
-      border-radius: 100%;
-      transition: all 0.2s ease-in-out;
-      cursor: pointer;
+  .play-icon {
+    position: relative;
+    width: var(--button-size);
+    height: var(--button-size);
+    padding: 8px;
+    border-radius: var(--button-size);
+    transition: all var(--transition-speed) ease-in-out;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 
-      svg {
-        width: 20px;
-        height: 20px;
-        margin-top: -2px;
-        color: var(--color-chocolate);
-        transition: color 0.2s ease-in-out;
+    svg {
+      width: var(--icon-size);
+      min-width: var(--icon-size);
+      height: var(--icon-size);
+      min-height: var(--icon-size);
+      margin: 4px auto;
+      color: var(--color-chocolate);
+      position: absolute;
+      top: 4px;
+      left: 8px;
+      transition: color var(--transition-speed) ease-in-out;
 
-        line {
-          transform-origin: center;
-          transition: all 0.2s ease;
-        }
-      }
-
-      &:hover,
-      &.playing {
-        background-color: var(--color-chocolate);
-        svg {
-          color: var(--color-paper);
-        }
-      }
-
-      &:hover {
-        .play-icon-tooltip {
-          opacity: 1;
-          left: -80px;
-        }
-      }
-
-      &.menu-open {
-        border-radius: 50% 50% 0 0;
-      }
-
-      &.playing {
-        svg line {
-          animation: waveform 1s ease-in-out infinite;
-
-          &:nth-child(2) {
-            animation-delay: 0.1s;
-          }
-          &:nth-child(3) {
-            animation-delay: 0.2s;
-          }
-          &:nth-child(4) {
-            animation-delay: 0.3s;
-          }
-          &:nth-child(5) {
-            animation-delay: 0.4s;
-          }
-          &:nth-child(6) {
-            animation-delay: 0.5s;
-          }
-        }
-      }
-
-      .play-icon-tooltip {
-        position: absolute;
-        width: 70px;
-        top: 16px;
-        left: -50px;
-        opacity: 0;
-        transform: translateY(-50%) rotate(0deg);
-        background: rgba(255, 255, 255, 0.5);
-        color: var(--color-chocolate);
-        padding: 2px;
-        border-radius: 4px;
-        font-size: var(--font-size-xsmall);
-        font-weight: 600;
-        text-align: center;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        font-family: var(--font-sans);
-        pointer-events: none;
-      }
-
-      .volume-control {
-        position: absolute;
-        bottom: -70px;
-        left: 50%;
-        transform: translateX(-50%) rotate(-90deg);
-        background: var(--color-chocolate);
-        padding: 16px;
-        border-radius: 40px 0% 0% 40px;
-        transition: all 0.2s ease-in-out;
-        z-index: 100;
-        width: 110px;
-        max-height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.8s ease-in-out;
-        transition-delay: 1s;
-
-        &.hidden {
-          opacity: 0;
-          max-height: 0;
-          overflow: hidden;
-          transform: translateX(-50%) rotate(-90deg) translateY(10px);
-        }
-
-        .volume-tooltip {
-          position: absolute;
-          top: 50%;
-          right: -24px;
-          transform: translateY(-50%) rotate(90deg);
-          background: var(--color-chocolate);
-          color: var(--color-paper);
-          padding: 2px;
-          border-radius: 4px;
-          font-size: 12px;
-          font-family: var(--font-sans);
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity 0.2s ease-in-out;
-        }
-
-        .volume-slider:hover + .volume-tooltip,
-        .volume-slider:active + .volume-tooltip {
-          opacity: 1;
-        }
-
-        .volume-slider {
-          width: 80px;
-          -webkit-appearance: none;
-          background: var(--color-paper);
-          height: 3px;
-          border-radius: 2px;
-          outline: none;
-
-          &::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--color-paper);
-            cursor: pointer;
-            border: 2px solid var(--color-chocolate);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-          }
-
-          &::-moz-range-thumb {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--color-paper);
-            cursor: pointer;
-            border: 2px solid var(--color-chocolate);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-          }
-        }
+      line {
+        transform-origin: center;
+        transition: all var(--transition-speed) ease;
       }
     }
 
-    .play-text {
-      color: var(--color-chocolate);
-      font-size: var(--font-size-xsmall);
-      font-family: var(--font-sans);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      text-decoration: underline;
-      text-underline-offset: 4px;
-      text-decoration-color: var(--color-chocolate);
-      transition: all 0.3s ease-in-out;
+    &:hover,
+    &.playing {
+      background-color: var(--color-chocolate);
+      svg {
+        color: var(--color-paper);
+      }
+    }
 
-      &:hover {
-        text-decoration-color: var(--color-accent);
+    &:hover .play-icon-tooltip {
+      opacity: 1;
+      left: -80px;
+    }
+
+    &.menu-open {
+      min-height: 160px;
+    }
+
+    &.playing svg line {
+      animation: waveform 1s ease-in-out infinite;
+
+      @for $i from 2 through 6 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{($i - 1) * 0.1}s;
+        }
       }
     }
   }
 
+  .play-icon-tooltip {
+    position: absolute;
+    opacity: 0;
+    width: 70px;
+    top: 6px;
+    left: -20px;
+    background: rgba(255, 255, 255, 0.5);
+    color: var(--color-chocolate);
+    padding: 2px;
+    border-radius: 4px;
+    font-size: var(--font-size-xsmall);
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: var(--font-sans);
+    pointer-events: none;
+    transition: opacity var(--transition-speed) ease-in-out;
+  }
 
-  // Waveform animation
+  .volume-control {
+    transform: rotate(-90deg);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.8s ease-in-out;
+    transition-delay: 1s;
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+
+    &.hidden {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transform: translateX(-50%) rotate(-90deg) translateY(10px);
+    }
+
+    .volume-tooltip {
+      position: absolute;
+      top: 50%;
+      right: 60px;
+      transform: translateY(-50%) rotate(90deg);
+      background: var(--color-chocolate);
+      color: var(--color-paper);
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: var(--font-size-xsmall);
+      font-family: var(--font-sans);
+      pointer-events: none;
+      transition: opacity var(--transition-speed) ease-in-out;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .volume-slider {
+      width: 80px;
+      -webkit-appearance: none;
+      background: var(--color-paper);
+      height: 3px;
+      border-radius: 2px;
+      outline: none;
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--color-paper);
+        cursor: pointer;
+        border: 2px solid var(--color-chocolate);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      &::-moz-range-thumb {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--color-paper);
+        cursor: pointer;
+        border: 2px solid var(--color-chocolate);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  .play-text {
+    margin-top: 4px;
+    color: var(--color-chocolate);
+    font-size: var(--font-size-xsmall);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: var(--color-chocolate);
+    transition: all var(--transition-speed) ease-in-out;
+
+    &:hover {
+      text-decoration-color: var(--color-accent);
+    }
+  }
+
   @keyframes waveform {
-    0%,
-    100% {
-      transform: scaleY(0.5);
-    }
-    50% {
-      transform: scaleY(1);
-    }
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(2); }
+  }
+
+  .hidden {
+    display: none !important;
   }
 </style>

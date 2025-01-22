@@ -219,10 +219,15 @@ import PoemContent from "../components/poem/PoemContent.astro";
     const loadingPercentage = document.querySelector(".loading-percentage");
     const loadingBar = document.querySelector(".loading-bar");
 
+    // Clear all typed paragraphs first
+    typedParagraphs.forEach(p => {
+      p.textContent = "";
+    });
+
     let totalChars = 0;
     let typedChars = 0;
 
-    // Calculate total characters (including attribution)
+    // Calculate total characters
     ghostParagraphs.forEach((p) => {
       totalChars += (p.textContent || "").length;
     });
@@ -242,8 +247,7 @@ import PoemContent from "../components/poem/PoemContent.astro";
 
     function type() {
       if (currentParagraph < ghostParagraphs.length) {
-        const originalText =
-          ghostParagraphs[currentParagraph].textContent || "";
+        const originalText = ghostParagraphs[currentParagraph].textContent || "";
         const typedP = typedParagraphs[currentParagraph];
 
         if (index < originalText.length) {
