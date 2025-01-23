@@ -248,16 +248,19 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
     }
   }
 
-  // Existing close button logic
+  // Close button logic
   const container = document.querySelector(".manifesto-container");
   const closeButton = document.querySelector(".close-button");
 
   closeButton?.addEventListener("click", () => {
     container?.classList.add("closing");
-    // Wait for animation to complete before navigating back
+    // Get the last visited URL from sessionStorage or default to home
+    const lastVisitedUrl = sessionStorage.getItem('lastVisitedUrl') || '/';
+    
+    // Wait for animation to complete before navigating
     setTimeout(() => {
-      window.location.href = "/";
-    }, 500); // Match this with your animation duration
+      window.location.href = lastVisitedUrl;
+    }, 500);
   });
 
   // Handle back button

@@ -43,7 +43,7 @@ const appendReader = (href: string) => {
         links.map(({ icon, href, text }) => (
           <li>
             <Image src={icon} alt={`${text} icon`} />
-            <a href={appendReader(href)} target="_blank">
+            <a href={appendReader(href)}>
               {text}
             </a>
           </li>
@@ -65,7 +65,7 @@ const appendReader = (href: string) => {
   // Update all links to include reader parameter
   if (reader) {
     document
-      .querySelectorAll('.footer a:not([href^="mailto:"])')
+      .querySelectorAll('.links a:not([href^="mailto:"])')
       .forEach((link) => {
         const href = link.getAttribute("href");
         if (href) {
