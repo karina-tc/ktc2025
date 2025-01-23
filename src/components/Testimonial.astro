@@ -158,10 +158,37 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
         }
       }
 
-      // Update title
+      // Update title with typing effect
       const title = this.card.querySelector('.testimonial-title h2');
       if (title) {
-        title.textContent = testimonial.quote.title;
+        // Split the new title text into spans
+        const chars = testimonial.quote.title.split('').map(char => {
+          const span = document.createElement('span');
+          span.className = 'char';
+          span.style.opacity = '0.2';
+          span.textContent = char;
+          return span;
+        });
+        
+        // Clear existing content and add new spans
+        title.textContent = '';
+        chars.forEach(span => title.appendChild(span));
+        
+        // Animate each character
+        let currentChar = 0;
+        const totalChars = chars.length;
+        const speed = 75;
+
+        function revealNextChar() {
+          if (currentChar < totalChars) {
+            chars[currentChar].style.opacity = '1';
+            currentChar++;
+            setTimeout(revealNextChar, speed);
+          }
+        }
+
+        // Start the typing animation
+        revealNextChar();
       }
 
       // Update quote
@@ -314,6 +341,11 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
           padding-bottom: var(--spacing-small);
           transition: all 0.3s ease-in-out;
           opacity: 0;
+
+          .char {
+            display: inline-block;
+            transition: opacity 0.1s ease-in-out;
+          }
         }
       }
     }
