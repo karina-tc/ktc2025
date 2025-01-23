@@ -34,7 +34,13 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
   includeNavigation={false}
   includeFooter={false}
 >
+  <!-- Manifesto -->
   <div class="manifesto-container" data-referrer={referrer}>
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-bar-inner" style="width: 0%;"></div>
+    </div>
+
     <!-- Background -->
     <div class="manifesto-background"></div>
 
@@ -204,6 +210,34 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
 <script>
   // Import reader utility
   import { getReader, setReader } from "../utils/reader";
+
+  // Progress bar logic
+  const progressBar = document.querySelector('.progress-bar-inner');
+  const content = document.querySelector('.manifesto-content');
+  const outroSection = document.querySelector('[data-section="outro"]');
+
+  function updateProgressBar() {
+    if (!content || !progressBar || !outroSection) return;
+    
+    const scrollPosition = content.scrollTop;
+    const scrollHeight = content.scrollHeight - content.clientHeight;
+    const progress = (scrollPosition / scrollHeight) * 100;
+    
+    // Check if outro section is in view
+    const outroRect = outroSection.getBoundingClientRect();
+    const isOutroVisible = outroRect.top < window.innerHeight;
+    
+    // Set to 100% if outro is visible, otherwise calculate normally
+    const clampedProgress = isOutroVisible ? 100 : Math.min(100, Math.max(0, progress));
+    (progressBar as HTMLElement).style.width = `${clampedProgress}%`;
+  }
+
+  // Update progress bar on scroll
+  content?.addEventListener('scroll', updateProgressBar);
+  
+  // Initialize progress bar at 0%
+  (progressBar as HTMLElement).style.width = '0%';
+  setTimeout(updateProgressBar, 100);
 
   const urlReader = new URLSearchParams(window.location.search).get("reader");
   if (urlReader) {
@@ -668,6 +702,37 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
       &::after {
         opacity: 0;
       }
+    }
+  }
+
+  // Progress Bar
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: transparent;
+    z-index: 100;
+    animation: progressBar 2s ease-in-out forwards;
+
+
+    .progress-bar-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0px;
+      height: 100%;
+      background-color: var(--color-coffee);
+    }
+  }
+
+  @keyframes progressBar {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 </style>
