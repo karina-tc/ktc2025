@@ -35,10 +35,7 @@ const greeting = reader ? `${reader}` : "friend";
     </div>
 
     <!-- Footnote -->
-    <button
-      class="footnote"
-      onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-    >
+    <button class="footnote" onclick="setTimeout(() => window.scrollTo({top: 0, behavior: 'smooth'}), 3000)">
       <span>Have a minute of joy</span>
     </button>
 
@@ -118,14 +115,14 @@ const greeting = reader ? `${reader}` : "friend";
   .footnote {
     width: 80%;
     max-width: 420px;
-    margin: var(--spacing-small) auto var(--spacing-triple);
+    margin: -12px auto var(--spacing-triple);
     display: flex;
     backdrop-filter: blur(2px);
     opacity: 0;
     padding: 4px 6px;
-    border-radius: 4px;
-    color: var(--color-chocolate);
-    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    color: var(--color-ink-tertiary);
+    background-color: var(--color-sky);
     animation: fadeInUp 0.5s ease-in-out forwards;
     animation-delay: 0.8s;
     transition: all 0.3s ease-in-out;
@@ -137,14 +134,13 @@ const greeting = reader ? `${reader}` : "friend";
       padding: 4px 6px;
       font-size: var(--font-size-xsmall);
       font-family: var(--font-sans);
-      font-weight: 500;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.1em;
     }
 
     &:hover {
-      background-color: var(--color-chocolate);
-      color: var(--color-paper);
+      background-color: var(--color-paper);
     }
   }
 

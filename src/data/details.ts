@@ -13,10 +13,10 @@ export const details = [
 ] as const;
 
 export const links = [
-  { icon: hand, href: "/resume", text: "Resume" },
-  { icon: sheet, href: "/work", text: "Work Samples" },
+  { icon: sheet, href: "/resume", text: "Resume" },
+  { icon: scribble, href: "/work", text: "Work Samples" },
   { icon: flower, href: "/about", text: "About Me" },
-  { icon: scribble, href: "/philosophy", text: "My Philosophy" },
+  { icon: hand, href: "/philosophy", text: "My Philosophy" },
 ] as const;
 
 export const contactInfo = {

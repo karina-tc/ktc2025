@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 
+import Infancy from "../../assets/backgrounds/poem/highlight-infancy.png";
 ---
 
 <div class="poem-wrapper hidden">
@@ -14,7 +16,7 @@
     <div class="poem-text">
       <p>
         O to make the most jubilant song! Full of music-full of manhood,
-        womanhood, <span class="highlight infancy">infancy<em></em></span>! Full
+        womanhood, <span class="highlight infancy">infancy</span>! Full
         of common employments-full of grain and trees.
       </p>
       <p>
@@ -45,6 +47,9 @@
       <p class="poem-attribution">Walt Whitman, A Song of Joys</p>
     </div>
   </div>
+  <div class="poem-background">
+    <Image src={Infancy} alt="Infancy" width={1200} height={1200} draggable={false} />
+  </div>
 </div>
 
 <style lang="scss">
@@ -63,6 +68,8 @@
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     backdrop-filter: blur(2px);
+    position: relative;
+    overflow: hidden;
     box-shadow: 0 10px 20px rgba(111, 93, 85, 0.2);
 
     opacity: 0;
@@ -116,6 +123,7 @@
     }
   }
 
+  // Poem Text
   .poem {
     position: relative;
 
@@ -148,51 +156,48 @@
     }
   }
 
+  // Poem Highlights
   .poem span.highlight {
     display: inline-block;
-    padding: 0 12px;
+    padding: 0;
     border-radius: 40px;
     position: relative;
-    overflow: hidden;
-    cursor: pointer;
     margin-bottom: -13px;
     background-color: rgba(255, 255, 255, 0.05);
     transition: background-color 0.3s ease-in-out;
 
     &.reveal {
+      padding: 0 12px;
       background-color: rgba(255, 255, 255, 1);
-    }
-
-    em {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      z-index: 0;
-      background-image: url("../../assets/backgrounds/poem/highlight-infancy.png");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      transition: all 0.3s ease-in-out;
-    }
-
-    &:hover {
-      em {
-        opacity: 1;
-      }
     }
   }
 
-  @keyframes blink {
-    0%,
-    100% {
-      opacity: 1;
+  // Poem Background
+  .poem-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      margin: auto;
+      object-fit: cover;
+      opacity: 0.1;
+      transition: opacity 0.3s ease-in-out;
     }
-    50% {
-      opacity: 0;
+
+    &.reveal {
+      img {
+        opacity: 1;
+      }
     }
   }
 </style>

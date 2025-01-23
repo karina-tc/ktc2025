@@ -272,14 +272,18 @@ import PoemContent from "../components/poem/PoemContent.astro";
           parentHighlight.classList.add('reveal');
         }
         
-        // Update loading progress
-        const progress = Math.round((currentChar / totalChars) * 100);
+        // Update loading progress - make it smoother by calculating exact percentage
+        const progress = Math.floor((currentChar / (totalChars - 1)) * 100);
         if (loadingBar) loadingBar.style.width = `${progress}%`;
         if (loadingPercentage) loadingPercentage.textContent = `${progress}%`;
         
         currentChar++;
         setTimeout(revealNextChar, speed);
       } else {
+        // Ensure we hit 100%
+        if (loadingBar) loadingBar.style.width = '100%';
+        if (loadingPercentage) loadingPercentage.textContent = '100%';
+        
         console.log('Typing complete');
         setTimeout(() => {
           exitPoemView();
