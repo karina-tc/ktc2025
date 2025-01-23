@@ -2,6 +2,7 @@
 // Components
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
+import Subtitle from "../components/Subtitle.astro";
 
 // Data
 import { workExperience, education, otherExperience } from "../data/resume";
@@ -14,10 +15,10 @@ const resumeFileName = "KarinaTovarCastro_CV.pdf";
   title={`${personalInfo.name.full} | Resume`}
   description={`${personalInfo.name.full}'s professional experience and background`}
 >
-  <div class="grid-container" data-intersection-observer={true}>
-    <div class="grid-content">
+  <div class="section-container" data-intersection-observer={true}>
+    <div class="section-content">
       <div class="text-content">
-        <h2>Digital Resume</h2>
+        <Subtitle title="Digital Resume" />
         <h1>{personalInfo.name.full}</h1>
         <p class="subheading">
           <span><strong>{personalInfo.role}</strong></span>
@@ -193,8 +194,7 @@ const resumeFileName = "KarinaTovarCastro_CV.pdf";
     align-items: center;
     justify-content: flex-start;
     gap: 6px;
-    font-family: var(--font-sans);
-    font-size: var(--font-size-small);
+    margin-top: var(--spacing-base);
     font-weight: 500;
 
     em {
