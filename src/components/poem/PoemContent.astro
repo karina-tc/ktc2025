@@ -2,6 +2,10 @@
 import { Image } from "astro:assets";
 
 import Infancy from "../../assets/backgrounds/poem/highlight-infancy.png";
+import Locomotive from "../../assets/backgrounds/poem/highlight-locomotive.png";
+import Lightning from "../../assets/backgrounds/poem/highlight-lightning.png";
+import Woods from "../../assets/backgrounds/poem/highlight-woods.png";
+import Raindrops from "../../assets/backgrounds/poem/highlight-raindrops.png";
 ---
 
 <div class="poem-wrapper hidden">
@@ -16,23 +20,27 @@ import Infancy from "../../assets/backgrounds/poem/highlight-infancy.png";
     <div class="poem-text">
       <p>
         O to make the most jubilant song! Full of music-full of manhood,
-        womanhood, <span class="highlight infancy">infancy</span>! Full
-        of common employments-full of grain and trees.
+        womanhood, <span class="highlight" data-highlight="infancy"
+          >infancy</span
+        >! Full of common employments-full of grain and trees.
       </p>
       <p>
         O for the voices of animals-O for the swiftness and balance of fishes! O
-        for the dropping of <span class="highlight raindrops">raindrops</span> in
-        a song! O for the sunshine and motion of waves in a song!
+        for the dropping of <span class="highlight" data-highlight="raindrops"
+          >raindrops</span
+        > in a song! O for the sunshine and motion of waves in a song!
       </p>
       <p>
         O the joy of my spirit-it is uncaged-it darts like <span
-          class="highlight lightning">lightning</span
+          class="highlight"
+          data-highlight="lightning">lightning</span
         >! It is not enough to have this globe or a certain time, I will have
         thousands of globes and all time.
       </p>
       <p>
-        O the engineer's joys! to go with a <span class="highlight locomotive"
-          >locomotive</span
+        O the engineer's joys! to go with a <span
+          class="highlight"
+          data-highlight="locomotive">locomotive</span
         >! To hear the hiss of steam, the merry shriek, the steam-whistle, the
         laughing locomotive! To push with resistless way and speed off in the
         distance.
@@ -40,7 +48,8 @@ import Infancy from "../../assets/backgrounds/poem/highlight-infancy.png";
       <p>
         O the gleesome saunter over fields and hillsides! The leaves and flowers
         of the commonest weeds, the moist fresh stillness of the <span
-          class="highlight woods">woods</span
+          class="highlight"
+          data-highlight="woods">woods</span
         >, The exquisite smell of the earth at daybreak, and all through the
         forenoon.
       </p>
@@ -48,7 +57,51 @@ import Infancy from "../../assets/backgrounds/poem/highlight-infancy.png";
     </div>
   </div>
   <div class="poem-background">
-    <Image src={Infancy} alt="Infancy" width={1200} height={1200} draggable={false} />
+    <Image
+      class="muted"
+      src={Infancy}
+      alt="Infancy"
+      width={1200}
+      height={1200}
+      draggable={false}
+      data-highlight="infancy"
+    />
+    <Image
+      class="muted"
+      src={Raindrops}
+      alt="Raindrops"
+      width={1200}
+      height={1200}
+      draggable={false}
+      data-highlight="raindrops"
+    />
+    <Image
+      class="muted"
+      src={Lightning}
+      alt="Lightning"
+      width={1200}
+      height={1200}
+      draggable={false}
+      data-highlight="lightning"
+    />
+    <Image
+      class="muted"
+      src={Locomotive}
+      alt="Locomotive"
+      width={1200}
+      height={1200}
+      draggable={false}
+      data-highlight="locomotive"
+    />
+    <Image
+      class="muted"
+      src={Woods}
+      alt="Woods"
+      width={1200}
+      height={1200}
+      draggable={false}
+      data-highlight="woods"
+    />
   </div>
 </div>
 
@@ -186,18 +239,34 @@ import Infancy from "../../assets/backgrounds/poem/highlight-infancy.png";
     overflow: hidden;
 
     img {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       margin: auto;
       object-fit: cover;
-      opacity: 0.1;
       transition: opacity 0.3s ease-in-out;
-    }
 
-    &.reveal {
-      img {
-        opacity: 1;
+      &.muted {
+        opacity: 0;
       }
+
+      &.reveal {
+        animation: reveal 4s ease-in-out forwards;
+      }
+    }
+  }
+
+  @keyframes reveal {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.25;
+    }
+    100% {
+      opacity: 0;
     }
   }
 </style>

@@ -269,10 +269,18 @@ import PoemContent from "../components/poem/PoemContent.astro";
         const parentHighlight = charSpan.closest('.highlight');
         if (parentHighlight && 
             Array.from(parentHighlight.querySelectorAll('.char')).indexOf(charSpan) === 0) {
+          // Add reveal class to the highlight span
           parentHighlight.classList.add('reveal');
+          
+          // Find and reveal the corresponding background image
+          const highlightType = parentHighlight.getAttribute('data-highlight');
+          if (highlightType) {
+            const backgroundImage = document.querySelector(`.poem-background img[data-highlight="${highlightType}"]`);
+            backgroundImage?.classList.add('reveal');
+          }
         }
         
-        // Update loading progress - make it smoother by calculating exact percentage
+        // Update loading progress
         const progress = Math.floor((currentChar / (totalChars - 1)) * 100);
         if (loadingBar) loadingBar.style.width = `${progress}%`;
         if (loadingPercentage) loadingPercentage.textContent = `${progress}%`;
