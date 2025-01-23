@@ -21,8 +21,8 @@ export const personalInfo = {
       url: "https://github.com/karina-tc"
     },
     threads: {
-      handle: "karinatovar",
-      url: "https://www.threads.net/@karinatovar"
+      handle: "karinasteethgap",
+      url: "https://www.threads.net/@karinasteethgap"
     }
   },
   website: "https://karinatovar.com"

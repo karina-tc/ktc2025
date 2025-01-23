@@ -29,7 +29,7 @@ personalInfo.social.threads.url // Threads profile URL
 // Handles
 personalInfo.social.linkedin.handle // "karina-tovar-castro"
 personalInfo.social.github.handle // "karina-tc"
-personalInfo.social.threads.handle // "karinatovar"
+personalInfo.social.threads.handle // "karinasteethgap"
 
 ## Usage Examples
 
