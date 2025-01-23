@@ -1,29 +1,28 @@
 ---
 import { Image } from "astro:assets";
 import Subtitle from "../Subtitle.astro";
-import hand from "../../assets/illustrations/hand.svg";
 
 const philosophyItems = [
   {
-    icon: hand,
+    digits: "01",
     title: "Ideas can come from anywhere",
     description:
       "Don't let ego get in the way. Be the champion where people feel comfortable bringing ideas forth.",
   },
   {
-    icon: hand,
+    digits: "02",
     title: "Become fast, but be diligent",
     description:
       "Work as fast as you can to understand the problem and deliver a worthwhile solution.",
   },
   {
-    icon: hand,
+    digits: "03",
     title: "Design should be accessible to everyone",
     description:
       "It's the right thing and it makes your product feel more human.",
   },
   {
-    icon: hand,
+    digits: "04",
     title: "Play and plan for the long game",
     description:
       "Go further than building delight. Think of the long term and how your solution can grow.",
@@ -35,11 +34,9 @@ const philosophyItems = [
   <Subtitle title="My Design Philosophy" />
   <div class="split-container">
     {
-      philosophyItems.map(({ icon, title, description }) => (
+      philosophyItems.map(({ digits, title, description }) => (
         <div class="column">
-          <div class="art-content">
-            <Image src={icon} alt={title} />
-          </div>
+          <div class="digits">{digits}</div>
           <div class="text-content">
             <h4>{title}</h4>
             <p>{description}</p>
@@ -65,15 +62,21 @@ const philosophyItems = [
     .column {
       display: flex;
       flex-direction: row;
-      gap: var(--spacing-small);
+      gap: var(--spacing-base);
       padding: var(--spacing-small);
-
       border-bottom: 1px solid var(--color-border);
-
-      .art-content {
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+      .digits {
         display: flex;
         justify-content: center;
         align-items: center;
+        font-size: var(--font-size-large);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-ink-tertiary);
+        font-family: var(--font-mono);
+        border-radius: 6px;
+        background-color: var(--color-surface);
 
         width: 40px;
         min-width: 40px;
@@ -81,6 +84,7 @@ const philosophyItems = [
         min-height: 40px;
         max-height: 40px;
         height: 40px;
+        transition: all 0.3s ease-in-out;
       }
 
       .text-content {
@@ -93,6 +97,13 @@ const philosophyItems = [
 
         h4 {
           margin-bottom: var(--spacing-xxs);
+        }
+      }
+
+      &:hover {
+        .digits {
+          background-color: var(--color-ink-tertiary);
+          color: var(--color-paper);
         }
       }
     }
