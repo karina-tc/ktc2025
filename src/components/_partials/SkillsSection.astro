@@ -1,45 +1,37 @@
 ---
 import { Image } from "astro:assets";
 import Subtitle from "../Subtitle.astro";
-import hand from "../../assets/illustrations/hand.svg";
 
 const skillsItems = [
   {
-    icon: hand,
     title: "Full-Stack Product Builder",
     description:
       "I have worn every R&D hat though my career. Product Manager, Designer, and now curious front-end developer.",
   },
   {
-    icon: hand,
     title: "Strategic Business Partner",
     description:
-      "I once was part of a team of 2 int a startup where I learned the meaning of truly acting like an owner. I know the pains of low MRRs and high churn.",
+      "I once was part of a team of 2 in a startup where I learned the meaning of truly acting like an owner. I know the pains of low MRRs and high churn.",
   },
   {
-    icon: hand,
     title: "Systems Thinker",
     description:
       "I’ve worked for startups of all sizes across many categories. Specializing in technical and complex products.",
   },
   {
-    icon: hand,
-    title: "Designer Super IC and Lead",
+    title: "Designer Super IC",
     description:
       "I will never not want to touch pixels. Design is my new art tool, but I have often been placed in positions of leadership to upskill teams.",
   },
 ];
 ---
 
-<div class="section-container">
+<!-- Start -->
   <Subtitle title="Some of My Skills" />
   <div class="split-container">
     {
-      skillsItems.map(({ icon, title, description }) => (
+      skillsItems.map(({ title, description }) => (
         <div class="column">
-          <div class="art-content">
-            <Image src={icon} alt={title} />
-          </div>
           <div class="text-content">
             <h4>{title}</h4>
             <p>{description}</p>
@@ -48,7 +40,7 @@ const skillsItems = [
       ))
     }
   </div>
-</div>
+<!-- End -->
 
 <style lang="scss">
   .split-container {
@@ -65,9 +57,9 @@ const skillsItems = [
       display: flex;
       flex-direction: row;
       gap: var(--spacing-small);
-      padding: var(--spacing-small);
-
-      border-bottom: 1px solid var(--color-border);
+      padding: var(--spacing-base);
+      background-color: var(--color-surface);
+      border-radius: var(--border-radius-base);
 
       .art-content {
         display: flex;
