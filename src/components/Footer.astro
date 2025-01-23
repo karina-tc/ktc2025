@@ -31,16 +31,16 @@ const social = [
     <Tooltip text="Colophon">
       <div class="tooltip-wrapper">
         <p>
-          This website was coded with love, sweat, and tears by yours truly using
-          AstroJs, TypeScript, and Tailwind CSS.
+          This website was coded with sweat, some tears, but mostly love, by yours truly using
+          AstroJs, TypeScript, Tailwind CSS and a little bit of Cursor's magic.
           <br /><br />
           I'm using Instrument Serif, Instrument Sans and EB Garamond as fonts.
-          The color palette is inspired by the smell of cholocate cookies.
+          The color palette is inspired by the smell of warm cholocate and cookies on a cold fall night.
         </p>
       </div>
     </Tooltip>
-    <span>·</span>
-    <a href="/share">Share Site</a>
+    <span>&nbsp;·&nbsp;</span>
+    <a class="footer-link" href="/share-the-joy">Have a Minute of Joy</a>
   </div>
 </footer>
 
@@ -89,7 +89,7 @@ const social = [
   }
 
   .footer-links a:hover {
-    text-decoration: underline !important;
+    text-decoration: underline;
   }
 
   .tooltip-wrapper {
@@ -105,6 +105,17 @@ const social = [
     p {
       flex: 1;
       margin: 0;
+    }
+  }
+
+  .footer-link {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--color-ink-tertiary);
+
+    &:hover {
+      text-decoration-color: var(--color-accent);
+      text-decoration-style: solid;
     }
   }
 </style>
