@@ -1,0 +1,241 @@
+---
+import { Image } from "astro:assets";
+import spendBubble from "../../../assets/illustrations/case-studies/beyond-contracts/chart-bubble-spend.png";
+import dataBubble from "../../../assets/illustrations/case-studies/beyond-contracts/chart-bubble-data.png";
+import timeBubble from "../../../assets/illustrations/case-studies/beyond-contracts/chart-bubble-time.png";
+import interfaceBubble from "../../../assets/illustrations/case-studies/beyond-contracts/chart-bubble-interface.png";
+
+interface Initiative {
+  title: string;
+  size: "large" | "medium" | "small" | "xsmall";
+  x: string;
+  y: string;
+  image?: ImageMetadata;
+}
+
+
+const initiatives: Initiative[] = [
+  {
+    title: "Unlocking Spend Reporting",
+    size: "large",
+    x: "85%",
+    y: "25%",
+    image: spendBubble,
+  },
+  {
+    title: "Contract Data Completion",
+    size: "medium",
+    x: "65%",
+    y: "55%",
+    image: dataBubble,
+  },
+  {
+    title: "Unblocking Account Execs' Time",
+    size: "small",
+    x: "15%",
+    y: "15%",
+    image: timeBubble,
+  },
+  {
+    title: "Improving User Interface",
+    size: "xsmall",
+    x: "25%",
+    y: "75%",
+    image: interfaceBubble,
+  },
+];
+---
+
+<div class="quadrant-chart">
+  <div class="chart-container">
+    <!-- Axis Labels -->
+    <div class="y-axis-label">Business Impact</div>
+    <div class="x-axis-label">Value Importance</div>
+
+    <!-- Corner Labels -->
+    <div class="corner-label high-left">HIGH</div>
+    <div class="corner-label high-right">HIGH</div>
+    <div class="corner-label low-left">LOW</div>
+
+    <!-- Axis Lines -->
+    <div class="vertical-line"></div>
+    <div class="horizontal-line"></div>
+
+    <!-- Initiative Bubbles -->
+    {
+      initiatives.map(({ title, size, x, y, image }) => (
+        <div class={`initiative ${size}`} style={`--x: ${x}; --y: ${y};`}>
+          <div class="bubble">{image && <Image src={image} alt={title} />}</div>
+          <span>{title}</span>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style lang="scss">
+  // Breakpoint mixins
+  @use "../../../styles/base/_breakpoints.scss" as *;
+
+  .quadrant-chart {
+    position: relative;
+    width: 90%;
+    aspect-ratio: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-double);
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: var(--color-surface);
+      border-radius: 8px;
+    }
+
+    .vertical-line,
+    .horizontal-line {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.1);
+
+      &::after {
+        content: "";
+        position: absolute;
+        background: inherit;
+      }
+    }
+
+    .vertical-line {
+      left: 50%;
+      height: 100%;
+      width: 1px;
+      transform: translateX(-50%);
+    }
+
+    .horizontal-line {
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      transform: translateY(-50%);
+    }
+
+    // These are the labels for the quadrants
+    .corner-label {
+      position: absolute;
+      font-size: var(--font-size-small);
+      color: var(--color-ink-tertiary);
+      font-family: var(--font-mono);
+      padding: var(--spacing-base);
+
+      @include tablet {
+        font-size: var(--font-size-xxs);
+      }
+
+      &.high-left {
+        top: 0;
+        left: 0;
+      }
+      &.high-right {
+        top: 0;
+        right: 0;
+      }
+      &.low-left {
+        bottom: 0;
+        left: 0;
+      }
+    }
+
+    // These are the labels for the axes
+    .y-axis-label,
+    .x-axis-label {
+      position: absolute;
+      font-family: var(--font-headings);
+      color: var(--color-ink-secondary);
+      font-size: var(--font-size-base);
+
+      @include tablet {
+        font-size: var(--font-size-small);
+      }
+    }
+
+    .y-axis-label {
+      left: -2em;
+      top: calc(50% + 2em);
+      transform: rotate(-90deg);
+      transform-origin: left center;
+    }
+
+    .x-axis-label {
+      bottom: -3em;
+      left: calc(50% - 3em);
+      text-align: center;
+    }
+
+    .initiative {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-xsmall);
+      left: var(--x);
+      top: var(--y);
+
+      .bubble {
+        width: var(--size);
+        height: var(--size);
+        border-radius: 50%;
+        background: var(--color-coffee);
+        opacity: 0.9;
+        cursor: pointer;
+        border: 1px solid var(--color-paper);
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          opacity: 1;
+          background: var(--color-accent-light);
+
+          img {
+            mix-blend-mode: plus-lighter;
+          }
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          mix-blend-mode: color-dodge;
+        }
+      }
+
+      span {
+        text-align: center;
+        font-size: var(--font-size-xsmall);
+        color: var(--color-ink-secondary);
+        font-family: var(--font-sans);
+        font-weight: 500;
+        max-width: 120px;
+        line-height: 1.2;
+        text-wrap: balance;
+        margin-top: var(--spacing-xsmall);
+
+        @include tablet {
+          font-size: var(--font-size-xxs);
+        }
+      }
+
+      &.large {
+        --size: 80px;
+      }
+      &.medium {
+        --size: 60px;
+      }
+      &.small {
+        --size: 40px;
+      }
+      &.xsmall {
+        --size: 30px;
+      }
+    }
+  }
+</style>

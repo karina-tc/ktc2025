@@ -6,6 +6,7 @@ import CaseStudyHeader from "../../components/work/CaseStudyHeader.astro";
 import { getCaseStudy } from "../../data/case-study-details";
 import CaseStudyShowcase from "../../components/work/CaseStudyShowcase.astro";
 import ImpactSection from "../../components/work/ImpactSection.astro";
+import QuadrantChart from "../../components/_partials/work/QuadrantChart.astro";
 
 //Assets
 import scribble from "../../assets/scribbles/loop-down.svg";
@@ -194,8 +195,11 @@ const caseStudy = getCaseStudy("beyondContracts");
       <!-- Plate End -->
 
       <p>
-        Data cleanup may not sound exciting—I’ll admin that it's about as thrilling as organizing your sock drawer—but it was crucial. 
-        <strong>We needed to Marie Kondo our experience into a crystal-clear supplier system that would truly spark joy for our customers.</strong>
+        Data cleanup may not sound exciting—I'll admin that it's about as
+        thrilling as organizing your sock drawer—but it was crucial. <strong
+          >We needed to Marie Kondo our experience into a crystal-clear supplier
+          system that would truly spark joy for our customers.</strong
+        >
       </p>
       <p>
         We needed to organize our data to make it crystal clear how suppliers
@@ -209,6 +213,8 @@ const caseStudy = getCaseStudy("beyondContracts");
         the initiatives that could help us maximize financial reporting and
         operational value.
       </p>
+
+      <QuadrantChart />
     </div>
   </div>
 </BaseLayout>
@@ -345,6 +351,7 @@ const caseStudy = getCaseStudy("beyondContracts");
       justify-content: space-between;
       gap: var(--spacing-double);
       padding: var(--spacing-quad) 0;
+      cursor: pointer;
 
       @include mobile {
         flex-direction: column;
@@ -419,7 +426,8 @@ const caseStudy = getCaseStudy("beyondContracts");
     }
 
     @keyframes float {
-      0%, 100% {
+      0%,
+      100% {
         transform: translate(-50%, -50%);
       }
       50% {
