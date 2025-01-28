@@ -1,0 +1,118 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  background: ImageMetadata;
+  caption?: {
+    icon: ImageMetadata;
+    title: string;
+    description: string;
+  };
+}
+
+const { background, caption } = Astro.props;
+---
+
+<div class="case-showcase">
+  <figure>
+    <slot />
+  </figure>
+  
+  <div class="showcase-background">
+    <Image
+      src={background}
+      alt="showcase background"
+      draggable="false"
+    />
+  </div>
+
+  {caption && (
+    <figcaption class="caption-container">
+      <Image src={caption.icon} alt={caption.title} draggable="false" width={40} />
+      <div class="caption-content">
+        <span>{caption.title}</span>
+        <span>{caption.description}</span>
+      </div>
+    </figcaption>
+  )}
+</div>
+
+<style lang="scss">
+  @use "../../styles/base/_breakpoints.scss" as *;
+
+  .case-showcase {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-base);
+    position: relative;
+    margin-bottom: var(--spacing-quad);
+
+    figure {
+      width: 90%;
+      position: relative;
+      z-index: 1;
+      max-width: 1220px;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -10px rgba(92, 74, 54, 0.5);
+
+      :global(img), :global(video) {
+        width: calc(100% - 24px);
+        height: auto;
+        margin: 12px;
+        border-radius: 12px;
+        border: 1px solid var(--color-paper);
+      }
+    }
+
+    .showcase-background {
+      width: 100%;
+      height: calc(100% - 15%);
+      position: absolute;
+      top: 15%;
+      left: 0;
+      z-index: -1;
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .caption-container {
+      width: 90%;
+      max-width: 920px;
+      margin: 20px auto -40px;
+      display: flex;
+      gap: var(--spacing-base);
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: var(--spacing-base);
+      background-color: var(--color-paper);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px -10px rgba(92, 74, 54, 0.5);
+
+      img {
+        width: 40px;
+        height: auto;
+        border-radius: 12px;
+      }
+
+      .caption-content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-small);
+        font-size: var(--font-size-base);
+
+        span:first-child {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+</style> 

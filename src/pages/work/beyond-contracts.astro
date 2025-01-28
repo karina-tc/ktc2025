@@ -2,102 +2,50 @@
 // Components
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
+import CaseStudyHeader from "../../components/work/CaseStudyHeader.astro";
+import { getCaseStudy } from "../../data/case-study-details";
+import CaseStudyShowcase from "../../components/work/CaseStudyShowcase.astro";
 
 //Assets
 import scribble from "../../assets/scribbles/loop-down.svg";
+import showcaseImage from "../../assets/case-studies/tropic/tropic-supplier-index.png";
+import showcaseBackground from "../../assets/backgrounds/bg02.png";
+import showcaseLogo from "../../assets/icons/cv-tropic.png";
 
-const title = "Beyond Contracts";
-
-const description =
-  "How we rebuilt Tropic to make suppliers the heart of our platform. Evolving from contract focused to a true spend management solution.";
+// Data
+const caseStudy = getCaseStudy("beyondContracts");
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
->
-  <div class="grid-container main-details" data-intersection-observer={true}>
-    <div class="grid-content">
-      <div class="text-content">
-        <h3>Tropic</h3>
-        <h1>
-          <span>{title}</span>
-          <span class="subheading">Building Financial Clarity</span>
-        </h1>
-        <p>{description}</p>
-      </div>
-    </div>
-    <div class="aside-details">
-      <div class="details-column">
-        <span>Role</span>
-        <span>Lead Product Designer</span>
-      </div>
-      <div class="details-column">
-        <span>Project Status</span>
-        <span>Launched</span>
-      </div>
-      <div class="details-column">
-        <span>Timeline</span>
-        <span>H2 2024 &mdash; H1 2025</span>
-      </div>
-      <div class="details-column">
-        <span>Focus Areas</span>
-        <span>Product Design, Strategy, Information Architecture, Architecture, Systems Design, UX Research</span>
-      </div>
-    </div>
-  </div>
+<BaseLayout title={caseStudy.title} description={caseStudy.description}>
+  <!-- Case Study Header -->
+  <CaseStudyHeader {...caseStudy} />
+
+  <CaseStudyShowcase
+    background={showcaseBackground}
+    caption={{
+      icon: showcaseLogo,
+      title: "What is Tropic?",
+      description: "Tropic is an intake-to-procure platform that helps companies of all sizes—from startups to enterprises like OpenAI—manage their supplier relationships and reduce unnecessary spending."
+    }}>
+    <Image
+      src={showcaseImage}
+      alt="show case image"
+      draggable="false"
+      width={1220}
+      priority
+    />
+  </CaseStudyShowcase>
 
   <!-- Spacer -->
   <div class="spacer-small"></div>
 
-  <!-- Blog Posts -->
-  <div class="section-container">
-    here
-  </div>
+  <!-- Case Study Content -->
+  <div class="section-container">here</div>
 </BaseLayout>
 
 <style lang="scss">
   // Breakpoint mixins
   @use "../../styles/base/_breakpoints.scss" as *;
 
-  .main-details {
-    h1 span.subheading {
-      display: block;
-      font-style: italic;
-      color: var(--color-ink-tertiary);
-      transform: scale(0.8);
-      transform-origin: left;
-    }
-  }
-
-  .aside-details {
-    @include desktop-reverse {
-      max-width: 220px;
-      margin-left: auto;
-    }
-
-    span:first-child {
-      font-weight: 600;
-      font-size: var(--font-size-xsmall);
-      color: var(--color-ink-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    span:last-child {
-      margin-bottom: var(--spacing-small);
-    }
-
-    .details-column {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-small);
-      padding-bottom: var(--spacing-base);
-      border-bottom: 1px solid var(--color-border);
-
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-  }
 </style>
+

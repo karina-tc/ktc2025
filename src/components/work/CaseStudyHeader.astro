@@ -1,0 +1,101 @@
+---
+interface Props {
+  title: string;
+  subheading?: string;
+  company: string;
+  description: string;
+  role: string;
+  status: string;
+  timeline: string;
+  focusAreas: string;
+}
+
+const { 
+  title, 
+  subheading, 
+  company, 
+  description,
+  role,
+  status,
+  timeline,
+  focusAreas
+} = Astro.props;
+---
+
+<div class="grid-container main-details" data-intersection-observer={true}>
+  <div class="grid-content">
+    <div class="text-content">
+      <h3>{company}</h3>
+      <h1>
+        <span>{title}</span>
+        {subheading && <span class="subheading">{subheading}</span>}
+      </h1>
+      <p>{description}</p>
+    </div>
+  </div>
+  <div class="aside-details">
+    <div class="details-column">
+      <span>Role</span>
+      <span>{role}</span>
+    </div>
+    <div class="details-column">
+      <span>Project Status</span>
+      <span>{status}</span>
+    </div>
+    <div class="details-column">
+      <span>Timeline</span>
+      <span>{timeline}</span>
+    </div>
+    <div class="details-column">
+      <span>Focus Areas</span>
+      <span>{focusAreas}</span>
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../../styles/base/_breakpoints.scss" as *;
+
+  .main-details {
+    h1 span.subheading {
+      display: block;
+      font-style: italic;
+      color: var(--color-ink-tertiary);
+    }
+  }
+
+  .aside-details {
+    @include desktop-reverse {
+      max-width: 220px;
+      margin-left: auto;
+      margin-top: var(--spacing-base);
+    }
+
+    span:first-child {
+      font-weight: 600;
+      font-size: var(--font-size-xxs);
+      font-family: var(--font-sans);
+      color: var(--color-ink-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    span:last-child {
+      font-size: var(--font-size-base);
+      margin-bottom: var(--spacing-small);
+    }
+
+    .details-column {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-small);
+      padding-bottom: var(--spacing-small);
+      margin-bottom: var(--spacing-base);
+      border-bottom: 1px solid var(--color-border);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+</style> 
