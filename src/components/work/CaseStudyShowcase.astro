@@ -14,7 +14,7 @@ const { background, caption } = Astro.props;
 ---
 
 <div class="case-showcase">
-  <figure>
+  <figure data-intersection-observer={true}>
     <slot />
   </figure>
   
@@ -27,7 +27,7 @@ const { background, caption } = Astro.props;
   </div>
 
   {caption && (
-    <figcaption class="caption-container">
+    <figcaption class="caption-container" data-intersection-observer={true}>
       <Image src={caption.icon} alt={caption.title} draggable="false" width={40} />
       <div class="caption-content">
         <span>{caption.title}</span>
