@@ -5,12 +5,16 @@ import { Image } from "astro:assets";
 import CaseStudyHeader from "../../components/work/CaseStudyHeader.astro";
 import { getCaseStudy } from "../../data/case-study-details";
 import CaseStudyShowcase from "../../components/work/CaseStudyShowcase.astro";
+import ImpactSection from "../../components/work/ImpactSection.astro";
 
 //Assets
 import scribble from "../../assets/scribbles/loop-down.svg";
 import showcaseImage from "../../assets/case-studies/tropic/tropic-supplier-index.png";
-import showcaseBackground from "../../assets/backgrounds/bg02.png";
+import showcaseBackground from "../../assets/backgrounds/bgCS.jpg";
 import showcaseLogo from "../../assets/icons/cv-tropic.png";
+import rocketShip from "../../assets/illustrations/case-studies/beyond-contracts/rocket-ship-illus.png";
+import rocketBg from "../../assets/illustrations/case-studies/beyond-contracts/rocket-illus-bg.png";
+import galaxyQuest from "../../assets/illustrations/case-studies/beyond-contracts/galaxy-quest-illus.png";
 
 // Data
 const caseStudy = getCaseStudy("beyondContracts");
@@ -25,8 +29,10 @@ const caseStudy = getCaseStudy("beyondContracts");
     caption={{
       icon: showcaseLogo,
       title: "What is Tropic?",
-      description: "Tropic is an intake-to-procure platform that helps companies of all sizes—from startups to enterprises like OpenAI—manage their supplier relationships and reduce unnecessary spending."
-    }}>
+      description:
+        "Tropic is an intake-to-procure platform that helps companies of all sizes—from startups to enterprises like OpenAI—manage their supplier relationships and reduce unnecessary spending.",
+    }}
+  >
     <Image
       src={showcaseImage}
       alt="show case image"
@@ -40,12 +46,290 @@ const caseStudy = getCaseStudy("beyondContracts");
   <div class="spacer-small"></div>
 
   <!-- Case Study Content -->
-  <div class="section-container">here</div>
+  <div class="section-container">
+    <!-- Impact Section -->
+    <ImpactSection
+      metrics={[
+        {
+          metric: "Time Savings",
+          value: "~4hrs",
+          description: "per week per customer",
+        },
+        {
+          metric: "Customer Engagement",
+          value: "~10%",
+          description: "increase in engagement",
+        },
+        {
+          metric: "Data Accuracy",
+          value: "~70%",
+          description: "increase in accuracy",
+        },
+      ]}
+    />
+
+    <!-- Case Study Content -->
+    <div class="story-container" data-intersection-observer={true}>
+      <h4>Problem</h4>
+      <h2>Beyond the Contract Horizon</h2>
+      <p>
+        Built initially around contracts, Tropic's platform faced a critical
+        limitation: <strong
+          >suppliers without contracts remained invisible, preventing complete
+          spend tracking</strong
+        >. Our 2023 customer interviews highlighted this as a major concern.
+      </p>
+      <p>
+        The impact was significant. Shadow spend became harder to track, and <strong
+          >customers resorted to using spreadsheets instead of our platform</strong
+        >. We needed to reimagine our approach by making suppliers, not
+        contracts, the central focus of our platform—creating what we called the
+        "supplierverse."
+      </p>
+      <p>
+        <strong>A great solution would increase customers...</strong>
+      </p>
+      <div class="spacer-small"></div>
+      <div class="section-grid">
+        <div class="section-item standout">
+          <h3>Visibility</h3>
+          <hr />
+          <p>
+            360 view of all supplier relationships and spending across the
+            organization
+          </p>
+        </div>
+        <div class="section-item">
+          <h3>Focus</h3>
+          <hr />
+          <p>
+            Streamlined supplier management without difficulties and
+            distractions
+          </p>
+        </div>
+        <div class="section-item">
+          <h3>Clarity</h3>
+          <hr />
+          <p>
+            Clear insights into supplier data, contracts, and spending patterns
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case Study Content -->
+    <div class="story-container" data-intersection-observer={true}>
+      <h4>Discovery</h4>
+      <h2>Galaxy Quest</h2>
+      <p>
+        To make our experience a supplier centric one, I looked at all the data
+        objects that made up a supplier so that we could built that universe.
+        Through conversations with our Account Executives about customer
+        onboarding, we studied how both clients and our team set up Tropic
+        accounts. A clear pattern emerged: the <strong
+          >key components of a supplier existed in isolation</strong
+        >—like separate moons orbiting without any connection to each other.
+      </p>
+
+      <div class="spacer-small"></div>
+
+      <div class="artwork">
+        <Image
+          src={galaxyQuest}
+          alt="Galaxy Quest"
+          width={320}
+          draggable={false}
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <!-- Case Study Content -->
+    <div class="story-container" data-intersection-observer={true}>
+      <h4>Strategizing</h4>
+      <h2>Mission Control</h2>
+      <p>
+        With supplier data scattered across our procurement universe, we needed
+        a mission control center to bring order to the chaos. <strong
+          >Our customers needed a single source of truth</strong
+        > that would give them complete visibility into their supplier expenses,
+        commitments, and usage - <strong
+          >but first, we had to tackle the data quality challenge</strong
+        >.
+      </p>
+      <div class="plate-wrapper rocket-ship-narrative">
+        <span class="plate-label">Figure II.</span>
+        <figure class="plate-content">
+          <Image
+            class="rocketship"
+            src={rocketShip}
+            alt="Rocket Ship"
+            width={158}
+            draggable={false}
+            loading="lazy"
+          />
+          <div class="floating-cards">
+            <div class="floating-cards-cell">
+              <h5>Business Goal</h5>
+              <span>Data Quality</span>
+              <span>Enhance data quality and visibility</span>
+            </div>
+            <div class="floating-cards-cell">
+              <h5>Customer Goal</h5>
+              <span>Spend Insights</span>
+              <span>Provide customers financial impact of expenses</span>
+            </div>
+          </div>
+        </figure>
+        <figcaption class="plate-caption">
+          Formalizing Our Plan for Launch
+        </figcaption>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
 
 <style lang="scss">
   // Breakpoint mixins
   @use "../../styles/base/_breakpoints.scss" as *;
 
-</style>
+  .story-container {
+    margin: var(--spacing-quad) 0;
+    padding: var(--spacing-double) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-base);
 
+    p {
+      font-size: var(--font-size-base);
+    }
+
+    h4 {
+      color: var(--color-ink-tertiary);
+      font-family: var(--font-sans);
+      font-size: var(--font-size-small);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0 0 var(--spacing-xsmall);
+    }
+
+    h2 {
+      color: var(--color-ink-secondary);
+      font-family: var(--font-headings);
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin: 0 0 var(--spacing-base);
+      letter-spacing: -0.02em;
+    }
+
+    .artwork,
+    .plate-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .plate-wrapper {
+      .plate-label,
+      .plate-caption {
+        color: var(--color-ink-tertiary);
+        width: fit-content;
+        margin: var(--spacing-base) auto;
+        text-align: center;
+      }
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-base);
+
+      @include tablet {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include mobile {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      .section-item {
+        display: flex;
+        flex-direction: column;
+        padding: var(--spacing-base);
+        font-size: var(--font-size-base);
+        border-radius: 6px;
+        background-color: var(--color-surface);
+
+        &.standout {
+          background-color: var(--color-ink);
+
+          h3 {
+            color: var(--color-surface);
+          }
+
+          hr {
+            border-color: var(--color-coffee);
+          }
+
+          p {
+            color: var(--color-paper);
+          }
+        }
+
+        h3 {
+          font-family: var(--font-headings);
+          font-size: clamp(1.5rem, 5vw, 1.5rem);
+          color: var(--color-ink-tertiary);
+        }
+
+        hr {
+          border: 1px solid var(--color-border);
+          margin: var(--spacing-base) 0;
+        }
+      }
+    }
+  }
+
+  .rocket-ship-narrative {
+    flex-direction: column;
+    background-image: url("../../assets/illustrations/case-studies/beyond-contracts/rocket-illus-bg.png");
+    background-size: 300px;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    .plate-content {
+      position: relative;
+    }
+
+    .floating-cards {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      gap: var(--spacing-base);
+      padding: var(--spacing-double) 0;
+      margin: var(--spacing-quad) 0;
+      z-index: 1;
+
+      .floating-cards-cell {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xsmall);
+        align-items: start;
+        justify-content: start;
+        background-color: white;
+        padding: var(--spacing-base);
+        border-radius: 6px;
+        border-left: 4px solid var(--color-accent);
+      }
+    }
+
+    .rocketship {
+      position: absolute;
+      top: calc(25% - 64px);
+      left: calc(50% - 45px);
+      z-index: 2;
+    }
+  }
+</style>
