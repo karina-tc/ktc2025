@@ -215,6 +215,18 @@ const caseStudy = getCaseStudy("beyondContracts");
       </p>
 
       <QuadrantChart />
+
+      <div class="spacer-large"></div>
+
+      <div class="story-container-subsection">
+        <h3>Polishing Data Clusters</h3>
+        <p>
+          To build the supplierverse, we needed to optimize several key areas
+          within Tropic. We approached this by identifying distinct <strong>data
+          clusters that required improvement before unifying them</strong> into a single,
+          cohesive interface.
+        </p>
+      </div>
     </div>
   </div>
 </BaseLayout>
@@ -243,6 +255,13 @@ const caseStudy = getCaseStudy("beyondContracts");
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin: 0 0 var(--spacing-xsmall);
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      color: var(--color-ink-tertiary);
+      font-family: var(--font-headings);
+      margin: 0 0 var(--spacing-base);
     }
 
     h2 {
