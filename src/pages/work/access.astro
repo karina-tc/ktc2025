@@ -1,0 +1,123 @@
+---
+// Layouts
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// Components
+import Divider from "../../components/Divider.astro";
+import Atom from "../../components/Atom.astro";
+
+// Data
+const bookingLink =
+  "https://cal.com/karina-tovar-djofxs/quick-chat?month=2025-01&date=2025-01-28";
+---
+
+<BaseLayout
+  title="Karina Tovar - Access"
+  description="Karina Tovar is a Lead Product Designer."
+  includeNavigation={false}
+  includeFooter={false}
+>
+  <div class="section-container">
+    <a href="/"><Atom size="140px" /></a>
+    <h1>What's the secret code?</h1>
+    <p>Enter your code to continue:</p>
+    <div class="password-input-container">
+      <input type="text" id="passwordInput" placeholder="gentle-daisy" />
+      <button id="submitButton">Submit</button>
+    </div>
+    <a class="action-link" id="backButton" href="/">Take me back</a>
+  </div>
+</BaseLayout>
+
+<script>
+  // Get the back button element
+  const backButton = document.getElementById("backButton");
+
+  // Get the last visited URL from sessionStorage
+  const lastVisitedUrl = sessionStorage.getItem("lastVisitedUrl");
+  console.log("Retrieved URL from session:", lastVisitedUrl);
+
+  // If we have a last visited URL
+  if (lastVisitedUrl) {
+    console.log("Setting back button href to:", lastVisitedUrl);
+    backButton?.setAttribute("href", lastVisitedUrl);
+  } else {
+    console.log("No valid last URL found, using home page");
+  }
+</script>
+
+<style lang="scss">
+  .section-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: var(--spacing-quad);
+    text-align: center;
+
+    :global(h1) {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin: var(--spacing-double) 0 var(--spacing-base);
+    }
+
+    .password-input-container {
+      width: 100%;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-small);
+      text-align: center;
+      margin: var(--spacing-base) auto var(--spacing-quad);
+
+      input {
+        width: 100%;
+        max-width: 300px;
+        padding: var(--spacing-base);
+        border: 0;
+        border-bottom: 1px solid var(--color-coffee);
+        background-color: var(--color-surface);
+        color: var(--color-ink);
+        font-size: var(--font-size-large);
+        text-align: center;
+        font-family: var(--font-mono);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--color-ink-secondary);
+        outline: none;
+        transition: all 0.3s ease-in-out;
+
+        &::placeholder {
+          color: var(--color-ink-tertiary);
+        }
+
+        &:focus {
+          border-width: 2px;
+        }
+      }
+
+      button {
+        width: 100%;
+        padding: var(--spacing-small) var(--spacing-base);
+        border: 0;
+        background-color: var(--color-accent);
+        color: var(--color-surface);
+        font-size: var(--font-size-huge);
+        font-family: var(--font-headings);
+        border-radius: var(--border-radius-base);
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          background-color: var(--color-accent-light);
+        }
+
+        &:active {
+          background-color: var(--color-accent);
+        }
+      }
+    }
+  }
+</style>
