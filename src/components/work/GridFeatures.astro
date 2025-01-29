@@ -7,18 +7,19 @@ interface Feature {
 
 interface Props {
   features: Feature[];
+  stackThird?: boolean;
 }
 
-const { features } = Astro.props;
+const { features, stackThird = false } = Astro.props;
 ---
 
-<div class="section-grid">
+<div class={`section-grid ${stackThird ? 'stack-third' : ''}`}>
   {
-    features.map(({ title, description, isStandout }) => (
-      <div class:list={["section-item", { standout: isStandout }]}>
-        <h3>{title}</h3>
+    features.map((feature) => (
+      <div class="section-item">
+        <h3>{feature.title}</h3>
         <hr />
-        <p>{description}</p>
+        <p>{feature.description}</p>
       </div>
     ))
   }
@@ -29,15 +30,39 @@ const { features } = Astro.props;
 
   .section-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-base);
+    grid-template-columns: repeat(3, 1fr);  // Default to 3 columns on mobile
 
-    @include tablet {
-      grid-template-columns: repeat(2, 1fr);
+    &.stack-third {
+      grid-template-columns: repeat(2, 1fr);  // 2 columns when stacking on mobile
+      
+      .section-item:nth-child(3) {
+        grid-column: 1 / -1;
+        min-height: 300px;
+        
+        p {
+          max-width: 75ch;
+          margin: auto 0;
+        }
+      }
+
+      @include mobile {
+        grid-template-columns: 1fr;  // Stack everything on very small screens
+        
+        .section-item:nth-child(3) {
+          grid-column: 1;
+          min-height: unset;
+        }
+      }
     }
 
-    @include mobile {
-      grid-template-columns: repeat(1, 1fr);
+    @include tablet {
+      grid-template-columns: 1fr;  // Single column (rows) on tablet and up
+      
+      &.stack-third .section-item:nth-child(3) {
+        grid-column: 1;
+        min-height: unset;
+      }
     }
 
     .section-item {
@@ -73,6 +98,10 @@ const { features } = Astro.props;
       hr {
         border: 1px solid var(--color-border);
         margin: var(--spacing-base) 0;
+      }
+
+      p {
+        color: var(--color-ink);
       }
     }
   }

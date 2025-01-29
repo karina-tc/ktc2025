@@ -2,21 +2,20 @@
 // Components
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
-import CaseStudyHeader from "../../components/work/CaseStudyHeader.astro";
 import { getCaseStudy } from "../../data/case-study-details";
-import CaseStudyShowcase from "../../components/work/CaseStudyShowcase.astro";
-import ImpactSection from "../../components/work/ImpactSection.astro";
+
+// Case Study Components
+import * as Work from "../../components/work/index.js";
+
+// Partials
 import QuadrantChart from "../../components/_partials/work/QuadrantChart.astro";
-import StorySection from "../../components/work/StorySection.astro";
-import RocketShipPlate from "../../components/work/RocketShipPlate.astro";
-import GridFeatures from "../../components/work/GridFeatures.astro";
 import DataClusters from "../../components/_partials/work/DataClusters.astro";
-import ScrollableGallery from "../../components/work/ScrollableGallery.astro";
+
 
 //Assets
 import scribble from "../../assets/scribbles/loop-down.svg";
 import showcaseImage from "../../assets/case-studies/tropic/tropic-supplier-index.png";
-import showcaseBackground from "../../assets/backgrounds/bgCS.jpg";
+import showcaseBackground from "../../assets/backgrounds/noise-1.png";
 import showcaseLogo from "../../assets/icons/cv-tropic.png";
 import galaxyQuest from "../../assets/illustrations/case-studies/beyond-contracts/galaxy-quest-illus.png";
 import cluster01 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-01.svg";
@@ -29,10 +28,10 @@ const caseStudy = getCaseStudy("beyondContracts");
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>
   <!-- Case Study Header -->
-  <CaseStudyHeader {...caseStudy} />
+  <Work.CaseStudyHeader {...caseStudy} />
 
   <!-- Showcase -->
-  <CaseStudyShowcase
+  <Work.CaseStudyShowcase
     background={showcaseBackground}
     caption={{
       icon: showcaseLogo,
@@ -48,7 +47,7 @@ const caseStudy = getCaseStudy("beyondContracts");
       width={1220}
       priority
     />
-  </CaseStudyShowcase>
+  </Work.CaseStudyShowcase>
 
   <!-- Spacer -->
   <div class="spacer-small"></div>
@@ -56,7 +55,7 @@ const caseStudy = getCaseStudy("beyondContracts");
   <!-- Case Study Content -->
   <div class="section-container">
     <!-- Impact Section -->
-    <ImpactSection
+    <Work.ImpactSection
       metrics={[
         {
           metric: "Time Savings",
@@ -77,7 +76,7 @@ const caseStudy = getCaseStudy("beyondContracts");
     />
 
     <!-- Problem -->
-    <StorySection kicker="Problem" title="Beyond the Contract Horizon">
+    <Work.StorySection kicker="Problem" title="Beyond the Contract Horizon">
       <p>
         Built initially around contracts, Tropic's platform faced a critical
         limitation: <strong
@@ -96,7 +95,7 @@ const caseStudy = getCaseStudy("beyondContracts");
         <strong>A great solution would increase customers...</strong>
       </p>
       <div class="spacer-small"></div>
-      <GridFeatures
+      <Work.GridFeatures
         features={[
           {
             title: "Visibility",
@@ -116,10 +115,10 @@ const caseStudy = getCaseStudy("beyondContracts");
           },
         ]}
       />
-    </StorySection>
+    </Work.StorySection>
 
     <!-- Discovery -->
-    <StorySection
+    <Work.StorySection
       kicker="Discovery"
       title="Galaxy Quest"
       artwork={{
@@ -137,10 +136,10 @@ const caseStudy = getCaseStudy("beyondContracts");
           >key components of a supplier existed in isolation</strong
         >—like separate moons orbiting without any connection to each other.
       </p>
-    </StorySection>
+    </Work.StorySection>
 
     <!-- Strategy -->
-    <StorySection kicker="Strategizing" title="Mission Control">
+    <Work.StorySection kicker="Strategizing" title="Mission Control">
       <p>
         With supplier data scattered across our procurement universe, we needed
         a mission control center to bring order to the chaos. <strong
@@ -151,7 +150,7 @@ const caseStudy = getCaseStudy("beyondContracts");
       </p>
 
       <!-- Rocketship Illustration -->
-      <RocketShipPlate
+      <Work.RocketShipPlate
         leftCard={{
           type: "Business Goal",
           title: "Data Quality",
@@ -222,10 +221,10 @@ const caseStudy = getCaseStudy("beyondContracts");
           },
         ]}
       />
-    </StorySection>
+    </Work.StorySection>
 
     <!-- Solutioning -->
-    <StorySection kicker="Solutioning" title="Universe Building">
+    <Work.StorySection kicker="Solutioning" title="Universe Building">
       <p>
         With supplier data scattered across our procurement universe, we needed
         a mission control center to bring order to the chaos. Our customers
@@ -247,11 +246,11 @@ const caseStudy = getCaseStudy("beyondContracts");
         <li>How can I monitor the status of my data?</li>
         <li>How can I trace the origin of my supplier data?</li>
       </ol>
-    </StorySection>
+    </Work.StorySection>
   </div>
 
   <!-- Scrollable Gallery -->
-  <ScrollableGallery
+  <Work.ScrollableGallery
     items={[
       {
         image: showcaseImage,
@@ -278,7 +277,7 @@ const caseStudy = getCaseStudy("beyondContracts");
   />
 
   <div class="section-container no-gap">
-    <StorySection className="no-title">
+    <Work.StorySection className="no-title">
       <p>
         Onboarding in Tropic can be lengthy since we ensure data accuracy while
         setting up a user's account. To expedite this process and allow
@@ -286,11 +285,11 @@ const caseStudy = getCaseStudy("beyondContracts");
         we needed to use AI to enhance supplier matching between ERPs and
         Tropic.
       </p>
-    </StorySection>
+    </Work.StorySection>
   </div>
 
-    <!-- Showcase -->
-  <CaseStudyShowcase background={showcaseBackground} backgroundFull={true}>
+  <!-- Showcase -->
+  <Work.CaseStudyShowcase background={showcaseBackground} backgroundFull={true}>
     <Image
       src={showcaseImage}
       alt="show case image"
@@ -298,7 +297,7 @@ const caseStudy = getCaseStudy("beyondContracts");
       width={1220}
       priority
     />
-  </CaseStudyShowcase>
+  </Work.CaseStudyShowcase>
 </BaseLayout>
 
 <style>

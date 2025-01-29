@@ -2,22 +2,15 @@
 // Components
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
-import CaseStudyHeader from "../../components/work/CaseStudyHeader.astro";
 import { getCaseStudy } from "../../data/case-study-details";
-import CaseStudyShowcase from "../../components/work/CaseStudyShowcase.astro";
-import ImpactSection from "../../components/work/ImpactSection.astro";
-import StorySection from "../../components/work/StorySection.astro";
-import ScrollableGallery from "../../components/work/ScrollableGallery.astro";
+
+// Case Study Components
+import * as Work from "../../components/work/index.js";
 
 //Assets
-import scribble from "../../assets/scribbles/loop-down.svg";
-import showcaseImage from "../../assets/case-studies/tropic/tropic-supplier-index.png";
-import showcaseBackground from "../../assets/backgrounds/bgCS.jpg";
+import showcaseImage from "../../assets/case-studies/tropic/ask-ai/ask-ai-showcase.png";
+import showcaseBackground from "../../assets/backgrounds/noise-5.png";
 import showcaseLogo from "../../assets/icons/cv-tropic.png";
-import galaxyQuest from "../../assets/illustrations/case-studies/beyond-contracts/galaxy-quest-illus.png";
-import cluster01 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-01.svg";
-import cluster02 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-02.svg";
-import cluster03 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-03.svg";
 
 // Data
 const caseStudy = getCaseStudy("askTropic");
@@ -25,5 +18,123 @@ const caseStudy = getCaseStudy("askTropic");
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>
   <!-- Case Study Header -->
-  <CaseStudyHeader {...caseStudy} />
+  <Work.CaseStudyHeader {...caseStudy} />
+
+  <!-- Showcase -->
+  <Work.CaseStudyShowcase
+    background={showcaseBackground}
+    caption={{
+      icon: showcaseLogo,
+      title: "What is Tropic?",
+      description:
+        "Tropic is an intake-to-procure platform that helps companies of all sizes—from startups to enterprises like OpenAI—manage their supplier relationships and reduce unnecessary spending.",
+    }}
+  >
+    <Image
+      src={showcaseImage}
+      alt="show case image"
+      draggable="false"
+      width={1220}
+      priority
+    />
+  </Work.CaseStudyShowcase>
+
+  <!-- Background -->
+  <Work.StorySection kicker="Background" title="Assisted Intelligence">
+    <p>
+      Over one month, Tropic designed and developed its Ask AI feature—a chat
+      interface that helps customers quickly find information. This feature uses
+      multiple specialized AI agents to assist customers with tasks like
+      creating requests, analyzing account data, and reviewing procurement
+      policies against contracts and requests.
+      <p></p>
+      I led the creation of a foundational system that other teams could use to help
+      users interact with their agents, while also designing the core Ask AI experience.
+      To create this Ask AI system, I focused on the following:
+    </p>
+
+    <Work.GridFeatures
+      features={[
+        {
+          title: "Structure",
+          description:
+            "Designed a structured framework that lets customers seamlessly interact with our AI agents within their natural platform workflows.",
+        },
+        {
+          title: "Branding",
+          description:
+            "Developed a visual identity for our AI feature that integrated seamlessly with the application while standing out with a modern aesthetic.",
+        },
+        {
+          title: "Information Architecture",
+          description:
+            "Designed ways to help customers interact with this new feature. Created patterns for AI agents to clearly communicate their context when solving customer questions. Built frameworks for users to easily access conversation history, receive suggested tips and actions, and understand our agents' full capabilities.",
+        },
+      ]}
+      stackThird={true}
+    />
+  </Work.StorySection>
+
+  <Work.CaseStudyShowcase background={showcaseBackground} backgroundFull={true}>
+    <Image
+      src={showcaseImage}
+      alt="show case image"
+      draggable="false"
+      width={1220}
+      priority
+    />
+  </Work.CaseStudyShowcase>
+
+  <!-- Development -->
+  <Work.StorySection kicker="Development" title="Shapping Tropic's Assistant">
+    <p>
+      I was also lucky to be given the opportunity to play with code and so I
+      contributed to the front-end development, working alongside another
+      developer who handled back-end integration and optimization.
+    </p>
+    <p>
+      In the span of two weeks, we developed a code prototype that allowed our
+      team to test and refine the intended user experience. This hands-on
+      approach helped us evaluate performance requirements and optimize the
+      build. While we started with design mockups, much of the real design work
+      happened directly in code—enabling me to fine-tune the UI and create a
+      polished, distinctive experience within our application.
+    </p>
+    <p>
+      One of my favorite aspects of this project was enhancing the UI with
+      subtle interactions that gave it a more polished, established feel to
+      hopefully spark some joy in our customers’ experience.
+    </p>
+  </Work.StorySection>
+
+  <Work.CaseStudyShowcase background={showcaseBackground} backgroundFull={true}>
+    <Image
+      src={showcaseImage}
+      alt="show case image"
+      draggable="false"
+      width={1220}
+      priority
+    />
+  </Work.CaseStudyShowcase>
+
+  <!-- Reception -->
+  <Work.StorySection kicker="Reception" title="Making it Beta">
+    <p>
+      This feature has just been released and is in beta—we're using this period
+      to fine-tune our agents and optimize experiences that required more
+      development time. As Tropic's biggest user of our own platform for spend
+      management, we're thoroughly dogfooding this feature.
+    </p>
+    <p>
+      Initial feedback has been overwhelmingly positive from both Tropic and
+      customers. We've received an exceptional amount of customer feedback on
+      this feature—a strong signal of successful adoption.
+    </p>
+    <p>
+      While there are some expected rough edges, that's exactly what beta
+      testing and dogfooding are designed to address. I cannot take credit for
+      the mazing work that other teams did on this feature, but I am surely
+      proud of the amount of love and care that we put into this experience.
+    </p>
+  </Work.StorySection>
 </BaseLayout>
