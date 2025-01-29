@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 
 interface Props {
   background: ImageMetadata;
+  backgroundFull?: boolean;
   caption?: {
     icon: ImageMetadata;
     title: string;
@@ -10,15 +11,15 @@ interface Props {
   };
 }
 
-const { background, caption } = Astro.props;
+const { background, caption, backgroundFull = false } = Astro.props;
 ---
 
-<div class="case-showcase">
+<div class:list={["case-showcase", { "show-full": backgroundFull }]}>
   <figure data-intersection-observer={true}>
     <slot />
   </figure>
   
-  <div class="showcase-background">
+  <div class:list={["showcase-background", { "show-full": backgroundFull }]}>
     <Image
       src={background}
       alt="showcase background"
@@ -47,6 +48,15 @@ const { background, caption } = Astro.props;
     gap: var(--spacing-base);
     position: relative;
     margin-bottom: var(--spacing-quad);
+
+    &.show-full {
+      padding: var(--spacing-quad) 0;
+    }
+
+    &.show-full .showcase-background {
+      height: 100%;
+      top: 0;
+    }
 
     figure {
       width: 90%;

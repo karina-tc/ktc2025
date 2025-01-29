@@ -5,7 +5,7 @@ import Plate from "./Plate.astro";
 
 interface Props {
   kicker?: string;
-  title: string;
+  title?: string;
   className?: string;
   artwork?: {
     image: ImageMetadata;
@@ -22,7 +22,7 @@ interface Props {
 const { kicker, title, className = "", artwork, plate } = Astro.props;
 ---
 
-<div class:list={["story-container", className]} data-intersection-observer={true}>
+<div class:list={["story-container", title ? "" : "no-title", className]} data-intersection-observer={true}>
   {kicker && <h4>{kicker}</h4>}
   <h2>{title}</h2>
 
@@ -64,6 +64,10 @@ const { kicker, title, className = "", artwork, plate } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-base);
+
+    &.no-title {
+      margin-top: 0;
+    }
 
     p {
       font-size: var(--font-size-base);

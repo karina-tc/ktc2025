@@ -276,4 +276,34 @@ const caseStudy = getCaseStudy("beyondContracts");
       },
     ]}
   />
+
+  <div class="section-container no-gap">
+    <StorySection className="no-title">
+      <p>
+        Onboarding in Tropic can be lengthy since we ensure data accuracy while
+        setting up a user's account. To expedite this process and allow
+        customers and account executives to focus on complex data translations,
+        we needed to use AI to enhance supplier matching between ERPs and
+        Tropic.
+      </p>
+    </StorySection>
+  </div>
+
+    <!-- Showcase -->
+  <CaseStudyShowcase background={showcaseBackground} backgroundFull={true}>
+    <Image
+      src={showcaseImage}
+      alt="show case image"
+      draggable="false"
+      width={1220}
+      priority
+    />
+  </CaseStudyShowcase>
 </BaseLayout>
+
+<style>
+  .section-container.no-gap {
+    margin-top: -40px;
+    margin-bottom: -40px;
+  }
+</style>
