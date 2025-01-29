@@ -11,7 +11,6 @@ import * as Work from "../../components/work/index.js";
 import QuadrantChart from "../../components/_partials/work/QuadrantChart.astro";
 import DataClusters from "../../components/_partials/work/DataClusters.astro";
 
-
 //Assets
 import scribble from "../../assets/scribbles/loop-down.svg";
 import showcaseImage from "../../assets/case-studies/tropic/tropic-supplier-index.png";
@@ -298,9 +297,14 @@ const caseStudy = getCaseStudy("beyondContracts");
       priority
     />
   </Work.CaseStudyShowcase>
+
+  <Work.WorkFooter />
 </BaseLayout>
 
-<style>
+<style lang="scss" scoped>
+  // Breakpoint mixins
+  @import "../../styles/base/_breakpoints.scss";
+
   .section-container.no-gap {
     margin-top: -40px;
     margin-bottom: -40px;
