@@ -21,29 +21,66 @@ const bookingLink =
     <a href="/"><Atom size="140px" /></a>
     <h1>What's the secret code?</h1>
     <p>Enter your code to continue:</p>
-    <div class="password-input-container">
-      <input type="text" id="passwordInput" placeholder="gentle-daisy" />
-      <button id="submitButton">Submit</button>
-    </div>
+    <form 
+      method="POST" 
+      action="/api/validate-password" 
+      class="password-input-container"
+    >
+      <input 
+        type="text" 
+        id="passwordInput" 
+        name="password" 
+        placeholder="gentle-daisy" 
+      />
+      <button type="submit" id="submitButton">Submit</button>
+    </form>
     <a class="action-link" id="backButton" href="/">Take me back</a>
   </div>
 </BaseLayout>
 
 <script>
-  // Get the back button element
-  const backButton = document.getElementById("backButton");
-
-  // Get the last visited URL from sessionStorage
-  const lastVisitedUrl = sessionStorage.getItem("lastVisitedUrl");
-  console.log("Retrieved URL from session:", lastVisitedUrl);
-
-  // If we have a last visited URL
-  if (lastVisitedUrl) {
-    console.log("Setting back button href to:", lastVisitedUrl);
-    backButton?.setAttribute("href", lastVisitedUrl);
-  } else {
-    console.log("No valid last URL found, using home page");
-  }
+  const form = document.querySelector('form');
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const password = formData.get('password')?.toString().trim();
+    
+    console.log('Submitting password:', password);
+    
+    try {
+      const response = await fetch('/api/validate-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+        credentials: 'same-origin'
+      });
+      
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const result = await response.json();
+      console.log('Response:', result);
+      
+      if (result.valid) {
+        // Wait for cookie to be set
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Simple redirect
+        const params = new URLSearchParams(window.location.search);
+        const redirectUrl = params.get('redirect') || '/work';
+        console.log('Redirecting to:', redirectUrl);
+        
+        // Use replace to avoid adding to browser history
+        window.location.replace(redirectUrl);
+      } else {
+        alert(result.message || 'Invalid password');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error validating password. Please try again.');
+    }
+  });
 </script>
 
 <style lang="scss">
