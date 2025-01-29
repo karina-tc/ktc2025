@@ -1,0 +1,141 @@
+---
+import { Image } from "astro:assets";
+
+interface DataCluster {
+  icon: ImageMetadata;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  clusters: DataCluster[];
+}
+
+const { clusters } = Astro.props;
+---
+
+<div class="data-clusters-wrapper">
+  {
+    clusters.map((cluster) => (
+      <div class="data-cluster-row">
+        <Image
+          class="data-cluster-icon"
+          src={cluster.icon}
+          alt="Data Cluster Icon"
+          width={60}
+        />
+        <div class="data-cluster-title">
+          <span class="data-cluster-dot" />
+          <p>{cluster.title}</p>
+        </div>
+        <p class="data-cluster-description">{cluster.description}</p>
+      </div>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  @use "../../../styles/base/_breakpoints.scss" as *;
+
+  .data-clusters-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-base);
+    margin-top: var(--spacing-base);
+
+    .data-cluster-row {
+      display: flex;
+      flex-direction: row;
+      gap: var(--spacing-double);
+      align-items: flex-start;
+
+      .data-cluster-icon {
+        min-width: 48px;
+        margin-top: -20px;
+      }
+
+      .data-cluster-title {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: var(--spacing-base);
+        max-width: 160px;
+        min-width: 160px;
+        font-size: var(--font-size-huge);
+
+        .data-cluster-dot {
+          width: 12px;
+          min-width: 12px;
+          height: 12px;
+          min-height: 12px;
+          margin-top: 12px;
+          background-color: var(--color-accent-light);
+          border-radius: 50%;
+          position: relative;
+
+          &::after {
+            content: "";
+            width: 1px;
+            height: 100px;
+            background-color: var(--color-border);
+            position: absolute;
+            top: 14px;
+            left: 5px;
+          }
+        }
+      }
+
+      .data-cluster-description {
+        font-size: var(--font-size-base);
+      }
+    }
+
+    .data-cluster-row:last-child .data-cluster-title .data-cluster-dot::after {
+      display: none;
+    }
+
+    @include tablet {
+      .data-cluster-row {
+        flex-direction: column;
+        gap: var(--spacing-small);
+        padding-left: 80px;
+        position: relative;
+
+        .data-cluster-icon {
+          width: 24px;
+          position: absolute;
+          left: 0px;
+        }
+
+        .data-cluster-title {
+          max-width: 100%;
+          min-width: 100%;
+          gap: var(--spacing-small);
+          font-size: var(--font-size-large);
+
+          .data-cluster-dot {
+            margin-top: 8px;
+            &::after {
+              height: 80px;
+            }
+          }
+        }
+        .data-cluster-description {
+          margin-left: 22px;
+        }
+      }
+    }
+
+    @include mobile {
+      .data-cluster-row {
+        flex-direction: column;
+        padding-left: 0;
+        gap: 0px;
+
+        .data-cluster-icon {
+          display: none;
+        }
+      }
+    }
+  }
+</style> 

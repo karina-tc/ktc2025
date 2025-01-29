@@ -10,22 +10,23 @@ import QuadrantChart from "../../components/_partials/work/QuadrantChart.astro";
 import StorySection from "../../components/work/StorySection.astro";
 import RocketShipPlate from "../../components/work/RocketShipPlate.astro";
 import GridFeatures from "../../components/work/GridFeatures.astro";
+import DataClusters from "../../components/_partials/work/DataClusters.astro";
 
 //Assets
 import scribble from "../../assets/scribbles/loop-down.svg";
 import showcaseImage from "../../assets/case-studies/tropic/tropic-supplier-index.png";
 import showcaseBackground from "../../assets/backgrounds/bgCS.jpg";
 import showcaseLogo from "../../assets/icons/cv-tropic.png";
-import rocketShip from "../../assets/illustrations/case-studies/beyond-contracts/rocket-ship-illus.png";
-import rocketBg from "../../assets/illustrations/case-studies/beyond-contracts/rocket-illus-bg.png";
 import galaxyQuest from "../../assets/illustrations/case-studies/beyond-contracts/galaxy-quest-illus.png";
+import cluster01 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-01.svg";
+import cluster02 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-02.svg";
+import cluster03 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-03.svg";
 
 // Data
 const caseStudy = getCaseStudy("beyondContracts");
 ---
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>
-
   <!-- Case Study Header -->
   <CaseStudyHeader {...caseStudy} />
 
@@ -37,7 +38,8 @@ const caseStudy = getCaseStudy("beyondContracts");
       title: "What is Tropic?",
       description:
         "Tropic is an intake-to-procure platform that helps companies of all sizes—from startups to enterprises like OpenAI—manage their supplier relationships and reduce unnecessary spending.",
-    }}>
+    }}
+  >
     <Image
       src={showcaseImage}
       alt="show case image"
@@ -57,26 +59,24 @@ const caseStudy = getCaseStudy("beyondContracts");
       metrics={[
         {
           metric: "Time Savings",
-          value: "~4hrs",
+          value: "+4hrs",
           description: "per week per customer",
         },
         {
           metric: "Customer Engagement",
-          value: "~10%",
+          value: "+35%",
           description: "increase in engagement",
         },
         {
           metric: "Data Accuracy",
-          value: "~70%",
+          value: "+50%",
           description: "increase in accuracy",
         },
       ]}
     />
 
     <!-- Problem -->
-    <StorySection 
-      kicker="Problem"
-      title="Beyond the Contract Horizon">
+    <StorySection kicker="Problem" title="Beyond the Contract Horizon">
       <p>
         Built initially around contracts, Tropic's platform faced a critical
         limitation: <strong
@@ -99,52 +99,54 @@ const caseStudy = getCaseStudy("beyondContracts");
         features={[
           {
             title: "Visibility",
-            description: "360 view of all supplier relationships and spending across the organization",
-            isStandout: true
+            description:
+              "360 view of all supplier relationships and spending across the organization",
+            isStandout: true,
           },
           {
             title: "Focus",
-            description: "Streamlined supplier management without difficulties and distractions"
+            description:
+              "Streamlined supplier management without difficulties and distractions",
           },
           {
             title: "Clarity",
-            description: "Clear insights into supplier data, contracts, and spending patterns"
-          }
+            description:
+              "Clear insights into supplier data, contracts, and spending patterns",
+          },
         ]}
       />
     </StorySection>
 
-
     <!-- Discovery -->
-    <StorySection 
+    <StorySection
       kicker="Discovery"
       title="Galaxy Quest"
       artwork={{
         image: galaxyQuest,
         alt: "Galaxy Quest",
-        width: 320
-      }}>
+        width: 320,
+      }}
+    >
       <p>
         To make our experience a supplier centric one, I looked at all the data
         objects that made up a supplier so that we could built that universe.
         Through conversations with our Account Executives about customer
         onboarding, we studied how both clients and our team set up Tropic
-        accounts. A clear pattern emerged: the <strong>key components of a 
-          supplier existed in isolation</strong>—like separate moons orbiting 
-          without any connection to each other.
+        accounts. A clear pattern emerged: the <strong
+          >key components of a supplier existed in isolation</strong
+        >—like separate moons orbiting without any connection to each other.
       </p>
     </StorySection>
 
     <!-- Strategy -->
-    <StorySection 
-      kicker="Strategizing"
-      title="Mission Control">
+    <StorySection kicker="Strategizing" title="Mission Control">
       <p>
         With supplier data scattered across our procurement universe, we needed
-        a mission control center to bring order to the chaos. <strong>Our customers 
-          needed a single source of truth</strong> that would give them complete 
-          visibility into their supplier expenses, commitments, and usage - 
-          <strong>but first, we had to tackle the data quality challenge</strong>.
+        a mission control center to bring order to the chaos. <strong
+          >Our customers needed a single source of truth</strong
+        > that would give them complete visibility into their supplier expenses,
+        commitments, and usage -
+        <strong>but first, we had to tackle the data quality challenge</strong>.
       </p>
 
       <!-- Rocketship Illustration -->
@@ -152,21 +154,23 @@ const caseStudy = getCaseStudy("beyondContracts");
         leftCard={{
           type: "Business Goal",
           title: "Data Quality",
-          description: "Enhance data quality and visibility"
+          description: "Enhance data quality and visibility",
         }}
         rightCard={{
           type: "Customer Goal",
           title: "Spend Insights",
-          description: "Provide customers financial impact of expenses"
+          description: "Provide customers financial impact of expenses",
         }}
         caption="Formalizing Our Plan for Launch"
       />
 
       <p>
         Data cleanup may not sound exciting—I'll admin that it's about as
-        thrilling as organizing your sock drawer—but it was crucial. 
-        <strong>We needed to Marie Kondo our experience into a crystal-clear supplier
-          system that would truly spark joy for our customers.</strong>
+        thrilling as organizing your sock drawer—but it was crucial.
+        <strong
+          >We needed to Marie Kondo our experience into a crystal-clear supplier
+          system that would truly spark joy for our customers.</strong
+        >
       </p>
       <p>
         We needed to organize our data to make it crystal clear how suppliers
@@ -187,15 +191,61 @@ const caseStudy = getCaseStudy("beyondContracts");
       <div class="spacer-large"></div>
 
       <!-- Polishing Data Clusters -->
-      <div class="story-container-subsection">
-        <h3>Polishing Data Clusters</h3>
-        <p>
-          To build the supplierverse, we needed to optimize several key areas
-          within Tropic. We approached this by identifying distinct <strong>data
-          clusters that required improvement before unifying them</strong> into a single,
-          cohesive interface.
-        </p>
-      </div>
+      <h3>Polishing Data Clusters</h3>
+      <p>
+        To build the supplierverse, we needed to optimize several key areas
+        within Tropic. We approached this by identifying distinct <strong>data 
+        clusters that required improvement before unifying them</strong> into
+        a single, cohesive interface.
+      </p>
+
+      <DataClusters
+        clusters={[
+          {
+            icon: cluster01,
+            title: "Integrations",
+            description:
+              "How suppliers are created in Tropic through connected integrations, which can either be the original source of a supplier or provide additional supplier data.",
+          },
+          {
+            icon: cluster02,
+            title: "Requests & Contracts",
+            description:
+              "Suppliers can also originate within Tropic when users submit purchase requests or add new contracts.",
+          },
+          {
+            icon: cluster03,
+            title: "Spend Expenses",
+            description:
+              "Suppliers may or may not have associated costs. The expenses view reveals each supplier's actual financial impact on overall spending.",
+          },
+        ]}
+      />
+    </StorySection>
+
+    <!-- Solutioning -->
+    <StorySection kicker="Solutioning" title="Universe Building">
+      <p>
+        With supplier data scattered across our procurement universe, we needed
+        a mission control center to bring order to the chaos. Our customers
+        needed a single source of truth that would give them complete visibility
+        into their supplier expenses, commitments, and usage - but first, we had
+        to tackle the data quality challenge.
+      </p>
+
+      <h3>Data Integrations</h3>
+      <p>
+        We began with the foundation: data integrations, which are the primary
+        source of supplier information in Tropic. We re-architected our
+        integrations pages to answer four key questions:
+      </p>
+
+      <ol>
+        <li>What data can I bring into Tropic?</li>
+        <li>How can I ensure my data is as accurate as possible?</li>
+        <li>How can I monitor the status of my data?</li>
+        <li>How can I trace the origin of my supplier data?</li>
+      </ol>
     </StorySection>
   </div>
 </BaseLayout>
@@ -221,14 +271,4 @@ const caseStudy = getCaseStudy("beyondContracts");
     }
   }
 
-  .story-container-subsection {
-    margin-top: var(--spacing-quad);
-    
-    h3 {
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
-      color: var(--color-ink-tertiary);
-      font-family: var(--font-headings);
-      margin: 0 0 var(--spacing-base);
-    }
-  }
 </style>

@@ -79,11 +79,11 @@ const { kicker, title, className = "", artwork, plate } = Astro.props;
       margin: 0 0 var(--spacing-xsmall);
     }
 
-    h3 {
+    :global(h3) {
       font-size: clamp(1.25rem, 3vw, 1.75rem);
       color: var(--color-ink-tertiary);
       font-family: var(--font-headings);
-      margin: 0 0 var(--spacing-base);
+      margin: var(--spacing-base) 0 0;
     }
 
     h2 {
@@ -100,6 +100,15 @@ const { kicker, title, className = "", artwork, plate } = Astro.props;
       align-items: center;
       justify-content: center;
       margin: 0 auto;
+    }
+
+    // Ordered list styles
+    :global(ol) {
+      margin-left: var(--spacing-base);
+    }
+
+    :global(ol li) {
+      margin: 0 0 var(--spacing-xsmall);
     }
   }
 </style>
