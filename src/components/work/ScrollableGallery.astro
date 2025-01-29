@@ -1,0 +1,164 @@
+---
+import { Image } from "astro:assets";
+
+interface GalleryItem {
+  image: ImageMetadata;
+  alt: string;
+  title?: string;
+  description?: string;
+}
+
+interface Props {
+  items: GalleryItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="scrollable-gallery-wrapper">
+  <div class="faders"></div>
+  <div class="scrollable-gallery">
+    {
+      items.map((item) => (
+        <figure class="scrollable-gallery-item">
+          <Image
+            src={item.image}
+            alt={item.alt}
+            width={820}
+            height={578}
+            loading="lazy"
+          />
+          <figcaption class="scrollable-gallery-item-caption">
+            {item.title && <p class="title">{item.title}</p>}
+            {item.description && <p class="description">{item.description}</p>}
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../../styles/base/_breakpoints.scss" as *;
+
+  .scrollable-gallery-wrapper {
+    width: 100%;
+    margin: -100px auto var(--spacing-double);
+    position: relative;
+    background: var(--color-surface);
+    overflow: hidden; // Contain the faders
+  }
+
+  .scrollable-gallery {
+    width: 100%;
+    padding: var(--spacing-double) calc(50vw - 410px);
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: var(--spacing-double);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    .scrollable-gallery-item {
+      flex: 1;
+      min-width: 820px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: var(--spacing-base);
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+
+      .scrollable-gallery-item-caption {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-small);
+
+        .title {
+          font-family: var(--font-headings);
+          font-size: clamp(1rem, 2.5vw, 1.5rem);
+        }
+        .description {
+          font-size: var(--font-size-small);
+        }
+      }
+    }
+
+    @include tablet {
+      padding: var(--spacing-double);
+
+      .scrollable-gallery-item {
+        min-width: 600px;
+      }
+    }
+
+    @include mobile {
+      padding: var(--spacing-double);
+      flex-direction: column;
+      gap: var(--spacing-base);
+
+      .scrollable-gallery-item {
+        min-width: 100%;
+      }
+    }
+  }
+
+  .faders {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    pointer-events: none;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 200px;
+      height: 100%;
+    }
+
+    &::before {
+      left: 0;
+      background: linear-gradient(90deg, var(--color-surface) 0%, transparent 100%);
+    }
+
+    &::after {
+      right: 0;
+      background: linear-gradient(270deg, var(--color-surface) 0%, transparent 100%);
+    }
+  }
+
+  @include tablet {
+    .scrollable-gallery {
+      padding: var(--spacing-double);
+    }
+  }
+
+  @include mobile {
+    .scrollable-gallery {
+      padding: var(--spacing-double);
+      flex-direction: column;
+      gap: var(--spacing-base);
+    }
+
+    .faders {
+      display: none;
+    }
+  }
+</style>
+

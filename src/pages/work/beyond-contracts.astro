@@ -11,6 +11,7 @@ import StorySection from "../../components/work/StorySection.astro";
 import RocketShipPlate from "../../components/work/RocketShipPlate.astro";
 import GridFeatures from "../../components/work/GridFeatures.astro";
 import DataClusters from "../../components/_partials/work/DataClusters.astro";
+import ScrollableGallery from "../../components/work/ScrollableGallery.astro";
 
 //Assets
 import scribble from "../../assets/scribbles/loop-down.svg";
@@ -194,9 +195,9 @@ const caseStudy = getCaseStudy("beyondContracts");
       <h3>Polishing Data Clusters</h3>
       <p>
         To build the supplierverse, we needed to optimize several key areas
-        within Tropic. We approached this by identifying distinct <strong>data 
-        clusters that required improvement before unifying them</strong> into
-        a single, cohesive interface.
+        within Tropic. We approached this by identifying distinct <strong
+          >data clusters that required improvement before unifying them</strong
+        > into a single, cohesive interface.
       </p>
 
       <DataClusters
@@ -248,27 +249,31 @@ const caseStudy = getCaseStudy("beyondContracts");
       </ol>
     </StorySection>
   </div>
+
+  <!-- Scrollable Gallery -->
+  <ScrollableGallery
+    items={[
+      {
+        image: showcaseImage,
+        alt: "Integrations Index",
+        title: "Integrations Index",
+        description:
+          "Elevated from hidden settings to become a central feature. Enhanced with filters and restructured categories to focus on value rather than market type.",
+      },
+      {
+        image: showcaseImage,
+        alt: "Second gallery item",
+        title: "Integrations Index",
+        description:
+          "Elevated from hidden settings to become a central feature. Enhanced with filters and restructured categories to focus on value rather than market type.",
+      },
+      {
+        image: showcaseImage,
+        alt: "Third gallery item",
+        title: "Integrations Index",
+        description:
+          "Elevated from hidden settings to become a central feature. Enhanced with filters and restructured categories to focus on value rather than market type.",
+      },
+    ]}
+  />
 </BaseLayout>
-
-<style lang="scss">
-  // Breakpoint mixins
-  @use "../../styles/base/_breakpoints.scss" as *;
-
-  // Rocketship Interaction
-  .rocket-ship-narrative .floating-cards {
-    &:hover ~ .rocketship {
-      opacity: 0;
-      transform: scale(0.5);
-      transform-origin: center;
-      transition-delay: 0.2s;
-    }
-
-    &:hover .floating-cards-cell {
-      transform: rotate(0deg);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      z-index: 3;
-      transition-delay: 0.3s;
-    }
-  }
-
-</style>
