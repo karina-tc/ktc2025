@@ -1,0 +1,92 @@
+---
+interface Card {
+  type: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  leftCard: Card;
+  rightCard: Card;
+}
+
+const { leftCard, rightCard } = Astro.props;
+---
+
+<div class="floating-cards">
+  <div class="floating-cards-cell left">
+    <h5>{leftCard.type}</h5>
+    <p class="title">{leftCard.title}</p>
+    <p class="description">{leftCard.description}</p>
+  </div>
+  <div class="floating-cards-cell right">
+    <h5>{rightCard.type}</h5>
+    <p class="title">{rightCard.title}</p>
+    <p class="description">{rightCard.description}</p>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../../styles/base/_breakpoints.scss" as *;
+
+  .floating-cards {
+    --card-bg: white;
+    --card-border: var(--color-accent);
+
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-double);
+    padding: var(--spacing-quad) 0;
+    cursor: pointer;
+
+    @include mobile {
+      flex-direction: column;
+    }
+
+    &:hover .floating-cards-cell {
+      transform: rotate(0deg);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      z-index: 3;
+      transition-delay: 0.3s;
+    }
+  }
+
+  .floating-cards-cell {
+    flex: 1;
+    background: var(--card-bg);
+    padding: var(--spacing-base);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid var(--card-border);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+
+    &.left {
+      transform: rotate(-10deg);
+    }
+
+    &.right {
+      transform: rotate(10deg);
+    }
+
+    h5 {
+      color: var(--color-coffee);
+      font-size: var(--font-size-small);
+      font-family: var(--font-sans);
+
+      margin-bottom: var(--spacing-xsmall);
+    }
+
+    .title {
+      display: block;
+      font-family: var(--font-headings);
+      font-size: var(--font-size-massive);
+    }
+
+    .description {
+      margin-top: var(--spacing-xsmall);
+      font-size: var(--font-size-small);
+    }
+  }
+</style>

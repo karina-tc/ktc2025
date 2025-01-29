@@ -1,0 +1,50 @@
+---
+interface Props {
+  label?: string;
+  caption?: string;
+  className?: string;
+}
+
+const { label, caption, className } = Astro.props;
+---
+
+<div class:list={["plate-wrapper", className]}>
+  {label && <span class="plate-label">{label}</span>}
+  <figure class="plate-content">
+    <slot />
+  </figure>
+  {caption && <figcaption class="plate-caption">{caption}</figcaption>}
+</div>
+
+<style lang="scss">
+  .plate-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 100%;
+
+    .plate-label,
+    .plate-caption {
+      color: var(--color-ink-tertiary);
+      width: fit-content;
+      margin: var(--spacing-base) auto;
+      text-align: center;
+    }
+
+    .plate-content {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .plate-caption {
+      font-size: var(--font-size-small);
+      font-weight: 500;
+      font-style: italic;
+    }
+  }
+</style> 

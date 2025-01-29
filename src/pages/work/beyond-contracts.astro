@@ -7,6 +7,9 @@ import { getCaseStudy } from "../../data/case-study-details";
 import CaseStudyShowcase from "../../components/work/CaseStudyShowcase.astro";
 import ImpactSection from "../../components/work/ImpactSection.astro";
 import QuadrantChart from "../../components/_partials/work/QuadrantChart.astro";
+import StorySection from "../../components/work/StorySection.astro";
+import RocketShipPlate from "../../components/work/RocketShipPlate.astro";
+import GridFeatures from "../../components/work/GridFeatures.astro";
 
 //Assets
 import scribble from "../../assets/scribbles/loop-down.svg";
@@ -22,9 +25,11 @@ const caseStudy = getCaseStudy("beyondContracts");
 ---
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>
+
   <!-- Case Study Header -->
   <CaseStudyHeader {...caseStudy} />
 
+  <!-- Showcase -->
   <CaseStudyShowcase
     background={showcaseBackground}
     caption={{
@@ -32,8 +37,7 @@ const caseStudy = getCaseStudy("beyondContracts");
       title: "What is Tropic?",
       description:
         "Tropic is an intake-to-procure platform that helps companies of all sizes—from startups to enterprises like OpenAI—manage their supplier relationships and reduce unnecessary spending.",
-    }}
-  >
+    }}>
     <Image
       src={showcaseImage}
       alt="show case image"
@@ -69,10 +73,10 @@ const caseStudy = getCaseStudy("beyondContracts");
       ]}
     />
 
-    <!-- Case Study Content -->
-    <div class="story-container" data-intersection-observer={true}>
-      <h4>Problem</h4>
-      <h2>Beyond the Contract Horizon</h2>
+    <!-- Problem -->
+    <StorySection 
+      kicker="Problem"
+      title="Beyond the Contract Horizon">
       <p>
         Built initially around contracts, Tropic's platform faced a critical
         limitation: <strong
@@ -91,115 +95,78 @@ const caseStudy = getCaseStudy("beyondContracts");
         <strong>A great solution would increase customers...</strong>
       </p>
       <div class="spacer-small"></div>
-      <div class="section-grid">
-        <div class="section-item standout">
-          <h3>Visibility</h3>
-          <hr />
-          <p>
-            360 view of all supplier relationships and spending across the
-            organization
-          </p>
-        </div>
-        <div class="section-item">
-          <h3>Focus</h3>
-          <hr />
-          <p>
-            Streamlined supplier management without difficulties and
-            distractions
-          </p>
-        </div>
-        <div class="section-item">
-          <h3>Clarity</h3>
-          <hr />
-          <p>
-            Clear insights into supplier data, contracts, and spending patterns
-          </p>
-        </div>
-      </div>
-    </div>
+      <GridFeatures
+        features={[
+          {
+            title: "Visibility",
+            description: "360 view of all supplier relationships and spending across the organization",
+            isStandout: true
+          },
+          {
+            title: "Focus",
+            description: "Streamlined supplier management without difficulties and distractions"
+          },
+          {
+            title: "Clarity",
+            description: "Clear insights into supplier data, contracts, and spending patterns"
+          }
+        ]}
+      />
+    </StorySection>
 
-    <!-- Case Study Content -->
-    <div class="story-container" data-intersection-observer={true}>
-      <h4>Discovery</h4>
-      <h2>Galaxy Quest</h2>
+
+    <!-- Discovery -->
+    <StorySection 
+      kicker="Discovery"
+      title="Galaxy Quest"
+      artwork={{
+        image: galaxyQuest,
+        alt: "Galaxy Quest",
+        width: 320
+      }}>
       <p>
         To make our experience a supplier centric one, I looked at all the data
         objects that made up a supplier so that we could built that universe.
         Through conversations with our Account Executives about customer
         onboarding, we studied how both clients and our team set up Tropic
-        accounts. A clear pattern emerged: the <strong
-          >key components of a supplier existed in isolation</strong
-        >—like separate moons orbiting without any connection to each other.
+        accounts. A clear pattern emerged: the <strong>key components of a 
+          supplier existed in isolation</strong>—like separate moons orbiting 
+          without any connection to each other.
       </p>
+    </StorySection>
 
-      <div class="spacer-small"></div>
-
-      <div class="artwork">
-        <Image
-          src={galaxyQuest}
-          alt="Galaxy Quest"
-          width={320}
-          draggable={false}
-          loading="lazy"
-        />
-      </div>
-    </div>
-
-    <!-- Case Study Content -->
-    <div class="story-container" data-intersection-observer={true}>
-      <h4>Strategizing</h4>
-      <h2>Mission Control</h2>
+    <!-- Strategy -->
+    <StorySection 
+      kicker="Strategizing"
+      title="Mission Control">
       <p>
         With supplier data scattered across our procurement universe, we needed
-        a mission control center to bring order to the chaos. <strong
-          >Our customers needed a single source of truth</strong
-        > that would give them complete visibility into their supplier expenses,
-        commitments, and usage - <strong
-          >but first, we had to tackle the data quality challenge</strong
-        >.
+        a mission control center to bring order to the chaos. <strong>Our customers 
+          needed a single source of truth</strong> that would give them complete 
+          visibility into their supplier expenses, commitments, and usage - 
+          <strong>but first, we had to tackle the data quality challenge</strong>.
       </p>
 
-      <!-- Plate Start -->
-      <div class="plate-wrapper rocket-ship-narrative">
-        <span class="plate-label">Figure II.</span>
-        <figure class="plate-content">
-          <div class="floating-cards">
-            <div class="floating-cards-cell left">
-              <h5>Business Goal</h5>
-              <span class="title">Data Quality</span>
-              <span class="description"
-                >Enhance data quality and visibility</span
-              >
-            </div>
-            <div class="floating-cards-cell right">
-              <h5>Customer Goal</h5>
-              <span class="title">Spend Insights</span>
-              <span class="description"
-                >Provide customers financial impact of expenses</span
-              >
-            </div>
-          </div>
-          <Image
-            class="rocketship"
-            src={rocketShip}
-            alt="Rocket Ship"
-            width={158}
-            draggable={false}
-            loading="lazy"
-          />
-        </figure>
-        <figcaption class="plate-caption">
-          Formalizing Our Plan for Launch
-        </figcaption>
-      </div>
-      <!-- Plate End -->
+      <!-- Rocketship Illustration -->
+      <RocketShipPlate
+        leftCard={{
+          type: "Business Goal",
+          title: "Data Quality",
+          description: "Enhance data quality and visibility"
+        }}
+        rightCard={{
+          type: "Customer Goal",
+          title: "Spend Insights",
+          description: "Provide customers financial impact of expenses"
+        }}
+        caption="Formalizing Our Plan for Launch"
+      />
 
       <p>
         Data cleanup may not sound exciting—I'll admin that it's about as
-        thrilling as organizing your sock drawer—but it was crucial. <strong
-          >We needed to Marie Kondo our experience into a crystal-clear supplier
-          system that would truly spark joy for our customers.</strong
-        >
+        thrilling as organizing your sock drawer—but it was crucial. 
+        <strong>We needed to Marie Kondo our experience into a crystal-clear supplier
+          system that would truly spark joy for our customers.</strong>
       </p>
       <p>
         We needed to organize our data to make it crystal clear how suppliers
@@ -214,10 +181,12 @@ const caseStudy = getCaseStudy("beyondContracts");
         operational value.
       </p>
 
+      <!-- Quadrant Chart -->
       <QuadrantChart />
 
       <div class="spacer-large"></div>
 
+      <!-- Polishing Data Clusters -->
       <div class="story-container-subsection">
         <h3>Polishing Data Clusters</h3>
         <p>
@@ -227,7 +196,7 @@ const caseStudy = getCaseStudy("beyondContracts");
           cohesive interface.
         </p>
       </div>
-    </div>
+    </StorySection>
   </div>
 </BaseLayout>
 
@@ -235,239 +204,31 @@ const caseStudy = getCaseStudy("beyondContracts");
   // Breakpoint mixins
   @use "../../styles/base/_breakpoints.scss" as *;
 
-  .story-container {
-    max-width: 820px;
-    margin: var(--spacing-quad) auto;
-    padding: var(--spacing-double) 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-base);
-
-    p {
-      font-size: var(--font-size-base);
+  // Rocketship Interaction
+  .rocket-ship-narrative .floating-cards {
+    &:hover ~ .rocketship {
+      opacity: 0;
+      transform: scale(0.5);
+      transform-origin: center;
+      transition-delay: 0.2s;
     }
 
-    h4 {
-      color: var(--color-ink-tertiary);
-      font-family: var(--font-sans);
-      font-size: var(--font-size-small);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin: 0 0 var(--spacing-xsmall);
+    &:hover .floating-cards-cell {
+      transform: rotate(0deg);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      z-index: 3;
+      transition-delay: 0.3s;
     }
+  }
 
+  .story-container-subsection {
+    margin-top: var(--spacing-quad);
+    
     h3 {
       font-size: clamp(1.25rem, 3vw, 1.75rem);
       color: var(--color-ink-tertiary);
       font-family: var(--font-headings);
       margin: 0 0 var(--spacing-base);
-    }
-
-    h2 {
-      color: var(--color-ink-secondary);
-      font-family: var(--font-headings);
-      font-size: clamp(2rem, 5vw, 3rem);
-      margin: 0 0 var(--spacing-base);
-      letter-spacing: -0.02em;
-    }
-
-    .artwork,
-    .plate-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-    }
-
-    .plate-wrapper {
-      .plate-label,
-      .plate-caption {
-        color: var(--color-ink-tertiary);
-        width: fit-content;
-        margin: var(--spacing-base) auto;
-        text-align: center;
-      }
-    }
-
-    .section-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--spacing-base);
-
-      @include tablet {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      @include mobile {
-        grid-template-columns: repeat(1, 1fr);
-      }
-
-      .section-item {
-        display: flex;
-        flex-direction: column;
-        padding: var(--spacing-base);
-        font-size: var(--font-size-base);
-        border-radius: 6px;
-        background-color: var(--color-surface);
-
-        &.standout {
-          background-color: var(--color-ink);
-
-          h3 {
-            color: var(--color-surface);
-          }
-
-          hr {
-            border-color: var(--color-coffee);
-          }
-
-          p {
-            color: var(--color-paper);
-          }
-        }
-
-        h3 {
-          font-family: var(--font-headings);
-          font-size: clamp(1.5rem, 5vw, 1.5rem);
-          color: var(--color-ink-tertiary);
-        }
-
-        hr {
-          border: 1px solid var(--color-border);
-          margin: var(--spacing-base) 0;
-        }
-      }
-    }
-  }
-
-  .rocket-ship-narrative {
-    --card-bg: white;
-    --card-border: var(--color-accent);
-    --rocket-offset: 45px;
-
-    position: relative;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: var(--spacing-quad) var(--spacing-base);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-base);
-
-    background-image: url("../../assets/illustrations/case-studies/beyond-contracts/rocket-illus-bg.png");
-    background-size: 260px;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    .plate-content {
-      position: relative;
-      width: 100%;
-    }
-
-    .floating-cards {
-      display: flex;
-      justify-content: space-between;
-      gap: var(--spacing-double);
-      padding: var(--spacing-quad) 0;
-      cursor: pointer;
-
-      @include mobile {
-        flex-direction: column;
-      }
-
-      &:hover ~ .rocketship {
-        opacity: 0;
-        transform: scale(0.5);
-        transform-origin: center;
-        transition-delay: 0.2s;
-      }
-
-      &:hover .floating-cards-cell {
-        transform: rotate(0deg);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        z-index: 3;
-        transition-delay: 0.3s;
-      }
-    }
-
-    .floating-cards-cell {
-      flex: 1;
-      background: var(--card-bg);
-      padding: var(--spacing-base);
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      border-left: 4px solid var(--card-border);
-      transition: all 0.3s ease;
-      position: relative;
-      z-index: 1;
-
-      &.left {
-        transform: rotate(-10deg);
-      }
-
-      &.right {
-        transform: rotate(10deg);
-      }
-
-      h5 {
-        color: var(--color-coffee);
-        font-size: var(--font-size-small);
-        font-family: var(--font-sans);
-
-        margin-bottom: var(--spacing-xsmall);
-      }
-
-      .title {
-        display: block;
-        font-family: var(--font-headings);
-        font-size: var(--font-size-massive);
-      }
-
-      .description {
-        font-size: var(--font-size-small);
-      }
-    }
-
-    .rocketship {
-      position: absolute;
-      display: block;
-      max-width: 130px;
-      height: auto;
-      top: calc(25% + 18px);
-      left: calc(50% + 28px);
-      z-index: 2;
-      opacity: 1;
-      transition: all 0.4s ease;
-      will-change: opacity, transform;
-      animation: float 3s ease-in-out infinite;
-      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
-    }
-
-    @keyframes float {
-      0%,
-      100% {
-        transform: translate(-50%, -50%);
-      }
-      50% {
-        transform: translate(-50%, calc(-50% - 2px));
-      }
-    }
-
-    .plate-label,
-    .plate-caption {
-      display: block;
-      width: fit-content;
-      text-align: center;
-      color: var(--color-ink-tertiary);
-      font-size: var(--font-size-base);
-      margin: 0 auto var(--spacing-quad);
-    }
-
-    .plate-caption {
-      font-size: var(--font-size-small);
-      font-weight: 500;
-      font-style: italic;
     }
   }
 </style>

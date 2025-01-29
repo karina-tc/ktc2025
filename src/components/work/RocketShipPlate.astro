@@ -1,0 +1,90 @@
+---
+import { Image } from "astro:assets";
+import Plate from "./Plate.astro";
+import FloatingCards from "./FloatingCards.astro";
+import rocketShip from "../../assets/illustrations/case-studies/beyond-contracts/rocket-ship-illus.png";
+import rocketBg from "../../assets/illustrations/case-studies/beyond-contracts/rocket-illus-bg.png";
+
+interface Card {
+  type: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  leftCard: Card;
+  rightCard: Card;
+  caption?: string;
+}
+
+const { leftCard, rightCard, caption } = Astro.props;
+---
+
+<Plate label="Figure II." caption={caption} className="rocket-ship-narrative">
+  <div class="plate-content">
+    <FloatingCards leftCard={leftCard} rightCard={rightCard} />
+    <Image
+      class="rocketship"
+      src={rocketShip}
+      alt="Rocket Ship"
+      width={158}
+      draggable={false}
+      loading="lazy"
+    />
+  </div>
+</Plate>
+
+<style lang="scss">
+  @use "../../styles/base/_breakpoints.scss" as *;
+
+  :global(.rocket-ship-narrative) {
+    background-image: url("../../assets/illustrations/case-studies/beyond-contracts/rocket-illus-bg.png");
+    background-size: 260px;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  :global(.plate-content) {
+    cursor: pointer;
+  }
+
+  :global(.plate-content:hover .rocketship) {
+    opacity: 0;
+    transform: scale(0.5);
+    transform-origin: center;
+    transition-delay: 0.2s;
+  }
+
+  .rocketship {
+    position: absolute;
+    display: block;
+    max-width: 130px;
+    height: auto;
+    top: calc(25% + 20px);
+    left: calc(50% + 28px);
+    z-index: 2;
+    opacity: 1;
+    transition: all 0.4s ease;
+    will-change: opacity, transform;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+
+    @include mobile {
+      width: 120px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate(-50%, -50%);
+    }
+    50% {
+      transform: translate(-50%, calc(-50% - 2px));
+    }
+  }
+</style>
+

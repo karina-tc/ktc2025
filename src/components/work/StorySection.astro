@@ -1,0 +1,106 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import Plate from "./Plate.astro";
+
+interface Props {
+  kicker?: string;
+  title: string;
+  className?: string;
+  artwork?: {
+    image: ImageMetadata;
+    alt: string;
+    width?: number;
+  };
+  plate?: {
+    label?: string;
+    caption?: string;
+    className?: string;
+  };
+}
+
+const { kicker, title, className = "", artwork, plate } = Astro.props;
+---
+
+<div class:list={["story-container", className]} data-intersection-observer={true}>
+  {kicker && <h4>{kicker}</h4>}
+  <h2>{title}</h2>
+
+  <!-- Main content slot -->
+  <slot />
+
+  <!-- Artwork section if provided -->
+  {
+    artwork && !plate && (
+      <div class="artwork">
+        <Image
+          src={artwork.image}
+          alt={artwork.alt}
+          width={artwork.width || 320}
+          draggable={false}
+          loading="lazy"
+        />
+      </div>
+    )
+  }
+
+  <!-- Plate wrapper if provided -->
+  {
+    plate && !artwork && (
+      <Plate {...plate}>
+        <slot name="plate" />
+      </Plate>
+    )
+  }
+</div>
+
+<style lang="scss">
+  @use "../../styles/base/_breakpoints.scss" as *;
+
+  .story-container {
+    max-width: 820px;
+    margin: var(--spacing-quad) auto;
+    padding: var(--spacing-double) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-base);
+
+    p {
+      font-size: var(--font-size-base);
+    }
+
+    h4 {
+      color: var(--color-ink-tertiary);
+      font-family: var(--font-sans);
+      font-size: var(--font-size-small);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0 0 var(--spacing-xsmall);
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      color: var(--color-ink-tertiary);
+      font-family: var(--font-headings);
+      margin: 0 0 var(--spacing-base);
+    }
+
+    h2 {
+      color: var(--color-ink-secondary);
+      font-family: var(--font-headings);
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin: 0 0 var(--spacing-base);
+      letter-spacing: -0.02em;
+    }
+
+    // Artwork styles
+    .artwork {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+  }
+</style>
+

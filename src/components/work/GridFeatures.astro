@@ -1,0 +1,79 @@
+---
+interface Feature {
+  title: string;
+  description: string;
+  isStandout?: boolean;
+}
+
+interface Props {
+  features: Feature[];
+}
+
+const { features } = Astro.props;
+---
+
+<div class="section-grid">
+  {
+    features.map(({ title, description, isStandout }) => (
+      <div class:list={["section-item", { standout: isStandout }]}>
+        <h3>{title}</h3>
+        <hr />
+        <p>{description}</p>
+      </div>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  @use "../../styles/base/_breakpoints.scss" as *;
+
+  .section-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-base);
+
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mobile {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .section-item {
+      display: flex;
+      flex-direction: column;
+      padding: var(--spacing-base);
+      font-size: var(--font-size-base);
+      border-radius: 6px;
+      background-color: var(--color-surface);
+
+      &.standout {
+        background-color: var(--color-ink);
+
+        h3 {
+          color: var(--color-surface);
+        }
+
+        hr {
+          border-color: var(--color-coffee);
+        }
+
+        p {
+          color: var(--color-paper);
+        }
+      }
+
+      h3 {
+        font-family: var(--font-headings);
+        font-size: clamp(1.5rem, 5vw, 1.5rem);
+        color: var(--color-ink-tertiary);
+      }
+
+      hr {
+        border: 1px solid var(--color-border);
+        margin: var(--spacing-base) 0;
+      }
+    }
+  }
+</style> 
