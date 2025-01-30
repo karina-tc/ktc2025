@@ -1,0 +1,40 @@
+---
+import MiniShowcaseCard from './MiniShowcaseCard.astro';
+import { miniShowcases } from '../data/miniShowcases';
+---
+
+<section class="mini-showcase-container" data-intersection-observer="true">
+  <div class="mini-showcase-grid">
+    {miniShowcases.map((showcase) => <MiniShowcaseCard {...showcase} />)}
+  </div>
+</section>
+<div class="spacer-large"></div>
+
+<style>
+  .mini-showcase-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: var(--content-wide);
+    margin: -100px auto 0;
+  }
+
+  .mini-showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .mini-showcase-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .mini-showcase-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style> 

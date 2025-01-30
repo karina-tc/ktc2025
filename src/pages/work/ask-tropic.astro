@@ -3,10 +3,11 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import { getCaseStudy } from "../../data/case-study-details";
-import { checkAccess, hasValidAccessToken } from '../../middleware/checkAccess';
-
+import { checkAccess, hasValidAccessToken } from "../../middleware/checkAccess";
+import MiniShowcase from "../../components/MiniShowcase.astro";
 // Case Study Components
 import * as Work from "../../components/work/index.js";
+import BackToTop from "../../components/BackToTop.astro";
 
 //Assets
 import showcaseImage from "../../assets/case-studies/tropic/ask-ai/ask-ai-showcase.png";
@@ -18,8 +19,8 @@ const caseStudy = getCaseStudy("askTropic");
 
 // Check access
 if (Astro.request.url && checkAccess(new URL(Astro.request.url).pathname)) {
-  const cookies = Astro.request.headers.get('cookie') || '';
-  
+  const cookies = Astro.request.headers.get("cookie") || "";
+
   if (!hasValidAccessToken(cookies)) {
     return Astro.redirect(`/work/access?redirect=${Astro.url.pathname}`);
   }
@@ -27,6 +28,9 @@ if (Astro.request.url && checkAccess(new URL(Astro.request.url).pathname)) {
 ---
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>
+  <!-- Back to Top Button -->
+  <BackToTop />
+
   <!-- Case Study Header -->
   <Work.CaseStudyHeader {...caseStudy} />
 
@@ -52,15 +56,18 @@ if (Astro.request.url && checkAccess(new URL(Astro.request.url).pathname)) {
   <!-- Background -->
   <Work.StorySection kicker="Background" title="Assisted Intelligence">
     <p>
-      Over one month, Tropic designed and developed its Ask AI feature—a chat
-      interface that helps customers quickly find information. This feature uses
-      multiple specialized AI agents to assist customers with tasks like
-      creating requests, analyzing account data, and reviewing procurement
-      policies against contracts and requests.
-      <p></p>
-      I led the creation of a foundational system that other teams could use to help
-      users interact with their agents, while also designing the core Ask AI experience.
-      To create this Ask AI system, I focused on the following:
+      In a little over a month, we designed and developed Tropic's Ask AI
+      feature—a chat interface that helps customers quickly find information.
+      This feature uses multiple specialized AI agents to assist customers with
+      tasks like creating requests, analyzing account data, and reviewing
+      procurement policies against contracts and requests.
+    </p>
+    <p>
+      <strong
+        >I led the creation of a foundational system that other teams could use
+        to help users interact with their agents</strong
+      >, while also designing the core Ask AI experience. To create this Ask AI
+      system, I focused on the following:
     </p>
 
     <Work.GridFeatures
@@ -85,28 +92,21 @@ if (Astro.request.url && checkAccess(new URL(Astro.request.url).pathname)) {
     />
   </Work.StorySection>
 
-  <Work.CaseStudyShowcase background={showcaseBackground} backgroundFull={true}>
-    <Image
-      src={showcaseImage}
-      alt="show case image"
-      draggable="false"
-      width={1220}
-      priority
-    />
-  </Work.CaseStudyShowcase>
-
   <!-- Development -->
   <Work.StorySection kicker="Development" title="Shapping Tropic's Assistant">
     <p>
-      I was also lucky to be given the opportunity to play with code and so I
-      contributed to the front-end development, working alongside another
-      developer who handled back-end integration and optimization.
+      <strong
+        >I was also lucky to be given the opportunity to play with code and so I
+        contributed to the front-end development</strong
+      >, working alongside another developer who handled back-end integration
+      and optimization.
     </p>
     <p>
       In the span of two weeks, we developed a code prototype that allowed our
-      team to test and refine the intended user experience. This hands-on
-      approach helped us evaluate performance requirements and optimize the
-      build. While we started with design mockups, much of the real design work
+      team to test and refine the intended user experience. This <strong
+        >hands-on approach helped us evaluate performance requirements and
+        optimize the build</strong
+      >. While we started with design mockups, much of the real design work
       happened directly in code—enabling me to fine-tune the UI and create a
       polished, distinctive experience within our application.
     </p>
@@ -117,15 +117,7 @@ if (Astro.request.url && checkAccess(new URL(Astro.request.url).pathname)) {
     </p>
   </Work.StorySection>
 
-  <Work.CaseStudyShowcase background={showcaseBackground} backgroundFull={true}>
-    <Image
-      src={showcaseImage}
-      alt="show case image"
-      draggable="false"
-      width={1220}
-      priority
-    />
-  </Work.CaseStudyShowcase>
+  <MiniShowcase />
 
   <!-- Reception -->
   <Work.StorySection kicker="Reception" title="Making it Beta">
@@ -147,4 +139,70 @@ if (Astro.request.url && checkAccess(new URL(Astro.request.url).pathname)) {
       proud of the amount of love and care that we put into this experience.
     </p>
   </Work.StorySection>
+
+  <!-- Showcase -->
+  <Work.CaseStudyShowcase background={showcaseBackground} backgroundFull={true}>
+    <Image
+      src={showcaseImage}
+      alt="show case image"
+      draggable="false"
+      width={1220}
+      priority
+    />
+  </Work.CaseStudyShowcase>
+
+  <!-- Footer -->
+  <Work.WorkFooter />
 </BaseLayout>
+
+<style lang="scss">
+  .back-to-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+
+    font-size: var(--font-size-xsmall);
+    font-weight: 600;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    cursor: pointer;
+
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: var(--spacing-small) var(--spacing-base);
+    border-radius: var(--border-radius-base);
+
+    transition: all var(--transition-base);
+
+    &:hover {
+      background-color: var(--color-chocolate);
+      color: var(--color-paper);
+    }
+
+    &:focus {
+      outline: none;
+      background-color: var(--color-chocolate);
+      color: var(--color-paper);
+
+      .back-to-top--initial-text {
+        display: none;
+      }
+
+      .back-to-top--secondary-text {
+        display: block;
+      }
+    }
+
+    &--initial-text {
+      display: block;
+    }
+
+    &--secondary-text {
+      display: none;
+    }
+  }
+</style>
