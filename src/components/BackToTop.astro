@@ -1,0 +1,84 @@
+---
+
+---
+<button class="back-to-top" id="backToTop" style="display: none;">
+  <span class="button-text">Back Up</span>
+</button>
+
+<script>
+  const button = document.getElementById('backToTop');
+  const buttonText = button?.querySelector('.button-text');
+  
+  function updateButtonVisibility() {
+    const scrollPosition = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const twentyPercentVH = viewportHeight * 0.2;
+    const nearBottom = documentHeight - (scrollPosition + viewportHeight) < 100;
+    
+    if (scrollPosition > twentyPercentVH) {
+      if (button) {
+        button.style.display = 'flex';
+        button.classList.toggle('darken', nearBottom);
+      }
+    } else {
+      if (button) button.style.display = 'none';
+    }
+  }
+
+  updateButtonVisibility();
+  window.addEventListener('scroll', updateButtonVisibility);
+
+  if (button) {
+    button.addEventListener('click', () => {
+      if (buttonText) buttonText.textContent = "Let's Go!";
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      button.style.display = 'none';
+      button.classList.remove('darken');
+      
+      setTimeout(() => {
+        if (buttonText) buttonText.textContent = 'Back Up';
+      }, 1000);
+    });
+  }
+</script>
+
+<style lang="scss">
+  // Breakpoint mixins
+  @import "../styles/base/_breakpoints.scss";
+
+  .back-to-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: var(--spacing-base);
+    right: var(--spacing-base);
+    z-index: 50;
+
+    font-size: var(--font-size-xsmall);
+    font-weight: 600;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    cursor: pointer;
+
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: var(--spacing-small) var(--spacing-base);
+    border-radius: var(--border-radius-base);
+    border: none;
+
+    transition: all var(--transition-base);
+
+    &:hover {
+      background-color: var(--color-chocolate);
+      color: var(--color-paper);
+    }
+
+    &.darken {
+      background-color: var(--color-chocolate);
+      color: var(--color-paper);
+    }
+  }
+</style> 
