@@ -11,8 +11,8 @@ interface Initiative {
   x: string;
   y: string;
   image?: ImageMetadata;
+  description?: string;
 }
-
 
 const initiatives: Initiative[] = [
   {
@@ -21,6 +21,7 @@ const initiatives: Initiative[] = [
     x: "85%",
     y: "25%",
     image: spendBubble,
+    description: "This was our biggest priority. We needed to solidify our stake as an intake to procure platform.",
   },
   {
     title: "Contract Data Completion",
@@ -28,6 +29,7 @@ const initiatives: Initiative[] = [
     x: "65%",
     y: "55%",
     image: dataBubble,
+    description: "Data quality is one of the biggest hurdle to getting spend variance insights.",
   },
   {
     title: "Unblocking Account Execs' Time",
@@ -35,6 +37,7 @@ const initiatives: Initiative[] = [
     x: "15%",
     y: "15%",
     image: timeBubble,
+    description: "We needed to create ways to unblock account execs from their desks.",
   },
   {
     title: "Improving User Interface",
@@ -42,12 +45,14 @@ const initiatives: Initiative[] = [
     x: "25%",
     y: "75%",
     image: interfaceBubble,
+    description: "While we did design some updates to our UI, I opted to keep the focus on the core functionality so to economize the time spent on development.",
   },
 ];
 ---
 
 <div class="quadrant-chart" data-intersection-observer={true}>
   <div class="chart-container">
+    <span class="footnote">Bubble sizes reflect stakeholder appetite</span>
     <!-- Axis Labels -->
     <div class="y-axis-label">Business Impact</div>
     <div class="x-axis-label">Value Importance</div>
@@ -63,10 +68,13 @@ const initiatives: Initiative[] = [
 
     <!-- Initiative Bubbles -->
     {
-      initiatives.map(({ title, size, x, y, image }) => (
+      initiatives.map(({ title, size, x, y, image, description }) => (
         <div class={`initiative ${size}`} style={`--x: ${x}; --y: ${y};`}>
           <div class="bubble">{image && <Image src={image} alt={title} />}</div>
           <span>{title}</span>
+          <p class="description">
+            {description}
+          </p>
         </div>
       ))
     }
@@ -180,6 +188,7 @@ const initiatives: Initiative[] = [
       gap: var(--spacing-xsmall);
       left: var(--x);
       top: var(--y);
+      cursor: pointer;
 
       .bubble {
         width: var(--size);
@@ -187,18 +196,8 @@ const initiatives: Initiative[] = [
         border-radius: 50%;
         background: var(--color-coffee);
         opacity: 0.9;
-        cursor: pointer;
         border: 1px solid var(--color-paper);
         transition: all 0.2s ease-in-out;
-
-        &:hover {
-          opacity: 1;
-          background: var(--color-accent-light);
-
-          img {
-            mix-blend-mode: plus-lighter;
-          }
-        }
 
         img {
           width: 100%;
@@ -235,6 +234,83 @@ const initiatives: Initiative[] = [
       }
       &.xsmall {
         --size: 30px;
+      }
+
+      .description {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(-20%, -100%);
+        opacity: 0;
+        visibility: hidden;
+
+        width: 100%;
+        min-width: 200px;
+        max-width: 200px;
+        background: var(--color-chocolate);
+        padding: 16px;
+        border-radius: var(--border-radius-large);
+
+        font-size: var(--font-size-xsmall);
+        color: var(--color-paper);
+        font-family: var(--font-sans);
+        font-weight: 400;
+        line-height: 1.5;
+        text-wrap: balance;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+      }
+
+      &:hover .description {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-20%, -115%);
+        transition-delay: 0.2s;
+      }
+
+      &:hover .bubble {
+        opacity: 1;
+        background: var(--color-accent-light);
+
+        img {
+          mix-blend-mode: plus-lighter;
+        }
+      }
+    }
+
+    span.footnote {
+      display: block;
+      width: 100%;
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      text-align: center;
+      font-size: var(--font-size-xsmall);
+      color: var(--color-ink-tertiary);
+    }
+
+    @include tablet {
+      padding: 0;
+    }
+
+    @include mobile {
+      .initiative .bubble {
+        transform: scale(0.75) translateY(16px);
+      }
+
+      .initiative span {
+        margin-top: 8px;
+      }
+
+      span.footnote {
+        bottom: -28px;
+      }
+
+      .x-axis-label {
+        bottom: -52px;
+      }
+
+      .corner-label {
+        padding: var(--spacing-small);
       }
     }
   }
