@@ -11,6 +11,7 @@ import * as Work from "../../components/work/index.js";
 // Partials
 import QuadrantChart from "../../components/_partials/work/QuadrantChart.astro";
 import DataClusters from "../../components/_partials/work/DataClusters.astro";
+import BackToTop from "../../components/BackToTop.astro";
 
 //Assets
 import scribble from "../../assets/scribbles/loop-down.svg";
@@ -36,6 +37,10 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
 ---
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>
+
+  <!-- Back to Top Button -->
+  <BackToTop />
+
   <!-- Case Study Header -->
   <Work.CaseStudyHeader {...caseStudy} />
 
