@@ -7,21 +7,34 @@ import { checkAccess, hasValidAccessToken } from "../../middleware/checkAccess";
 
 // Case Study Components
 import * as Work from "../../components/work/index.js";
+import Carousel from "../../components/Carousel.astro";
 
 // Partials
 import QuadrantChart from "../../components/_partials/work/QuadrantChart.astro";
 import DataClusters from "../../components/_partials/work/DataClusters.astro";
 import BackToTop from "../../components/BackToTop.astro";
+import Plate from "../../components/work/Plate.astro";
 
 //Assets
-import scribble from "../../assets/scribbles/loop-down.svg";
-import showcaseImage from "../../assets/case-studies/tropic/tropic-supplier-index.png";
 import showcaseBackground from "../../assets/backgrounds/noise-1.png";
 import showcaseLogo from "../../assets/icons/cv-tropic.png";
 import galaxyQuest from "../../assets/illustrations/case-studies/beyond-contracts/galaxy-quest-illus.png";
 import cluster01 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-01.svg";
 import cluster02 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-02.svg";
 import cluster03 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-03.svg";
+import showcaseImage from "../../assets/case-studies/tropic/tropic-supplier-index.png";
+import integrationsIndex from "../../assets/case-studies/tropic/integrations/integrations-index.png";
+import integrationsDetails from "../../assets/case-studies/tropic/integrations/integrations-details.png";
+import integrationsCollaboration from "../../assets/case-studies/tropic/integrations/integrations-collaboration.png";
+import astronauts from "../../assets/illustrations/case-studies/beyond-contracts/data-transparency.png";
+import showcaseVideo2 from "../../assets/case-studies/tropic/integrations/ai-supplier-matching.mp4";
+import exploreIllustration from "../../assets/illustrations/case-studies/beyond-contracts/explore-illus.svg";
+import deriskIllustration from "../../assets/illustrations/case-studies/beyond-contracts/derisk-illus.svg";
+import planIllustration from "../../assets/illustrations/case-studies/beyond-contracts/plan-illus.svg";
+import Reporting01 from "../../assets/illustrations/case-studies/beyond-contracts/reporting01.svg";
+import Reporting02 from "../../assets/illustrations/case-studies/beyond-contracts/reporting02.svg";
+import Reporting03 from "../../assets/illustrations/case-studies/beyond-contracts/reporting03.svg";
+import Reporting04 from "../../assets/illustrations/case-studies/beyond-contracts/reporting04.svg";
 
 // Data
 const caseStudy = getCaseStudy("beyondContracts");
@@ -37,7 +50,6 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
 ---
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>
-
   <!-- Back to Top Button -->
   <BackToTop />
 
@@ -267,51 +279,167 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
   <Work.ScrollableGallery
     items={[
       {
-        image: showcaseImage,
+        image: integrationsIndex,
         alt: "Integrations Index",
-        title: "Integrations Index",
+        title: "New Integrations Page",
         description:
           "Elevated from hidden settings to become a central feature. Enhanced with filters and restructured categories to focus on value rather than market type.",
       },
       {
-        image: showcaseImage,
-        alt: "Second gallery item",
-        title: "Integrations Index",
+        image: integrationsDetails,
+        alt: "Integrations Details",
+        title: "Integrations Details",
         description:
-          "Elevated from hidden settings to become a central feature. Enhanced with filters and restructured categories to focus on value rather than market type.",
+          "Each integration has a detailed view that shows the data that is being brought into Tropic and the status of the data.",
       },
       {
-        image: showcaseImage,
-        alt: "Third gallery item",
-        title: "Integrations Index",
+        image: integrationsCollaboration,
+        alt: "Collaboration",
+        title: "Collaboration",
         description:
-          "Elevated from hidden settings to become a central feature. Enhanced with filters and restructured categories to focus on value rather than market type.",
+          "Customers can now collaborate on connecting integrations to make sure connections are made correctly.",
       },
     ]}
   />
 
-  <div class="section-container no-gap">
-    <Work.StorySection className="no-title">
-      <p>
-        Onboarding in Tropic can be lengthy since we ensure data accuracy while
-        setting up a user's account. To expedite this process and allow
-        customers and account executives to focus on complex data translations,
-        we needed to use AI to enhance supplier matching between ERPs and
-        Tropic.
-      </p>
-    </Work.StorySection>
-  </div>
+  <Work.StorySection subtitle="AI Supplier Matching">
+    <p>
+      Onboarding in Tropic can be lengthy since we ensure data accuracy while
+      setting up a user's account. To expedite this process and allow customers
+      and account executives to focus on complex data translations, we needed to
+      use AI to enhance supplier matching between ERPs and Tropic.
+    </p>
+  </Work.StorySection>
 
-  <!-- Showcase -->
-  <Work.CaseStudyShowcase background={showcaseBackground} backgroundFull={true}>
-    <Image
-      src={showcaseImage}
-      alt="show case image"
-      draggable="false"
-      width={1220}
-      priority
-    />
+  <Work.CaseStudyShowcase legend="AI Supplier Matching" spacingTight>
+    <video
+      src={showcaseVideo2}
+      autoplay="true"
+      muted="true"
+      loop="true"
+      class="w-full"></video>
   </Work.CaseStudyShowcase>
+
+  <Work.StorySection subtitle="Data Transparency" spacing="none">
+    <p>
+      With improved data connection management, we needed to explore how users
+      could see all their data in one clear surface. Over two weeks of
+      explorations, we went deep on how the supplierverse could provide value to
+      both finance and procurement teams. For this rocket ship to launch
+      successfully, we had to make both these personas happy.
+    </p>
+    <p>
+      After these explorations, I met with the Product and Engineering leads to
+      refine our initial designs, focusing on what we knew would succeed. Since
+      our team was newly formed, we decided to pursue achievable wins rather
+      than moonshot ideas to build credibility with stakeholders and gain
+      momentum in our work.
+    </p>
+
+    <div class="astronauts-container">
+      <Plate
+        label="Figure III."
+        caption="Finance and Procurement Conquering Planet Spend"
+      >
+        <Image
+          class="astronauts"
+          src={astronauts}
+          alt="2 astronauts looking at each other"
+          width={885}
+          draggable={false}
+          loading="lazy"
+        />
+      </Plate>
+    </div>
+  </Work.StorySection>
+
+  <section class="split-panels" data-intersection-observer={true}>
+    <div class="panel-container">
+      <div class="panel">
+        <h3 class="title-heading">Explore</h3>
+        <Image
+          src={exploreIllustration}
+          alt="Explore"
+          width={418}
+          draggable={false}
+          loading="lazy"
+        />
+      </div>
+      <div class="panel">
+        <h3 class="title-heading">Derisk</h3>
+        <Image
+          src={deriskIllustration}
+          alt="Derisk"
+          width={371}
+          draggable={false}
+          loading="lazy"
+        />
+      </div>
+      <div class="panel">
+        <h3 class="title-heading">Plan</h3>
+        <Image
+          src={planIllustration}
+          alt="Plan"
+          width={455}
+          draggable={false}
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <Work.StorySection subtitle="Data Reporting" spacing="none">
+    <p>
+      Throughout our explorations, I focused on showing glimpses of potential
+      features. However, I became convinced that data clarity alone wouldn't
+      justify our customers' investment in Tropic. What we needed to build—and
+      what our design partners were actively seeking—was a way to demonstrate
+      how supplier costs affected their bottom line. Enter, the finance super
+      galaxy.
+    </p>
+    <p>
+      While I'm not a financial scientist myself, I was lucky to partner with a
+      Product Lead who had universal knowledge of what finance teams scan for
+      when searching for spend signals. Plus, another crew had already done the
+      heavy lifting of making it easier for customers to plot their contract
+      coordinates and cost trajectories. This alignment of the stars helped us
+      launch our Contracts vs Actual mission into orbit.
+    </p>
+  </Work.StorySection>
+
+  <Carousel
+    label="Figure IV. Explorations into Reporting"
+    items={[
+      {
+        title: "Saved styles",
+        description:
+          "Save attributes in a single, reusable style that anyone on your team can apply",
+        image: Reporting01,
+        alt: "Saved styles interface",
+      },
+      {
+        title: "Components",
+        description:
+          "Create a Component, update it in one place, and it updates everywhere",
+        image: Reporting02,
+        alt: "Components interface",
+      },
+      {
+        title: "Reporting 03",
+        description: "Description for reporting 03",
+        image: Reporting03,
+        alt: "Reporting 03",
+      },
+      {
+        title: "Reporting 04",
+        description: "Description for reporting 04",
+        image: Reporting04,
+        alt: "Reporting 04",
+      },
+    ]}
+  />
+
+  <div class="spacer-large"></div>
 
   <Work.WorkFooter />
 </BaseLayout>
@@ -323,5 +451,54 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
   .section-container.no-gap {
     margin-top: -40px;
     margin-bottom: -40px;
+  }
+
+  @include mobile {
+    .astronauts-container {
+      display: none;
+    }
+  }
+
+  .split-panels {
+    width: 100%;
+    margin: var(--spacing-quad) 0;
+    padding: var(--spacing-double) var(--spacing-base);
+    background-color: var(--color-surface);
+
+    .panel-container {
+      width: 90%;
+      max-width: 1220px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+      gap: var(--spacing-base);
+
+      .panel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-small);
+        padding: var(--spacing-base) var(--spacing-base) 0;
+
+        &:not(:last-child) {
+          border-right: 1px solid var(--color-border);
+        }
+      }
+      @include tablet {
+        flex-direction: column;
+        .panel {
+          align-items: center;
+          border-right: 0px !important;
+          padding-bottom: var(--spacing-double);
+          &:not(:last-child) {
+            border-bottom: 1px solid var(--color-border);
+          }
+        }
+      }
+    }
+    @include mobile {
+      margin-top: var(--spacing-base);
+      margin-bottom: var(--spacing-base);
+    }
   }
 </style>

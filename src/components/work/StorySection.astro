@@ -6,6 +6,7 @@ import Plate from "./Plate.astro";
 interface Props {
   kicker?: string;
   title?: string;
+  subtitle?: string;
   className?: string;
   artwork?: {
     image: ImageMetadata;
@@ -17,14 +18,32 @@ interface Props {
     caption?: string;
     className?: string;
   };
+  spacing?: 'small' | 'base' | 'double' | 'quad' | 'none';
 }
 
-const { kicker, title, className = "", artwork, plate } = Astro.props;
+const {
+  kicker,
+  title,
+  subtitle,
+  className = "",
+  artwork,
+  plate,
+  spacing = "quad",
+} = Astro.props;
 ---
 
-<div class:list={["story-container", title ? "" : "no-title", className]} data-intersection-observer={true}>
+<div
+  class:list={[
+    "story-container",
+    title ? "" : "no-title",
+    className,
+    `spacing-${spacing}`,
+  ]}
+  data-intersection-observer={true}
+>
   {kicker && <h4>{kicker}</h4>}
-  <h2>{title}</h2>
+  {title && <h2>{title}</h2>}
+  {subtitle && <h3>{subtitle}</h3>}
 
   <!-- Main content slot -->
   <slot />
@@ -60,11 +79,30 @@ const { kicker, title, className = "", artwork, plate } = Astro.props;
   .story-container {
     width: 90%;
     max-width: 820px;
-    margin: var(--spacing-quad) auto;
     padding: var(--spacing-double) 0;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-base);
+
+    &.spacing-quad {
+      margin: var(--spacing-quad) auto;
+    }
+
+    &.spacing-double {
+      margin: var(--spacing-double) auto;
+    }
+
+    &.spacing-base {
+      margin: var(--spacing-base) auto;
+    }
+
+    &.spacing-small {
+      margin: var(--spacing-small) auto;
+    }
+
+    &.spacing-none {
+      margin: 0 auto;
+    }
 
     &.no-title {
       margin-top: 0;
@@ -117,4 +155,3 @@ const { kicker, title, className = "", artwork, plate } = Astro.props;
     }
   }
 </style>
-

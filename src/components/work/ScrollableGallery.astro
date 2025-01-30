@@ -2,7 +2,8 @@
 import { Image } from "astro:assets";
 
 interface GalleryItem {
-  image: ImageMetadata;
+  image?: ImageMetadata;
+  video?: string;
   alt: string;
   title?: string;
   description?: string;
@@ -21,13 +22,18 @@ const { items } = Astro.props;
     {
       items.map((item) => (
         <figure class="scrollable-gallery-item">
-          <Image
-            src={item.image}
-            alt={item.alt}
-            width={820}
-            height={578}
-            loading="lazy"
-          />
+          {item.image && (
+            <Image
+              src={item.image}
+              alt={item.alt}
+              width={820}
+              height={578}
+              loading="lazy"
+            />
+          )}
+          {item.video && (
+            <video src={item.video} autoplay="true" muted="true" loop="true"></video>
+          )}
           <figcaption class="scrollable-gallery-item-caption">
             {item.title && <p class="title">{item.title}</p>}
             {item.description && <p class="description">{item.description}</p>}
@@ -75,7 +81,8 @@ const { items } = Astro.props;
       align-items: flex-start;
       gap: var(--spacing-base);
 
-      img {
+      img,
+      video {
         width: 100%;
         height: auto;
         border-radius: 12px;
@@ -88,11 +95,11 @@ const { items } = Astro.props;
         flex-direction: column;
         gap: var(--spacing-small);
         max-width: 600px;
-        color: var(--color-ink-tertiary);
+        color: var(--color-ink-secondary);
 
         .title {
           font-family: var(--font-headings);
-          font-size: clamp(1rem, 2.5vw, 1.5rem);
+          font-size: clamp(1rem, 2.5vw, 1.25rem);
         }
         .description {
           font-size: var(--font-size-small);

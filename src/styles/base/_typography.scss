@@ -32,6 +32,16 @@ h2 {
 h3 {
   font-size: clamp(1rem, 3vw, 1.25rem);
   margin-bottom: var(--spacing-4);
+
+  &.title-heading {
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--color-coffee);
+      margin-bottom: var(--spacing-small);
+    }
 }
 
 h4 {
@@ -43,6 +53,20 @@ h4 {
 p {
   margin-bottom: var(--spacing-4);
   max-width: var(--content-width);
+}
+
+.plate-label,
+.plate-caption {
+  color: var(--color-ink-tertiary);
+  width: fit-content;
+  margin: var(--spacing-base) auto;
+  text-align: center;
+}
+
+.plate-caption {
+  font-size: var(--font-size-small);
+  font-weight: 500;
+  font-style: italic;
 }
 
 .prose {
@@ -76,6 +100,7 @@ p {
       margin-top: var(--spacing-double);
     }
   }
+
 
   code:not(pre code) {
     font-family: var(--font-body);

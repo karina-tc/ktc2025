@@ -1,0 +1,331 @@
+---
+import { Image } from "astro:assets";
+
+interface CarouselItem {
+  title: string;
+  description: string;
+  image: ImageMetadata;
+  alt: string;
+}
+
+interface Props {
+  items: CarouselItem[];
+  label?: string;
+}
+
+const { items, label } = Astro.props;
+---
+
+<div class="carousel-wrapper">
+  <div class="debug-width"></div>
+  {label && <span class="plate-label">{label}</span>}
+  <div class="carousel-content">
+    <div class="carousel-container">
+      <div class="carousel-nav">
+        {
+          items.map((item, index) => (
+            <div
+              class:list={["nav-item", { active: index === 0 }]}
+              data-index={index}
+            >
+              <h4>{item.title}</h4>
+              <p>{item.description}</p>
+              <div class="progress-bar" />
+            </div>
+          ))
+        }
+      </div>
+      <div class="carousel-slides">
+        {
+          items.map((item, index) => (
+            <div class:list={["slide", { active: index === 0 }]}>
+              <Image
+                src={item.image}
+                alt={item.alt}
+                width={800}
+                draggable={false}
+                loading="lazy"
+              />
+              <div class="slide-content">
+                <h4>{item.title}</h4>
+                <p>{item.description}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  console.log("Script tag loaded");
+
+  function initCarousel() {
+    // Only run carousel on desktop
+    if (window.innerWidth <= 768) {
+      console.log("Mobile/tablet view - carousel disabled");
+      return;
+    }
+
+    console.log("Desktop view - initializing carousel...");
+
+    const navItems = document.querySelectorAll(".carousel-nav .nav-item");
+    const slides = document.querySelectorAll(".carousel-slides .slide");
+    let currentIndex = 0;
+    let timer;
+
+    console.log("Found elements:", {
+      navItems: navItems.length,
+      slides: slides.length,
+    });
+
+    function showSlide(index) {
+      console.log("Showing slide:", index);
+
+      // Remove active class from all items
+      navItems.forEach((nav) => nav.classList.remove("active"));
+      slides.forEach((slide) => slide.classList.remove("active"));
+
+      // Update current index
+      currentIndex = index;
+
+      // Add active class to current items
+      navItems[currentIndex].classList.add("active");
+      slides[currentIndex].classList.add("active");
+
+      // Clear existing timer and start a new one
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        console.log("Timer completed, moving to next slide");
+        const nextIndex = (currentIndex + 1) % navItems.length;
+        showSlide(nextIndex);
+      }, 5000);
+    }
+
+    // Handle clicks on nav items
+    navItems.forEach((item, index) => {
+      item.addEventListener("click", () => {
+        console.log("Nav item clicked:", index);
+        showSlide(index);
+      });
+    });
+
+    // Start the carousel
+    console.log("Starting carousel with first slide");
+    showSlide(0);
+  }
+
+  // Handle resize events
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      location.reload(); // Reinitialize on resize
+    }, 250);
+  });
+
+  document.addEventListener("astro:page-load", initCarousel);
+  document.addEventListener("DOMContentLoaded", initCarousel);
+
+  // Add debug logging for container width
+  const wrapper = document.querySelector(".carousel-wrapper");
+  if (wrapper) {
+    console.log("Carousel wrapper width:", wrapper.offsetWidth);
+
+    // Create a ResizeObserver to monitor size changes
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        console.log("Container width changed to:", entry.contentRect.width);
+      }
+    });
+
+    observer.observe(wrapper);
+  }
+</script>
+
+<style lang="scss">
+  @import "../styles/base/_breakpoints.scss";
+
+  .carousel-wrapper {
+    container-type: inline-size;
+    container-name: carousel;
+
+    width: 90%;
+    max-width: var(--content-wide);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-base);
+
+    .carousel-content {
+      width: 100%;
+      height: 100%;
+    }
+
+    .carousel-container {
+      display: flex;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 12px 24px -12px rgba(116, 92, 72, 0.5);
+      border: 2px solid var(--color-paper);
+    }
+
+    .carousel-nav {
+      width: 100%;
+      max-width: 300px;
+      flex-shrink: 0;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-item {
+      flex: 1;
+      padding: var(--spacing-base);
+      cursor: pointer;
+      position: relative;
+      background: var(--color-paper);
+      transition: background 0.2s ease-in-out;
+
+      h4 {
+        font-weight: 500;
+        font-family: var(--font-headings);
+        color: var(--color-coffee);
+        margin-bottom: var(--spacing-small);
+      }
+
+      p {
+        color: var(--color-coffee);
+        font-weight: 500;
+        font-size: var(--font-size-small);
+      }
+
+      &:hover,
+      &:focus {
+        h4 {
+          color: var(--color-ink-tertiary);
+        }
+
+        p {
+          color: var(--color-ink-tertiary);
+        }
+      }
+
+      &.active {
+        background-color: var(--color-surface);
+
+        h4 {
+          color: var(--color-ink-primary);
+        }
+
+        p {
+          color: var(--color-ink-tertiary);
+        }
+
+        .progress-bar {
+          background: var(--color-accent);
+          height: 2px;
+          width: 100%;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          animation: progress 5s linear;
+        }
+      }
+    }
+
+    .carousel-slides {
+      flex-grow: 1;
+      background: var(--color-surface);
+      padding: var(--spacing-double) var(--spacing-base);
+
+      .slide {
+        display: none;
+        overflow: hidden;
+
+        .slide-content {
+          display: none;
+        }
+
+        &.active {
+          display: block;
+        }
+
+        img {
+          width: auto;
+          height: auto;
+          min-height: 400px;
+          display: block;
+          margin: auto;
+        }
+      }
+    }
+
+    @keyframes progress {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    @container carousel (max-width: 820px) {
+      .carousel-container {
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        overflow: visible;
+      }
+
+      .carousel-nav {
+        display: none !important;
+      }
+
+      .carousel-slides {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+        gap: var(--spacing-double);
+        padding: 0;
+        background: none;
+
+        .slide {
+          display: block !important;
+          background: var(--color-surface);
+          border-radius: 12px;
+          overflow: hidden;
+          padding: var(--spacing-base);
+          border: 1px solid var(--color-paper);
+          box-shadow: 0 12px 24px -12px rgba(116, 92, 72, 0.5);
+
+          img {
+            width: 100%;
+            max-width: 520px;
+            height: auto;
+            margin: var(--spacing-base) auto var(--spacing-double);
+          }
+
+          .slide-content {
+            display: block;
+            max-width: 520px;
+            margin: var(--spacing-base) auto;
+
+            h4 {
+              font-weight: 500;
+              font-family: var(--font-headings);
+              color: var(--color-ink-primary);
+              margin-bottom: var(--spacing-small);
+            }
+
+            p {
+              color: var(--color-ink-tertiary);
+              font-weight: 500;
+              font-size: var(--font-size-small);
+            }
+          }
+        }
+      }
+    }
+  }
+</style>

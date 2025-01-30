@@ -2,30 +2,40 @@
 import { Image } from "astro:assets";
 
 interface Props {
-  background: ImageMetadata;
+  background?: ImageMetadata;
   backgroundFull?: boolean;
   caption?: {
     icon: ImageMetadata;
     title: string;
     description: string;
   };
+  legend?: string; 
+  spacingTight?: boolean;
 }
 
-const { background, caption, backgroundFull = false } = Astro.props;
+const { background, caption, backgroundFull = false, legend, spacingTight = false } = Astro.props;
 ---
 
-<div class:list={["case-showcase", { "show-full": backgroundFull }]}>
+<div class:list={["case-showcase", { "show-full": backgroundFull, "tight": spacingTight }]}>
   <figure data-intersection-observer={true}>
     <slot />
   </figure>
+
+  {legend && (
+    <div class="legend-container">
+      <span>{legend}</span>
+    </div>
+  )}
   
-  <div class:list={["showcase-background", { "show-full": backgroundFull }]}>
-    <Image
-      src={background}
-      alt="showcase background"
-      draggable="false"
-    />
-  </div>
+  {background && (
+    <div class:list={["showcase-background", { "show-full": backgroundFull }]}>
+      <Image
+        src={background}
+        alt="showcase background"
+        draggable="false"
+      />
+    </div>
+  )}
 
   {caption && (
     <figcaption class="caption-container" data-intersection-observer={true}>
@@ -49,6 +59,10 @@ const { background, caption, backgroundFull = false } = Astro.props;
     position: relative;
     margin-bottom: var(--spacing-quad);
 
+    &.tight {
+      margin-top: -60px;
+    }
+
     &.show-full {
       padding: var(--spacing-quad) 0;
     }
@@ -56,6 +70,17 @@ const { background, caption, backgroundFull = false } = Astro.props;
     &.show-full .showcase-background {
       height: 100%;
       top: 0;
+    }
+
+    .legend-container {
+      width: 90%;
+      max-width: 1220px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: var(--font-size-small);
+      font-weight: 500;
+      font-style: italic;
+      color: var(--color-ink-tertiary);
     }
 
     figure {
