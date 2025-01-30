@@ -33,7 +33,8 @@ export default defineConfig({
             alias: {
                 '@styles': '/src/styles'
             }
-        }
+        },
+        envPrefix: 'RESEND_'
     },
     markdown: {
         shikiConfig: {
