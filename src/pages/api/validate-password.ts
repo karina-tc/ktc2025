@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(
         JSON.stringify({
           valid: false,
-          message: 'Invalid password'
+          message: "That ain't it, friend. Try again."
         }),
         {
           status: 401,
@@ -49,8 +49,7 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(
       JSON.stringify({
         valid: false,
-        message: 'Server error',
-        error: String(error)
+        message: 'Something went wrong. Please try again.'
       }),
       {
         status: 500,

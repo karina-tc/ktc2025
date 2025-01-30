@@ -19,70 +19,88 @@ const bookingLink =
 >
   <div class="section-container">
     <a href="/"><Atom size="140px" /></a>
-    <h1>What's the secret code?</h1>
-    <p>Enter your code to continue:</p>
-    <form 
-      method="POST" 
-      action="/api/validate-password" 
-      class="password-input-container"
-    >
-      <input 
-        type="text" 
-        id="passwordInput" 
-        name="password" 
-        placeholder="gentle-daisy" 
+    <h1>Access Required</h1>
+    <form class="form-group">
+      <input
+        type="text"
+        name="password"
+        placeholder="knock-knock"
+        autocomplete="off"
+        required
       />
-      <button type="submit" id="submitButton">Submit</button>
+      <button class="button" type="submit">Submit</button>
+      <div class="error-message" role="alert"></div>
     </form>
-    <a class="action-link" id="backButton" href="/">Take me back</a>
+
+    <a class="action-link take-me-back" id="backButton" href="/">Take me back</a
+    >
   </div>
 </BaseLayout>
 
 <script>
-  const form = document.querySelector('form');
-  
-  form?.addEventListener('submit', async (e) => {
+  const form = document.querySelector("form");
+  const errorMessage = document.querySelector(".error-message");
+  const input = document.querySelector('input[name="password"]');
+
+  form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    const password = formData.get('password')?.toString().trim();
-    
-    console.log('Client: Submitting password:', password);
-    
+    const password = formData.get("password")?.toString().trim();
+
     try {
-      const response = await fetch('/api/validate-password', {
-        method: 'POST',
+      // Clear any existing error states
+      if (errorMessage) {
+        errorMessage.textContent = "";
+        errorMessage.classList.remove("visible");
+      }
+      if (input) {
+        input.classList.remove("error");
+      }
+
+      const response = await fetch("/api/validate-password", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ password }),
-        credentials: 'same-origin'
+        credentials: "same-origin",
       });
-      
-      console.log('Client: Response status:', response.status);
+
       const result = await response.json();
-      console.log('Client: Response data:', result);
-      
+
       if (!result.valid) {
-        console.log('Client: Invalid password');
-        alert(result.message || 'Invalid password');
+        if (errorMessage) {
+          errorMessage.textContent = result.message;
+          errorMessage.classList.add("visible");
+        }
+        if (input) {
+          input.classList.add("error");
+        }
         return;
       }
-      
-      if (result.valid) {
-        console.log('Client: Valid password, redirecting...');
-        const params = new URLSearchParams(window.location.search);
-        const redirectUrl = params.get('redirect') || '/work';
-        window.location.replace(redirectUrl);
-      }
-      
+
+      // Valid password, redirect
+      const params = new URLSearchParams(window.location.search);
+      const redirectUrl = params.get("redirect") || "/work";
+      window.location.replace(redirectUrl);
     } catch (error) {
-      console.error('Client Error:', error);
-      alert('Error validating password. Please try again.');
+      if (errorMessage) {
+        errorMessage.textContent =
+          "Error validating password. Please try again.";
+        errorMessage.classList.add("visible");
+      }
+      if (input) {
+        input.classList.add("error");
+      }
     }
   });
 </script>
 
 <style lang="scss">
+  .take-me-back {
+    margin-top: var(--spacing-quad);
+  }
+
   .section-container {
     display: flex;
     flex-direction: column;
@@ -97,7 +115,7 @@ const bookingLink =
       margin: var(--spacing-double) 0 var(--spacing-base);
     }
 
-    .password-input-container {
+    .form-group {
       width: 100%;
       max-width: 300px;
       display: flex;
@@ -106,7 +124,7 @@ const bookingLink =
       justify-content: center;
       gap: var(--spacing-small);
       text-align: center;
-      margin: var(--spacing-base) auto var(--spacing-quad);
+      margin: var(--spacing-base) auto 0;
 
       input {
         width: 100%;
@@ -132,9 +150,29 @@ const bookingLink =
         &:focus {
           border-width: 2px;
         }
+
+        &.error {
+          border-color: var(--color-accent);
+          border-width: 2px;
+          background-color: #fbdfb6;
+        }
       }
 
-      button {
+      .error-message {
+        color: var(--color-ink-tertiary);
+        font-size: var(--font-size-small);
+        font-family: var(--font-sans);
+        font-weight: 600;
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+
+        &.visible {
+          opacity: 1;
+          margin: var(--spacing-xsmall) 0 var(--spacing-small);
+        }
+      }
+
+      .button {
         width: 100%;
         padding: var(--spacing-small) var(--spacing-base);
         border: 0;
