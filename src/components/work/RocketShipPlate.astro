@@ -50,8 +50,7 @@ const { leftCard, rightCard, caption } = Astro.props;
 
   :global(.plate-content:hover .rocketship) {
     opacity: 0;
-    transform: scale(0.5);
-    transform-origin: center;
+    transform: translateY(-20px);
     transition-delay: 0.2s;
   }
 
@@ -60,30 +59,28 @@ const { leftCard, rightCard, caption } = Astro.props;
     display: block;
     max-width: 130px;
     height: auto;
-    top: calc(25% + 20px);
-    left: calc(50% + 28px);
+    top: 36px;
+    left: calc(50% - 40px);
     z-index: 2;
     opacity: 1;
-    transition: all 0.4s ease;
-    will-change: opacity, transform;
-    animation: float 3s ease-in-out infinite;
+    transition: opacity 0.4s ease, transform 0.4s ease;
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+    animation: rocketFloat 4s ease-in-out infinite;
 
     @include mobile {
-      width: 120px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      display: none;
     }
   }
 
-  @keyframes float {
-    0%,
-    100% {
-      transform: translate(-50%, -50%);
+  @keyframes rocketFloat {
+    0% {
+      transform: translateY(0);
     }
     50% {
-      transform: translate(-50%, calc(-50% - 2px));
+      transform: translateY(-8px);
+    }
+    100% {
+      transform: translateY(0);
     }
   }
 </style>

@@ -41,6 +41,7 @@ const { leftCard, rightCard } = Astro.props;
 
     @include mobile {
       flex-direction: column;
+      gap: var(--spacing-base);
     }
 
     &:hover .floating-cards-cell {
@@ -62,12 +63,14 @@ const { leftCard, rightCard } = Astro.props;
     position: relative;
     z-index: 1;
 
-    &.left {
-      transform: rotate(-10deg);
-    }
+    @include tablet-reverse {
+      &.left {
+        transform: rotate(-10deg);
+      }
 
-    &.right {
-      transform: rotate(10deg);
+      &.right {
+        transform: rotate(10deg);
+      }
     }
 
     h5 {
