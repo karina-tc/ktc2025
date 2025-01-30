@@ -1,11 +1,15 @@
+export const config = {
+  matcher: '/work/*'  // Only run on /work routes
+};
+
 export function onRequest({ request, redirect }, next) {
   const url = new URL(request.url);
   const cookies = request.headers.get('cookie');
   
-  console.log('Middleware:', {
+  console.log('Netlify Middleware:', {
     path: url.pathname,
-    cookies: cookies,
-    hasAccess: cookies?.includes('access_token=true')
+    hasAccess: cookies?.includes('access_token=true'),
+    env: process.env.NETLIFY ? 'Netlify' : 'Local'
   });
 
   // Always allow access to these paths
@@ -15,7 +19,17 @@ export function onRequest({ request, redirect }, next) {
 
   // If trying to access /work/* without access token
   if (url.pathname.startsWith('/work') && !cookies?.includes('access_token=true')) {
-    return redirect(`/work/access?redirect=${encodeURIComponent(url.pathname)}`);
+    // Use full URL for Netlify redirects
+    const baseUrl = process.env.NETLIFY 
+      ? 'https://' + request.headers.get('host')
+      : '';
+    
+    return redirect(
+      `${baseUrl}/work/access?redirect=${encodeURIComponent(url.pathname)}`,
+      {
+        status: 302
+      }
+    );
   }
 
   return next();
