@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { isValidPassword } from '../../config/passwords';
+import { isValidPassword, incrementPasswordUsage } from '../../config/passwords';
 
 export const prerender = false;
 
@@ -44,6 +44,9 @@ export const POST: APIRoute = async ({ request }) => {
         }
       );
     }
+
+    // Increment usage count for valid passwords using the ID
+    await incrementPasswordUsage(passwordConfig.id);
 
     console.log('API: Valid password, setting cookie');
     return new Response(
