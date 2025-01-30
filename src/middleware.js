@@ -18,6 +18,12 @@ export function onRequest({ request }, next) {
     return next();
   }
 
+  // Check if Supabase is available
+  if (!process.env.PUBLIC_SUPABASE_URL) {
+    console.warn('Supabase is down, bypassing authentication');
+    return next();
+  }
+
   // Check for access token on protected paths
   if (url.pathname.startsWith('/work')) {
     if (!cookies?.includes('access_token=true')) {
