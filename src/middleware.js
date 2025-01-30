@@ -12,24 +12,21 @@ export function onRequest({ request, redirect }, next) {
     env: process.env.NETLIFY ? 'Netlify' : 'Local'
   });
 
-  // Always allow access to these paths
-  if (url.pathname === '/work/access' || url.pathname.startsWith('/api/')) {
+  // Skip non-work paths
+  if (!url.pathname.startsWith('/work') || 
+      url.pathname === '/work/access' || 
+      url.pathname.startsWith('/api/')) {
     return next();
   }
 
-  // If trying to access /work/* without access token
-  if (url.pathname.startsWith('/work') && !cookies?.includes('access_token=true')) {
-    // Use full URL for Netlify redirects
-    const baseUrl = process.env.NETLIFY 
-      ? 'https://' + request.headers.get('host')
-      : '';
-    
-    return redirect(
-      `${baseUrl}/work/access?redirect=${encodeURIComponent(url.pathname)}`,
-      {
-        status: 302
+  // Check for access token
+  if (!cookies?.includes('access_token=true')) {
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: `/work/access?redirect=${encodeURIComponent(url.pathname)}`
       }
-    );
+    });
   }
 
   return next();
