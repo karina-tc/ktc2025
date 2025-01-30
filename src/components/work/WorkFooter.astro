@@ -25,34 +25,68 @@ const { endingText = "El fin." } = Astro.props;
       </svg>
       <span>Show some love</span>
     </button>
-    <button>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16.125 10.5C16.125 10.6989 16.046 10.8897 15.9053 11.0303C15.7647 11.171 15.5739 11.25 15.375 11.25H9C8.80109 11.25 8.61032 11.171 8.46967 11.0303C8.32902 10.8897 8.25 10.6989 8.25 10.5C8.25 10.3011 8.32902 10.1103 8.46967 9.96967C8.61032 9.82902 8.80109 9.75 9 9.75H15.375C15.5739 9.75 15.7647 9.82902 15.9053 9.96967C16.046 10.1103 16.125 10.3011 16.125 10.5ZM15.375 12.75H9C8.80109 12.75 8.61032 12.829 8.46967 12.9697C8.32902 13.1103 8.25 13.3011 8.25 13.5C8.25 13.6989 8.32902 13.8897 8.46967 14.0303C8.61032 14.171 8.80109 14.25 9 14.25H15.375C15.5739 14.25 15.7647 14.171 15.9053 14.0303C16.046 13.8897 16.125 13.6989 16.125 13.5C16.125 13.3011 16.046 13.1103 15.9053 12.9697C15.7647 12.829 15.5739 12.75 15.375 12.75ZM21.75 11.625C21.7473 14.1106 20.7587 16.4935 19.0011 18.2511C17.2435 20.0087 14.8606 20.9973 12.375 21H4.5C4.10218 21 3.72064 20.842 3.43934 20.5607C3.15804 20.2794 3 19.8978 3 19.5V11.625C3 9.1386 3.98772 6.75403 5.74587 4.99587C7.50403 3.23772 9.8886 2.25 12.375 2.25C14.8614 2.25 17.246 3.23772 19.0041 4.99587C20.7623 6.75403 21.75 9.1386 21.75 11.625ZM20.25 11.625C20.25 9.53642 19.4203 7.53338 17.9435 6.05653C16.4666 4.57969 14.4636 3.75 12.375 3.75C10.2864 3.75 8.28338 4.57969 6.80653 6.05653C5.32968 7.53338 4.5 9.53642 4.5 11.625V19.5H12.375C14.4629 19.4978 16.4646 18.6674 17.941 17.191C19.4174 15.7146 20.2478 13.7129 20.25 11.625Z" fill="#B88C73"/>
+    <button id="feedback-button">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M16.125 10.5C16.125 10.6989 16.046 10.8897 15.9053 11.0303C15.7647 11.171 15.5739 11.25 15.375 11.25H9C8.80109 11.25 8.61032 11.171 8.46967 11.0303C8.32902 10.8897 8.25 10.6989 8.25 10.5C8.25 10.3011 8.32902 10.1103 8.46967 9.96967C8.61032 9.82902 8.80109 9.75 9 9.75H15.375C15.5739 9.75 15.7647 9.82902 15.9053 9.96967C16.046 10.1103 16.125 10.3011 16.125 10.5ZM15.375 12.75H9C8.80109 12.75 8.61032 12.829 8.46967 12.9697C8.32902 13.1103 8.25 13.3011 8.25 13.5C8.25 13.6989 8.32902 13.8897 8.46967 14.0303C8.61032 14.171 8.80109 14.25 9 14.25H15.375C15.5739 14.25 15.7647 14.171 15.9053 14.0303C16.046 13.8897 16.125 13.6989 16.125 13.5C16.125 13.3011 16.046 13.1103 15.9053 12.9697C15.7647 12.829 15.5739 12.75 15.375 12.75ZM21.75 11.625C21.7473 14.1106 20.7587 16.4935 19.0011 18.2511C17.2435 20.0087 14.8606 20.9973 12.375 21H4.5C4.10218 21 3.72064 20.842 3.43934 20.5607C3.15804 20.2794 3 19.8978 3 19.5V11.625C3 9.1386 3.98772 6.75403 5.74587 4.99587C7.50403 3.23772 9.8886 2.25 12.375 2.25C14.8614 2.25 17.246 3.23772 19.0041 4.99587C20.7623 6.75403 21.75 9.1386 21.75 11.625ZM20.25 11.625C20.25 9.53642 19.4203 7.53338 17.9435 6.05653C16.4666 4.57969 14.4636 3.75 12.375 3.75C10.2864 3.75 8.28338 4.57969 6.80653 6.05653C5.32968 7.53338 4.5 9.53642 4.5 11.625V19.5H12.375C14.4629 19.4978 16.4646 18.6674 17.941 17.191C19.4174 15.7146 20.2478 13.7129 20.25 11.625Z"
+          fill="#B88C73"></path>
       </svg>
       <span>Leave some feedback</span>
     </button>
   </div>
 </div>
 
+<dialog id="feedback-dialog" class="feedback-dialog">
+  <form method="dialog" class="feedback-form">
+    <h1>Share Your Thoughts</h1>
+    <div class="form-group">
+      <input type="text" id="name" name="name" autocomplete="off" required placeholder="Your Name" />
+      <label for="name">Your Name</label>
+    </div>
+    <div class="form-group">
+      <textarea id="message" name="message" rows="4" required placeholder="What worked well?"></textarea>
+      <label for="message">What worked well?</label>
+    </div>
+    <div class="form-group">
+      <textarea id="message" name="message" rows="4" required placeholder="What could be improved?"></textarea>
+      <label for="message">What could be improved?</label>
+    </div>
+    <input type="hidden" id="page_url" name="page_url" value="" />
+    <div class="dialog-buttons">
+      <button type="button" class="secondary" id="cancel-feedback"
+        >Cancel</button
+      >
+      <button type="submit" class="primary">Send Feedback</button>
+    </div>
+  </form>
+</dialog>
+
 <script>
-  const loveButton = document.getElementById('love-button');
-  
+  const loveButton = document.getElementById("love-button");
+
   if (loveButton) {
-    loveButton.addEventListener('click', async (event) => {
+    loveButton.addEventListener("click", async (event) => {
       try {
         // Create multiple hearts with random variations
         for (let i = 0; i < 5; i++) {
           setTimeout(() => {
-            const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.style.position = 'fixed';
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.style.position = "fixed";
             heart.style.left = `${event.clientX}px`;
             heart.style.top = `${event.clientY}px`;
-            heart.style.fontSize = '2rem';
-            heart.style.pointerEvents = 'none';
-            heart.style.transform = 'translate(-50%, -50%) scale(0)';
-            heart.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            
+            heart.style.fontSize = "2rem";
+            heart.style.pointerEvents = "none";
+            heart.style.transform = "translate(-50%, -50%) scale(0)";
+            heart.style.transition =
+              "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+
             document.body.appendChild(heart);
 
             // Random angle for each heart
@@ -67,9 +101,9 @@ const { endingText = "El fin." } = Astro.props;
                   calc(-50% + ${-Math.sin(angle) * distance}px)
                 )
                 scale(1.5)
-                rotate(${angle * 180 / Math.PI}deg)
+                rotate(${(angle * 180) / Math.PI}deg)
               `;
-              heart.style.opacity = '0';
+              heart.style.opacity = "0";
             });
 
             setTimeout(() => {
@@ -79,19 +113,72 @@ const { endingText = "El fin." } = Astro.props;
         }
 
         // Record love via API
-        await fetch('/api/record-love', {
-          method: 'POST',
-          mode: 'no-cors',
+        await fetch("/api/record-love", {
+          method: "POST",
+          mode: "no-cors",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            page_path: window.location.pathname
-          })
+            page_path: window.location.pathname,
+          }),
         });
-        
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
+      }
+    });
+  }
+
+  // Feedback dialog logic
+  const dialog = document.getElementById(
+    "feedback-dialog",
+  ) as HTMLDialogElement;
+  const feedbackButton = document.getElementById("feedback-button");
+  const cancelButton = document.getElementById("cancel-feedback");
+  const feedbackForm = dialog?.querySelector("form");
+  const pageUrlInput = document.getElementById("page_url") as HTMLInputElement;
+
+  if (feedbackButton && dialog) {
+    feedbackButton.addEventListener("click", () => {
+      pageUrlInput.value = window.location.pathname;
+      dialog.showModal();
+    });
+  }
+
+  if (cancelButton) {
+    cancelButton.addEventListener("click", () => {
+      dialog.close();
+    });
+  }
+
+  if (feedbackForm) {
+    feedbackForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(feedbackForm);
+      try {
+        const response = await fetch("/api/submit-feedback", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.get("name"),
+            message: formData.get("message"),
+            page_url: formData.get("page_url"),
+          }),
+        });
+
+        if (response.ok) {
+          dialog.close();
+          // Optional: Show success message
+          alert("Thank you for your feedback!");
+        } else {
+          throw new Error("Failed to submit feedback");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to submit feedback. Please try again.");
       }
     });
   }
@@ -167,7 +254,7 @@ const { endingText = "El fin." } = Astro.props;
     animation: float 1s ease-out forwards;
     z-index: 999;
     transform: translate(-50%, -50%);
-    
+
     &::before {
       content: "❤️";
       display: block; // Make sure the content is visible
@@ -184,4 +271,145 @@ const { endingText = "El fin." } = Astro.props;
       opacity: 0;
     }
   }
-</style> 
+
+  .feedback-dialog {
+    padding: 0;
+    border: 0;
+    border-radius: var(--border-radius-large);
+    max-width: 500px;
+    width: 90%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
+    &::backdrop {
+      background-color: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
+    }
+  }
+
+  .feedback-form {
+    padding: var(--spacing-double);
+    margin: auto;
+
+    h1 {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      margin: 0 0 var(--spacing-double);
+      font-family: var(--font-headings);
+      color: var(--color-coffee);
+    }
+
+    .form-group {
+      margin-bottom: var(--spacing-base);
+      font-weight: 500;
+      position: relative;
+
+      label {
+        display: block;
+        font-family: var(--font-sans);
+        font-size: var(--font-size-small);
+        color: var(--color-ink-tertiary);
+        position: absolute;
+        top: 24px;
+        left: 12px;
+        transform: translateY(-50%);
+        background-color: transparent;
+        padding: 0 var(--spacing-xsmall);
+        transition: all 0.3s ease-in-out;
+      }
+
+      input,
+      textarea {
+        margin-top: var(--spacing-xsmall);
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        height: 40px;
+        min-height: 52px;
+        padding: var(--spacing-small);
+        border: 2px solid transparent;
+        outline: none;
+        border-radius: var(--border-radius-base);
+        font-family: var(--font-sans);
+        font-size: var(--font-size-small);
+        background-color: var(--color-surface);
+        font-weight: 500;
+        color: var(--color-ink);
+        transition: all 0.3s ease-in-out;
+
+        &::placeholder {
+          color: transparent;
+          font-weight: 500;
+        }
+
+        &:focus {
+          border: 2px solid var(--color-coffee);
+          background-color: white;
+          & ~ label {
+            top: 0;
+            transform: translateY(-25%);
+            background-color: white
+          }
+        }
+
+        &:not(:placeholder-shown) {
+          background-color: white;
+          border: 2px solid var(--color-coffee);
+          
+          & ~ label {
+            top: 0;
+            transform: translateY(-25%);
+            background-color: white;
+          }
+        }
+      }
+
+      textarea {
+        height: auto;
+        min-height: 40px;
+        max-height: 160px;
+        padding-top: 16px;
+      }
+    }
+
+    .dialog-buttons {
+      display: flex;
+      gap: var(--spacing-base);
+      justify-content: flex-end;
+      margin-top: var(--spacing-double);
+
+      button {
+        padding: var(--spacing-small) var(--spacing-base);
+        border-radius: var(--border-radius-base);
+        font-family: var(--font-sans);
+        font-size: var(--font-size-base);
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &.primary {
+          background-color: var(--color-accent);
+          color: var(--color-surface);
+          border: none;
+
+          &:hover {
+            background-color: var(--color-accent-light);
+          }
+        }
+
+        &.secondary {
+          background-color: transparent;
+          color: var(--color-ink);
+
+          &:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+          }
+        }
+      }
+    }
+  }
+</style>
+
