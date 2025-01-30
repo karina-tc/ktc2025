@@ -59,30 +59,18 @@ const { items, label } = Astro.props;
 </div>
 
 <script is:inline>
-  console.log("Script tag loaded");
-
   function initCarousel() {
     // Only run carousel on desktop
     if (window.innerWidth <= 768) {
-      console.log("Mobile/tablet view - carousel disabled");
       return;
     }
-
-    console.log("Desktop view - initializing carousel...");
 
     const navItems = document.querySelectorAll(".carousel-nav .nav-item");
     const slides = document.querySelectorAll(".carousel-slides .slide");
     let currentIndex = 0;
     let timer;
 
-    console.log("Found elements:", {
-      navItems: navItems.length,
-      slides: slides.length,
-    });
-
     function showSlide(index) {
-      console.log("Showing slide:", index);
-
       // Remove active class from all items
       navItems.forEach((nav) => nav.classList.remove("active"));
       slides.forEach((slide) => slide.classList.remove("active"));
@@ -97,7 +85,6 @@ const { items, label } = Astro.props;
       // Clear existing timer and start a new one
       clearTimeout(timer);
       timer = setTimeout(() => {
-        console.log("Timer completed, moving to next slide");
         const nextIndex = (currentIndex + 1) % navItems.length;
         showSlide(nextIndex);
       }, 5000);
@@ -106,13 +93,11 @@ const { items, label } = Astro.props;
     // Handle clicks on nav items
     navItems.forEach((item, index) => {
       item.addEventListener("click", () => {
-        console.log("Nav item clicked:", index);
         showSlide(index);
       });
     });
 
     // Start the carousel
-    console.log("Starting carousel with first slide");
     showSlide(0);
   }
 
@@ -131,12 +116,10 @@ const { items, label } = Astro.props;
   // Add debug logging for container width
   const wrapper = document.querySelector(".carousel-wrapper");
   if (wrapper) {
-    console.log("Carousel wrapper width:", wrapper.offsetWidth);
 
     // Create a ResizeObserver to monitor size changes
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        console.log("Container width changed to:", entry.contentRect.width);
       }
     });
 
