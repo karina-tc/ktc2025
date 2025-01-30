@@ -52,7 +52,21 @@ h4 {
 
 p {
   margin-bottom: var(--spacing-4);
+  line-height: 1.8;
   max-width: var(--content-width);
+}
+
+p + h2,
+p + h3 {
+  margin-top: var(--spacing-double) !important;
+}
+
+h3 + p {
+  margin-top: var(--spacing-small) !important;
+}
+
+ol li, ul li {
+  line-height: 1.8;
 }
 
 .plate-label,

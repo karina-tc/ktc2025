@@ -32,7 +32,7 @@ const { items } = Astro.props;
             />
           )}
           {item.video && (
-            <video src={item.video} autoplay="true" muted="true" loop="true"></video>
+            <video src={item.video} autoplay="true" muted="true" loop="true" />
           )}
           <figcaption class="scrollable-gallery-item-caption">
             {item.title && <p class="title">{item.title}</p>}
@@ -57,7 +57,7 @@ const { items } = Astro.props;
 
   .scrollable-gallery {
     width: 100%;
-    padding: var(--spacing-double) calc(50vw - 410px);
+    padding: var(--spacing-double) calc(25vw - 410px) var(--spacing-double);
     display: flex;
     flex-direction: row;
     overflow-x: auto;

@@ -5,9 +5,9 @@ interface Props {
   background?: ImageMetadata;
   backgroundFull?: boolean;
   caption?: {
-    icon: ImageMetadata;
-    title: string;
-    description: string;
+    icon?: ImageMetadata;
+    title?: string;
+    description?: string;
   };
   legend?: string; 
   spacingTight?: boolean;
@@ -39,10 +39,12 @@ const { background, caption, backgroundFull = false, legend, spacingTight = fals
 
   {caption && (
     <figcaption class="caption-container" data-intersection-observer={true}>
-      <Image src={caption.icon} alt={caption.title} draggable="false" width={40} />
+      {caption.icon && (
+        <Image src={caption.icon} alt={caption.title ?? ''} draggable="false" width={40} />
+      )}
       <div class="caption-content">
-        <span>{caption.title}</span>
-        <span>{caption.description}</span>
+        {caption.title && <span>{caption.title}</span>}
+        {caption.description && <span>{caption.description}</span>}
       </div>
     </figcaption>
   )}

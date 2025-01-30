@@ -3,7 +3,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import { getCaseStudy } from "../../data/case-study-details";
-import { checkAccess, hasValidAccessToken } from "../../middleware/checkAccess";
+
+// Data
+const caseStudy = getCaseStudy("beyondContracts");
 
 // Case Study Components
 import * as Work from "../../components/work/index.js";
@@ -16,13 +18,14 @@ import BackToTop from "../../components/BackToTop.astro";
 import Plate from "../../components/work/Plate.astro";
 
 //Assets
-import showcaseBackground from "../../assets/backgrounds/noise-1.png";
+import showcaseBackground from "../../assets/backgrounds/noise-2.png";
 import showcaseLogo from "../../assets/icons/cv-tropic.png";
 import galaxyQuest from "../../assets/illustrations/case-studies/beyond-contracts/galaxy-quest-illus.png";
 import cluster01 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-01.svg";
 import cluster02 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-02.svg";
 import cluster03 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-03.svg";
 import showcaseImage from "../../assets/case-studies/tropic/tropic-supplier-index.png";
+import showcaseImage2 from "../../assets/case-studies/tropic/suppliers-catalog.png";
 import integrationsIndex from "../../assets/case-studies/tropic/integrations/integrations-index.png";
 import integrationsDetails from "../../assets/case-studies/tropic/integrations/integrations-details.png";
 import integrationsCollaboration from "../../assets/case-studies/tropic/integrations/integrations-collaboration.png";
@@ -35,18 +38,12 @@ import Reporting01 from "../../assets/illustrations/case-studies/beyond-contract
 import Reporting02 from "../../assets/illustrations/case-studies/beyond-contracts/reporting02.svg";
 import Reporting03 from "../../assets/illustrations/case-studies/beyond-contracts/reporting03.svg";
 import Reporting04 from "../../assets/illustrations/case-studies/beyond-contracts/reporting04.svg";
-
-// Data
-const caseStudy = getCaseStudy("beyondContracts");
-
-// Check access
-if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
-  const cookies = Astro.request.headers.get("cookie") || "";
-
-  if (!hasValidAccessToken(cookies)) {
-    return Astro.redirect(`/work/access?redirect=${Astro.url.pathname}`);
-  }
-}
+import dataTableExploration from "../../assets/illustrations/case-studies/beyond-contracts/data-table-exploration.png";
+import contractsDemo01 from "../../assets/illustrations/case-studies/beyond-contracts/contracts-demo-01.png";
+import contractsDemo02 from "../../assets/illustrations/case-studies/beyond-contracts/contracts-demo-02.png";
+import tooltip01 from "../../assets/illustrations/case-studies/beyond-contracts/tooltips-01.png";
+import tooltip02 from "../../assets/illustrations/case-studies/beyond-contracts/tooltips-02.png";
+import tooltip03 from "../../assets/illustrations/case-studies/beyond-contracts/tooltips-03.png";
 ---
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>
@@ -101,8 +98,14 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       ]}
     />
 
+    <div class="spacer-massive"></div>
+
     <!-- Problem -->
-    <Work.StorySection kicker="Problem" title="Beyond the Contract Horizon">
+    <Work.StorySection
+      kicker="Problem"
+      title="Beyond the Contract Horizon"
+      spacing="none"
+    >
       <p>
         Built initially around contracts, Tropic's platform faced a critical
         limitation: <strong
@@ -143,10 +146,13 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       />
     </Work.StorySection>
 
+    <div class="spacer-massive"></div>
+
     <!-- Discovery -->
     <Work.StorySection
       kicker="Discovery"
       title="Galaxy Quest"
+      spacing="none"
       artwork={{
         image: galaxyQuest,
         alt: "Galaxy Quest",
@@ -164,8 +170,14 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       </p>
     </Work.StorySection>
 
+    <div class="spacer-massive"></div>
+
     <!-- Strategy -->
-    <Work.StorySection kicker="Strategizing" title="Mission Control">
+    <Work.StorySection
+      kicker="Strategizing"
+      title="Mission Control"
+      spacing="none"
+    >
       <p>
         With supplier data scattered across our procurement universe, we needed
         a mission control center to bring order to the chaos. <strong
@@ -248,6 +260,8 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
         ]}
       />
     </Work.StorySection>
+
+    <div class="spacer-large"></div>
 
     <!-- Solutioning -->
     <Work.StorySection kicker="Solutioning" title="Universe Building">
@@ -353,8 +367,8 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
     </div>
   </Work.StorySection>
 
-  <section class="split-panels" data-intersection-observer={true}>
-    <div class="panel-container">
+  <section class="open-canvas split-panels" data-intersection-observer={true}>
+    <div class="canvas-container panel-container">
       <div class="panel">
         <h3 class="title-heading">Explore</h3>
         <Image
@@ -408,97 +422,382 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
   </Work.StorySection>
 
   <Carousel
+    id="reporting-carousel"
     label="Figure IV. Explorations into Reporting"
     items={[
       {
-        title: "Saved styles",
+        title: "Plate I.",
         description:
-          "Save attributes in a single, reusable style that anyone on your team can apply",
+          "Tests showed separating spend and variance improved clarity",
         image: Reporting01,
         alt: "Saved styles interface",
       },
       {
-        title: "Components",
+        title: "Plate II.",
         description:
-          "Create a Component, update it in one place, and it updates everywhere",
+          "We split the charts but kept the data together for clarity",
         image: Reporting02,
         alt: "Components interface",
       },
       {
-        title: "Reporting 03",
-        description: "Description for reporting 03",
+        title: "Plate III.",
+        description:
+          "Expanded variance analysis visuals to show differences over time",
         image: Reporting03,
         alt: "Reporting 03",
       },
       {
-        title: "Reporting 04",
-        description: "Description for reporting 04",
+        title: "Plate IV.",
+        description:
+          "Added an insights panel to highlight potential report inaccuracies",
         image: Reporting04,
         alt: "Reporting 04",
       },
     ]}
   />
 
+  <section class="open-canvas" data-intersection-observer={true}>
+    <div class="canvas-container data-table-exploration">
+      <span class="plate-label">Figure V. Data-Table Exploration</span>
+      <Image
+        src={dataTableExploration}
+        alt="View of sketches for data table exploration"
+        width={920}
+        draggable={false}
+        loading="lazy"
+      />
+      <span class="plate-caption">
+        Laying out all the data for our new supplier tables in one view
+      </span>
+      <p>
+        Initially, I had proposed adding as much detail as we could to the
+        table. This included adding contracts, requests and usage data. However,
+        as the work progressed we realized that adding that data into the index
+        might cause our application to become very slow. So that soon evolved
+        into a data exercise to optimize our data and make our reporting more
+        nimble to any filtering changes by our customers.
+      </p>
+      <p>
+        We removed this feature from the initial launch due to time constraints.
+        This turned out to be a blessing in disguise, as I had concerns about
+        how our time-sensitive reporting would handle time-bound data. Our final
+        table was straightforward yet effective. Soon after launch, we saw
+        Account Executives and customers taking action to improve accounts'
+        contract data and ensure their integrations were properly connected.
+      </p>
+    </div>
+  </section>
+
   <div class="spacer-large"></div>
 
+  <Work.StorySection
+    kicker="Systems Thinking"
+    title="Data Satellites"
+    spacing="small"
+  >
+    <p>
+      During this work, I led the creation of a foundational analytics system
+      that orbited around three key components:
+    </p>
+    <ul>
+      <li>
+        Data Accessibility: Mapping out how users could navigate and access
+        information
+      </li>
+      <li>
+        UI Components: Designing reusable elements that formed our analytics
+        constellation
+      </li>
+      <li>
+        Developer Collaboration: Working closely with engineers to contribute
+        code that brought the system to life
+      </li>
+    </ul>
+    <p>
+      Like a well-designed space station, this system became a central hub that
+      other teams could dock into&mdash;providing them with a pre-built
+      foundation for crafting their own analysis tools.
+    </p>
+  </Work.StorySection>
+
+  <div class="open-canvas systems-demo">
+    <div class="canvas-container">
+      <span class="plate-label">Figure VI.</span>
+      <div class="tooltips-container">
+        <figure>
+          <Image
+            src={tooltip01}
+            alt="Tooltip 01"
+            width={320}
+            draggable={false}
+            loading="lazy"
+          />
+        </figure>
+        <figure>
+          <Image
+            src={tooltip02}
+            alt="Tooltip 02"
+            width={240}
+            draggable={false}
+            loading="lazy"
+          />
+        </figure>
+        <figure>
+          <Image
+            src={tooltip03}
+            alt="Tooltip 03"
+            width={360}
+            draggable={false}
+            loading="lazy"
+          />
+        </figure>
+      </div>
+      <span class="plate-caption">
+        Our analytics design system used across all of Tropic
+      </span>
+      <div class="contracts-demo-container">
+        <Image
+          src={contractsDemo01}
+          alt="Contract Details"
+          width={920}
+          draggable={false}
+          loading="lazy"
+        />
+        <Image
+          src={contractsDemo02}
+          alt="Price Benchmarks"
+          width={920}
+          draggable={false}
+          loading="lazy"
+        />
+      </div>
+      <span class="plate-caption">
+        Our analytics design system used across all of Tropic
+      </span>
+    </div>
+  </div>
+
+  <div class="spacer-massive"></div>
+
+  <Work.StorySection kicker="Launch" title="We Have Liftoff!" spacing="quad">
+    <p>
+      Our mission to make suppliers the heart of our platform was a success,
+      transforming how customers interact with and manage their vendor
+      relationships. The new supplier-centric design dramatically improved data
+      visibility and financial reporting capabilities.
+    </p>
+    <p>
+      Moving forward, we're expanding on this foundation by creating a
+      comprehensive supplier database view that will bring all vendor
+      information together in one central location. This enhancement will
+      further streamline our customers' experience and complete our vision for
+      unified supplier management—ensuring all our data points align perfectly
+      in our supplier centric universe.
+    </p>
+    <h3>What we achieved</h3>
+    <ul>
+      <li>Made suppliers the central focus of the platform.</li>
+      <li>Improved data visibility and tracking for all suppliers.</li>
+      <li>Enhanced financial reporting with clear insights.</li>
+      <li>Simplified supplier onboarding and data cleanup.</li>
+      <li>Introduced AI-powered supplier matching for better accuracy.</li>
+      <li>Developed reusable systems for analytics and reporting.</li>
+      <li>Created a polished, user-friendly design experience.</li>
+    </ul>
+  </Work.StorySection>
+
+  <Work.CaseStudyShowcase
+    background={showcaseBackground}
+    backgroundFull
+    caption={{
+      title: "We're continuing to build on this foundation",
+      description:
+        "Soon, customers will be able to access their entire history of suppliers for better procurement control and collaboration between finance and procurement.",
+    }}
+  >
+    <Image
+      src={showcaseImage2}
+      alt="show case image"
+      draggable="false"
+      width={1220}
+      priority
+    />
+  </Work.CaseStudyShowcase>
+
   <Work.WorkFooter />
-</BaseLayout>
 
-<style lang="scss" scoped>
-  // Breakpoint mixins
-  @import "../../styles/base/_breakpoints.scss";
+  <style lang="scss" scoped>
+    // Breakpoint mixins
+    @import "../../styles/base/_breakpoints.scss";
 
-  .section-container.no-gap {
-    margin-top: -40px;
-    margin-bottom: -40px;
-  }
-
-  @include mobile {
-    .astronauts-container {
-      display: none;
+    .section-container.no-gap {
+      margin-top: -40px;
+      margin-bottom: -40px;
     }
-  }
 
-  .split-panels {
-    width: 100%;
-    margin: var(--spacing-quad) 0;
-    padding: var(--spacing-double) var(--spacing-base);
-    background-color: var(--color-surface);
+    @include mobile {
+      .astronauts-container {
+        display: none;
+      }
+    }
 
-    .panel-container {
-      width: 90%;
-      max-width: 1220px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: row;
-      gap: var(--spacing-base);
+    .open-canvas {
+      width: 100%;
+      margin: var(--spacing-quad) 0;
+      padding: var(--spacing-double) var(--spacing-base);
+      background-color: var(--color-surface);
 
-      .panel {
-        flex: 1;
+      .canvas-container {
+        width: 90%;
+        max-width: 1220px;
+        margin: 0 auto;
+      }
+    }
+
+    .split-panels {
+      .panel-container {
         display: flex;
-        flex-direction: column;
-        gap: var(--spacing-small);
-        padding: var(--spacing-base) var(--spacing-base) 0;
+        flex-direction: row;
+        gap: var(--spacing-base);
 
-        &:not(:last-child) {
-          border-right: 1px solid var(--color-border);
+        .panel {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: var(--spacing-small);
+          padding: var(--spacing-base) var(--spacing-base) 0;
+
+          &:not(:last-child) {
+            border-right: 1px solid var(--color-border);
+          }
+        }
+        @include tablet {
+          flex-direction: column;
+          .panel {
+            align-items: center;
+            border-right: 0px !important;
+            padding-bottom: var(--spacing-double);
+            &:not(:last-child) {
+              border-bottom: 1px solid var(--color-border);
+            }
+          }
         }
       }
-      @include tablet {
+      @include mobile {
+        margin-top: var(--spacing-base);
+        margin-bottom: var(--spacing-base);
+      }
+    }
+
+    .data-table-exploration,
+    .systems-demo {
+      .plate-label,
+      .plate-caption {
+        text-align: center;
+        width: 100%;
+        display: block;
+      }
+    }
+    .data-table-exploration {
+      img {
+        width: 90%;
+        max-width: 920px;
+        margin: 0 auto;
+      }
+
+      p {
+        max-width: var(--max-width-narrow-small);
+        margin: var(--spacing-double) auto;
+      }
+    }
+
+    .systems-demo {
+      .contracts-demo-container {
+        display: flex;
         flex-direction: column;
-        .panel {
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-base);
+        position: relative;
+        padding: var(--spacing-double) 0 var(--spacing-base);
+        z-index: 1;
+
+        @include desktop-reverse {
+          flex-direction: row;
+        }
+
+        img {
+          max-width: 580px;
+          height: auto;
+          border: 10px solid rgba(255, 255, 255, 0.5);
+          border-radius: 10px;
+          box-shadow: 0 12px 20px -12px rgba(81, 64, 41, 0.4);
+          transition: all 0.3s ease-in-out;
+
+          @include desktop-reverse {
+            cursor: pointer;
+            max-width: 800px;
+            &:first-child {
+              position: absolute;
+              top: 10%;
+              left: 0;
+
+              &:hover {
+                z-index: 1;
+
+                & ~ img {
+                  z-index: 0;
+                  opacity: 0.5;
+                }
+              }
+            }
+
+            &:last-child {
+              z-index: 1;
+              margin-top: 20%;
+              margin-left: 50%;
+            }
+          }
+
+          @include tablet {
+            max-width: 90%;
+          }
+        }
+      }
+
+      .tooltips-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-base);
+        position: relative;
+        z-index: 1;
+        padding: var(--spacing-double) 0 var(--spacing-base);
+
+        @include tablet {
+          flex-direction: column;
+          padding-bottom: 0;
+        }
+
+        figure {
+          height: auto;
+          z-index: 2;
+          display: flex;
           align-items: center;
-          border-right: 0px !important;
-          padding-bottom: var(--spacing-double);
-          &:not(:last-child) {
-            border-bottom: 1px solid var(--color-border);
+          justify-content: center;
+
+          img {
+            width: auto;
+            height: auto;
+          }
+
+          @include desktop-reverse {
+            width: 25%;
+            min-width: 280px;
           }
         }
       }
     }
-    @include mobile {
-      margin-top: var(--spacing-base);
-      margin-bottom: var(--spacing-base);
-    }
-  }
-</style>
+  </style>
+</BaseLayout>

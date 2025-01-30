@@ -189,6 +189,18 @@ const initiatives: Initiative[] = [
       left: var(--x);
       top: var(--y);
       cursor: pointer;
+      animation: float 3s ease-in-out infinite;
+      
+      // Add random animation delay to each bubble
+      &:nth-child(2n) {
+        animation-delay: -0.25s;
+      }
+      &:nth-child(3n) {
+        animation-delay: -0.5s;
+      }
+      &:nth-child(4n) {
+        animation-delay: -0.75s;
+      }
 
       .bubble {
         width: var(--size);
@@ -197,6 +209,7 @@ const initiatives: Initiative[] = [
         background: var(--color-coffee);
         opacity: 0.9;
         border: 1px solid var(--color-paper);
+        box-shadow: 0 0 10px rgba(90, 70, 46, 0.4);
         transition: all 0.2s ease-in-out;
 
         img {
@@ -260,20 +273,36 @@ const initiatives: Initiative[] = [
         transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
       }
 
-      &:hover .description {
-        opacity: 1;
-        visibility: visible;
-        transform: translate(-20%, -115%);
-        transition-delay: 0.2s;
-      }
-
-      &:hover .bubble {
-        opacity: 1;
-        background: var(--color-accent-light);
-
-        img {
-          mix-blend-mode: plus-lighter;
+      &:hover {
+        animation-play-state: paused;
+        
+        .description {
+          opacity: 1;
+          visibility: visible;
+          transform: translate(-20%, -115%);
+          transition-delay: 0.2s;
         }
+
+        .bubble {
+          opacity: 1;
+          background: var(--color-accent-light);
+
+          img {
+            mix-blend-mode: plus-lighter;
+          }
+        }
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translate(-50%, -50%);
+      }
+      50% {
+        transform: translate(-50%, calc(-50% - 5px));
+      }
+      100% {
+        transform: translate(-50%, -50%);
       }
     }
 

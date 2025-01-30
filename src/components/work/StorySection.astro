@@ -2,7 +2,7 @@
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import Plate from "./Plate.astro";
-
+import Divider from "../Divider.astro";
 interface Props {
   kicker?: string;
   title?: string;
@@ -41,7 +41,12 @@ const {
   ]}
   data-intersection-observer={true}
 >
-  {kicker && <h4>{kicker}</h4>}
+  {kicker && (
+    <div class="kicker-container">
+      <Divider color="var(--color-accent)" width={82} height={6} />
+      <h4>{kicker}</h4>
+    </div>
+  )}
   {title && <h2>{title}</h2>}
   {subtitle && <h3>{subtitle}</h3>}
 
@@ -119,7 +124,7 @@ const {
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin: 0 0 var(--spacing-xsmall);
+      margin: var(--spacing-double) 0 var(--spacing-xsmall);
     }
 
     :global(h3) {
@@ -146,12 +151,19 @@ const {
     }
 
     // Ordered list styles
-    :global(ol) {
+    :global(ol),
+    :global(ul) {
       margin-left: var(--spacing-base);
     }
 
-    :global(ol li) {
+    :global(ol li),
+    :global(ul li) {
       margin: 0 0 var(--spacing-xsmall);
+      text-wrap: balance;
+    }
+
+    :global(p) {
+      text-wrap: pretty;
     }
   }
 </style>

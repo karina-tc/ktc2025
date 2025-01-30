@@ -11,12 +11,13 @@ interface CarouselItem {
 interface Props {
   items: CarouselItem[];
   label?: string;
+  id?: string;
 }
 
-const { items, label } = Astro.props;
+const { items, label, id = crypto.randomUUID() } = Astro.props;
 ---
 
-<div class="carousel-wrapper">
+<div class="carousel-wrapper" id={`carousel-${id}`}>
   <div class="debug-width"></div>
   {label && <span class="plate-label">{label}</span>}
   <div class="carousel-content">
@@ -58,73 +59,80 @@ const { items, label } = Astro.props;
   </div>
 </div>
 
-<script is:inline>
-  function initCarousel() {
-    // Only run carousel on desktop
-    if (window.innerWidth <= 768) {
-      return;
+<script>
+  class Carousel {
+    private wrapper: HTMLElement;
+    private navItems: NodeListOf<HTMLElement>;
+    private slides: NodeListOf<HTMLElement>;
+    private currentIndex: number = 0;
+    private timer: number | undefined;
+
+    constructor(wrapperId: string) {
+      this.wrapper = document.getElementById(wrapperId)!;
+      this.navItems = this.wrapper.querySelectorAll(".carousel-nav .nav-item");
+      this.slides = this.wrapper.querySelectorAll(".carousel-slides .slide");
+
+      this.init();
     }
 
-    const navItems = document.querySelectorAll(".carousel-nav .nav-item");
-    const slides = document.querySelectorAll(".carousel-slides .slide");
-    let currentIndex = 0;
-    let timer;
+    private init(): void {
+      // Only run carousel on desktop
+      if (window.innerWidth <= 768) {
+        return;
+      }
 
-    function showSlide(index) {
+      // Handle clicks on nav items
+      this.navItems.forEach((item, index) => {
+        item.addEventListener("click", () => this.showSlide(index));
+      });
+
+      // Start the carousel
+      this.showSlide(0);
+    }
+
+    private showSlide(index: number): void {
       // Remove active class from all items
-      navItems.forEach((nav) => nav.classList.remove("active"));
-      slides.forEach((slide) => slide.classList.remove("active"));
+      this.navItems.forEach((nav) => nav.classList.remove("active"));
+      this.slides.forEach((slide) => slide.classList.remove("active"));
 
       // Update current index
-      currentIndex = index;
+      this.currentIndex = index;
 
       // Add active class to current items
-      navItems[currentIndex].classList.add("active");
-      slides[currentIndex].classList.add("active");
+      this.navItems[this.currentIndex].classList.add("active");
+      this.slides[this.currentIndex].classList.add("active");
 
       // Clear existing timer and start a new one
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        const nextIndex = (currentIndex + 1) % navItems.length;
-        showSlide(nextIndex);
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.timer = window.setTimeout(() => {
+        const nextIndex = (this.currentIndex + 1) % this.navItems.length;
+        this.showSlide(nextIndex);
       }, 5000);
     }
+  }
 
-    // Handle clicks on nav items
-    navItems.forEach((item, index) => {
-      item.addEventListener("click", () => {
-        showSlide(index);
-      });
+  // Initialize all carousels on the page
+  function initCarousels() {
+    document.querySelectorAll(".carousel-wrapper").forEach((wrapper) => {
+      if (wrapper.id) {
+        new Carousel(wrapper.id);
+      }
     });
-
-    // Start the carousel
-    showSlide(0);
   }
 
   // Handle resize events
-  let resizeTimer;
+  let resizeTimer: number;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
+    resizeTimer = window.setTimeout(() => {
       location.reload(); // Reinitialize on resize
     }, 250);
   });
 
-  document.addEventListener("astro:page-load", initCarousel);
-  document.addEventListener("DOMContentLoaded", initCarousel);
-
-  // Add debug logging for container width
-  const wrapper = document.querySelector(".carousel-wrapper");
-  if (wrapper) {
-
-    // Create a ResizeObserver to monitor size changes
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-      }
-    });
-
-    observer.observe(wrapper);
-  }
+  document.addEventListener("astro:page-load", initCarousels);
+  document.addEventListener("DOMContentLoaded", initCarousels);
 </script>
 
 <style lang="scss">
@@ -179,9 +187,13 @@ const { items, label } = Astro.props;
       }
 
       p {
+        opacity: 0.4;
         color: var(--color-coffee);
         font-weight: 500;
         font-size: var(--font-size-small);
+        line-height: 1.5;
+        margin-top: 16px;
+        transition: opacity 0.2s ease-in-out;
       }
 
       &:hover,
@@ -191,6 +203,7 @@ const { items, label } = Astro.props;
         }
 
         p {
+          opacity: 1;
           color: var(--color-ink-tertiary);
         }
       }
@@ -203,17 +216,20 @@ const { items, label } = Astro.props;
         }
 
         p {
+          opacity: 1;
           color: var(--color-ink-tertiary);
         }
 
         .progress-bar {
-          background: var(--color-accent);
-          height: 2px;
-          width: 100%;
+          background: var(--color-paper);
+          width: 2px;
+          height: 100%;
           position: absolute;
           bottom: 0;
           left: 0;
           animation: progress 5s linear;
+          mix-blend-mode: multiply;
+          pointer-events: none;
         }
       }
     }

@@ -90,6 +90,7 @@
   
   // Layout
   --max-width: 1200px;
+  --max-width-narrow-small: 820px;
   --content-narrow: 960px;
   --content-narrow-plus: 980px;
   --content-wide: 1200px;
@@ -123,4 +124,8 @@
 
 .spacer-huge {
   height: var(--spacing-quad); // 80px
+}
+
+.spacer-massive {
+  height: 160px;
 }
