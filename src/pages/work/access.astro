@@ -46,7 +46,7 @@ const bookingLink =
     const formData = new FormData(e.target as HTMLFormElement);
     const password = formData.get('password')?.toString().trim();
     
-    console.log('Submitting password:', password);
+    console.log('Client: Submitting password:', password);
     
     try {
       const response = await fetch('/api/validate-password', {
@@ -58,26 +58,25 @@ const bookingLink =
         credentials: 'same-origin'
       });
       
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      console.log('Client: Response status:', response.status);
       const result = await response.json();
-      console.log('Response:', result);
+      console.log('Client: Response data:', result);
+      
+      if (!result.valid) {
+        console.log('Client: Invalid password');
+        alert(result.message || 'Invalid password');
+        return;
+      }
       
       if (result.valid) {
-        // Wait for cookie to be set
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        // Simple redirect
+        console.log('Client: Valid password, redirecting...');
         const params = new URLSearchParams(window.location.search);
         const redirectUrl = params.get('redirect') || '/work';
-        console.log('Redirecting to:', redirectUrl);
-        
-        // Use replace to avoid adding to browser history
         window.location.replace(redirectUrl);
-      } else {
-        alert(result.message || 'Invalid password');
       }
+      
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Client Error:', error);
       alert('Error validating password. Please try again.');
     }
   });

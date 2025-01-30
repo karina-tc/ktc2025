@@ -2,7 +2,7 @@ export const config = {
   matcher: '/work/*'  // Only run on /work routes
 };
 
-export function onRequest({ request, redirect }, next) {
+export function onRequest({ request }, next) {
   const url = new URL(request.url);
   const cookies = request.headers.get('cookie');
   
@@ -12,21 +12,23 @@ export function onRequest({ request, redirect }, next) {
     env: process.env.NETLIFY ? 'Netlify' : 'Local'
   });
 
-  // Skip non-work paths
-  if (!url.pathname.startsWith('/work') || 
-      url.pathname === '/work/access' || 
+  // Skip access check for these paths
+  if (url.pathname === '/work/access' || 
       url.pathname.startsWith('/api/')) {
     return next();
   }
 
-  // Check for access token
-  if (!cookies?.includes('access_token=true')) {
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: `/work/access?redirect=${encodeURIComponent(url.pathname)}`
-      }
-    });
+  // Check for access token on protected paths
+  if (url.pathname.startsWith('/work')) {
+    if (!cookies?.includes('access_token=true')) {
+      const redirectUrl = `/work/access?redirect=${url.pathname}`;
+      return new Response(null, {
+        status: 302,
+        headers: {
+          'Location': redirectUrl
+        }
+      });
+    }
   }
 
   return next();
