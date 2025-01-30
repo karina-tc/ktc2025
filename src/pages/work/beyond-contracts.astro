@@ -3,6 +3,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import { getCaseStudy } from "../../data/case-study-details";
+import { checkAccess, hasValidAccessToken } from "../../middleware/checkAccess";
 
 // Case Study Components
 import * as Work from "../../components/work/index.js";
@@ -23,6 +24,15 @@ import cluster03 from "../../assets/illustrations/case-studies/beyond-contracts/
 
 // Data
 const caseStudy = getCaseStudy("beyondContracts");
+
+// Check access
+if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
+  const cookies = Astro.request.headers.get("cookie") || "";
+
+  if (!hasValidAccessToken(cookies)) {
+    return Astro.redirect(`/work/access?redirect=${Astro.url.pathname}`);
+  }
+}
 ---
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>

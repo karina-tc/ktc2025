@@ -18,7 +18,7 @@ import showcaseLogo from "../../assets/icons/cv-tropic.png";
 const caseStudy = getCaseStudy("askTropic");
 
 // Check access
-if (Astro.request.url && checkAccess(new URL(Astro.request.url).pathname)) {
+if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
   const cookies = Astro.request.headers.get("cookie") || "";
 
   if (!hasValidAccessToken(cookies)) {
