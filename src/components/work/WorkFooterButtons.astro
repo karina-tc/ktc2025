@@ -1,0 +1,128 @@
+---
+import { Image } from "astro:assets";
+import heartSolid from "../../assets/icons/heart-solid.svg";
+import heartLine from "../../assets/icons/heart-line.svg";
+import messageBubbleLine from "../../assets/icons/message-bubble-line.svg";
+import messageBubbleSolid from "../../assets/icons/message-bubble-solid.svg";
+---
+
+<div class="work-footer-buttons">
+  <button id="love-button">
+    <div class="icon-container heart">
+      <Image class="heart-line" src={heartLine} alt="Heart" />
+      <Image class="heart-solid" src={heartSolid} alt="Heart" />
+    </div>
+    <span>Show some love</span>
+  </button>
+  <button id="feedback-button">
+    <div class="icon-container message-bubble">
+      <Image class="message-bubble-line" src={messageBubbleLine} alt="Message Bubble" />
+      <Image class="message-bubble-solid" src={messageBubbleSolid} alt="Message Bubble" />
+    </div>
+    <span>Leave some feedback</span>
+  </button>
+</div>
+
+<script>
+  const loveButton = document.getElementById("love-button");
+
+  if (loveButton) {
+    loveButton.addEventListener("click", async (event) => {
+      try {
+        const heartLine = loveButton.querySelector(".heart-line") as HTMLElement;
+        const heartSolid = loveButton.querySelector(".heart-solid") as HTMLElement;
+        const heartContainer = loveButton.querySelector(".icon-container.heart") as HTMLElement;
+        
+        if (heartLine && heartSolid && heartContainer) {
+          heartLine.style.opacity = "0";
+          heartSolid.style.opacity = "1";
+          heartContainer.style.animation = "heartBounce 0.5s cubic-bezier(0.17, 0.89, 0.32, 1.49)";
+          
+          heartContainer.addEventListener("animationend", () => {
+            heartContainer.style.animation = "";
+          }, { once: true });
+
+          setTimeout(() => {
+            heartLine.style.cssText = "opacity: 1";
+            heartSolid.style.cssText = "opacity: 0";
+          }, 2000);
+        }
+
+        await fetch("/api/record-love", {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            page_path: window.location.pathname,
+          }),
+        });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    });
+  }
+</script>
+
+<style lang="scss">
+  @keyframes heartBounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+  }
+
+  .work-footer-buttons {
+    display: flex;
+    gap: var(--spacing-base);
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-small);
+      font-size: var(--font-size-base);
+      position: relative;
+
+      .icon-container {
+        position: relative;
+        width: 24px;
+        height: 24px;
+        transform-origin: center;
+      }
+
+      .heart-line,
+      .heart-solid,
+      .message-bubble-line,
+      .message-bubble-solid {
+        position: absolute;
+        left: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .heart-solid,
+      .message-bubble-solid {
+        opacity: 0;
+      }
+
+      &:hover {
+        .heart-line,
+        .message-bubble-line {
+          opacity: 0;
+        }
+        .heart-solid,
+        .message-bubble-solid {
+          opacity: 1;
+        }
+      }
+
+      span {
+        border-bottom: 1px dotted var(--color-ink-tertiary);
+        transition: all 0.3s ease-in-out;
+      }
+
+      &:hover span {
+        border-color: var(--color-accent);
+      }
+    }
+  }
+</style> 
