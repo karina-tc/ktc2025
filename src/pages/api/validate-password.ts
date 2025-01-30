@@ -5,6 +5,23 @@ export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    // Check if Supabase environment variables are set
+    if (!import.meta.env.PUBLIC_SUPABASE_URL || !import.meta.env.PUBLIC_SUPABASE_ANON_KEY) {
+      console.error('Missing Supabase environment variables');
+      return new Response(
+        JSON.stringify({
+          valid: false,
+          message: 'Server configuration error'
+        }),
+        {
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+    }
+
     const body = await request.json();
     const password = body?.password?.toLowerCase()?.trim();
     
@@ -16,13 +33,12 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(
         JSON.stringify({
           valid: false,
-          message: "That ain't it, friend. Try again."
+          message: 'Oops! That password is not valid.'
         }),
         {
           status: 401,
           headers: {
             'Content-Type': 'application/json',
-            // Clear any existing access token
             'Set-Cookie': 'access_token=false; Path=/; Max-Age=0'
           }
         }
@@ -49,7 +65,8 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(
       JSON.stringify({
         valid: false,
-        message: 'Something went wrong. Please try again.'
+        message: 'Something went wrong. Please try again.',
+        error: String(error)
       }),
       {
         status: 500,
