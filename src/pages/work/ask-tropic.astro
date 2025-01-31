@@ -24,6 +24,16 @@ import optionsBlock from "../../assets/case-studies/tropic/ask-ai/options-block.
 
 // Data
 const caseStudy = getCaseStudy("askTropic");
+
+// Check access
+import { checkAccess, hasValidAccessToken } from "../../middleware/checkAccess";
+if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
+  const cookies = Astro.request.headers.get("cookie") || "";
+
+  if (!hasValidAccessToken(cookies)) {
+    return Astro.redirect(`/work/access?redirect=${Astro.url.pathname}`);
+  }
+}
 ---
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>

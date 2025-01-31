@@ -4,23 +4,21 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import CaseStudyHeader from "../../components/work/CaseStudyHeader.astro";
 import { getCaseStudy } from "../../data/case-study-details";
-import CaseStudyShowcase from "../../components/work/CaseStudyShowcase.astro";
-import ImpactSection from "../../components/work/ImpactSection.astro";
-import StorySection from "../../components/work/StorySection.astro";
-import ScrollableGallery from "../../components/work/ScrollableGallery.astro";
 
 //Assets
-import scribble from "../../assets/scribbles/loop-down.svg";
-import showcaseImage from "../../assets/case-studies/tropic/tropic-supplier-index.png";
-import showcaseBackground from "../../assets/backgrounds/bgCS.jpg";
-import showcaseLogo from "../../assets/icons/cv-tropic.png";
-import galaxyQuest from "../../assets/illustrations/case-studies/beyond-contracts/galaxy-quest-illus.png";
-import cluster01 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-01.svg";
-import cluster02 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-02.svg";
-import cluster03 from "../../assets/illustrations/case-studies/beyond-contracts/data-cluster-03.svg";
 
 // Data
 const caseStudy = getCaseStudy("peopleGlue");
+
+// Check access
+import { checkAccess, hasValidAccessToken } from "../../middleware/checkAccess";
+if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
+  const cookies = Astro.request.headers.get("cookie") || "";
+
+  if (!hasValidAccessToken(cookies)) {
+    return Astro.redirect(`/work/access?redirect=${Astro.url.pathname}`);
+  }
+}
 ---
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>

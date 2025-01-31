@@ -44,6 +44,16 @@ import contractsDemo02 from "../../assets/illustrations/case-studies/beyond-cont
 import tooltip01 from "../../assets/illustrations/case-studies/beyond-contracts/tooltips-01.png";
 import tooltip02 from "../../assets/illustrations/case-studies/beyond-contracts/tooltips-02.png";
 import tooltip03 from "../../assets/illustrations/case-studies/beyond-contracts/tooltips-03.png";
+
+// Check access
+import { checkAccess, hasValidAccessToken } from "../../middleware/checkAccess";
+if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
+  const cookies = Astro.request.headers.get("cookie") || "";
+
+  if (!hasValidAccessToken(cookies)) {
+    return Astro.redirect(`/work/access?redirect=${Astro.url.pathname}`);
+  }
+}
 ---
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>
