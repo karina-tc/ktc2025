@@ -51,6 +51,7 @@ import PoemContent from "../components/poem/PoemContent.astro";
   const state = {
     isPoemActive: false,
     poemTimeout: null as number | null,
+    currentChar: 0,
   };
 
   // Set initial volume slider value to 20
@@ -91,7 +92,7 @@ import PoemContent from "../components/poem/PoemContent.astro";
 
   const handleVolumeControl = () => {
     clearTimeout(volumeTimeout);
-    volumeTimeout = setTimeout(() => {
+    volumeTimeout = window.setTimeout(() => {
       elements.volumeControl?.classList.add("hidden");
       elements.playIcon?.classList.remove("menu-open");
     }, 2000);
@@ -211,6 +212,7 @@ import PoemContent from "../components/poem/PoemContent.astro";
       state.poemTimeout = null;
     }
     state.isPoemActive = false;
+    state.currentChar = 0;
 
     const ripple = document.querySelector(".ripple");
     ripple?.classList.remove("hidden");
@@ -247,6 +249,32 @@ import PoemContent from "../components/poem/PoemContent.astro";
 
   // Function to simulate typing effect
   function typePoem(element: Element) {
+    // Reset state
+    state.currentChar = 0;
+    if (state.poemTimeout) {
+      clearTimeout(state.poemTimeout);
+      state.poemTimeout = null;
+    }
+    
+    // Full reset of all poem elements
+    const allChars = document.querySelectorAll('.char');
+    allChars.forEach(char => (char as HTMLElement).style.opacity = '0.25');
+    
+    // Reset highlights and background images
+    document.querySelectorAll('.highlight').forEach(h => h.classList.remove('reveal'));
+    document.querySelectorAll('.poem-background img').forEach(img => img.classList.remove('reveal'));
+    
+    // Reset loading bar and percentage
+    const loadingBar = document.querySelector('.loading-bar') as HTMLElement;
+    const loadingPercentage = document.querySelector('.loading-percentage');
+    if (loadingBar) loadingBar.style.width = '0%';
+    if (loadingPercentage) loadingPercentage.textContent = '0%';
+    
+    // Reset poem visibility states
+    elements.poem?.classList.remove('hidden');
+    elements.returnButton?.classList.remove('hidden');
+    elements.playButton?.classList.remove('hidden');
+    
     const chars = Array.from(element.querySelectorAll('.char'));
     console.log('Found chars for typing:', chars.length);
     
@@ -254,16 +282,15 @@ import PoemContent from "../components/poem/PoemContent.astro";
     const totalChars = chars.length;
     const speed = 50;
 
-    // Reset loading bar
-    const loadingBar = document.querySelector('.loading-bar') as HTMLElement;
-    const loadingPercentage = document.querySelector('.loading-percentage');
-    if (loadingBar) loadingBar.style.width = '0%';
-    if (loadingPercentage) loadingPercentage.textContent = '0%';
-
     function revealNextChar() {
+      if (!state.isPoemActive) return;
+      
       if (currentChar < totalChars) {
         const charSpan = chars[currentChar] as HTMLElement;
         charSpan.style.opacity = '1';
+        
+        // Update state
+        state.currentChar = currentChar;
         
         // Check if this char is the first one in a highlight span
         const parentHighlight = charSpan.closest('.highlight');
@@ -286,7 +313,7 @@ import PoemContent from "../components/poem/PoemContent.astro";
         if (loadingPercentage) loadingPercentage.textContent = `${progress}%`;
         
         currentChar++;
-        setTimeout(revealNextChar, speed);
+        state.poemTimeout = setTimeout(revealNextChar, speed) as unknown as number;
       } else {
         // Ensure we hit 100%
         if (loadingBar) loadingBar.style.width = '100%';
