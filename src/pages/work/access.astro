@@ -5,6 +5,18 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 // Components
 import Divider from "../../components/Divider.astro";
 import Atom from "../../components/Atom.astro";
+
+// Get the redirect URL from query params
+const params = new URLSearchParams(Astro.url.search);
+const redirectUrl = params.get('redirect') || '/work';
+
+// Import checkAccess to verify if the redirect path needs protection
+import { checkAccess } from "../../middleware/checkAccess";
+
+// If redirect URL is not a protected path, redirect immediately
+if (!checkAccess(redirectUrl)) {
+  return Astro.redirect(redirectUrl);
+}
 ---
 
 <BaseLayout

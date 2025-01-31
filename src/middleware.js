@@ -18,6 +18,12 @@ export function onRequest({ request }, next) {
     return next();
   }
 
+  // Import checkAccess to verify if path needs protection
+  const { checkAccess } = require("../../middleware/checkAccess");
+  if (!checkAccess(url.pathname)) {
+    return next();
+  }
+
   // Check for debug parameter with a secure value
   const debugToken = url.searchParams.get('debug_token');
   const cookies = request.headers.get('cookie') || '';
