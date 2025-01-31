@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
@@ -15,14 +17,19 @@ export async function getStaticPaths() {
     return isDev ? true : data.status === "published";
   });
 
-  return posts.map((post, index) => ({
-    params: { slug: post.slug },
-    props: {
-      post,
-      prev: index > 0 ? posts[index - 1] : null,
-      next: index < posts.length - 1 ? posts[index + 1] : null,
-    },
-  }));
+  console.log('Found posts:', posts.length); // Debug log
+
+  return posts.map((post, index) => {
+    console.log('Processing post:', post.slug); // Debug log
+    return {
+      params: { slug: post.slug },
+      props: {
+        post,
+        prev: index > 0 ? posts[index - 1] : null,
+        next: index < posts.length - 1 ? posts[index + 1] : null,
+      },
+    };
+  });
 }
 
 interface Props {
@@ -32,7 +39,20 @@ interface Props {
 }
 
 const { post, prev, next } = Astro.props;
-const { Content } = await post.render();
+
+// Add error handling around render
+let Content;
+try {
+  const rendered = await post.render();
+  Content = rendered.Content;
+  if (!Content) {
+    throw new Error('Content component not found in render result');
+  }
+} catch (error) {
+  console.error('Error rendering post:', error);
+  console.error('Post object:', post);
+  return new Response('Error rendering blog post', { status: 500 });
+}
 
 // Dynamic import based on post slug
 let blogImage: ImageMetadata | null = null;

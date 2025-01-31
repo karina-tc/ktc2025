@@ -14,7 +14,8 @@ export function onRequest({ request }, next) {
 
   // Skip access check for these paths
   if (url.pathname === '/work/access' || 
-      url.pathname.startsWith('/api/')) {
+      url.pathname.startsWith('/api/') ||
+      url.pathname.startsWith('/blog/')) {
     return next();
   }
 
