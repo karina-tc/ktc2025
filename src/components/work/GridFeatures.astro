@@ -42,7 +42,7 @@ const { features, stackThird = false } = Astro.props;
         
         p {
           max-width: 75ch;
-          margin: auto 0;
+          margin: 0;
         }
       }
 
@@ -78,6 +78,7 @@ const { features, stackThird = false } = Astro.props;
 
         h3 {
           color: var(--color-surface);
+          margin-top: 0;
         }
 
         hr {
@@ -93,6 +94,7 @@ const { features, stackThird = false } = Astro.props;
         font-family: var(--font-headings);
         font-size: clamp(1.5rem, 5vw, 1.5rem);
         color: var(--color-ink-tertiary);
+        margin-top: var(--spacing-xsmall);
       }
 
       hr {

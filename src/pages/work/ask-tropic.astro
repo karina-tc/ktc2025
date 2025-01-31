@@ -3,7 +3,6 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import { getCaseStudy } from "../../data/case-study-details";
-import { checkAccess, hasValidAccessToken } from "../../middleware/checkAccess";
 import MiniShowcase from "../../components/MiniShowcase.astro";
 // Case Study Components
 import * as Work from "../../components/work/index.js";
@@ -13,18 +12,14 @@ import BackToTop from "../../components/BackToTop.astro";
 import showcaseImage from "../../assets/case-studies/tropic/ask-ai/ask-ai-showcase.png";
 import showcaseBackground from "../../assets/backgrounds/noise-5.png";
 import showcaseLogo from "../../assets/icons/cv-tropic.png";
+import askTropicHallway01 from "../../assets/case-studies/tropic/ask-ai/ask-tropic-hallway01.png";
+import askTropicHallway02 from "../../assets/case-studies/tropic/ask-ai/ask-tropic-hallway02.png";
+import askTropicHallway03 from "../../assets/case-studies/tropic/ask-ai/ask-tropic-hallway03.png";
+import askTropicHallway04 from "../../assets/case-studies/tropic/ask-ai/ask-tropic-hallway04.png";
+import askTropicHallway05 from "../../assets/case-studies/tropic/ask-ai/ask-tropic-hallway05.png";
 
 // Data
 const caseStudy = getCaseStudy("askTropic");
-
-// Check access
-if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
-  const cookies = Astro.request.headers.get("cookie") || "";
-
-  if (!hasValidAccessToken(cookies)) {
-    return Astro.redirect(`/work/access?redirect=${Astro.url.pathname}`);
-  }
-}
 ---
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>
@@ -56,19 +51,23 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
   <!-- Background -->
   <Work.StorySection kicker="Background" title="Assisted Intelligence">
     <p>
-      In a little over a month, we designed and developed Tropic's Ask AI
-      feature—a chat interface that helps customers quickly find information.
-      This feature uses multiple specialized AI agents to assist customers with
-      tasks like creating requests, analyzing account data, and reviewing
-      procurement policies against contracts and requests.
+      <strong
+        >In a little over a month, we designed and developed Tropic's Ask AI
+        feature—a chat interface that helps customers quickly find information.</strong
+      >
+      This feature uses multiple specialized AI agents to assist customers with tasks
+      like creating requests, analyzing account data, and reviewing procurement policies
+      against contracts and requests.
     </p>
     <p>
-      <strong
+      <strong class="highlighted green"
         >I led the creation of a foundational system that other teams could use
         to help users interact with their agents</strong
       >, while also designing the core Ask AI experience. To create this Ask AI
       system, I focused on the following:
     </p>
+
+    <div class="spacer-base"></div>
 
     <Work.GridFeatures
       features={[
@@ -91,6 +90,53 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       stackThird={true}
     />
   </Work.StorySection>
+
+  <section class="open-canvas mockups" data-intersection-observer={true}>
+    <div class="canvas-container">
+      <span class="plate-label">Figure I.</span>
+      <div class="hallway">
+        <Image
+          src={askTropicHallway03}
+          alt="ask-tropic-hallway-0"
+          draggable="false"
+          width={640}
+          priority
+        />
+        <Image
+          src={askTropicHallway04}
+          alt="ask-tropic-hallway-02"
+          draggable="false"
+          width={580}
+          priority
+        />
+        <Image
+          src={askTropicHallway05}
+          alt="ask-tropic-hallway-03"
+          draggable="false"
+          width={880}
+          priority
+        />
+        <Image
+          src={askTropicHallway02}
+          alt="ask-tropic-hallway-04"
+          draggable="false"
+          width={950}
+          priority
+        />
+        <Image
+          src={askTropicHallway01}
+          alt="ask-tropic-hallway-05"
+          draggable="false"
+          width={900}
+          priority
+        />
+      </div>
+    </div>
+    <span class="plate-caption"
+      >Mid-fidelity wireframes of Tropic's Ask AI feature. High fidelity was
+      done in code.</span
+    >
+  </section>
 
   <!-- Development -->
   <Work.StorySection kicker="Development" title="Shapping Tropic's Assistant">
@@ -203,6 +249,81 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
 
     &--secondary-text {
       display: none;
+    }
+  }
+
+  .open-canvas {
+    width: 100%;
+    margin: var(--spacing-quad) 0;
+    padding: var(--spacing-double) var(--spacing-base);
+    background-color: var(--color-surface);
+
+    .canvas-container {
+      width: 90%;
+      max-width: 1220px;
+      margin: 0 auto;
+    }
+
+    :global(.plate-label),
+    :global(.plate-caption) {
+      display: block;
+      width: 100%;
+      text-align: center;
+      color: var(--color-surface);
+    }
+
+    &.mockups {
+      background-color: var(--color-chocolate);
+
+      @include desktop-reverse {
+        padding: var(--spacing-quad) 0;
+      }
+    }
+
+    &.mockups .canvas-container {
+      min-width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-xxs);
+
+      @include desktop-reverse {
+        gap: var(--spacing-base);
+      }
+
+      .hallway {
+        width: 95%;
+        margin: 0 auto;
+        padding: var(--spacing-base) var(--spacing-quad);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--spacing-quad);
+        overflow-x: scroll;
+
+        -webkit-overflow-scrolling: touch;
+        -webkit-scrollbar {
+          display: none;
+        }
+
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        img {
+          width: 100%;
+          height: auto;
+          object-fit: contain;
+
+          @include tablet {
+            min-width: 600px;
+          }
+
+          @include mobile {
+            min-width: 300px;
+          }
+        }
+      }
     }
   }
 </style>
