@@ -1,5 +1,5 @@
 ---
-import WorkFooterButtons from "./WorkFooterButtons.astro";
+import Buttons from "./Buttons.astro";
 import FeedbackDialog from "./FeedbackDialog.astro";
 
 export interface Props {
@@ -13,13 +13,13 @@ const { endingText = "El fin." } = Astro.props;
   <div class="work-footer-text">
     <span>{endingText}</span>
   </div>
-  <WorkFooterButtons />
+  <Buttons />
 </div>
 
 <FeedbackDialog />
 
 <style lang="scss">
-  @import "../../styles/base/_breakpoints.scss";
+  @import "../../../styles/base/_breakpoints.scss";
 
   .work-footer {
     width: 90%;

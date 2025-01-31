@@ -45,7 +45,7 @@ const { items } = Astro.props;
 </div>
 
 <style lang="scss">
-  @use "../../styles/base/_breakpoints.scss" as *;
+  @use "../../../styles/base/_breakpoints.scss" as *;
 
   .scrollable-gallery-wrapper {
     width: 100%;
@@ -57,7 +57,7 @@ const { items } = Astro.props;
 
   .scrollable-gallery {
     width: 100%;
-    padding: var(--spacing-double) calc(25vw - 410px) var(--spacing-double);
+    padding: 80px calc(25vw - 340px) var(--spacing-double);
     display: flex;
     flex-direction: row;
     overflow-x: auto;
@@ -100,6 +100,7 @@ const { items } = Astro.props;
         .title {
           font-family: var(--font-headings);
           font-size: clamp(1rem, 2.5vw, 1.25rem);
+          margin-bottom: 0px;
         }
         .description {
           font-size: var(--font-size-small);

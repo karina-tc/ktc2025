@@ -1,0 +1,48 @@
+---
+interface Props {
+  maxWidth?: string;
+  includeClasses?: string;
+}
+
+const { maxWidth, includeClasses } = Astro.props;
+---
+
+<slot name="title" data-intersection-observer={true} />
+<div
+  class:list={["product-shot-wrapper", includeClasses]}
+  style={`max-width: ${maxWidth};`}
+  data-intersection-observer={true}
+>
+  <figure class="product-shot-frame" style={`max-width: ${maxWidth};`}>
+    <slot />
+  </figure>
+</div>
+<slot name="caption" data-intersection-observer={true} />
+
+<style lang="scss">
+  .product-shot-wrapper {
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 12px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 12px 20px -12px rgba(60, 51, 35, 0.5);
+    overflow: hidden;
+
+    .product-shot-frame {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid white;
+      box-shadow: 0 2px 4px rgba(60, 51, 35, 0.5) inset;
+
+      :global(img),
+      :global(video) {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    }
+  }
+</style>

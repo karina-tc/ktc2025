@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import closeLine from "../../assets/icons/close-line.svg";
+import closeLine from "../../../assets/icons/close-line.svg";
 ---
 
 <dialog id="feedback-dialog" class="feedback-dialog">
@@ -91,8 +91,8 @@ import closeLine from "../../assets/icons/close-line.svg";
         }
 
         const formArea = feedbackForm.querySelector(".form-area");
-        const successMessage = feedbackForm.querySelector(".success-message");
-        if (formArea && successMessage) {
+        const successMessage = feedbackForm.querySelector(".success-message") as HTMLElement;
+        if (formArea instanceof HTMLElement && successMessage) {
           formArea.style.display = "none";
           successMessage.style.display = "block";
         }

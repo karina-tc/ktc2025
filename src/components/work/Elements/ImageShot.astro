@@ -1,0 +1,53 @@
+---
+interface Props {
+  maxWidth?: string;
+  includeClasses?: string;
+  title?: string;
+  caption?: string;
+}
+
+const { maxWidth, includeClasses, title, caption } = Astro.props;
+---
+
+<div
+  class:list={["image-shot-wrapper", includeClasses]}
+  style={`max-width: ${maxWidth};`}
+  data-intersection-observer={true}>
+  <slot name="extra" class="image-shot-extra" />
+  {title && <p class="plate-label">{title}</p>}
+  <figure class="image-shot-frame" style={`max-width: ${maxWidth};`}>
+    <slot />
+  </figure>
+  {caption && <p class="plate-caption">{caption}</p>}
+</div>
+
+  <style lang="scss">
+    .image-shot-wrapper {
+      width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+      .image-shot-frame {
+        width: 100%;
+        height: auto;
+
+        :global(img),
+        :global(video) {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+      }
+
+      .image-shot-extra {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+    }
+  </style>
+</div>

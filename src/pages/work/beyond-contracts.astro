@@ -14,8 +14,8 @@ import Carousel from "../../components/Carousel.astro";
 // Partials
 import QuadrantChart from "../../components/_partials/work/QuadrantChart.astro";
 import DataClusters from "../../components/_partials/work/DataClusters.astro";
+import RocketShipPlate from "../../components/_partials/work/RocketShipPlate.astro";
 import BackToTop from "../../components/BackToTop.astro";
-import Plate from "../../components/work/Plate.astro";
 
 //Assets
 import showcaseBackground from "../../assets/backgrounds/noise-2.png";
@@ -64,7 +64,7 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
   <Work.CaseStudyHeader {...caseStudy} />
 
   <!-- Showcase -->
-  <Work.CaseStudyShowcase
+  <Work.LargeShowcase
     background={showcaseBackground}
     caption={{
       icon: showcaseLogo,
@@ -80,7 +80,7 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       width={1220}
       priority
     />
-  </Work.CaseStudyShowcase>
+  </Work.LargeShowcase>
 
   <!-- Spacer -->
   <div class="spacer-small"></div>
@@ -198,7 +198,7 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       </p>
 
       <!-- Rocketship Illustration -->
-      <Work.RocketShipPlate
+      <RocketShipPlate
         leftCard={{
           type: "Business Goal",
           title: "Data Quality",
@@ -326,7 +326,9 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
     ]}
   />
 
-  <Work.StorySection subtitle="AI Supplier Matching">
+  <div class="spacer-large"></div>
+
+  <Work.StorySection subtitle="AI Supplier Matching" spacing="none">
     <p>
       Onboarding in Tropic can be lengthy since we ensure data accuracy while
       setting up a user's account. To expedite this process and allow customers
@@ -335,14 +337,17 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
     </p>
   </Work.StorySection>
 
-  <Work.CaseStudyShowcase legend="AI Supplier Matching" spacingTight>
+  <Work.ProductShot maxWidth="1220px">
     <video
       src={showcaseVideo2}
       autoplay="true"
       muted="true"
       loop="true"
       class="w-full"></video>
-  </Work.CaseStudyShowcase>
+    <p class="plate-caption" slot="caption">AI Supplier Matching</p>
+  </Work.ProductShot>
+
+  <div class="spacer-large"></div>
 
   <Work.StorySection subtitle="Data Transparency" spacing="none">
     <p>
@@ -360,21 +365,20 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       momentum in our work.
     </p>
 
-    <div class="astronauts-container">
-      <Plate
-        label="Figure III."
-        caption="Finance and Procurement Conquering Planet Spend"
-      >
-        <Image
-          class="astronauts"
-          src={astronauts}
-          alt="2 astronauts looking at each other"
-          width={885}
-          draggable={false}
-          loading="lazy"
-        />
-      </Plate>
-    </div>
+    <Work.ImageShot maxWidth="1220px" title="Figure III." caption="Finance and Procurement Conquering Planet Spend">
+      <div slot="extra" class="astronauts-text">
+        <span>Overspending is dangerous</span>
+        <span>Together, we'll command it!</span>
+      </div>
+      <Image
+        class="astronauts"
+        src={astronauts}
+        alt="2 astronauts looking at each other"
+        width={885}
+        draggable={false}
+        loading="lazy"
+      />
+    </Work.ImageShot>
   </Work.StorySection>
 
   <section class="open-canvas split-panels" data-intersection-observer={true}>
@@ -616,7 +620,7 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
     </ul>
   </Work.StorySection>
 
-  <Work.CaseStudyShowcase
+  <Work.LargeShowcase
     background={showcaseBackground}
     backgroundFull
     caption={{
@@ -632,9 +636,9 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       width={1220}
       priority
     />
-  </Work.CaseStudyShowcase>
+  </Work.LargeShowcase>
 
-  <Work.WorkFooter />
+  <Work.Footer />
 
   <style lang="scss" scoped>
     // Breakpoint mixins
@@ -645,9 +649,40 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       margin-bottom: -40px;
     }
 
-    @include mobile {
-      .astronauts-container {
-        display: none;
+    .astronauts-text span {
+      color: var(--color-ink-tertiary);
+      font-size: var(--font-size-small);
+      font-weight: 500;
+      font-style: italic;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+
+      &:first-child {
+        top: 18%;
+        left: 10%;
+      }
+      &:last-child {
+        top: 28%;
+        left: 75%;
+      }
+
+      @include mobile {
+        font-size: var(--font-size-xsmall);
+        line-height: 1.2;
+        &:first-child {
+          top: 20%;
+          left: 10%;
+          max-width: 100px;
+        }
+        &:last-child {
+          top: 28%;
+          left: 75%;
+          max-width: 100px;
+        }
       }
     }
 

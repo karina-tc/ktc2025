@@ -6,8 +6,8 @@ import { getCaseStudy } from "../../data/case-study-details";
 // Case Study Components
 import * as Work from "../../components/work/index.js";
 import BackToTop from "../../components/BackToTop.astro";
-import AskAIChatPreview from "../../components/work/AskAIChatPreview.astro";
-
+import AskAIChatPreview from "../../components/work/Demos/AskAIChatPreview.astro";
+import ProductShot from "../../components/work/Elements/ProductShot.astro";
 //Assets
 import showcaseImage from "../../assets/case-studies/tropic/ask-ai/ask-ai-showcase.png";
 import showcaseBackground from "../../assets/backgrounds/noise-5.png";
@@ -44,7 +44,7 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
   <Work.CaseStudyHeader {...caseStudy} />
 
   <!-- Showcase -->
-  <Work.CaseStudyShowcase
+  <Work.LargeShowcase
     background={showcaseBackground}
     caption={{
       icon: showcaseLogo,
@@ -257,7 +257,7 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
   </Work.StorySection>
 
   <!-- Showcase -->
-  <Work.CaseStudyShowcase background={showcaseBackground} backgroundFull={true}>
+  <Work.LargeShowcase background={showcaseBackground} backgroundFull={true}>
     <Image
       src={showcaseImage}
       alt="show case image"
@@ -265,10 +265,10 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       width={1220}
       priority
     />
-  </Work.CaseStudyShowcase>
+  </Work.LargeShowcase>
 
   <!-- Footer -->
-  <Work.WorkFooter />
+  <Work.Footer />
 </BaseLayout>
 
 <style lang="scss">
@@ -490,5 +490,9 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
         }
       }
     }
+  }
+
+  .testing {
+    margin: 100px auto;
   }
 </style>

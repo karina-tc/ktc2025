@@ -1,9 +1,9 @@
 ---
 import { Image } from "astro:assets";
-import Plate from "./Plate.astro";
+import Plate from "../../work/Plate.astro";
 import FloatingCards from "./FloatingCards.astro";
-import rocketShip from "../../assets/illustrations/case-studies/beyond-contracts/rocket-ship-illus.png";
-import rocketBg from "../../assets/illustrations/case-studies/beyond-contracts/rocket-illus-bg.png";
+import rocketShip from "../../../assets/illustrations/case-studies/beyond-contracts/rocket-ship-illus.png";
+import rocketBg from "../../../assets/illustrations/case-studies/beyond-contracts/rocket-illus-bg.png";
 
 interface Card {
   type: string;
@@ -35,10 +35,10 @@ const { leftCard, rightCard, caption } = Astro.props;
 </Plate>
 
 <style lang="scss">
-  @use "../../styles/base/_breakpoints.scss" as *;
+  @use "../../../styles/base/_breakpoints.scss" as *;
 
   :global(.rocket-ship-narrative) {
-    background-image: url("../../assets/illustrations/case-studies/beyond-contracts/rocket-illus-bg.png");
+    background-image: url("../../../assets/illustrations/case-studies/beyond-contracts/rocket-illus-bg.png");
     background-size: 260px;
     background-position: center;
     background-repeat: no-repeat;

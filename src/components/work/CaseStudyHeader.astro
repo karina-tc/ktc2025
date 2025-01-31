@@ -11,16 +11,16 @@ interface Props {
   lastUpdated?: string;
 }
 
-const { 
-  title, 
-  subheading, 
-  company, 
+const {
+  title,
+  subheading,
+  company,
   description,
   role,
   status,
   timeline,
   focusAreas,
-  lastUpdated
+  lastUpdated,
 } = Astro.props;
 ---
 
@@ -36,7 +36,7 @@ const {
       <span class="last-updated">Last Updated: {lastUpdated}</span>
     </div>
   </div>
-  <div class="aside-details">
+  <div class="aside-details large-view">
     <div class="details-column">
       <span>Role</span>
       <span>{role}</span>
@@ -54,12 +54,36 @@ const {
       <span>{focusAreas}</span>
     </div>
   </div>
+  <details class="details-toggle" open>
+    <summary>
+      <span>See Project Details</span>
+    </summary>
+    <div class="aside-details small-view">
+      <div class="details-column">
+        <span>Role</span>
+        <span>{role}</span>
+      </div>
+      <div class="details-column">
+        <span>Project Status</span>
+        <span>{status}</span>
+      </div>
+      <div class="details-column">
+        <span>Timeline</span>
+        <span>{timeline}</span>
+      </div>
+      <div class="details-column">
+        <span>Focus Areas</span>
+        <span>{focusAreas}</span>
+      </div>
+    </div>
+  </details>
 </div>
 
 <style lang="scss">
   @use "../../styles/base/_breakpoints.scss" as *;
 
   .main-details {
+    width: 90%;
     h1 span.subheading {
       display: block;
       font-style: italic;
@@ -110,5 +134,37 @@ const {
         border-bottom: none;
       }
     }
+
+    &.large-view {
+      @include tablet {
+        display: none;
+      }
+    }
   }
-</style> 
+
+  .details-toggle {
+    margin: var(--spacing-base) 0;
+    display: block;
+    cursor: pointer;
+    list-style: none;
+    border-radius: var(--border-radius-base);
+    overflow: hidden;
+
+    summary {
+      padding: 14px var(--spacing-base) 14px;
+      background-color: var(--color-surface);
+    }
+
+    &[open] {
+      background-color: var(--color-surface);
+
+      .aside-details {
+        padding: var(--spacing-base) var(--spacing-base) var(--spacing-small);
+      }
+    }
+
+    @include tablet-reverse {
+      display: none;
+    }
+  }
+</style>
