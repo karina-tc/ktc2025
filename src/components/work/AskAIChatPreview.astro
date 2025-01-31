@@ -1,0 +1,404 @@
+---
+import { Image } from "astro:assets";
+import aiIconContext from "../../assets/case-studies/tropic/ask-ai/ai-icon-gen.svg";
+import aiIconArrow from "../../assets/case-studies/tropic/ask-ai/ai-icon-arrow.svg";
+import aiIconOptions from "../../assets/case-studies/tropic/ask-ai/ai-icon-options.svg";
+import aiIconNewThread from "../../assets/case-studies/tropic/ask-ai/ai-icon-thread.svg";
+---
+
+<div class="holder">
+  <span class="poof">Poof!</span>
+
+  <div class="chat-input">
+    <!-- Context -->
+    <div class="chat-input-context">
+      <Image src={aiIconContext} alt="ai-icon-context" />
+      <span>General Knowledge</span>
+    </div>
+    <!-- Form -->
+    <div class="chat-input-form">
+      <!-- Input -->
+      <textarea class="ai-input" placeholder="Ask away..."></textarea>
+      <!-- Submit -->
+      <button class="chat-input-submit" type="button">
+        <div class="submit-icon">
+          <span><Image src={aiIconArrow} alt="ai-icon-arrow" /></span>
+        </div>
+      </button>
+      <!-- Actions -->
+      <div class="chat-input-form-actions">
+        <button type="button">
+          <Image src={aiIconOptions} alt="ai-icon-options" />
+          <span>Options</span>
+        </button>
+        <button type="button">
+          <Image src={aiIconNewThread} alt="ai-icon-new-thread" />
+          <span>New Thread</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const chatInputs = document.querySelectorAll(".chat-input");
+
+  chatInputs.forEach((chatInput) => {
+    const textarea = chatInput.querySelector(".ai-input");
+    const context = chatInput.querySelector(".chat-input-context");
+    const form = chatInput.querySelector(".chat-input-form");
+    const actions = chatInput.querySelector(".chat-input-form-actions");
+    const submit = chatInput.querySelector(".chat-input-submit");
+    const poof = document.querySelector(".poof");
+    const updateClasses = () => {
+      if (!textarea) return;
+      const hasValue = (textarea as HTMLTextAreaElement).value.length > 0;
+
+      if (hasValue) {
+        context?.classList.add("active");
+        actions?.classList.add("active");
+        submit?.classList.add("active");
+
+        setTimeout(() => {
+          form?.classList.add("active");
+        }, 100);
+      } else {
+        context?.classList.remove("active");
+        actions?.classList.remove("active");
+        submit?.classList.remove("active");
+        submit?.classList.remove("send");
+        form?.classList.remove("active");
+      }
+    };
+
+    // Handle value-dependent classes
+    textarea?.addEventListener("input", updateClasses);
+
+    // Handle submit button click
+    submit?.addEventListener("click", () => {
+      if ((textarea as HTMLTextAreaElement).value.length > 0) {
+        submit?.classList.add("send");
+        poof?.classList.add("animate");
+        // Reset form after animation
+        setTimeout(() => {
+          (textarea as HTMLTextAreaElement).value = "";
+          submit?.classList.remove("send");
+          poof?.classList.remove("animate");
+          updateClasses();
+        }, 1800);
+      }
+    });
+  });
+</script>
+
+<style lang="scss">
+  .holder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .poof {
+    min-width: 100px;
+    display: block;
+    font-style: italic;
+    text-align: center;
+    background-color: var(--color-paper);
+    padding: var(--spacing-small);
+    border-radius: 12px 0 12px 12px;
+    font-size: var(--font-size-xsmall);
+    font-weight: 500;
+    color: var(--color-text);
+    position: absolute;
+    top: calc(50% - 12px);
+    left: calc(50% - 50px);
+    z-index: 20;
+    opacity: 0;
+    border: 1px solid white;
+    box-shadow: 0px 10px 10px -5px rgba(108, 108, 108, 0.25);
+
+    &.animate {
+      animation: poof 1.75s ease-in-out;
+    }
+
+    @keyframes poof {
+      0% {
+        opacity: 0;
+        transform: translateY(0);
+      }
+      90% {
+        opacity: 1;
+        transform: translateY(-100px);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100px);
+      }
+    }
+  }
+
+  .chat-input {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-size: var(--font-size-small);
+    box-shadow: 0px 10px 10px -5px rgba(108, 108, 108, 0.25);
+    position: relative;
+    margin-top: auto;
+
+    .chat-input-context {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: var(--spacing-small);
+      font-size: var(--font-size-xsmall);
+      font-weight: 500;
+      color: white;
+      background-color: #241065;
+      border: 1px solid #241065;
+      border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
+      padding: var(--spacing-small);
+      transition: all var(--transition-base);
+      position: absolute;
+      top: 20px;
+      opacity: 0;
+      transform: translateY(0);
+
+      &.active {
+        opacity: 1;
+        position: relative;
+        top: 0;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+      }
+    }
+
+    .chat-input-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-small);
+      background-color: white;
+      position: relative;
+      border: 1px solid #795cf6;
+      overflow: hidden;
+      border-radius: var(--border-radius-large);
+      transition: all var(--transition-base);
+      z-index: 10;
+
+      &.active {
+        border-radius: 0 0 var(--border-radius-large) var(--border-radius-large);
+      }
+
+      textarea.ai-input {
+        width: 100%;
+        height: 100%;
+        min-height: 100px;
+        max-height: 100px;
+        resize: none;
+        border: 0;
+        outline: none;
+        font-family: var(--font-sans);
+        font-size: var(--font-size-small);
+        line-height: 1.6;
+        padding: var(--spacing-small);
+        caret-color: #241065;
+      }
+
+      .chat-input-submit {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        box-shadow: 0px 1px 4px -1px rgba(108, 108, 108, 0.25);
+
+        position: absolute;
+        top: calc(100% - 62px);
+        left: calc(100% - 62px);
+        z-index: 10;
+
+        .submit-icon {
+          width: 40px;
+          height: 40px;
+          min-width: 40px;
+          min-height: 40px;
+          outline: none;
+          background-color: #000;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all var(--transition-base);
+
+          span {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            overflow: hidden;
+            pointer-events: none;
+          }
+          img {
+            width: 20px;
+            height: 20px;
+            transition: all var(--transition-base);
+          }
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: calc(50% - 24px);
+            left: calc(50% - 24px);
+            width: 48px;
+            height: 48px;
+            background: transparent;
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            filter: blur(2px);
+            border-radius: 50%;
+            z-index: 1;
+          }
+
+          &:hover,
+          &:focus {
+            background-color: #241065;
+          }
+        }
+
+        &::before,
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 50%;
+          background: linear-gradient(to right, #d8d6fe, #8ebeff);
+          border-radius: 26px 26px 0 0;
+          z-index: -1;
+          filter: blur(8px);
+          opacity: 0;
+          transform: scale(0.75);
+          transition: all var(--transition-base);
+        }
+
+        &::after {
+          border-radius: 0 0 25px 25px;
+          top: calc(100% - 26px);
+          background: linear-gradient(to right, #fbb1bc, #ffcb77);
+        }
+
+        &:hover::before,
+        &:focus::before,
+        &.send::before {
+          opacity: 1;
+          transform: scale(0.85);
+          animation: pulseBefore 1s ease-in-out infinite;
+        }
+
+        &:hover::after,
+        &:focus::after,
+        &.send::after {
+          opacity: 1;
+          transform: scale(0.85);
+          animation: pulseAfter 1s ease-in-out infinite;
+        }
+
+        &:focus .submit-icon img,
+        &.send .submit-icon img {
+          animation: arrow-up 0.75s ease-in-out;
+        }
+
+        &.active .submit-icon {
+          background-color: #241065;
+        }
+      }
+
+      @keyframes arrow-up {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-28px);
+        }
+      }
+
+      @keyframes pulseBefore {
+        0% {
+          background: linear-gradient(to right, #d8d6fe, #8ebeff);
+        }
+        50% {
+          background: linear-gradient(to right, #8ebeff, #d8d6fe);
+        }
+        100% {
+          background: linear-gradient(to right, #d8d6fe, #8ebeff);
+        }
+      }
+
+      @keyframes pulseAfter {
+        0% {
+          background: linear-gradient(to right, #fbb1bc, #ffcb77);
+        }
+        50% {
+          background: linear-gradient(to right, #ffcb77, #fbb1bc);
+        }
+        100% {
+          background: linear-gradient(to right, #fbb1bc, #ffcb77);
+        }
+      }
+    }
+
+    .chat-input-form-actions {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 0 var(--spacing-small) var(--spacing-small);
+      gap: var(--spacing-small);
+      opacity: 0.5;
+      transition: all var(--transition-base);
+
+      &.active {
+        opacity: 1;
+      }
+
+      button {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-xsmall);
+        margin-bottom: var(--spacing-xsmall);
+        font-size: var(--font-size-xsmall);
+        font-weight: 500;
+        padding: 4px 12px;
+        background-color: #efefef;
+        border-radius: 20px;
+        box-shadow: 0px 1px 4px -1px rgba(108, 108, 108, 0.25) inset;
+        transition: all var(--transition-base);
+
+        &:hover {
+          box-shadow: 0px 1px 4px -1px rgba(108, 108, 108, 0.5) inset;
+        }
+      }
+    }
+  }
+</style>
