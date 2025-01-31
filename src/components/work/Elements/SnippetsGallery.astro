@@ -1,0 +1,40 @@
+---
+interface Props {
+  columns?: number;
+}
+
+const { columns = 2 } = Astro.props;
+---
+
+<div class="snippets-gallery-wrapper" style="container-type: inline-size;">
+  <div class={`snippets-gallery columns-${columns}`}>
+    <slot />
+  </div>
+</div>
+
+<style lang="scss">
+  @import "../../../styles/base/_breakpoints.scss";
+
+  .snippets-gallery-wrapper {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1220px;
+  }
+
+  .snippets-gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-base);
+    container: inline-size;
+  }
+
+  @container (min-width: 880px) {
+    .snippets-gallery {
+      grid-template-columns: repeat(2, 1fr);
+
+      &.columns-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+</style>
