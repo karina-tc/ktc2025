@@ -2,6 +2,9 @@ export const config = {
   matcher: '/work/*'  // Only run on /work routes
 };
 
+// Import at the top level instead
+import { checkAccess } from "./middleware/checkAccess";
+
 export function onRequest({ request }, next) {
   const url = new URL(request.url);
   
@@ -18,8 +21,6 @@ export function onRequest({ request }, next) {
     return next();
   }
 
-  // Import checkAccess using the correct path
-  const { checkAccess } = require("../middleware/checkAccess");
   if (!checkAccess(url.pathname)) {
     return next();
   }
