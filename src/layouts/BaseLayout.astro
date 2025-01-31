@@ -6,6 +6,7 @@ import "../styles/main.scss";
 import CommonHead from "../components/CommonHead.astro";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
+import { SEO } from "astro-seo";
 
 // Props
 interface Props {
@@ -28,6 +29,37 @@ const {
 	<head>
 		<meta charset="UTF-8" />
 		<CommonHead title={title} description={description} />
+		<SEO
+			title={title}
+			description={description}
+			openGraph={{
+				basic: {
+					title,
+					type: "website",
+					image: "/og-cover.png",
+					url: Astro.url.href,
+				},
+				optional: {
+					description,
+					siteName: "Karina Tovar",
+				},
+			}}
+			twitter={{
+				card: "summary_large_image",
+				title,
+				description,
+				image: "/og-cover.png",
+				imageAlt: "Karina Tovar Portfolio Preview"
+			}}
+			extend={{
+				meta: [
+					{ name: "author", content: "Karina Tovar" },
+				],
+				link: [
+					{ rel: "canonical", href: Astro.url.href },
+				],
+			}}
+		/>
 		
 		<!-- Critical styles to prevent flash -->
 		<style is:inline>
