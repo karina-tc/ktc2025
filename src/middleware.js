@@ -18,8 +18,8 @@ export function onRequest({ request }, next) {
     return next();
   }
 
-  // Import checkAccess to verify if path needs protection
-  const { checkAccess } = require("../../middleware/checkAccess");
+  // Import checkAccess using the correct path
+  const { checkAccess } = require("../middleware/checkAccess");
   if (!checkAccess(url.pathname)) {
     return next();
   }
