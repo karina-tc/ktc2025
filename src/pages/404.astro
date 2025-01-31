@@ -5,10 +5,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 // Components
 import Divider from "../components/Divider.astro";
 import Atom from "../components/Atom.astro";
-
-// Data
-const bookingLink =
-  "https://cal.com/karina-tovar-djofxs/quick-chat?month=2025-01&date=2025-01-28";
 ---
 
 <BaseLayout
@@ -27,18 +23,18 @@ const bookingLink =
 
 <script>
   // Get the back button element
-  const backButton = document.getElementById('backButton');
-  
+  const backButton = document.getElementById("backButton");
+
   // Get the last visited URL from sessionStorage
-  const lastVisitedUrl = sessionStorage.getItem('lastVisitedUrl');
-  console.log('Retrieved URL from session:', lastVisitedUrl);
-  
+  const lastVisitedUrl = sessionStorage.getItem("lastVisitedUrl");
+  console.log("Retrieved URL from session:", lastVisitedUrl);
+
   // If we have a last visited URL
   if (lastVisitedUrl) {
-    console.log('Setting back button href to:', lastVisitedUrl);
-    backButton?.setAttribute('href', lastVisitedUrl);
+    console.log("Setting back button href to:", lastVisitedUrl);
+    backButton?.setAttribute("href", lastVisitedUrl);
   } else {
-    console.log('No valid last URL found, using home page');
+    console.log("No valid last URL found, using home page");
   }
 </script>
 

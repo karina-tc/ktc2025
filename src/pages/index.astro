@@ -12,8 +12,7 @@ import flower from "../assets/illustrations/flower.svg";
 import selfCard from "../assets/brand/karina-large.png";
 
 // Data
-const bookingLink =
-	"https://cal.com/karina-tovar-djofxs/quick-chat?month=2025-01&date=2025-01-28";
+const bookingLink = "https://cal.com/karina-tovar/quick-chat";
 
 const navItems = [
 	{
@@ -112,17 +111,17 @@ const navItems = [
 
 <script>
 	// Find all philosophy buttons and attach click handlers
-	document.querySelectorAll('[data-philosophy]').forEach(button => {
-		button.addEventListener('click', () => {
+	document.querySelectorAll("[data-philosophy]").forEach((button) => {
+		button.addEventListener("click", () => {
 			// Get reader name from session if it exists
-			const reader = sessionStorage.getItem('reader');
-			const baseUrl = '/philosophy?referrer=index';
-			
+			const reader = sessionStorage.getItem("reader");
+			const baseUrl = "/philosophy?referrer=index";
+
 			// Add reader parameter if it exists
-			const url = reader 
+			const url = reader
 				? `${baseUrl}&reader=${encodeURIComponent(reader)}`
 				: baseUrl;
-				
+
 			window.location.href = url;
 		});
 	});
