@@ -1,0 +1,219 @@
+---
+interface Screen {
+  src: string;
+  alt: string;
+  width: number;
+  zIndex?: number;
+  rotation?: number;
+  initialX?: number;
+  initialY?: number;
+}
+
+interface Props {
+  screens: Screen[];
+  instanceId: string;
+}
+
+const { screens, instanceId } = Astro.props;
+---
+
+<div class="draggable-screens-container" data-instance-id={instanceId}>
+  {
+    screens.map((screen, index) => (
+      <div
+        class="draggable-screen"
+        data-index={index}
+        style={{
+          width: `${screen.width}px`,
+          zIndex: screen.zIndex || screens.length - index,
+          left: `${screen.initialX || 0}%`,
+          top: `${screen.initialY || 0}%`,
+          transform: `rotate(${screen.rotation || 0}deg)`,
+        }}
+      >
+        <img
+          src={screen.src}
+          alt={screen.alt}
+          width={screen.width}
+          draggable="false"
+        />
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  class DraggableScreens {
+    private container: HTMLElement;
+    private screens: HTMLElement[];
+    private activeScreen: HTMLElement | null = null;
+    private startX: number = 0;
+    private startY: number = 0;
+    private screenInitialX: number = 0;
+    private screenInitialY: number = 0;
+    private instanceId: string;
+
+    constructor(container: HTMLElement) {
+      this.container = container;
+      this.instanceId = container.dataset.instanceId || '';
+      this.screens = Array.from(
+        container.querySelectorAll(".draggable-screen"),
+      );
+      this.initDraggable();
+    }
+
+    private initDraggable() {
+      this.screens.forEach((screen) => {
+        screen.addEventListener("mousedown", (e) =>
+          this.dragStart(e as MouseEvent),
+        );
+        screen.addEventListener("touchstart", (e) =>
+          this.dragStart(e as TouchEvent),
+        );
+
+        // Bring to front on click
+        screen.addEventListener("mousedown", () => {
+          const maxZ = Math.max(
+            ...this.screens.map(
+              (s) => parseInt(window.getComputedStyle(s).zIndex) || 0,
+            ),
+          );
+          screen.style.zIndex = `${maxZ + 1}`;
+        });
+      });
+
+      document.addEventListener("mousemove", (e) => {
+        if (this.activeScreen?.closest(`[data-instance-id="${this.instanceId}"]`)) {
+          this.drag(e as MouseEvent);
+        }
+      });
+
+      document.addEventListener(
+        "touchmove",
+        (e) => {
+          if (this.activeScreen?.closest(`[data-instance-id="${this.instanceId}"]`)) {
+            this.drag(e as TouchEvent);
+          }
+        },
+        { passive: false },
+      );
+
+      document.addEventListener("mouseup", () => {
+        if (this.activeScreen?.closest(`[data-instance-id="${this.instanceId}"]`)) {
+          this.dragEnd();
+        }
+      });
+
+      document.addEventListener("touchend", () => {
+        if (this.activeScreen?.closest(`[data-instance-id="${this.instanceId}"]`)) {
+          this.dragEnd();
+        }
+      });
+    }
+
+    private dragStart(e: MouseEvent | TouchEvent) {
+      if (!e.target) return;
+
+      const screen = (e.target as HTMLElement).closest(".draggable-screen");
+      if (!screen) return;
+
+      this.activeScreen = screen as HTMLElement;
+
+      // Get current position from styles
+      const style = window.getComputedStyle(this.activeScreen);
+      this.screenInitialX = parseInt(style.left);
+      this.screenInitialY = parseInt(style.top);
+
+      if (e instanceof MouseEvent) {
+        this.startX = e.clientX;
+        this.startY = e.clientY;
+      } else {
+        e.preventDefault(); // Prevent scrolling while dragging
+        this.startX = e.touches[0].clientX;
+        this.startY = e.touches[0].clientY;
+      }
+    }
+
+    private drag(e: MouseEvent | TouchEvent) {
+      if (!this.activeScreen) return;
+
+      e.preventDefault();
+
+      let currentX: number, currentY: number;
+
+      if (e instanceof MouseEvent) {
+        currentX = e.clientX;
+        currentY = e.clientY;
+      } else {
+        currentX = e.touches[0].clientX;
+        currentY = e.touches[0].clientY;
+      }
+
+      const deltaX = currentX - this.startX;
+      const deltaY = currentY - this.startY;
+
+      const newX = this.screenInitialX + deltaX;
+      const newY = this.screenInitialY + deltaY;
+
+      this.activeScreen.style.left = `${newX}px`;
+      this.activeScreen.style.top = `${newY}px`;
+    }
+
+    private dragEnd() {
+      if (!this.activeScreen) return;
+
+      // Update the initial position for next drag
+      const style = window.getComputedStyle(this.activeScreen);
+      this.screenInitialX = parseInt(style.left);
+      this.screenInitialY = parseInt(style.top);
+
+      this.activeScreen = null;
+    }
+  }
+
+  // Initialize all instances when DOM is loaded
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".draggable-screens-container").forEach((container) => {
+      new DraggableScreens(container as HTMLElement);
+    });
+  });
+</script>
+
+<style>
+  .draggable-screens-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .draggable-screen {
+    position: absolute;
+    cursor: grab;
+    user-select: none;
+    transition: z-index 0.1s ease;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+    will-change: transform, left, top;
+
+    @media (max-width: 768px) {
+      cursor: default;
+      pointer-events: none; /* Disables dragging on mobile/tablet */
+    }
+
+    &:active {
+      cursor: grabbing;
+
+      @media (max-width: 768px) {
+        cursor: default;
+      }
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+    }
+  }
+</style>
+

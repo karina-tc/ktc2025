@@ -49,7 +49,7 @@ export const caseStudies: Record<string, CaseStudyMeta> = {
   },
   // Mystery / Glue
   peopleGlue: {
-    title: "People Glue",
+    title: "People as Glue",
     description: "How we rebranded and redesigned Mystery into Glue to help companies create a more connected and engaged workforce.",
     subheading: "Connecting Employees",
     company: "Mystery / Glue",
