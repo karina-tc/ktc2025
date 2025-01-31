@@ -5,24 +5,44 @@ export const config = {
 export function onRequest({ request }, next) {
   const url = new URL(request.url);
   
-  // Skip middleware for the main work page and other excluded paths
+  console.log('Middleware running for:', url.pathname);
+  console.log('Debug token from URL:', url.searchParams.get('debug_token'));
+  console.log('Expected token:', import.meta.env.PUBLIC_DEBUG_ACCESS_TOKEN);
+  
+  // Skip middleware for excluded paths
   if (url.pathname === '/work' || 
       url.pathname === '/work/access' || 
       url.pathname.startsWith('/api/') ||
       url.pathname.startsWith('/blog/')) {
+    console.log('Skipping middleware for excluded path');
     return next();
   }
 
-  // Only run middleware for /work/* routes (children pages)
-  if (url.pathname.startsWith('/work/')) {
-    console.warn('Bypassing authentication, setting temporary access cookie');
-    const response = next();
-    if (response instanceof Response) {
-      response.headers.set('Set-Cookie', 'access_token=true; Path=/; Max-Age=3600; SameSite=Lax');
-    }
-    return response;
+  // Check for debug parameter with a secure value
+  const debugToken = url.searchParams.get('debug_token');
+  const cookies = request.headers.get('cookie') || '';
+  
+  if (debugToken === import.meta.env.PUBLIC_DEBUG_ACCESS_TOKEN) {
+    console.warn('Debug access granted, creating new response with cookie');
+    return new Response(null, {
+      status: 302,
+      headers: {
+        'Location': url.pathname,
+        'Set-Cookie': 'access_token=true; Path=/; Max-Age=3600; SameSite=Lax'
+      }
+    });
   }
 
-  // For all other routes, just continue
-  return next();
+  // Check for existing cookie
+  if (cookies.includes('access_token=true')) {
+    return next();
+  }
+
+  // If no valid token or cookie, redirect to access page
+  return new Response(null, {
+    status: 302,
+    headers: {
+      'Location': `/work/access?redirect=${url.pathname}`
+    }
+  });
 } 
