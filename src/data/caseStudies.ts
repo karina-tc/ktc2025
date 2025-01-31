@@ -13,23 +13,23 @@ export interface CaseStudy {
 export const caseStudies: CaseStudy[] = [
   {
     title: "Tropic",
-    subtitle: "Building Supplier Intelligence",
+    subtitle: "Beyond Contracts",
     description:
       "I am an artist, turned product designer, who likes to code and make things. That just means that I am obsessed over how",
     tags: ["Product Design", "Strategy", "Design Engineering"],
     image: tropicImage,
     imageAlt: "Tropic platform interface showing supplier management features",
-    href: "/work/tropic",
+    href: "/work/beyond-contracts",
   },
   {
     title: "Tropic",
-    subtitle: "Building Supplier Intelligence",
+    subtitle: "Ask Tropic",
     description:
       "I am an artist, turned product designer, who likes to code and make things. That just means that I am obsessed over how",
     tags: ["Product Design", "Strategy", "Design Engineering"],
     image: tropicImage,
     imageAlt: "Tropic platform interface showing supplier management features",
-    href: "/work/tropic",
+    href: "/work/ask-tropic",
   },
   {
     title: "Tropic",

@@ -53,7 +53,15 @@ const getSpecialAbility = (title: string) => {
   return abilities[title] || "SUPER POWER";
 };
 
-const { quote, author, reference, include_classes = "", "data-index": index, totalTestimonials = 1, allTestimonials } = Astro.props;
+const {
+  quote,
+  author,
+  reference,
+  include_classes = "",
+  "data-index": index,
+  totalTestimonials = 1,
+  allTestimonials,
+} = Astro.props;
 ---
 
 <div class:list={["testimonial-item", include_classes]} data-index={index}>
@@ -93,18 +101,46 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
   </div>
   <div class="testimonial-special-ability">
     <div class="block">
-      <Image src={Bookmark} alt="Bookmark" width={20} height={20} draggable={false} loading="lazy" />
+      <Image
+        src={Bookmark}
+        alt="Bookmark"
+        width={20}
+        height={20}
+        draggable={false}
+        loading="lazy"
+      />
       SUPERPOWER: {getSpecialAbility(quote.title)}
     </div>
     <div class="block">
-      <Image src={Briefcase} alt="Briefcase" width={20} height={20} draggable={false} loading="lazy" />
+      <Image
+        src={Briefcase}
+        alt="Briefcase"
+        width={20}
+        height={20}
+        draggable={false}
+        loading="lazy"
+      />
       <a href="/resume" target="_blank">{author.pastCompany}</a>
     </div>
     <button type="button" aria-label="Previous" class="block arrow left">
-      <Image src={CaretLeft} alt="Caret Left" width={20} height={20} draggable={false} loading="lazy" />
+      <Image
+        src={CaretLeft}
+        alt="Caret Left"
+        width={20}
+        height={20}
+        draggable={false}
+        loading="lazy"
+      />
     </button>
     <button type="button" aria-label="Next" class="block arrow right">
-      <Image src={CaretRight} alt="Caret Right" width={20} height={20} draggable={false} loading="lazy" />
+      <Image
+        src={CaretRight}
+        alt="Caret Right"
+        width={20}
+        height={20}
+        draggable={false}
+        loading="lazy"
+      />
     </button>
   </div>
 </div>
@@ -113,32 +149,34 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
   class TestimonialCarousel {
     constructor() {
       this.currentIndex = 0;
-      this.card = document.querySelector('.testimonial-item');
+      this.card = document.querySelector(".testimonial-item");
       this.testimonials = allTestimonials;
-      
-      const prevButton = this.card?.querySelector('.arrow.left');
-      const nextButton = this.card?.querySelector('.arrow.right');
-      
-      prevButton?.addEventListener('click', () => this.navigate('prev'));
-      nextButton?.addEventListener('click', () => this.navigate('next'));
+
+      const prevButton = this.card?.querySelector(".arrow.left");
+      const nextButton = this.card?.querySelector(".arrow.right");
+
+      prevButton?.addEventListener("click", () => this.navigate("prev"));
+      nextButton?.addEventListener("click", () => this.navigate("next"));
     }
 
     navigate(direction) {
       if (!this.card) return;
 
       // Remove flip class first
-      this.card.classList.remove('flip');
-      
+      this.card.classList.remove("flip");
+
       // Add flip class back
       setTimeout(() => {
-        this.card.classList.add('flip');
+        this.card.classList.add("flip");
       }, 400);
-      
+
       // Update content after small delay
       setTimeout(() => {
-        this.currentIndex = direction === 'next' 
-          ? (this.currentIndex + 1) % this.testimonials.length
-          : (this.currentIndex - 1 + this.testimonials.length) % this.testimonials.length;
+        this.currentIndex =
+          direction === "next"
+            ? (this.currentIndex + 1) % this.testimonials.length
+            : (this.currentIndex - 1 + this.testimonials.length) %
+              this.testimonials.length;
 
         const nextTestimonial = this.testimonials[this.currentIndex];
         this.updateContent(nextTestimonial);
@@ -149,31 +187,32 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
       if (!this.card) return;
 
       // Update reference
-      const reference = this.card.querySelector('.testimonial-reference');
+      const reference = this.card.querySelector(".testimonial-reference");
       if (reference) {
-        reference.querySelector('span').textContent = testimonial.reference.number;
-        const link = reference.querySelector('a');
+        reference.querySelector("span").textContent =
+          testimonial.reference.number;
+        const link = reference.querySelector("a");
         if (link && testimonial.reference.link) {
           link.href = testimonial.reference.link;
         }
       }
 
       // Update title with typing effect
-      const title = this.card.querySelector('.testimonial-title h2');
+      const title = this.card.querySelector(".testimonial-title h2");
       if (title) {
         // Split the new title text into spans
-        const chars = testimonial.quote.title.split('').map(char => {
-          const span = document.createElement('span');
-          span.className = 'char';
-          span.style.opacity = '0.2';
+        const chars = testimonial.quote.title.split("").map((char) => {
+          const span = document.createElement("span");
+          span.className = "char";
+          span.style.opacity = "0.2";
           span.textContent = char;
           return span;
         });
-        
+
         // Clear existing content and add new spans
-        title.textContent = '';
-        chars.forEach(span => title.appendChild(span));
-        
+        title.textContent = "";
+        chars.forEach((span) => title.appendChild(span));
+
         // Animate each character
         let currentChar = 0;
         const totalChars = chars.length;
@@ -181,7 +220,7 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
 
         function revealNextChar() {
           if (currentChar < totalChars) {
-            chars[currentChar].style.opacity = '1';
+            chars[currentChar].style.opacity = "1";
             currentChar++;
             setTimeout(revealNextChar, speed);
           }
@@ -192,31 +231,43 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
       }
 
       // Update quote
-      const quote = this.card.querySelector('.testimonial-quote > p');
+      const quote = this.card.querySelector(".testimonial-quote > p");
       if (quote) {
         quote.textContent = testimonial.quote.content;
       }
 
       // Update author
-      const authorName = this.card.querySelector('.testimonial-author-info > p');
-      const authorImage = this.card.querySelector('.testimonial-author img');
-      const authorCurrentRole = this.card.querySelector('.testimonial-author-role p:first-child');
-      const authorPastRole = this.card.querySelector('.testimonial-author-role p:last-child');
-      
+      const authorName = this.card.querySelector(
+        ".testimonial-author-info > p",
+      );
+      const authorImage = this.card.querySelector(".testimonial-author img");
+      const authorCurrentRole = this.card.querySelector(
+        ".testimonial-author-role p:first-child",
+      );
+      const authorPastRole = this.card.querySelector(
+        ".testimonial-author-role p:last-child",
+      );
+
       if (authorName) authorName.textContent = testimonial.author.name;
       if (authorImage) authorImage.src = testimonial.author.image.src;
-      if (authorCurrentRole) authorCurrentRole.textContent = testimonial.author.currentRole;
-      if (authorPastRole) authorPastRole.textContent = testimonial.author.pastRole;
+      if (authorCurrentRole)
+        authorCurrentRole.textContent = testimonial.author.currentRole;
+      if (authorPastRole)
+        authorPastRole.textContent = testimonial.author.pastRole;
 
       // Update special ability
-      const superpower = this.card.querySelector('.testimonial-special-ability .block:first-child');
-      const pastCompany = this.card.querySelector('.testimonial-special-ability .block:nth-child(2)');
-      
+      const superpower = this.card.querySelector(
+        ".testimonial-special-ability .block:first-child",
+      );
+      const pastCompany = this.card.querySelector(
+        ".testimonial-special-ability .block:nth-child(2)",
+      );
+
       if (superpower) {
         const ability = this.getSpecialAbility(testimonial.quote.title);
         superpower.textContent = `SUPERPOWER: ${ability}`;
       }
-      
+
       if (pastCompany) {
         pastCompany.textContent = testimonial.author.pastCompany;
       }
@@ -303,7 +354,7 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
         justify-content: space-between;
         align-items: center;
         font-size: var(--font-size-small);
-        font-family: var(--font-sans);
+        font-family: var(--font-mono);
         backface-visibility: hidden;
 
         span {
@@ -317,6 +368,7 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
         a {
           font-weight: 500;
           padding: var(--spacing-small);
+          text-transform: uppercase;
           text-underline-offset: 4px !important;
 
           &:hover {
@@ -379,7 +431,6 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
       transition: all 0.3s ease-in-out;
       p {
         margin-top: var(--spacing-small);
-        font-family: var(--font-sans);
       }
     }
 
@@ -428,10 +479,13 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
         overflow: hidden;
 
         font-size: var(--font-size-small);
-        font-family: var(--font-sans);
+        font-family: var(--font-mono);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
 
         p {
           margin: 0;
+          color: var(--color-ink-tertiary);
           transition: all 0.2s ease-in-out;
 
           &:first-child {
@@ -445,7 +499,6 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
             top: 10px;
             left: 0;
             opacity: 0;
-            color: var(--color-ink-tertiary);
           }
         }
       }
@@ -560,7 +613,7 @@ const { quote, author, reference, include_classes = "", "data-index": index, tot
     }
     50% {
       color: var(--color-coffee);
-      opacity: .5;
+      opacity: 0.5;
     }
     100% {
       color: var(--color-ink);
