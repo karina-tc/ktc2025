@@ -8,6 +8,7 @@ interface Props {
   status: string;
   timeline: string;
   focusAreas: string;
+  lastUpdated: string;
 }
 
 const { 
@@ -18,7 +19,8 @@ const {
   role,
   status,
   timeline,
-  focusAreas
+  focusAreas,
+  lastUpdated
 } = Astro.props;
 ---
 
@@ -31,6 +33,7 @@ const {
         {subheading && <span class="subheading">{subheading}</span>}
       </h1>
       <p>{description}</p>
+      <span class="last-updated">Last Updated: {lastUpdated}</span>
     </div>
   </div>
   <div class="aside-details">
@@ -60,6 +63,16 @@ const {
     h1 span.subheading {
       display: block;
       font-style: italic;
+      color: var(--color-ink-tertiary);
+    }
+
+    .last-updated {
+      display: block;
+      font-size: var(--font-size-small);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
       color: var(--color-ink-tertiary);
     }
   }

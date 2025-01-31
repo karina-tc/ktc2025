@@ -7,6 +7,7 @@ interface CaseStudyMeta {
   status: string;
   timeline: string;
   focusAreas: string;
+  lastUpdated?: string;
 }
 
 export const caseStudies: Record<string, CaseStudyMeta> = {
@@ -19,7 +20,8 @@ export const caseStudies: Record<string, CaseStudyMeta> = {
     role: "Lead Product Designer",
     status: "Launched",
     timeline: "H2 2024 — H1 2025",
-    focusAreas: "Product Design, Strategy, Information Architecture, Architecture, Systems Design, UX Research"
+    focusAreas: "Product Design, Strategy, Information Architecture, Architecture, Systems Design, UX Research",
+    lastUpdated: "January 2025"
   },
   // Tropic Ask AI
   askTropic: {
@@ -30,7 +32,8 @@ export const caseStudies: Record<string, CaseStudyMeta> = {
     role: "Lead Product Designer",
     status: "In Beta",
     timeline: "December 2024",
-    focusAreas: "Product Design, Information Architecture, Design Engineering"
+    focusAreas: "Product Design, Information Architecture, Design Engineering",
+    lastUpdated: "January 2025"
   },
   // Tropic Supplier Intelligence
   supplierIntelligence: {
@@ -41,7 +44,8 @@ export const caseStudies: Record<string, CaseStudyMeta> = {
     role: "Lead Product Designer",
     status: "Launched",
     timeline: "Q1 2024 - Q3 2024",
-    focusAreas: "Product Design, Strategy, Information Architecture, Systems Design, UXR"
+    focusAreas: "Product Design, Strategy, Information Architecture, Systems Design, UXR",
+    lastUpdated: "January 2025"
   },
   // Mystery / Glue
   peopleGlue: {
@@ -52,7 +56,8 @@ export const caseStudies: Record<string, CaseStudyMeta> = {
     role: "Sr. Product Designer",
     status: "Launched",
     timeline: "2022 - 2023",
-    focusAreas: "Product Design, Design Systems"
+    focusAreas: "Product Design, Design Systems",
+    lastUpdated: "January 2025"
   }
 };
 
