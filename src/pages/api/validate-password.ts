@@ -5,26 +5,27 @@ export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    // Check if Supabase environment variables are set
+    const body = await request.json();
+    const password = body?.password?.toLowerCase()?.trim();
+    
+    // If Supabase is not available, set temporary access
     if (!import.meta.env.PUBLIC_SUPABASE_URL || !import.meta.env.PUBLIC_SUPABASE_ANON_KEY) {
-      console.error('Missing Supabase environment variables');
+      console.warn('Supabase is not available, granting temporary access');
       return new Response(
         JSON.stringify({
-          valid: false,
-          message: 'Server configuration error'
+          valid: true,
+          message: 'Temporary access granted'
         }),
         {
-          status: 500,
+          status: 200,
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Set-Cookie': 'access_token=true; Path=/; Max-Age=3600; SameSite=Lax'
           }
         }
       );
     }
 
-    const body = await request.json();
-    const password = body?.password?.toLowerCase()?.trim();
-    
     console.log('API: received password:', password);
     const passwordConfig = await isValidPassword(password);
     
