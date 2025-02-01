@@ -76,12 +76,8 @@ const navItems = [
 				>
 					{
 						navItems.map(({ icon, iconLight, alt, text, href, type, data }) => (
-							<li class="flex items-center gap-2 p-2 border-b border-paper dark:border-chocolate-light transition-colors duration-200 ease-in-out hover:bg-surface dark:hover:bg-ink-secondary">
-								<Image
-									src={icon}
-									alt={alt}
-									class="w-10 h-10 dark:hidden"
-								/>
+							<li class="flex items-center gap-2 p-2 border-b border-border dark:border-chocolate-light transition-colors duration-200 ease-in-out hover:bg-surface dark:hover:bg-ink-secondary">
+								<Image src={icon} alt={alt} class="w-10 h-10 dark:hidden" />
 								<Image
 									src={iconLight}
 									alt={alt}

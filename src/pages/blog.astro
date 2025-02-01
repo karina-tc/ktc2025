@@ -44,7 +44,7 @@ type BlogPost = CollectionEntry<"blog">;
   title="Karina Tovar | Blog"
   description="Blog posts by Karina Tovar"
 >
-  <section class="neue-container py-20" data-intersection-observer={true}>
+  <section class="neue-container pt-20 pb-10" data-intersection-observer={true}>
     <div class="mx-auto flex flex-col md:flex-row gap-4">
       <div class="flex-1 flex flex-col gap-4">
         <h4>Blog</h4>
@@ -65,15 +65,11 @@ type BlogPost = CollectionEntry<"blog">;
     </div>
   </section>
 
-  <!-- Spacer -->
-  <div class="spacer-small"></div>
-
   <!-- Blog Posts -->
-  <div class="grid-container blog-posts">
+  <div class="max-w-5xl mx-auto px-10 relative flex flex-col-reverse gap-10 mb-20">
     <div
-      class="grid-content blog-posts-listing"
-      data-intersection-observer={true}
-    >
+      class="flex flex-col-reverse gap-20"
+      data-intersection-observer={true}>
       {
         Object.entries(postsByYear).map(([year, yearPosts]) => {
           const typedPosts = yearPosts as BlogPost[];
@@ -82,116 +78,15 @@ type BlogPost = CollectionEntry<"blog">;
       }
     </div>
 
-    <div class="blog-posts-notes" data-intersection-observer={true}>
-      <div class="blog-posts-notes-punches"></div>
-      <div class="blog-posts-notes-content">
-        <h4>Notebooks</h4>
+    <div class="flex flex-row relative h-fit min-h-[210px] bg-surface dark:bg-ink-secondary p-8 rounded-xl overflow-hidden transition-transform duration-300 ease-in-out" data-intersection-observer={true}>
+      <div class="flex-1 flex flex-col relative">
+        <h4 class="mb-5">Notebooks</h4>
         {
           notebooks.map((post: BlogPost) => (
-            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+            <a href={`/blog/${post.slug}`} class="block py-5 mb-2 border-b border-border first:pt-0 last:border-b-0 last:pb-0 hover:underline">{post.data.title}</a>
           ))
         }
       </div>
     </div>
   </div>
 </BaseLayout>
-
-<style lang="scss">
-  // Breakpoint mixins
-  @use "../styles/base/_breakpoints.scss" as *;
-
-  .visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .blog-posts {
-    max-width: var(--content-narrow-plus);
-    margin: 0 auto;
-    padding: var(--spacing-base);
-    position: relative;
-  }
-
-  .blog-posts-listing {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: var(--spacing-double);
-  }
-
-  .blog-posts-notes {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    margin-left: 60px;
-    height: fit-content;
-    min-height: 240px;
-
-    background-color: var(--color-surface);
-    padding: 40px 20px 20px 40px;
-    border-radius: var(--border-radius-base);
-    overflow: hidden;
-
-    transform: rotate(2deg);
-    transition: transform 0.3s ease-in-out;
-
-    &:hover {
-      transform: rotate(0deg);
-    }
-
-    @include tablet {
-      margin-top: 80px;
-      margin-left: 0;
-      transform: rotate(0deg);
-    }
-
-    .blog-posts-notes-punches {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 20px;
-      height: 100%;
-      height: stretch;
-      height: -webkit-fill-available;
-      height: -moz-available;
-      margin: 20px 0;
-
-      background-image: url("/assets/paper-punch-pattern.svg");
-      background-repeat: repeat-y;
-      background-size: 12px 23px;
-      overflow: hidden;
-    }
-
-    .blog-posts-notes-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-
-      position: relative;
-    }
-
-    h4 {
-      margin-bottom: var(--spacing-base);
-    }
-
-    a {
-      display: block;
-      padding: var(--spacing-small) 0;
-      margin-bottom: var(--spacing-small);
-      border-bottom: 1px solid var(--color-border);
-
-      &:first-child {
-        padding-top: 0;
-      }
-
-      &:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
-      }
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-</style>
