@@ -28,10 +28,13 @@ const skillsItems = [
 
 <section class="skills-section">
   <Subtitle title="Some of My Skills" />
-  <div class="skills-list">
+  <div class="skills-list mt-10 flex flex-col gap-10">
     {
       skillsItems.map(({ title, description }, index) => (
-        <div class={`skill-item ${index === 0 ? "active" : ""}`} data-skill-item>
+        <div
+          class={`skill-item relative p-10 bg-surface dark:bg-ink-secondary border-2 border-coffee cursor-pointer transition-all duration-300 ease-in-out ${index === 0 ? "active" : ""}`}
+          data-skill-item
+        >
           <div class="top-corners">
             <span class="left" />
             <span class="right" />
@@ -50,8 +53,8 @@ const skillsItems = [
 
 <script>
   // Get all skill items
-  const skillItems = document.querySelectorAll('[data-skill-item]');
-  const skillsList = document.querySelector('.skills-list');
+  const skillItems = document.querySelectorAll("[data-skill-item]");
+  const skillsList = document.querySelector(".skills-list");
   const firstSkill = skillItems[0];
 
   // Add hover listeners to all items except the first one
@@ -69,10 +72,10 @@ const skillsItems = [
 
         if (!isAnyHovered) {
           // Check if we're actually hovering a skill item, not just the container
-          const isHoveringSkillItem = Array.from(skillItems).some(item => 
-            item.matches(":hover")
+          const isHoveringSkillItem = Array.from(skillItems).some((item) =>
+            item.matches(":hover"),
           );
-          
+
           if (isHoveringSkillItem) {
             firstSkill.classList.add("active");
           }
@@ -88,21 +91,7 @@ const skillsItems = [
 </script>
 
 <style lang="scss">
-  .skills-list {
-    margin-top: var(--spacing-double);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-double);
-  }
-
   .skill-item {
-    position: relative;
-    padding: var(--spacing-double);
-    background: var(--color-paper);
-    border: 2px solid var(--color-coffee);
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-
     h3 {
       margin: 0;
       font-family: var(--font-headings);

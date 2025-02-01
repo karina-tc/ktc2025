@@ -66,6 +66,10 @@ h4 {
   @apply text-sm font-mono uppercase text-ink-tertiary dark:text-chocolate-light font-semibold tracking-widest;
 }
 
+h5 {
+  @apply text-xs font-mono uppercase text-ink-tertiary dark:text-chocolate-light font-semibold tracking-widest;
+}
+
 p {
   @apply text-pretty leading-[2];
 }
