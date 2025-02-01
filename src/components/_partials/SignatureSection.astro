@@ -3,21 +3,6 @@ import { Image } from "astro:assets";
 import signature from "../../assets/brand/life-is-good.svg";
 ---
 
-<div class="signature-container">
-  <Image src={signature} alt="Signature" draggable={false} loading="lazy" />
+<div class="flex justify-center items-center mt-40">
+  <Image src={signature} alt="Signature" draggable={false} loading="lazy" class="w-full max-w-[400px] h-auto dark:opacity-25" />
 </div>
-
-<style lang="scss">
-  .signature-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: var(--spacing-quad);
-
-    img {
-      width: 100%;
-      max-width: 400px;
-      height: auto;
-    }
-  }
-</style> 
