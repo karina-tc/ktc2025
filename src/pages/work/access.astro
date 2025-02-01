@@ -8,7 +8,7 @@ import Atom from "../../components/Atom.astro";
 
 // Get the redirect URL from query params
 const params = new URLSearchParams(Astro.url.search);
-const redirectUrl = params.get('redirect') || '/work';
+const redirectUrl = params.get("redirect") || "/work";
 
 // Import checkAccess to verify if the redirect path needs protection
 import { checkAccess } from "../../middleware/checkAccess";
@@ -25,22 +25,35 @@ if (!checkAccess(redirectUrl)) {
   includeNavigation={false}
   includeFooter={false}
 >
-  <div class="section-container">
+  <div
+    class="w-full h-screen flex flex-col items-center justify-center text-center"
+  >
     <a href="/"><Atom size="140px" /></a>
-    <h1>Access Required</h1>
-    <form class="form-group">
+    <h1 class="my-10 mx-5">Access Required</h1>
+    <form
+      class="form-group w-full max-w-[300px] flex flex-col items-center justify-center gap-4 text-center mt-6 mx-auto"
+    >
       <input
         type="text"
         name="password"
         placeholder="knock-knock"
         autocomplete="off"
         required
+        class="w-full max-w-[300px] p-4 border-0 border-b border-coffee bg-surface text-ink text-lg text-center font-mono tracking-wider uppercase text-ink-secondary outline-none transition-all duration-300 ease-in-out placeholder:text-ink-tertiary focus:border-2 [&.error]:border-accent [&.error]:border-b-2 [&.error]:bg-[#fbdfb6]"
       />
-      <button class="button" type="submit">Submit</button>
-      <div class="error-message" role="alert"></div>
+      <button
+        class="button w-full py-3 px-6 border-0 bg-accent text-surface text-2xl font-instrument-serif rounded-lg cursor-pointer transition-all duration-300 ease-in-out hover:bg-accent-light active:bg-accent"
+        type="submit">Submit</button
+      >
+      <span
+        class="error-message py-5 caramel-text text-sm font-semibold opacity-0 transition-all duration-300 ease-in-out [&.visible]:opacity-100"
+        role="alert"
+      >
+      </span>
     </form>
 
-    <a class="action-link take-me-back" id="backButton" href="/">Take me back</a
+    <a class="action-link take-me-back mt-10" id="backButton" href="/"
+      >Take me back</a
     >
   </div>
 </BaseLayout>
@@ -103,103 +116,3 @@ if (!checkAccess(redirectUrl)) {
     }
   });
 </script>
-
-<style lang="scss">
-  .take-me-back {
-    margin-top: var(--spacing-quad);
-  }
-
-  .section-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    padding: var(--spacing-quad);
-    text-align: center;
-
-    :global(h1) {
-      font-size: clamp(2rem, 5vw, 3rem);
-      margin: var(--spacing-double) 0 var(--spacing-base);
-    }
-
-    .form-group {
-      width: 100%;
-      max-width: 300px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--spacing-small);
-      text-align: center;
-      margin: var(--spacing-base) auto 0;
-
-      input {
-        width: 100%;
-        max-width: 300px;
-        padding: var(--spacing-base);
-        border: 0;
-        border-bottom: 1px solid var(--color-coffee);
-        background-color: var(--color-surface);
-        color: var(--color-ink);
-        font-size: var(--font-size-large);
-        text-align: center;
-        font-family: var(--font-mono);
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        color: var(--color-ink-secondary);
-        outline: none;
-        transition: all 0.3s ease-in-out;
-
-        &::placeholder {
-          color: var(--color-ink-tertiary);
-        }
-
-        &:focus {
-          border-width: 2px;
-        }
-
-        &.error {
-          border-color: var(--color-accent);
-          border-width: 2px;
-          background-color: #fbdfb6;
-        }
-      }
-
-      .error-message {
-        color: var(--color-ink-tertiary);
-        font-size: var(--font-size-small);
-        font-family: var(--font-sans);
-        font-weight: 600;
-        opacity: 0;
-        transition: all 0.3s ease-in-out;
-
-        &.visible {
-          opacity: 1;
-          margin: var(--spacing-xsmall) 0 var(--spacing-small);
-        }
-      }
-
-      .button {
-        width: 100%;
-        padding: var(--spacing-small) var(--spacing-base);
-        border: 0;
-        background-color: var(--color-accent);
-        color: var(--color-surface);
-        font-size: var(--font-size-huge);
-        font-family: var(--font-headings);
-        border-radius: var(--border-radius-base);
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-
-        &:hover {
-          background-color: var(--color-accent-light);
-        }
-
-        &:active {
-          background-color: var(--color-accent);
-        }
-      }
-    }
-  }
-</style>
