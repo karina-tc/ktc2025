@@ -9,7 +9,7 @@ import hand from "../assets/illustrations/hand.svg";
 import sheet from "../assets/illustrations/sheet.svg";
 import scribble from "../assets/illustrations/scribble.svg";
 import flower from "../assets/illustrations/flower.svg";
-import selfCard from "../assets/brand/karina-large.png";
+import karina from "../assets/brand/karina-large.png";
 
 // Data
 const bookingLink = "https://cal.com/karina-tovar/quick-chat";
@@ -51,19 +51,17 @@ const navItems = [
 	title="Karina Tovar"
 	description="Karina Tovar is a Lead Product Designer."
 >
-	<div class="grid-container">
-		<div class="grid-content">
-			<div class="text-content">
-				<h2>Karina Tovar</h2>
-				<h1>Pixel Philosopher Cautious Technologist</h1>
-				<p>
+	<div class="w-full p-10 md:py-20" data-intersection-observer={true}>
+		<div class="container mx-auto flex flex-col-reverse md:flex-row gap-4">
+			<div class="flex-1 md:max-w-3xl flex flex-col gap-4 md:justify-between">
+				<h4>Karina Tovar</h4>
+				<h1 class="mt-4">Pixel Philosopher Cautious Technologist</h1>
+				<p class="md:max-w-xl mt-4">
 					My motivation is to build products that aim to help people have
 					happier days. Life is too short to be ruined by awful experiences.
 					Every product needs to be crafted for human joy.
 				</p>
-
 				<Subtitle title="Get Started" />
-
 				<ul class="list-section" data-intersection-observer={true}>
 					{
 						navItems.map(({ icon, alt, text, href, type, data }) => (
@@ -80,32 +78,17 @@ const navItems = [
 						))
 					}
 				</ul>
-
-				<div class="secondary-actions" data-intersection-observer={true}>
-					<a class="action-link" href="/resume">Get Resume</a>
-					<button
-						class="action-button"
-						data-copy="hello@karinatovar.com"
-						aria-label="Copy email to clipboard"
-						aria-live="polite"
-					>
-						<span>Email Me</span>
-					</button>
-					<a
-						class="action-link"
-						href={bookingLink}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Book a Call
-					</a>
-				</div>
+			</div>
+			<div class="flex-1 flex justify-start md:justify-center items-center max-md:mb-10">
+				<a
+					class="philosophy-holder w-full max-w-md md:h-full h-[500px] max-w-400px"
+					href="/philosophy">
+					<div class="philosophy-image w-full h-full mix-blend-overlay flex justify-end items-end">
+						<Image src={karina} alt="Karina" class="object-contain md:min-w-[700px] md:translate-x-[300px]" />
+					</div>
+				</a>
 			</div>
 		</div>
-
-		<a class="philosophy-holder" href="/philosophy">
-			<div class="philosophy-image"></div>
-		</a>
 	</div>
 </BaseLayout>
 
@@ -209,13 +192,6 @@ const navItems = [
 
 	// Visual section
 	.philosophy-holder {
-		width: 100vw;
-		max-width: 400px;
-		height: 100vh;
-		max-height: 70vh;
-		margin: 100px -40px 0 40px;
-		cursor: pointer;
-
 		overflow: hidden;
 		position: relative;
 		display: flex;
@@ -227,23 +203,6 @@ const navItems = [
 		background: url(../assets/backgrounds/bg04.png) no-repeat center center;
 		background-size: cover;
 		transition: all 0.3s ease-in-out;
-
-		&:hover .philosophy-image {
-			margin-left: 20px;
-		}
-
-		.philosophy-image {
-			width: 100%;
-			min-width: 800px;
-			height: 100%;
-			transform: translateX(150px);
-			mix-blend-mode: overlay;
-			transition: all 0.4s ease-in-out;
-			will-change: margin-left;
-			filter: drop-shadow(-10px 8px 4px rgba(97, 75, 70, 0.5));
-			background: url(../assets/brand/karina-large.png) no-repeat bottom center;
-			background-size: 80%;
-		}
 
 		&.full-screen {
 			max-height: none;

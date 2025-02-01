@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-ink: #2B2627;
+  --color-ink-secondary: #463629;
+  --color-ink-tertiary: #826C5F;
+  --color-paper: #FEF9F3;
+  --color-accent: #D85640;
+  --color-accent-light: #FF6632;
+  --color-lines: #EBD4BD;
+  --color-surface: #F0E9E1;
+  --color-border: #DCCCC3;
+  --color-lime: #E1EBA9;
+  --color-coal: #060403;
+  --color-coal-light: #81766d;
+  --color-coffee: #B29483;
+  --color-chocolate: #795548;
+  --color-chocolate-light: #d1ae95;
+  --color-gold: #C69E6A;
+  --color-sky: #CDE4F6;
+
+  /* Typography */
+  --font-instrument-sans: "Instrument Sans", sans-serif;
+  --font-instrument-serif: "Instrument Serif", serif;
+  --font-newsreader: "Newsreader", serif;
+  --font-mono: monospace;
+}
+
+html,
+body {
+  @apply w-full h-full m-0 p-0 relative font-instrument-sans;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+
+  @apply text-ink leading-normal;
+}
+
+h1,
+h2 {
+  @apply font-instrument-serif;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  @apply font-instrument-sans;
+}
+
+h1 {
+  @apply text-6xl md:text-8xl text-balance;
+}
+
+h2 {
+  @apply text-4xl md:text-6xl;
+}
+
+h3 {
+  @apply text-2xl md:text-3xl;
+}
+
+h4 {
+  @apply text-sm font-mono uppercase text-ink-tertiary font-semibold tracking-widest;
+}
+
+p {
+  @apply text-pretty leading-[2];
+}

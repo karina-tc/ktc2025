@@ -1,5 +1,6 @@
 ---
 // Styles
+import "../styles/global.css";
 import "../styles/main.scss";
 
 // Components
@@ -25,7 +26,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full">
 	<head>
 		<meta charset="UTF-8" />
 		<CommonHead title={title} description={description} />
@@ -49,18 +50,14 @@ const {
 				title,
 				description,
 				image: "/og-cover.png",
-				imageAlt: "Karina Tovar Portfolio Preview"
+				imageAlt: "Karina Tovar Portfolio Preview",
 			}}
 			extend={{
-				meta: [
-					{ name: "author", content: "Karina Tovar" },
-				],
-				link: [
-					{ rel: "canonical", href: Astro.url.href },
-				],
+				meta: [{ name: "author", content: "Karina Tovar" }],
+				link: [{ rel: "canonical", href: Astro.url.href }],
 			}}
 		/>
-		
+
 		<!-- Critical styles to prevent flash -->
 		<style is:inline>
 			/* Critical navigation styles */
@@ -80,24 +77,29 @@ const {
 			}
 		</style>
 	</head>
-	<body>
-		{includeNavigation && <Navigation />}
-		<main role="main" aria-label="Main Content">
-			<slot />
-		</main>
-		{includeFooter && <Footer />}
+	<body class="min-h-full">
+		<div class="relative flex flex-col min-h-full">
+			{includeNavigation && <Navigation />}
+			<main role="main" aria-label="Main Content" class="flex-1 relative z-0">
+				<slot />
+			</main>
+			{includeFooter && <Footer />}
+		</div>
 	</body>
 </html>
 
 <script>
 	// Store the current URL before any navigation happens
-	document.addEventListener('click', (e) => {
+	document.addEventListener("click", (e) => {
 		const target = e.target as HTMLElement;
-		const link = target.closest('a');
-		
-		if (link && !window.location.pathname.includes('404')) {
-			console.log('Storing current URL before navigation:', window.location.href);
-			sessionStorage.setItem('lastVisitedUrl', window.location.href);
+		const link = target.closest("a");
+
+		if (link && !window.location.pathname.includes("404")) {
+			console.log(
+				"Storing current URL before navigation:",
+				window.location.href,
+			);
+			sessionStorage.setItem("lastVisitedUrl", window.location.href);
 		}
 	});
 
