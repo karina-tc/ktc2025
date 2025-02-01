@@ -11,17 +11,28 @@ const social = [
 
 <footer class="w-full p-10 mt-10">
   <div
-    class="container mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
-    <div class="flex flex-col sm:flex-row sm:items-center gap-4">
-      <span class="font-medium">© Karina Tovar {new Date().getFullYear()}</span>
+    class="container mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4"
+  >
+    <div
+      class="flex flex-col sm:flex-row sm:items-center gap-4 font-mono uppercase caramel-text"
+    >
+      <span class="font-medium">© Karina Tovar {new Date().getFullYear()}</span
+      >
       <div class="flex flex-col sm:flex-row sm:items-center gap-2">
         {
           social.map((platform, index) => (
             <>
-              <a class="hover:underline hover:underline-offset-4 hover:decoration-ink" href={platform.url} target="_blank" rel="noopener noreferrer">
+              <a
+                class="hover:underline hover:underline-offset-4 hover:decoration-ink"
+                href={platform.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {platform.name}
               </a>
-              {index < social.length - 1 && <span class="hidden sm:inline">·</span>}
+              {index < social.length - 1 && (
+                <span class="hidden sm:inline">·</span>
+              )}
             </>
           ))
         }
@@ -40,13 +51,15 @@ const social = [
         </div>
       </Tooltip>
       <span class="hidden sm:inline">&nbsp;·&nbsp;</span>
-      <a class="hover:underline hover:underline-offset-4 hover:decoration-ink" href="/share-the-joy">Have a Minute of Joy</a>
+      <a
+        class="hover:underline hover:underline-offset-4 hover:decoration-ink font-mono uppercase caramel-text"
+        href="/share-the-joy">Have a Minute of Joy</a
+      >
     </div>
   </div>
 </footer>
 
 <style lang="scss">
-
   .tooltip-wrapper {
     width: fit-content;
     min-width: 300px;

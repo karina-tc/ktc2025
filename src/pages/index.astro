@@ -6,9 +6,13 @@ import Subtitle from "../components/Subtitle.astro";
 // Assets
 import { Image } from "astro:assets";
 import hand from "../assets/illustrations/hand.svg";
+import handLight from "../assets/illustrations/hand-light.svg";
 import sheet from "../assets/illustrations/sheet.svg";
+import sheetLight from "../assets/illustrations/sheet-light.svg";
 import scribble from "../assets/illustrations/scribble.svg";
+import scribbleLight from "../assets/illustrations/scribble-light.svg";
 import flower from "../assets/illustrations/flower.svg";
+import flowerLight from "../assets/illustrations/flower-light.svg";
 import karina from "../assets/brand/karina-large.png";
 
 // Data
@@ -17,6 +21,7 @@ const bookingLink = "https://cal.com/karina-tovar/quick-chat";
 const navItems = [
 	{
 		icon: hand,
+		iconLight: handLight,
 		alt: "Hand",
 		text: "Read philosophy manifesto",
 		href: "#",
@@ -25,6 +30,7 @@ const navItems = [
 	},
 	{
 		icon: scribble,
+		iconLight: scribbleLight,
 		alt: "Scribble",
 		text: "Look at my most recent work",
 		href: "/work",
@@ -32,6 +38,7 @@ const navItems = [
 	},
 	{
 		icon: flower,
+		iconLight: flowerLight,
 		alt: "Flower",
 		text: "Learn about me",
 		href: "/about",
@@ -39,6 +46,7 @@ const navItems = [
 	},
 	{
 		icon: sheet,
+		iconLight: sheetLight,
 		alt: "Sheet",
 		text: "Read my posts and notes",
 		href: "/blog",
@@ -62,15 +70,35 @@ const navItems = [
 					Every product needs to be crafted for human joy.
 				</p>
 				<Subtitle title="Get Started" />
-				<ul class="list-section" data-intersection-observer={true}>
+				<ul
+					class="list-section flex flex-col list-none p-0"
+					data-intersection-observer={true}
+				>
 					{
-						navItems.map(({ icon, alt, text, href, type, data }) => (
-							<li>
-								<Image src={icon} alt={alt} />
+						navItems.map(({ icon, iconLight, alt, text, href, type, data }) => (
+							<li class="flex items-center gap-2 p-2 border-b border-paper dark:border-chocolate-light transition-colors duration-200 ease-in-out hover:bg-surface dark:hover:bg-ink-secondary">
+								<Image
+									src={icon}
+									alt={alt}
+									class="w-10 h-10 dark:hidden"
+								/>
+								<Image
+									src={iconLight}
+									alt={alt}
+									class="w-10 h-10 hidden dark:block"
+								/>
 								{type === "link" ? (
-									<a href={href}>{text}</a>
+									<a
+										href={href}
+										class="caramel-text w-full h-6 -mt-0.5 hover:underline hover:underline-offset-4 transition-all duration-300 ease-in-out"
+									>
+										{text}
+									</a>
 								) : (
-									<button data-philosophy>
+									<button
+										data-philosophy
+										class="w-full h-6 -mt-0.5 text-left p-0 hover:[&>span]:underline hover:[&>span]:underline-offset-4 transition-all duration-300 ease-in-out"
+									>
 										<span>{text}</span>
 									</button>
 								)}
@@ -79,12 +107,21 @@ const navItems = [
 					}
 				</ul>
 			</div>
-			<div class="flex-1 flex justify-start md:justify-center items-center max-md:mb-10">
+			<div
+				class="flex-1 flex justify-start md:justify-center items-center max-md:mb-10"
+			>
 				<a
-					class="philosophy-holder w-full max-w-md md:h-full h-[500px] max-w-400px"
-					href="/philosophy">
-					<div class="philosophy-image w-full h-full mix-blend-overlay flex justify-end items-end">
-						<Image src={karina} alt="Karina" class="object-contain md:min-w-[700px] md:translate-x-[300px]" />
+					class="w-full max-w-md md:h-full h-[500px] max-w-400px overflow-hidden relative flex justify-center items-end rounded-t-[300px] animate-[slideUp_1s_ease-in-out] bg-[url('../assets/backgrounds/bg04.png')] bg-center bg-no-repeat bg-cover transition-all duration-300 ease-in-out"
+					href="/philosophy"
+				>
+					<div
+						class="philosophy-image w-full h-full mix-blend-overlay flex justify-end items-end max-w-600px m-0 transform-none animate-[slideUp_1s_ease-in-out]"
+					>
+						<Image
+							src={karina}
+							alt="Karina"
+							class="object-contain md:min-w-[700px] md:translate-x-[300px]"
+						/>
 					</div>
 				</a>
 			</div>
@@ -109,190 +146,3 @@ const navItems = [
 		});
 	});
 </script>
-
-<style lang="scss">
-	// Breakpoint mixins
-	@import "../styles/base/_breakpoints.scss";
-
-	// Navigation list
-	.list-section {
-		display: flex;
-		flex-direction: column;
-		list-style: none;
-		padding: 0;
-
-		li {
-			display: flex;
-			align-items: center;
-			gap: var(--spacing-small);
-			padding: var(--spacing-small);
-			border-bottom: 1px solid var(--color-border);
-			transition: background-color 0.2s ease;
-
-			&:hover {
-				background-color: var(--color-surface);
-			}
-
-			img {
-				width: 40px;
-				height: 40px;
-			}
-
-			a {
-				color: var(--color-text);
-				text-decoration: none;
-				width: 100%;
-				height: 24px;
-				margin-top: -2px;
-
-				&:hover {
-					text-decoration: underline;
-				}
-			}
-
-			button {
-				width: 100%;
-				height: 24px;
-				padding: 0;
-				margin-top: 1px;
-				text-align: left;
-
-				&:hover span {
-					text-decoration: underline 1px;
-					text-underline-offset: 4px;
-				}
-			}
-		}
-	}
-
-	// Secondary actions
-	.secondary-actions {
-		display: flex;
-		gap: var(--spacing-base);
-		margin-top: var(--spacing-base);
-
-		.action-button {
-			background: none;
-			border: none;
-			padding: 0;
-			cursor: pointer;
-			font-family: inherit;
-			color: var(--color-text);
-			margin-top: -1px;
-
-			span {
-				border-bottom: 1px solid;
-
-				&:hover {
-					border-color: var(--color-accent);
-				}
-			}
-		}
-	}
-
-	// Visual section
-	.philosophy-holder {
-		overflow: hidden;
-		position: relative;
-		display: flex;
-		justify-content: center;
-		align-items: end;
-
-		border-radius: 300px 300px 0 0;
-		animation: slideUp 1s ease-in-out;
-		background: url(../assets/backgrounds/bg04.png) no-repeat center center;
-		background-size: cover;
-		transition: all 0.3s ease-in-out;
-
-		&.full-screen {
-			max-height: none;
-			max-width: none;
-			position: fixed;
-			margin: 0;
-			border-radius: 0;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			z-index: 200;
-			background-image: none;
-			background-color: var(--color-surface);
-
-			.philosophy-image {
-				max-width: 600px;
-				margin: 0;
-				transform: none;
-				animation: slideUp 1s ease-in-out;
-			}
-		}
-	}
-
-	// Animation
-	@keyframes columnFade {
-		0%,
-		24.99% {
-			opacity: 1;
-		}
-		25%,
-		100% {
-			opacity: 0;
-		}
-	}
-
-	.manifesto-dialog {
-		padding: var(--spacing-base);
-		border: none;
-		max-width: 32rem;
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-
-		// Reset default dialog margins and positioning
-		margin: 0;
-		padding: var(--spacing-base);
-
-		&::backdrop {
-			background: transparent;
-		}
-
-		@include mobile {
-			top: auto;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			width: 100%;
-			max-width: 100%;
-			transform: none;
-			border-radius: 12px 12px 0 0;
-			animation: slideUp 0.3s ease-out;
-		}
-
-		form {
-			display: flex;
-			flex-direction: column;
-			gap: var(--spacing-base);
-		}
-
-		button {
-			align-self: flex-end;
-			padding: var(--spacing-small) var(--spacing-base);
-			background: var(--color-surface);
-			border: 1px solid var(--color-border);
-			border-radius: 4px;
-
-			&:hover {
-				background: var(--color-surface-hover);
-			}
-		}
-	}
-
-	@keyframes slideUp {
-		from {
-			transform: translateY(100%);
-		}
-		to {
-			transform: translateY(0);
-		}
-	}
-</style>

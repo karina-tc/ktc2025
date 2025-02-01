@@ -18,28 +18,12 @@ const {
 } = Astro.props;
 ---
 
-<div class="subtitle">
+<div class="subtitle mt-4">
   <Divider color={dividerColor} width={dividerWidth} height={dividerHeight} />
-  <h3>
+  <h3 class="flex items-center justify-start my-10">
     <span>{title}</span>
-    {description && <span class="description">&nbsp;·&nbsp;{description}</span>}
+    {description && <span class="opacity-75">&nbsp;·&nbsp;{description}</span>}
   </h3>
 </div>
 
-<style lang="scss">
-  .subtitle {
-    margin: var(--spacing-base) 0 0;
-
-    h3 {
-      display: flex;
-      align-items: center;
-      justify-content: start;
-      margin: var(--spacing-base) 0;
-    }
-
-    .description {
-      opacity: 0.75;
-    }
-  }
-</style>
 

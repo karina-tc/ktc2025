@@ -6,12 +6,14 @@ interface Props {
 const { text } = Astro.props;
 ---
 
-<span class="tooltip-wrapper">
-  <span class="tooltip-trigger group">
-    <span class="tooltip-trigger--text">{text}</span>
-    <span class="tooltip-trigger--highlight"></span>
+<span class="tooltip-wrapper relative inline-block">
+  <span class="tooltip-trigger cursor-pointer overflow-hidden peer">
+    <span class="tooltip-trigger--text font-mono uppercase caramel-text w-full h-full relative z-[1] transition-all hover:underline hover:underline-offset-4">
+      {text}
+    </span>
+    <span id="tooltip-trigger--highlight" class="absolute inset-0 opacity-0 rounded-sm transition-all group-hover:opacity-100 group-hover:w-full"></span>
   </span>
-  <span class="tooltip-content">
+  <span class="tooltip-content text-sm opacity-0 caramel-text w-fit bg-paper dark:bg-ink p-4 rounded-md absolute top-full left-[calc(50%-28px)] -translate-x-[calc(50%-28px)] transition-all peer-hover:opacity-100 peer-hover:visible peer-hover:translate-y-0">
     <slot />
   </span>
 </span>
@@ -48,73 +50,3 @@ const { text } = Astro.props;
     new Tooltip(tooltip as HTMLElement);
   });
 </script>
-
-<style>
-  .tooltip-wrapper {
-    position: relative;
-    display: inline-block;
-
-    &:hover {
-      .tooltip-trigger--highlight {
-        opacity: 1;
-        width: 100%;
-      }
-    }
-  }
-
-  .tooltip-trigger {
-    cursor: pointer;
-    overflow: hidden;
-  }
-
-  .tooltip-trigger--text {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    z-index: 1;
-    border-bottom: 1px solid var(--color-paper);
-    transition: underline 0.2s ease-in-out;
-
-    &:hover {
-      border-bottom: 1px solid var(--color-ink);
-    }
-  }
-
-  .tooltip-trigger--highlight {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    color: var(--color-ink);
-    border-radius: 4px;
-    transition: opacity 0.2s ease-in-out;
-  }
-
-  .tooltip-content {
-    width: fit-content;
-    background-color: var(--color-surface);
-    color: var(--color-ink);
-    font-size: var(--font-size-small);
-    font-family: var(--font-sans);
-    border-radius: 12px;
-    padding: 12px;
-    position: absolute;
-    z-index: 10;
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 0 12px 0 rgba(99, 87, 87, 0.5);
-    transition:
-      opacity 0.2s ease-in-out,
-      visibility 0.2s ease-in-out,
-      transform 0.2s ease-in-out;
-  }
-
-  .tooltip-wrapper:hover .tooltip-content {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-  }
-</style>

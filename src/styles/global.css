@@ -5,7 +5,7 @@
   --color-ink: #2B2627;
   --color-ink-secondary: #463629;
   --color-ink-tertiary: #826C5F;
-  --color-paper: #FEF9F3;
+  --color-paper: #fffdfa;
   --color-accent: #D85640;
   --color-accent-light: #FF6632;
   --color-lines: #EBD4BD;
@@ -34,7 +34,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
 
-  @apply text-ink leading-normal;
+  @apply text-ink leading-normal font-newsreader;
+  @apply bg-paper dark:bg-chocolate  dark:text-surface;
 }
 
 h1,
@@ -50,21 +51,30 @@ h6 {
 }
 
 h1 {
-  @apply text-6xl md:text-8xl text-balance;
+  @apply text-6xl md:text-8xl text-balance leading-[.9];
 }
 
 h2 {
-  @apply text-4xl md:text-6xl;
+  @apply text-4xl md:text-6xl leading-[1] text-balance;
 }
 
 h3 {
-  @apply text-2xl md:text-3xl;
+  @apply text-3xl md:text-4xl font-instrument-serif text-ink-tertiary dark:text-chocolate-light;
 }
 
 h4 {
-  @apply text-sm font-mono uppercase text-ink-tertiary font-semibold tracking-widest;
+  @apply text-sm font-mono uppercase text-ink-tertiary dark:text-chocolate-light font-semibold tracking-widest;
 }
 
 p {
   @apply text-pretty leading-[2];
+}
+
+
+.neue-container {
+  @apply w-full max-w-5xl mx-auto px-10;
+}
+
+.text-caramel {
+  @apply text-ink-tertiary dark:text-chocolate-light;
 }

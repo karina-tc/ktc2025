@@ -18,24 +18,23 @@ import PersonalSection from "../components/_partials/PersonalSection.astro";
   description="Karina Tovar is a Lead Product Designer."
 >
   <!-- About Me Top -->
-  <div class="w-full p-10 md:py-20" data-intersection-observer={true}>
-    <div class="container mx-auto flex flex-col md:flex-row gap-4">
+  <section class="neue-container pt-20" data-intersection-observer={true}>
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-4">
       <div class="flex-1 flex flex-col gap-4">
         <h4>About Me</h4>
-        <h1 class="mt-4">Building joyful high-tech solutions</h1>
-        <p class="md:max-w-xl mt-4">
-          I am an artist, turned product designer, who likes to code and make
-          things. That just means that I am obsessed over how technology can be
-          used to make people truly happier. One pixel, one bit, one thought at
-          a time.
+        <h1 class="mt-4 !leading-[1]">Building joyful high-tech solutions</h1>
+        <p class="md:max-w-xl mt-4 caramel-text text-pretty">
+          I am obsessed over how technology can be used to make people truly
+          happier. One pixel, one bit, one thought at a time.
         </p>
       </div>
       <div
-        class="flex-1 md:max-w-md justify-center items-center hidden md:flex">
+        class="flex-1 md:max-w-md justify-center items-center hidden md:flex"
+      >
         <Image src={loop} alt="Loop" loading="eager" draggable={false} />
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- Currently -->
   <div class="section-container">
