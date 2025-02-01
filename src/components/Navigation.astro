@@ -15,20 +15,20 @@ const pathname = new URL(Astro.request.url).pathname;
     <ul
       class="flex items-center justify-center gap-2 list-none m-0 p-0 [&>li>a]:text-sm [&>li>a]:font-medium [&>li>a]:rounded-md [&>li>a]:px-3 [&>li>a]:py-2 [&>li>a]:transition-all [&>li>a]:duration-300 [&>li>a]:ease-in-out">
       <li class="nav-items">
-        <a href="/" class={pathname === "/" ? "bg-ink-secondary !text-paper" : "caramel-text hover:bg-surface"}>Intro</a>
+        <a href="/" class={pathname === "/" ? "bg-ink-secondary !text-paper" : "caramel-text hover:bg-surface dark:hover:!text-ink"}>Intro</a>
       </li>
       <li class="nav-items">
-        <a href="/about" class={pathname.startsWith("/about") ? "bg-ink-secondary !text-paper" : "caramel-text hover:bg-surface"}
+        <a href="/about" class={pathname.startsWith("/about") ? "bg-ink-secondary !text-paper" : "caramel-text hover:bg-surface dark:hover:!text-ink"}
           >About</a
         >
       </li>
       <li class="nav-items">
-        <a href="/work" class={pathname.startsWith("/work") ? "bg-ink-secondary !text-paper" : "caramel-text hover:bg-surface"}
+        <a href="/work" class={pathname.startsWith("/work") ? "bg-ink-secondary !text-paper" : "caramel-text hover:bg-surface dark:hover:!text-ink"}
           >Work</a
         >
       </li>
       <li class="nav-items">
-        <a href="/blog" class={pathname.startsWith("/blog") ? "bg-ink-secondary !text-paper" : "caramel-text hover:bg-surface"}
+        <a href="/blog" class={pathname.startsWith("/blog") ? "bg-ink-secondary !text-paper" : "caramel-text hover:bg-surface dark:hover:!text-ink"}
           >Blog</a
         >
       </li>
