@@ -107,6 +107,24 @@ strong.highlighted.red {
   @apply text-sm font-medium italic;
 }
 
+ol,
+ul {
+  @apply ml-5 list-outside;
+}
+
+ol {
+  @apply list-decimal;
+}
+
+ul {
+  @apply list-disc;
+}
+
+ol li,
+ul li {
+  @apply mb-5 text-balance;
+}
+
 /* End of Base Styles */
 
 /* Blog Styles */
