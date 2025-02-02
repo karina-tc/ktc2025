@@ -84,6 +84,29 @@ p {
   @apply text-ink-tertiary dark:text-chocolate-light;
 }
 
+strong.highlighted {
+  @apply py-1 px-0.5 rounded-sm text-ink-secondary;
+  background-color: #fbe8cc;
+}
+
+strong.highlighted.green {
+  background-color: #dff2c8;
+}
+
+strong.highlighted.red {
+  @apply text-paper;
+  background-color: #FF5722;
+}
+
+.plate-label,
+.plate-caption {
+  @apply text-ink-tertiary dark:text-chocolate-light w-fit mx-auto my-10 text-center;
+}
+
+.plate-caption {
+  @apply text-sm font-medium italic;
+}
+
 /* End of Base Styles */
 
 /* Blog Styles */

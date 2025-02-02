@@ -24,54 +24,69 @@ const {
 } = Astro.props;
 ---
 
-<div class="grid-container main-details" data-intersection-observer={true}>
-  <div class="grid-content">
-    <div class="text-content">
-      <h3>{company}</h3>
-      <h1>
-        <span>{title}</span>
-        {subheading && <span class="subheading">{subheading}</span>}
+<div class="neue-container grid grid-cols-1 md:grid-cols-2 my-20" data-intersection-observer={true}>
+  <div class="text-content xl:min-w-[650px]">
+      <h4>{company}</h4>
+      <h1 class="my-5">
+        <span class="block">{title}</span>
+        {
+          subheading && (
+            <span class="text-ink-tertiary dark:text-chocolate-light italic block">
+              {subheading}
+            </span>
+          )
+        }
       </h1>
       <p>{description}</p>
-      <span class="last-updated">Last Updated: {lastUpdated}</span>
-    </div>
+      <h5 class="last-updated caramel-text mt-10">Last Updated: {lastUpdated}</h5>
   </div>
-  <div class="aside-details large-view">
-    <div class="details-column">
-      <span>Role</span>
+
+  <div class="aside-details max-md:hidden max-w-[240px] ml-auto mt-5">
+    <div
+      class="details-column flex flex-col gap-2 pb-5 mb-5 border-b border-lines dark:border-ink-tertiary"
+    >
+      <h5>Role</h5>
       <span>{role}</span>
     </div>
-    <div class="details-column">
-      <span>Project Status</span>
+    <div
+      class="details-column flex flex-col gap-2 pb-5 mb-5 border-b border-lines dark:border-ink-tertiary"
+    >
+      <h5>Project Status</h5>
       <span>{status}</span>
     </div>
-    <div class="details-column">
-      <span>Timeline</span>
+    <div
+      class="details-column flex flex-col gap-2 pb-5 mb-5 border-b border-lines dark:border-ink-tertiary"
+    >
+      <h5>Timeline</h5>
       <span>{timeline}</span>
     </div>
-    <div class="details-column">
-      <span>Focus Areas</span>
+    <div class="details-column flex flex-col gap-2 pb-5 mb-5">
+      <h5>Focus Areas</h5>
       <span>{focusAreas}</span>
     </div>
   </div>
-  <details class="details-toggle" open>
-    <summary>
+
+  <details
+    class="details-toggle my-10 block cursor-pointer list-none rounded-lg overflow-hidden open:bg-surface md:hidden dark:bg-ink-tertiary"
+    open
+  >
+    <summary class="p-4 bg-surface dark:bg-ink-tertiary">
       <span>See Project Details</span>
     </summary>
-    <div class="aside-details small-view">
-      <div class="details-column">
+    <div class="[&>.details-column]:dark:bg-ink-tertiary [&>.details-column]:p-4">
+      <div class="details-column flex flex-col gap-2 border-b border-lines">
         <span>Role</span>
         <span>{role}</span>
       </div>
-      <div class="details-column">
+      <div class="details-column flex flex-col gap-2 border-b border-lines">
         <span>Project Status</span>
         <span>{status}</span>
       </div>
-      <div class="details-column">
+      <div class="details-column flex flex-col gap-2 border-b border-lines">
         <span>Timeline</span>
         <span>{timeline}</span>
       </div>
-      <div class="details-column">
+      <div class="details-column flex flex-col gap-2">
         <span>Focus Areas</span>
         <span>{focusAreas}</span>
       </div>
@@ -79,92 +94,3 @@ const {
   </details>
 </div>
 
-<style lang="scss">
-  @use "../../styles/base/_breakpoints.scss" as *;
-
-  .main-details {
-    width: 90%;
-    h1 span.subheading {
-      display: block;
-      font-style: italic;
-      color: var(--color-ink-tertiary);
-    }
-
-    .last-updated {
-      display: block;
-      font-size: var(--font-size-small);
-      font-family: var(--font-mono);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 500;
-      color: var(--color-ink-tertiary);
-    }
-  }
-
-  .aside-details {
-    @include desktop-reverse {
-      max-width: 220px;
-      margin-left: auto;
-      margin-top: var(--spacing-base);
-    }
-
-    span:first-child {
-      font-weight: 600;
-      font-size: var(--font-size-xxs);
-      font-family: var(--font-sans);
-      color: var(--color-ink-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-    }
-
-    span:last-child {
-      font-size: var(--font-size-base);
-      margin-bottom: var(--spacing-small);
-    }
-
-    .details-column {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-small);
-      padding-bottom: var(--spacing-small);
-      margin-bottom: var(--spacing-base);
-      border-bottom: 1px solid var(--color-border);
-
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-
-    &.large-view {
-      @include tablet {
-        display: none;
-      }
-    }
-  }
-
-  .details-toggle {
-    margin: var(--spacing-base) 0;
-    display: block;
-    cursor: pointer;
-    list-style: none;
-    border-radius: var(--border-radius-base);
-    overflow: hidden;
-
-    summary {
-      padding: 14px var(--spacing-base) 14px;
-      background-color: var(--color-surface);
-    }
-
-    &[open] {
-      background-color: var(--color-surface);
-
-      .aside-details {
-        padding: var(--spacing-base) var(--spacing-base) var(--spacing-small);
-      }
-    }
-
-    @include tablet-reverse {
-      display: none;
-    }
-  }
-</style>
