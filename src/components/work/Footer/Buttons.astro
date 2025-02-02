@@ -6,20 +6,26 @@ import messageBubbleLine from "../../../assets/icons/message-bubble-line.svg";
 import messageBubbleSolid from "../../../assets/icons/message-bubble-solid.svg";
 ---
 
-<div class="work-footer-buttons">
-  <button id="love-button">
-    <div class="icon-container heart">
-      <Image class="heart-line" src={heartLine} alt="Heart" />
-      <Image class="heart-solid" src={heartSolid} alt="Heart" />
+<div class="work-footer-buttons flex gap-4 relative z-[45]">
+  <button 
+    id="love-button" 
+    class="flex items-center gap-2 text-base relative p-2 md:p-0 cursor-pointer touch-manipulation"
+  >
+    <div class="icon-container heart relative w-6 h-6 origin-center">
+      <Image class="heart-line absolute left-0 transition-opacity duration-300 ease-in-out" src={heartLine} alt="Heart" />
+      <Image class="heart-solid absolute left-0 transition-opacity duration-300 ease-in-out opacity-0" src={heartSolid} alt="Heart" />
     </div>
-    <span>Show some love</span>
+    <span class="border-b border-dotted border-[--color-ink-tertiary] transition-all duration-300 ease-in-out hover:border-[--color-accent]">Show some love</span>
   </button>
-  <button id="feedback-button">
-    <div class="icon-container message-bubble">
-      <Image class="message-bubble-line" src={messageBubbleLine} alt="Message Bubble" />
-      <Image class="message-bubble-solid" src={messageBubbleSolid} alt="Message Bubble" />
+  <button 
+    id="feedback-button" 
+    class="flex items-center gap-2 text-base relative p-2 md:p-0 cursor-pointer touch-manipulation max-md:hidden"
+  >
+    <div class="icon-container message-bubble relative w-6 h-6 origin-center">
+      <Image class="message-bubble-line absolute left-0 transition-opacity duration-300 ease-in-out" src={messageBubbleLine} alt="Message Bubble" />
+      <Image class="message-bubble-solid absolute left-0 transition-opacity duration-300 ease-in-out opacity-0" src={messageBubbleSolid} alt="Message Bubble" />
     </div>
-    <span>Leave some feedback</span>
+    <span class="border-b border-dotted border-[--color-ink-tertiary] transition-all duration-300 ease-in-out hover:border-[--color-accent]">Leave some feedback</span>
   </button>
 </div>
 
@@ -65,64 +71,38 @@ import messageBubbleSolid from "../../../assets/icons/message-bubble-solid.svg";
   }
 </script>
 
-<style lang="scss">
+<style>
   @keyframes heartBounce {
     0% { transform: scale(1); }
     50% { transform: scale(1.4); }
     100% { transform: scale(1); }
   }
 
-  .work-footer-buttons {
-    display: flex;
-    gap: var(--spacing-base);
+  /* Keep these hover states in CSS as they're more complex to handle in Tailwind */
+  button:hover .heart-line,
+  button:hover .message-bubble-line {
+    opacity: 0;
+  }
+  
+  button:hover .heart-solid,
+  button:hover .message-bubble-solid {
+    opacity: 1;
+  }
 
-    button {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-small);
-      font-size: var(--font-size-base);
-      position: relative;
-
-      .icon-container {
-        position: relative;
-        width: 24px;
-        height: 24px;
-        transform-origin: center;
-      }
-
-      .heart-line,
-      .heart-solid,
-      .message-bubble-line,
-      .message-bubble-solid {
-        position: absolute;
-        left: 0;
-        transition: opacity 0.3s ease-in-out;
-      }
-
-      .heart-solid,
-      .message-bubble-solid {
-        opacity: 0;
-      }
-
-      &:hover {
-        .heart-line,
-        .message-bubble-line {
-          opacity: 0;
-        }
-        .heart-solid,
-        .message-bubble-solid {
-          opacity: 1;
-        }
-      }
-
-      span {
-        border-bottom: 1px dotted var(--color-ink-tertiary);
-        transition: all 0.3s ease-in-out;
-      }
-
-      &:hover span {
-        border-color: var(--color-accent);
-      }
+  @media (max-width: 768px) {
+    button:active .heart-line,
+    button:active .message-bubble-line {
+      opacity: 0;
     }
+    
+    button:active .heart-solid,
+    button:active .message-bubble-solid {
+      opacity: 1;
+    }
+  }
+
+  /* Ensure the buttons themselves can receive events */
+  .work-footer-buttons {
+    pointer-events: all;
   }
 </style> 

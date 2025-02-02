@@ -9,38 +9,18 @@ export interface Props {
 const { endingText = "El fin." } = Astro.props;
 ---
 
-<div class="work-footer">
-  <div class="work-footer-text">
-    <span>{endingText}</span>
+<div class="work-footer w-full max-w-7xl mx-auto px-10 relative flex justify-between items-center pt-16 pb-4 pointer-events-none items-start">
+  <div class="work-footer-text text-[--color-ink-tertiary] text-[clamp(1.25rem,4vw,1.75rem)] font-[--font-headings]">
+    <span class="text-4xl caramel-text max-md:text-3xl">{endingText}</span>
   </div>
   <Buttons />
 </div>
 
 <FeedbackDialog />
 
-<style lang="scss">
-  @import "../../../styles/base/_breakpoints.scss";
-
-  .work-footer {
-    width: 90%;
-    max-width: var(--content-narrow);
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--spacing-quad) var(--spacing-base) var(--spacing-base);
-
-    .work-footer-text {
-      color: var(--color-ink-tertiary);
-      font-size: clamp(1.25rem, 4vw, 1.75rem);
-      font-family: var(--font-headings);
-    }
-
-    @include tablet {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: var(--spacing-base) 0;
-      gap: var(--spacing-base);
-    }
+<style>
+  /* Keep this to ensure child elements can receive events */
+  .work-footer > * {
+    pointer-events: all;
   }
 </style>

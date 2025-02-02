@@ -13,7 +13,7 @@ const { text } = Astro.props;
     </span>
     <span id="tooltip-trigger--highlight" class="absolute inset-0 opacity-0 rounded-sm transition-all group-hover:opacity-100 group-hover:w-full"></span>
   </span>
-  <span class="tooltip-content text-sm opacity-0 caramel-text w-fit bg-paper dark:bg-ink p-4 rounded-md absolute top-full left-[calc(50%-28px)] -translate-x-[calc(50%-28px)] transition-all peer-hover:opacity-100 peer-hover:visible peer-hover:translate-y-0">
+  <span class="tooltip-content invisible opacity-0 text-sm caramel-text w-fit bg-paper dark:bg-ink p-4 rounded-md absolute top-full left-[calc(50%-28px)] -translate-x-[calc(50%-28px)] transition-all peer-hover:visible peer-hover:opacity-100 peer-hover:translate-y-0 z-[40]">
     <slot />
   </span>
 </span>
