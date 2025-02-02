@@ -134,7 +134,7 @@ import gummyBear from "../../assets/illustrations/gummy.png";
     )
   }
 
-  <div id="tradingCard" class="trading-card-core bg-paper max-md:scale-80">
+  <div id="tradingCard" class="trading-card-core max-sm:max-h-[340px] bg-paper max-md:scale-80 max-sm:[&>img]:min-w-[220px] max-sm:[&>img]:min-h-[220px]">
     <!-- Outline -->
     <div class="outline">
       <Image
@@ -185,7 +185,7 @@ import gummyBear from "../../assets/illustrations/gummy.png";
   <!-- Details -->
   {
     showDetails && (
-      <figcaption class="font-mono">
+      <figcaption class="font-mono max-sm:-mt-5">
         <span class="hint">Hover over me</span>
         <div class="details bg-chocolate dark:bg-ink-secondary">
           <div class="detail">
@@ -198,7 +198,7 @@ import gummyBear from "../../assets/illustrations/gummy.png";
           </div>
           <div class="detail">
             <span>Powers:</span>
-            <span>Super Focus / Speed</span>
+            <span class="text-pretty max-sm:text-right">Super Focus / Speed</span>
           </div>
           <div class="footer">
             <Image src={gummyBear} alt="Gummy Bear" width={100} height={100} />
