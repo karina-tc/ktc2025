@@ -29,12 +29,13 @@ import gummyBear from "../../assets/illustrations/gummy.png";
   <!-- Tags -->
   {
     showTags && (
-      <div class="trading-card-tags">
+      <div class="trading-card-tags max-md:scale-70 max-md:mt-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="524"
           height="454"
           fill="none"
+          class="[&>text]:fill-ink dark:[&>text]:fill-paper [&>path]:fill-ink dark:[&>path]:fill-paper"
         >
           <>
             <text
@@ -133,7 +134,7 @@ import gummyBear from "../../assets/illustrations/gummy.png";
     )
   }
 
-  <div id="tradingCard" class="trading-card-core">
+  <div id="tradingCard" class="trading-card-core bg-paper max-md:scale-80">
     <!-- Outline -->
     <div class="outline">
       <Image
@@ -164,12 +165,14 @@ import gummyBear from "../../assets/illustrations/gummy.png";
     <!-- Shine -->
     <div class="card-shine top-left"></div>
     <!-- Label -->
-    <div class="trading-card-label">
+    <div
+      class="trading-card-label text-ink-secondary text-xs tracking-widest font-semibold font-instrument-sans bg-paper"
+    >
       <span>SUPER DESIGNER</span>
       <span>KTC · {new Date().getFullYear()}</span>
     </div>
     <!-- Pattern -->
-    <div class="pattern">
+    <div class="pattern bg-paper">
       <Image
         src={pattern}
         alt="Pattern"
@@ -182,9 +185,9 @@ import gummyBear from "../../assets/illustrations/gummy.png";
   <!-- Details -->
   {
     showDetails && (
-      <figcaption>
+      <figcaption class="font-mono">
         <span class="hint">Hover over me</span>
-        <div class="details">
+        <div class="details bg-chocolate dark:bg-ink-secondary">
           <div class="detail">
             <span>Experience:</span>
             <span>10 years</span>
@@ -218,11 +221,11 @@ import gummyBear from "../../assets/illustrations/gummy.png";
     height: 100%;
     margin: 0 auto;
     min-height: 500px;
-    padding: var(--spacing-base);
+    padding: 20px;
 
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-small);
+    gap: 10px;
     justify-content: center;
     align-items: center;
 
@@ -230,7 +233,6 @@ import gummyBear from "../../assets/illustrations/gummy.png";
     &.is-active {
       .trading-card-tags svg path,
       .trading-card-tags svg text {
-        fill: var(--color-coffee);
         opacity: 0.5;
       }
       .trading-card-core {
@@ -288,7 +290,6 @@ import gummyBear from "../../assets/illustrations/gummy.png";
       width: 100%;
       height: fit-content;
       position: relative;
-      font-family: var(--font-sans);
 
       & .hint {
         display: inline-block;
@@ -322,7 +323,6 @@ import gummyBear from "../../assets/illustrations/gummy.png";
         color: white;
         font-size: 12px;
         font-family: monospace;
-        background-color: var(--color-coal-light);
       }
 
       & .detail {
@@ -338,12 +338,12 @@ import gummyBear from "../../assets/illustrations/gummy.png";
       & .footer {
         display: flex;
         align-items: flex-start;
-        gap: var(--spacing-base);
+        gap: 20px;
 
-        padding: var(--spacing-base) 0 var(--spacing-small);
-        margin-top: var(--spacing-base);
+        padding: 20px 0 10px;
+        margin-top: 20px;
         border-top: 1px dashed rgba(255, 255, 255, 0.2);
-        font-size: var(--font-size-xsmall);
+        font-size: 12px;
 
         img {
           max-width: 40px;
@@ -452,7 +452,7 @@ import gummyBear from "../../assets/illustrations/gummy.png";
       background-position: center center;
       background-size: cover;
       box-shadow: 0 0 10px rgba(145, 123, 123, 0.5);
-      border: 1px solid var(--color-surface);
+      border: 1px solid white;
 
       transform: translate3d(0, 0, 0);
       backface-visibility: hidden;
@@ -529,12 +529,6 @@ import gummyBear from "../../assets/illustrations/gummy.png";
       left: 0;
       width: 100%;
       padding: 8px 16px;
-      color: var(--color-coal-light);
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      font-family: var(--font-sans);
-      background-color: var(--color-paper);
       z-index: 2;
       overflow: hidden;
 
