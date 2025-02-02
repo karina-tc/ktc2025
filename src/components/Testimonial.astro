@@ -64,83 +64,67 @@ const {
 } = Astro.props;
 ---
 
-<div class:list={["testimonial-item", include_classes]} data-index={index}>
-  <div class="testimonial-header">
-    <div class="testimonial-reference">
-      <span>{reference.number}</span>
+<div class:list={[
+  "testimonial-item group flex flex-col text-ink-secondary bg-surface border-6 border-paper rounded-xl transition-all duration-300 ease-[cubic-bezier(0.19,1,0.22,1)] overflow-hidden relative shadow-[0px_52px_20px_-40px_rgba(84,67,57,0.25)] hover:shadow-[0px_52px_20px_-40px_rgba(84,67,57,0.5)]",
+  "lg:active:block lg:[&:not(.active)]:hidden",
+  include_classes
+]} data-index={index}>
+  <!-- Header -->
+  <div class="testimonial-header flex flex-col px-4 md:px-8 pt-4 border-b border-dashed border-coffee transition-all duration-300">
+    <div class="testimonial-reference flex justify-between items-center text-sm font-mono [backface-visibility:hidden]">
+      <span class="uppercase tracking-widest font-extrabold opacity-75 transition-all duration-200 group-hover:text-coffee group-hover:opacity-100">{reference.number}</span>
       {
         reference.link && (
-          <a href={reference.link} target="_blank" rel="noopener noreferrer">
+          <a href={reference.link} 
+             class="font-medium p-2 uppercase underline-offset-4 hover:underline hover:decoration-inherit hover:underline-offset-2" 
+             target="_blank" 
+             rel="noopener noreferrer">
             View
           </a>
         )
       }
     </div>
-    <div class="testimonial-title">
-      <h2>{quote.title}</h2>
+
+    <div class="testimonial-title flex-grow flex flex-col [backface-visibility:hidden]">
+      <h2 class="font-instrument-serif !text-4xl text-coffee mb-4 pb-2 transition-all duration-300 opacity-0">{quote.title}</h2>
     </div>
   </div>
-  <div class="testimonial-holes">
-    <div class="testimonial-hole left"></div>
-    <div class="testimonial-hole right"></div>
+
+  <div class="testimonial-holes flex justify-between items-center overflow-hidden absolute w-[calc(100%+40px)] -left-6 top-24 max-md:hidden">
+    <div class="testimonial-hole w-10 h-10 rounded-full bg-paper"></div>
+    <div class="testimonial-hole w-10 h-10 rounded-full bg-paper"></div>
   </div>
-  <div class="testimonial-quote">
-    <p>{quote.content}</p>
-    <div class="testimonial-author">
-      <div class="testimonial-author-image">
-        <Image src={author.image} alt={author.name} width={100} height={100} />
+
+  <div class="testimonial-quote flex-grow flex gap-4 flex-col p-4 md:px-8 opacity-0 transition-all duration-300">
+    <p class="mt-2">{quote.content}</p>
+    <div class="testimonial-author flex items-start md:items-center py-2 gap-2 md:gap-4 md:flex-row flex-col">
+      <div class="testimonial-author-image rounded-[32px] w-[100px] h-[100px] min-w-[100px] min-h-[100px] overflow-hidden border-2 border-white bg-[url('../assets/backgrounds/bg02.png')] bg-center bg-no-repeat bg-[100px] shadow-md">
+        <Image src={author.image} alt={author.name} width={100} height={100} class="w-full h-full object-cover pointer-events-none" />
       </div>
-      <div class="testimonial-author-info">
-        <p>{author.name}</p>
-        <span class="testimonial-author-role">
-          <p>{author.currentRole}</p>
-          <p>{author.pastRole}</p>
+      <div class="testimonial-author-info flex flex-col">
+        <p class="font-medium m-0">{author.name}</p>
+        <span class="testimonial-author-role inline-block w-full -mt-1 overflow-hidden relative text-sm">
+          <p class="m-0 text-ink-tertiary transition-all duration-200 relative top-0 bg-inherit group-hover:opacity-0 group-hover:absolute group-hover:-top-10">{author.currentRole}</p>
+          <p class="m-0 text-ink-tertiary transition-all duration-200 absolute top-[10px] left-0 opacity-0 group-hover:opacity-100 group-hover:relative group-hover:top-0">{author.pastRole}</p>
         </span>
       </div>
     </div>
   </div>
-  <div class="testimonial-special-ability">
-    <div class="block">
-      <Image
-        src={Bookmark}
-        alt="Bookmark"
-        width={20}
-        height={20}
-        draggable={false}
-        loading="lazy"
-      />
+
+  <div class="testimonial-special-ability flex flex-row max-md:flex-col items-center text-sm font-mono text-ink-tertiary font-medium uppercase tracking-widest mt-4 -mb-0.5 md:-mb-1.5 border-t border-border bg-paper transition-all duration-200">
+    <div class="block inline-flex items-center justify-start gap-2 py-3 px-5 border-r max-md:border-r-0 max-md:border-b border-border flex-grow max-md:w-full">
+      <Image src={Bookmark} alt="Bookmark" width={20} height={20} draggable={false} loading="lazy" />
       SUPERPOWER: {getSpecialAbility(quote.title)}
     </div>
-    <div class="block">
-      <Image
-        src={Briefcase}
-        alt="Briefcase"
-        width={20}
-        height={20}
-        draggable={false}
-        loading="lazy"
-      />
-      <a href="/resume" target="_blank">{author.pastCompany}</a>
+    <div class="block inline-flex items-center justify-start gap-2 py-3 px-5 border-r max-md:border-r-0 max-md:border-b border-border flex-grow max-md:w-full">
+      <Image src={Briefcase} alt="Briefcase" width={20} height={20} draggable={false} loading="lazy" />
+      <a href="/resume" target="_blank" class="underline underline-offset-4 decoration-coffee hover:decoration-accent">{author.pastCompany}</a>
     </div>
-    <button type="button" aria-label="Previous" class="block arrow left">
-      <Image
-        src={CaretLeft}
-        alt="Caret Left"
-        width={20}
-        height={20}
-        draggable={false}
-        loading="lazy"
-      />
+    <button type="button" aria-label="Previous" class="block arrow left py-3 px-3 text-center cursor-pointer transition-colors duration-200 hover:bg-border max-md:hidden">
+      <Image src={CaretLeft} alt="Caret Left" width={20} height={20} draggable={false} loading="lazy" />
     </button>
-    <button type="button" aria-label="Next" class="block arrow right">
-      <Image
-        src={CaretRight}
-        alt="Caret Right"
-        width={20}
-        height={20}
-        draggable={false}
-        loading="lazy"
-      />
+    <button type="button" aria-label="Next" class="block arrow right py-3 px-3 text-center cursor-pointer transition-colors duration-200 hover:bg-border max-md:hidden">
+      <Image src={CaretRight} alt="Caret Right" width={20} height={20} draggable={false} loading="lazy" />
     </button>
   </div>
 </div>
@@ -203,8 +187,7 @@ const {
         // Split the new title text into spans
         const chars = testimonial.quote.title.split("").map((char) => {
           const span = document.createElement("span");
-          span.className = "char";
-          span.style.opacity = "0.2";
+          span.className = "char opacity-20";
           span.textContent = char;
           return span;
         });
@@ -220,7 +203,7 @@ const {
 
         function revealNextChar() {
           if (currentChar < totalChars) {
-            chars[currentChar].style.opacity = "1";
+            chars[currentChar].className = "char opacity-100 !text-coffee";
             currentChar++;
             setTimeout(revealNextChar, speed);
           }
@@ -289,323 +272,7 @@ const {
   new TestimonialCarousel();
 </script>
 
-<style lang="scss">
-  .testimonial-item {
-    display: flex;
-    flex-direction: column;
-    color: var(--color-ink-secondary);
-    background: var(--color-surface);
-    border: 6px solid var(--color-paper);
-    border-radius: 12px;
-    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0px 52px 20px -40px rgba(84, 67, 57, 0.25);
-
-    &.flip {
-      .testimonial-header h2 {
-        animation: flipTitle 0.3s ease-in-out forwards;
-      }
-      .testimonial-quote {
-        animation: flipQuote 0.3s ease-in-out forwards;
-      }
-    }
-
-    &.active,
-    &:hover {
-      box-shadow: 0px 52px 20px -40px rgba(84, 67, 57, 0.5);
-
-      .testimonial-reference span {
-        color: var(--color-coffee);
-        opacity: 1;
-      }
-
-      .testimonial-footer {
-        border-top: 1px solid var(--color-coffee);
-      }
-    }
-
-    &:hover {
-      .testimonial-author .testimonial-author-role p {
-        &:last-child {
-          position: relative;
-          opacity: 1;
-          top: 0;
-          background-color: inherit;
-        }
-        &:first-child {
-          position: absolute;
-          top: -10px;
-          left: 0;
-          opacity: 0;
-        }
-      }
-    }
-
-    .testimonial-header {
-      display: flex;
-      flex-direction: column;
-      padding: var(--spacing-base) var(--spacing-double) 0;
-      border-bottom: 1px dashed var(--color-coffee);
-      transition: all 0.3s ease-in-out;
-
-      .testimonial-reference {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: var(--font-size-small);
-        font-family: var(--font-mono);
-        backface-visibility: hidden;
-
-        span {
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          font-weight: 800;
-          opacity: 0.75;
-          transition: all 0.2s ease-in-out;
-        }
-
-        a {
-          font-weight: 500;
-          padding: var(--spacing-small);
-          text-transform: uppercase;
-          text-underline-offset: 4px !important;
-
-          &:hover {
-            text-decoration: underline;
-            text-underline-offset: 2px;
-            text-decoration-color: inherit;
-          }
-        }
-      }
-
-      .testimonial-title {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        backface-visibility: hidden;
-
-        h2 {
-          font-family: var(--font-headings);
-          font-size: var(--font-size-massive);
-          color: var(--color-coffee);
-          margin-bottom: var(--spacing-base);
-          padding-bottom: var(--spacing-small);
-          transition: all 0.3s ease-in-out;
-          opacity: 0;
-
-          .char {
-            display: inline-block;
-            transition: opacity 0.1s ease-in-out;
-          }
-        }
-      }
-    }
-
-    .testimonial-holes {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      overflow: hidden;
-
-      position: absolute;
-      width: calc(100% + 40px);
-      left: -20px;
-      top: 110px;
-
-      .testimonial-hole {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: var(--color-paper);
-      }
-    }
-
-    .testimonial-quote {
-      flex-grow: 1;
-      display: flex;
-      gap: var(--spacing-base);
-      flex-direction: column;
-      padding: var(--spacing-base) var(--spacing-double);
-      opacity: 0;
-      transition: all 0.3s ease-in-out;
-      p {
-        margin-top: var(--spacing-small);
-      }
-    }
-
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      padding: var(--spacing-small) 0;
-      gap: var(--spacing-base);
-
-      .testimonial-author-image {
-        border-radius: 32px;
-        width: 100px;
-        height: 100px;
-        overflow: hidden;
-        border: 2px solid rgb(255, 255, 255);
-        background: url(../assets/backgrounds/bg02.png) no-repeat center center;
-        background-size: 100px;
-        box-shadow: 0px 8px 12px -6px rgba(123, 108, 108, 0.5);
-      }
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        pointer-events: none;
-      }
-    }
-
-    .testimonial-author-info {
-      display: flex;
-      flex-direction: column;
-
-      p {
-        font-weight: 500;
-        margin: 0;
-      }
-
-      .testimonial-author-role {
-        display: flex / inline-block;
-        width: 100%;
-        margin: -4px 0 0;
-        overflow: hidden;
-        flex-direction: column;
-        gap: var(--spacing-xsmall);
-        position: relative;
-        overflow: hidden;
-
-        font-size: var(--font-size-small);
-        font-family: var(--font-mono);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-
-        p {
-          margin: 0;
-          color: var(--color-ink-tertiary);
-          transition: all 0.2s ease-in-out;
-
-          &:first-child {
-            position: relative;
-            top: 0;
-            background-color: inherit;
-          }
-
-          &:last-child {
-            position: absolute;
-            top: 10px;
-            left: 0;
-            opacity: 0;
-          }
-        }
-      }
-    }
-
-    .testimonial-special-ability {
-      display: flex;
-      align-items: center;
-
-      font-size: var(--font-size-small);
-      font-family: var(--font-mono);
-      color: var(--color-ink-tertiary);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-
-      margin: var(--spacing-small) 0 -2px;
-      border-top: 1px solid var(--color-border);
-      background: var(--color-paper);
-      transition: all 0.2s ease-in-out;
-
-      @include tablet {
-        margin: var(--spacing-small) 0 -6px;
-      }
-
-      .block {
-        display: inline-flex;
-        align-items: center;
-        justify-content: start;
-        gap: var(--spacing-small);
-        padding: 12px var(--spacing-base);
-        border-right: 1px solid var(--color-border);
-
-        &:not(.arrow) {
-          flex-grow: 1;
-        }
-
-        a {
-          text-decoration: underline;
-          text-underline-offset: 4px;
-          text-decoration-color: var(--color-coffee);
-
-          &:hover {
-            text-decoration-color: var(--color-accent);
-          }
-        }
-
-        &.arrow {
-          padding: 12px;
-          text-align: center;
-          cursor: pointer;
-          transition: background-color 0.2s ease-in-out;
-
-          &:hover {
-            background-color: var(--color-border);
-          }
-        }
-
-        &:last-child {
-          border-right: none;
-        }
-      }
-
-      @include tablet {
-        flex-direction: column;
-        align-items: start;
-
-        .block {
-          width: 100%;
-          border-right: none;
-          border-bottom: 1px solid var(--color-border);
-
-          &:last-child {
-            border-bottom: none;
-          }
-
-          &.arrow {
-            display: none !important;
-          }
-        }
-      }
-    }
-
-    @include desktop {
-      .testimonial-special-ability {
-        .block.arrow {
-          display: inline-flex;
-          cursor: pointer;
-          transition: background-color 0.2s ease-in-out;
-
-          &:hover {
-            background-color: var(--color-border);
-          }
-        }
-      }
-    }
-
-    @include desktop {
-      &.active {
-        display: block !important;
-      }
-      &:not(.active) {
-        display: none !important;
-      }
-    }
-  }
-
+<style>
   @keyframes flipTitle {
     0% {
       color: var(--color-coffee);
@@ -628,5 +295,13 @@ const {
     100% {
       opacity: 1;
     }
+  }
+
+  .testimonial-item.flip .testimonial-header h2 {
+    animation: flipTitle 0.3s ease-in-out forwards;
+  }
+  
+  .testimonial-item.flip .testimonial-quote {
+    animation: flipQuote 0.3s ease-in-out forwards;
   }
 </style>
