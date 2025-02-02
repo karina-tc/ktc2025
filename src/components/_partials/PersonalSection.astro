@@ -29,85 +29,89 @@ const books = [
 ];
 ---
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center justify-center">
-  <div class="flex flex-col gap-5 max-md:mb-10">
-    <Subtitle title="On the People Side" />
-    <p>
-      Outside of work, I like to watch dark psychological thrillers. Watch
-      soccer games and baking shows. I enjoy time away from my keyboard by
-      playing with my kid and talking walks with my dog.
-    </p>
-    <p>
-      I live in the East Coast of the USA with my wife and its <WeatherPill /> where
-      we are. I am happy to enjoy the every day. While working very hard for my family.
-    </p>
-  </div>
-  <PersonalImage />
-</div>
 
-<div class="currently-on-repeat my-10">
-  <h4 class="mb-5">Currently on Repeat</h4>
-  <iframe
-    style="border-radius:12px"
-    src="https://open.spotify.com/embed/track/77RNVzAVwqWiZrZuWqMV2i?utm_source=generator"
-    width="100%"
-    height="152"
-    frameborder="0"
-    allowfullscreen=""
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-    loading="lazy"></iframe>
-</div>
-
-<div class="mb-10">
-  <h4 class="mb-5">Currently Reading</h4>
   <div
-    class="currently-reading-list flex rounded-md gap-5 p-5 pb-2 bg-surface dark:bg-chocolate-light"
-  >
-    {
-      books.map(({ title, image, progress }) => (
-        <div class="book-container group">
-          <div class="relative w-32 h-48 bg-surface rounded-md overflow-hidden transition-all duration-300 shadow-md group-hover:-mt-2 group-hover:mb-2 transition-all duration-300">
-            <div
-              class={`book-lighting relative w-full h-full pl-2 bg-surface ${title.toLowerCase().replace(/\s+/g, "-")}`}
-            >
-              <Image
-                src={image}
-                alt={title}
-                width={268}
-                height={402}
-                draggable={false}
-                class="w-full h-full min-h-[191px] object-cover border-l-1 border-l-white/15"
-              />
-            </div>
-          </div>
-          <div class="book-completion">
-            <div class="book-completion-bar flex items-center justify-between gap-2 mt-2 opacity-0 transform -translateY-20 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-              {progress > 0 ? (
-                <>
-                  <div class="book-completion-bar-fill w-full h-1 rounded-md bg-paper shadow-inner relative overflow-hidden">
-                    <div
-                      class="book-completion-bar-fill-inner absolute inset-0 bg-coffee w-full h-full"
-                      style={`width: ${progress}%;`}
-                    />
-                  </div>
-                  <span class="text-xxs font-mono font-medium text-chocolate">
-                    {progress}%
-                  </span>
-                </>
-              ) : (
-                <span class="text-xxs font-mono font-medium text-chocolate opacity-50">
-                  NOT STARTED
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
-      ))
-    }
+    class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center justify-center">
+    <div class="flex flex-col gap-5 max-md:mb-10">
+      <Subtitle title="On the People Side" />
+      <p>
+        Outside of work, I like to watch dark psychological thrillers. Watch
+        soccer games and baking shows. I enjoy time away from my keyboard by
+        playing with my kid and talking walks with my dog.
+      </p>
+      <p>
+        I live in the East Coast of the USA with my wife and its <WeatherPill />
+        where we are. I am happy to enjoy the every day. While working very hard
+        for my family.
+      </p>
+    </div>
+    <PersonalImage />
   </div>
-</div>
 
-<SignatureSection />
+  <div class="currently-on-repeat my-10">
+    <h4 class="mb-5">Currently on Repeat</h4>
+    <iframe
+      style="border-radius:12px"
+      src="https://open.spotify.com/embed/track/77RNVzAVwqWiZrZuWqMV2i?utm_source=generator"
+      width="100%"
+      height="152"
+      frameborder="0"
+      allowfullscreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"></iframe>
+  </div>
+
+  <div class="mb-10">
+    <h4 class="mb-5">Currently Reading</h4>
+    <div
+      class="currently-reading-list flex rounded-md gap-5 p-5 pb-2 bg-surface dark:bg-chocolate-light"
+    >
+      {
+        books.map(({ title, image, progress }) => (
+          <div class="book-container group">
+            <div class="relative w-32 max-sm:w-20 max-sm:h-32 h-48 bg-surface rounded-md overflow-hidden transition-all duration-300 shadow-md group-hover:-mt-2 group-hover:mb-2 transition-all duration-300">
+              <div
+                class={`book-lighting relative w-full h-full pl-2 bg-surface ${title.toLowerCase().replace(/\s+/g, "-")}`}
+              >
+                <Image
+                  src={image}
+                  alt={title}
+                  width={268}
+                  height={402}
+                  draggable={false}
+                  class="w-full h-full min-h-[191px] max-sm:min-h-[100px] object-cover border-l-1 border-l-white/15"
+                />
+              </div>
+            </div>
+            <div class="book-completion">
+              <div class="book-completion-bar flex items-center justify-between gap-2 mt-2 opacity-0 transform -translateY-20 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                {progress > 0 ? (
+                  <>
+                    <div class="book-completion-bar-fill w-full h-1 rounded-md bg-paper shadow-inner relative overflow-hidden">
+                      <div
+                        class="book-completion-bar-fill-inner absolute inset-0 bg-coffee w-full h-full"
+                        style={`width: ${progress}%;`}
+                      />
+                    </div>
+                    <span class="text-xxs font-mono font-medium text-chocolate">
+                      {progress}%
+                    </span>
+                  </>
+                ) : (
+                  <span class="text-xxs font-mono font-medium text-chocolate opacity-50">
+                    NOT STARTED
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <SignatureSection />
+
 
 <style lang="scss">
   @import "../../styles/base/_breakpoints.scss";
