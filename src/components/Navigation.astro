@@ -4,31 +4,76 @@ const pathname = new URL(Astro.request.url).pathname;
 ---
 
 <nav
-  class="sticky top-0 w-full px-10 py-6 backdrop-blur-sm color-ink bg-paper/80 dark:bg-chocolate/80 z-40 font-mono uppercase">
+  class="sticky top-0 w-full px-10 py-6 backdrop-blur-sm color-ink bg-paper/80 dark:bg-chocolate/80 z-40 font-mono uppercase"
+>
   <div
-    class="flex gap-4 justify-between items-center flex-wrap flex-row w-full container mx-auto relative lg:flex-row lg:items-center">
+    class="flex gap-4 justify-between items-center flex-wrap flex-row w-full container mx-auto relative lg:flex-row lg:items-center"
+  >
     <a
       class="nav-logo flex items-center outline-none border-none bg-transparent cursor-pointer transition-all duration-300 ease-in-out"
-      href="/">
+      href="/"
+    >
       <Atom color="var(--color-coffee)" />
     </a>
+
+    <!-- Hamburger Menu Button -->
+    <button
+      id="menu-toggle"
+      type="button"
+      class="lg:hidden p-2 max-w-10 max-h-10 w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface dark:hover:bg-ink-secondary focus:outline-none focus:bg-surface dark:focus:bg-ink-secondary cursor-pointer transition-all duration-300 ease-in-out"
+      aria-label="Toggle menu"
+    >
+      <div class="relative flex-1 flex flex-col gap-1 items-center justify-center">
+        <span
+          class="block h-[2px] w-5 bg-current transform transition-all duration-300 ease-in-out"
+        ></span>
+        <span
+          class="block h-[2px] w-5 bg-current transform transition-all duration-300 ease-in-out"
+        ></span>
+        <span
+          class="block h-[2px] w-5 bg-current transform transition-all duration-300 ease-in-out"
+        ></span>
+      </div>
+    </button>
+
+    <!-- Navigation Links -->
     <ul
-      class="flex items-center justify-center gap-2 list-none m-0 p-0 [&>li>a]:text-sm [&>li>a]:font-medium [&>li>a]:rounded-md [&>li>a]:px-3 [&>li>a]:py-2 [&>li>a]:transition-all [&>li>a]:duration-300 [&>li>a]:ease-in-out">
-      <li class="nav-items">
-        <a href="/" class={pathname === "/" ? "bg-ink-secondary !text-paper" : "caramel-text hover:bg-surface dark:hover:!text-ink"}>Intro</a>
+      id="nav-links"
+      class="hidden lg:flex w-full lg:w-auto items-center justify-center gap-2 list-none m-0 p-0 [&>li>a]:text-sm [&>li>a]:font-medium [&>li>a]:rounded-md [&>li>a]:px-3 [&>li>a]:py-2 [&>li>a]:transition-all [&>li>a]:duration-300 [&>li>a]:ease-in-out [&.show]:flex [&.show]:flex-col [&.show]:absolute [&.show]:top-full [&.show]:left-0 [&.show]:right-0 [&.show]:bg-paper/95 [&.show]:dark:bg-chocolate/95 [&.show]:mt-2 [&.show]:p-4 [&.show]:rounded-md [&.show]:shadow-lg"
+    >
+      <li class="nav-items w-full lg:w-auto">
+        <a
+          href="/"
+          class={pathname === "/"
+            ? "bg-ink-secondary !text-paper block w-full"
+            : "caramel-text hover:bg-surface dark:hover:!text-ink block w-full"}
+          >Intro</a
+        >
       </li>
-      <li class="nav-items">
-        <a href="/about" class={pathname.startsWith("/about") ? "bg-ink-secondary !text-paper" : "caramel-text hover:bg-surface dark:hover:!text-ink"}
+      <li class="nav-items w-full lg:w-auto">
+        <a
+          href="/about"
+          class={pathname.startsWith("/about")
+            ? "bg-ink-secondary !text-paper block w-full"
+            : "caramel-text hover:bg-surface dark:hover:!text-ink block w-full"}
           >About</a
         >
       </li>
-      <li class="nav-items">
-        <a href="/work" class={pathname.startsWith("/work") ? "bg-ink-secondary !text-paper" : "caramel-text hover:bg-surface dark:hover:!text-ink"}
+      <li class="nav-items w-full lg:w-auto">
+        <a
+          href="/work"
+          class={pathname.startsWith("/work")
+            ? "bg-ink-secondary !text-paper block w-full"
+            : "caramel-text hover:bg-surface dark:hover:!text-ink block w-full"}
           >Work</a
         >
       </li>
-      <li class="nav-items">
-        <a href="/blog" class={pathname.startsWith("/blog") ? "bg-ink-secondary !text-paper" : "caramel-text hover:bg-surface dark:hover:!text-ink"}
+      <li class="nav-items w-full lg:w-auto">
+        <a
+          href="/blog"
+          class={pathname.startsWith("/blog")
+            ? "bg-ink-secondary !text-paper block w-full"
+            : "caramel-text hover:bg-surface dark:hover:!text-ink block w-full"}
           >Blog</a
         >
       </li>
@@ -41,4 +86,81 @@ const pathname = new URL(Astro.request.url).pathname;
   .nav-logo:focus :global(.atom-container .atom path) {
     animation: none !important;
   }
+
+  /* Add animation styles */
+  #nav-links {
+    transition:
+      opacity 0.2s ease-in-out,
+      transform 0.2s ease-in-out;
+    opacity: 0;
+    transform: translateY(-1rem);
+    pointer-events: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+
+  #nav-links.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Ensure the menu is visible and positioned normally on desktop */
+  @media (min-width: 1024px) {
+    #nav-links {
+      position: static;
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+      width: auto;
+    }
+  }
+
+  /* Fix hamburger menu animation */
+  #menu-toggle.open span:first-child {
+    @apply translate-y-[0.4rem] rotate-45;
+  }
+
+  #menu-toggle.open span:nth-child(2) {
+    @apply opacity-0;
+  }
+
+  #menu-toggle.open span:last-child {
+    @apply -translate-y-[0.4rem] -rotate-45;
+  }
 </style>
+
+<script>
+  const menuToggle = document.getElementById("menu-toggle");
+  const navLinks = document.getElementById("nav-links");
+
+  menuToggle?.addEventListener("click", () => {
+    menuToggle.classList.toggle("open");
+    if (navLinks?.classList.contains("hidden")) {
+      navLinks.classList.remove("hidden");
+      setTimeout(() => {
+        navLinks.classList.add("show");
+      }, 10);
+    } else {
+      navLinks?.classList.remove("show");
+      setTimeout(() => {
+        navLinks?.classList.add("hidden");
+      }, 200);
+    }
+  });
+
+  // Update click-outside handler to also remove 'open' class
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest("#menu-toggle") && !target.closest("#nav-links")) {
+      menuToggle?.classList.remove("open");
+      navLinks?.classList.remove("show");
+      setTimeout(() => {
+        navLinks?.classList.add("hidden");
+      }, 200);
+    }
+  });
+</script>
