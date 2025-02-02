@@ -9,71 +9,30 @@ interface Props {
 const { prev, next } = Astro.props;
 ---
 
-<nav class="post-navigation" data-intersection-observer={true}>
+<nav
+  class="post-navigation grid grid-cols-1 md:grid-cols-2 gap-4 mt-10 pt-10"
+  data-intersection-observer={true}
+>
   {
     prev && (
-      <a href={`/blog/${prev.slug}`} class="next">
-        <span>Next Up</span>
+      <a
+        href={`/blog/${prev.slug}`}
+        class="p-4 bg-surface dark:bg-ink-secondary cursor-pointer transition-all duration-300 ease-in-out rounded-xl order-2 next hover:bg-chocolate dark:hover:bg-ink hover:text-paper group"
+      >
+        <h5 class="mb-1 group-hover:!text-surface transition-all duration-300 ease-in-out">Next Up</h5>
         <div>{prev.data.title}</div>
       </a>
     )
   }
   {
     next && (
-      <a href={`/blog/${next.slug}`} class="prev">
-        <span>Previous</span>
+      <a
+        href={`/blog/${next.slug}`}
+        class="p-4 bg-surface dark:bg-ink-secondary cursor-pointer transition-all duration-300 ease-in-out rounded-xl order-1 prev hover:bg-chocolate dark:hover:bg-ink hover:text-paper group"
+      >
+        <h5 class="mb-1 group-hover:!text-surface transition-all duration-300 ease-in-out">Previous</h5>
         <div>{next.data.title}</div>
       </a>
     )
   }
 </nav>
-
-<style lang="scss">
-  // Breakpoint mixins
-  @import "../styles/base/_breakpoints.scss";
-
-  .post-navigation {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-top: var(--spacing-double);
-    padding-top: var(--spacing-double);
-    gap: var(--spacing-base);
-
-    @include tablet {
-      grid-template-columns: 1fr;
-    }
-
-    a {
-      padding: var(--spacing-base);
-      background-color: var(--color-surface);
-      border: 1px solid var(--color-surface);
-      border-radius: 8px;
-      text-decoration: none;
-      transition: all 0.2s ease;
-
-      &:hover {
-        border: 1px solid var(--color-lines);
-      }
-
-      span {
-        display: block;
-        font-size: var(--font-size-small);
-        color: var(--color-text-muted);
-        margin-bottom: var(--spacing-half);
-      }
-
-      div {
-        color: var(--color-text);
-      }
-
-      &.prev {
-        order: 1;
-      }
-
-      &.next {
-        order: 2;
-      }
-    }
-  }
-</style>
-

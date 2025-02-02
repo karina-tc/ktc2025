@@ -27,6 +27,7 @@
   --font-mono: monospace;
 }
 
+/* Base Styles */
 html,
 body {
   @apply w-full h-full m-0 p-0 relative font-instrument-sans;
@@ -79,6 +80,65 @@ p {
   @apply w-full max-w-5xl mx-auto px-10;
 }
 
-.text-caramel {
+.caramel-text {
   @apply text-ink-tertiary dark:text-chocolate-light;
 }
+
+/* End of Base Styles */
+
+/* Blog Styles */
+@layer components {
+  .blog-post-content {
+    h1, h2, h3, h4 {
+      @apply mb-10;
+    }
+
+    h2 {
+      @apply text-4xl md:text-6xl leading-[1] text-balance text-ink-tertiary dark:text-chocolate-light relative pt-8 mt-20 [&:first-of-type]:mt-0;
+    }
+
+    h2::before {
+      @apply content-[""] absolute top-0 left-0 w-[82px] h-[6px];
+      @apply flex items-start justify-start;
+      @apply bg-[url("/assets/swash.svg")] bg-center bg-no-repeat bg-contain;
+    }
+
+    h2 + h3 {
+      @apply mt-10;
+    }
+
+    h3 {
+      @apply text-3xl md:text-4xl font-instrument-serif text-ink-tertiary dark:text-chocolate-light;
+    }
+    
+    h4 {
+      @apply text-sm font-mono uppercase text-ink-tertiary dark:text-chocolate-light font-semibold tracking-widest;
+    }
+    
+    h5 {
+      @apply text-xs font-mono uppercase text-ink-tertiary dark:text-chocolate-light font-semibold tracking-widest;
+    }
+
+    p {
+      @apply text-pretty leading-[2] mb-5;
+    }
+
+    p + h3 {
+      @apply mt-10;
+    }
+
+    code:not(pre code) {
+      @apply font-mono leading-tight font-normal bg-surface text-ink;
+      @apply p-1 rounded-md dark:bg-ink-secondary dark:text-surface;
+    }
+
+    pre {
+      @apply relative my-10 border border-lines border-t-6 rounded-lg p-5 shadow-md;
+    }
+
+    pre code {
+      @apply text-sm leading-[1]
+    }
+  }
+}
+/* End of Blog Styles */

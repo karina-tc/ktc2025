@@ -76,7 +76,7 @@ try {
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description || ""}>
-  <div class="section-container">
+  <section class="neue-container">
     <BlogPostHeader
       title={post.data.title}
       tags={post.data.tags}
@@ -112,26 +112,17 @@ try {
         <Content />
       </article>
     </div>
-  </div>
-
-  <!-- Spacer -->
-  <div class="spacer-medium"></div>
+  </section>
 
   <!-- End of blog post -->
-  <div class="section-container blog-post-end">
+  <section class="neue-container text-2xl md:text-4xl mt-24" data-intersection-observer={true}>
     <p>El fin. &mdash; byeeee!</p>
-  </div>
+  </section>
 
   <!-- Navigation -->
-  <div class="section-container">
+  <section class="neue-container">
     <BlogPostNavigation prev={prev} next={next} />
 
     <SignatureSection />
-  </div>
+  </section>
 </BaseLayout>
-
-<style lang="scss">
-  .blog-post-end p {
-    font-size: var(--font-size-massive);
-  }
-</style>

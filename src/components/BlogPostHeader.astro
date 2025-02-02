@@ -11,15 +11,10 @@ const { title, tags, startedDate, publishDate, status } = Astro.props;
 const isDev = import.meta.env.PUBLIC_SHOW_DRAFTS;
 ---
 
-<div class="post-header">
-  {isDev && (
-    <div class={`draft-badge ${status === "draft" ? "draft" : "live"}`}>
-      {status === "draft" ? "✍️ Editing Draft" : "🔴 Editing Live"}
-    </div>
-  )}
-  <h2>{tags.includes("notebook") ? "Notebook" : "Thought"}</h2>
-  <h1>{title}</h1>
-  <div class="post-meta">
+<div class="post-header flex flex-col !pt-10">
+  <h4>{tags.includes("notebook") ? "Notebook" : "Thought"}</h4>
+  <h1 class="my-5">{title}</h1>
+  <h5 class="post-meta">
     {
       startedDate &&
         `Started: ${startedDate.toLocaleDateString("en-US", { 
@@ -37,49 +32,5 @@ const isDev = import.meta.env.PUBLIC_SHOW_DRAFTS;
           year: "numeric" 
         })}`
     }
-  </div>
+  </h5>
 </div>
-
-<style>
-  .post-header {
-    display: flex;
-    flex-direction: column;
-
-    h2 {
-      font-size: var(--font-size-small);
-      font-weight: 600;
-      font-family: var(--font-sans);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--color-accent);
-      margin-bottom: var(--spacing-base);
-    }
-
-    h1 {
-      margin-bottom: var(--spacing-base);
-    }
-  }
-
-  .draft-badge {
-    display: inline-block;
-    width: fit-content;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-family: var(--font-sans);
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    font-size: var(--font-size-small);
-    margin-bottom: var(--spacing-double);
-
-    &.draft {
-      background: var(--color-lime);
-      color: var(--color-ink);
-    }
-
-    &.live {
-      background: var(--color-accent);
-      color: var(--color-paper);
-    }
-  }
-</style> 
