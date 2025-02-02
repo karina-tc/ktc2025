@@ -9,6 +9,7 @@ interface Props {
   imageAlt?: string;
   title?: string;
   caption?: string;
+  startingImageWidth?: number;
   maxWidth?: number;
   imageStyles?: string;
   minHeight?: number;
@@ -22,6 +23,7 @@ const {
   imageAlt = "",
   title,
   caption,
+  startingImageWidth = 1220,
   maxWidth,
   imageStyles,
   minHeight = 520,
@@ -45,7 +47,7 @@ const {
           src={image}
           alt={imageAlt}
           draggable="false"
-          width={440}
+          width={startingImageWidth}
           loading="lazy"
           class="m-auto w-full h-auto object-contain md:w-full md:h-auto md:object-contain"
           style={`max-width: ${maxWidth}px; ${imageStyles}`}

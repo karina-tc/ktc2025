@@ -9,7 +9,6 @@ const caseStudy = getCaseStudy("beyondContracts");
 
 // Case Study Components
 import * as Work from "../../components/work/index.js";
-import Carousel from "../../components/Carousel.astro";
 
 // Partials
 import QuadrantChart from "../../components/_partials/work/QuadrantChart.astro";
@@ -19,7 +18,6 @@ import BackToTop from "../../components/BackToTop.astro";
 import SnippetsGallery from "../../components/work/Elements/SnippetsGallery.astro";
 import SnippetsGalleryItem from "../../components/work/Elements/SnippetsGalleryItem.astro";
 import SplitPanels from "../../components/_partials/work/SplitPanels.astro";
-
 
 //Assets
 import showcaseBackground from "../../assets/backgrounds/noise-2.png";
@@ -90,7 +88,6 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
   <div class="spacer-small"></div>
 
   <!-- Case Study Content -->
-  <div class="section-container">
     <!-- Impact Section -->
     <Work.ImpactSection
       metrics={[
@@ -118,8 +115,7 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
     <Work.StorySection
       kicker="Problem"
       title="Beyond the Contract Horizon"
-      spacing="none"
-    >
+      spacing="none">
       <p>
         Built initially around contracts, Tropic's platform faced a critical
         limitation: <strong
@@ -305,7 +301,7 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
         <li>How can I trace the origin of my supplier data?</li>
       </ol>
     </Work.StorySection>
-  </div>
+
 
   <div class="spacer-large"></div>
 
@@ -336,7 +332,7 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
     ]}
   />
 
-  <div class="spacer-large"></div>
+  <div class="spacer-small"></div>
 
   <Work.StorySection subtitle="AI Supplier Matching" spacing="none">
     <p>
@@ -432,42 +428,47 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
     </p>
   </Work.StorySection>
 
-  <Carousel
-    id="reporting-carousel"
-    label="Figure IV. Explorations into Reporting"
-    items={[
-      {
-        title: "Plate I.",
-        description:
-          "Tests showed separating spend and variance improved clarity",
-        image: Reporting01,
-        alt: "Saved styles interface",
-      },
-      {
-        title: "Plate II.",
-        description:
-          "We split the charts but kept the data together for clarity",
-        image: Reporting02,
-        alt: "Components interface",
-      },
-      {
-        title: "Plate III.",
-        description:
-          "Expanded variance analysis visuals to show differences over time",
-        image: Reporting03,
-        alt: "Reporting 03",
-      },
-      {
-        title: "Plate IV.",
-        description:
-          "Added an insights panel to highlight potential report inaccuracies",
-        image: Reporting04,
-        alt: "Reporting 04",
-      },
-    ]}
-  />
-
   <div class="spacer-large"></div>
+
+  <SnippetsGallery>
+    <SnippetsGalleryItem
+      large
+      title="Plate I."
+      image={Reporting01}
+      imageAlt="Saved styles interface"
+      caption="Tests showed separating spend and variance improved clarity"
+      maxWidth={880}
+    />
+
+    <SnippetsGalleryItem
+      large
+      title="Plate II."
+      image={Reporting02}
+      imageAlt="Components interface"
+      caption="We split the charts but kept the data together for clarity"
+      maxWidth={880}
+    />
+
+    <SnippetsGalleryItem
+      large
+      title="Plate III."
+      image={Reporting03}
+      imageAlt="Reporting 03"
+      caption="Expanded variance analysis visuals to show differences over time"
+      maxWidth={880}
+    />
+
+    <SnippetsGalleryItem
+      large
+      title="Plate IV."
+      image={Reporting04}
+      imageAlt="Reporting 04"
+      caption="Added an insights panel to highlight potential report inaccuracies"
+      maxWidth={880}
+    />
+  </SnippetsGallery>
+
+  <div class="spacer-massive"></div>
 
   <Work.StorySection subtitle="Data Table Exploration" spacing="none">
     <p>
@@ -488,21 +489,21 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
     </p>
   </Work.StorySection>
 
-  <Work.ImageShot
-    maxWidth="1220px"
-    title="Figure V. Data-Table Exploration"
-    caption="Laying out all the data for our new supplier tables in one view"
-  >
-    <Image
-      src={dataTableExploration}
-      alt="View of sketches for data table exploration"
-      width={920}
-      draggable={false}
-      loading="lazy"
-    />
-  </Work.ImageShot>
-
   <div class="spacer-large"></div>
+
+  <SnippetsGallery>
+    <SnippetsGalleryItem
+      image={dataTableExploration}
+      large
+      title="Figure V. Data-Table Exploration"
+      imageAlt="View of sketches for data table exploration"
+      caption="Laying out all the data for our new supplier tables in one view"
+      maxWidth={880}
+    />
+  </SnippetsGallery>
+
+
+  <div class="spacer-massive"></div>
 
   <Work.StorySection
     kicker="Systems Thinking"
@@ -585,7 +586,7 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
 
   <div class="spacer-large"></div>
 
-  <Work.StorySection kicker="Launch" title="We Have Liftoff!" spacing="quad">
+  <Work.StorySection kicker="Launch" title="We Have Liftoff!" spacing="double">
     <p>
       Our mission to make suppliers the heart of our platform was a success,
       transforming how customers interact with and manage their vendor
@@ -600,7 +601,8 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       unified supplier management—ensuring all our data points align perfectly
       in our supplier centric universe.
     </p>
-    <h3>What we achieved</h3>
+    <div class="spacer-large"></div>
+    <h3>What We Achieved</h3>
     <ul>
       <li>Made suppliers the central focus of the platform.</li>
       <li>Improved data visibility and tracking for all suppliers.</li>
@@ -632,171 +634,3 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
 
   <Work.Footer />
 </BaseLayout>
-
-<style lang="scss" scoped>
-  // Breakpoint mixins
-  @import "../../styles/base/_breakpoints.scss";
-
-  .section-container.no-gap {
-    margin-top: -40px;
-    margin-bottom: -40px;
-  }
-  .open-canvas {
-    width: 100%;
-    margin: var(--spacing-quad) 0;
-    padding: var(--spacing-double) var(--spacing-base);
-    background-color: var(--color-surface);
-
-    .canvas-container {
-      width: 90%;
-      max-width: 1220px;
-      margin: 0 auto;
-    }
-  }
-
-  .split-panels {
-    .panel-container {
-      display: flex;
-      flex-direction: row;
-      gap: var(--spacing-base);
-
-      .panel {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-small);
-        padding: var(--spacing-base) var(--spacing-base) 0;
-
-        &:not(:last-child) {
-          border-right: 1px solid var(--color-border);
-        }
-      }
-      @include tablet {
-        flex-direction: column;
-        .panel {
-          align-items: center;
-          border-right: 0px !important;
-          padding-bottom: var(--spacing-double);
-          &:not(:last-child) {
-            border-bottom: 1px solid var(--color-border);
-          }
-        }
-      }
-    }
-    @include mobile {
-      margin-top: var(--spacing-base);
-      margin-bottom: var(--spacing-base);
-    }
-  }
-
-  .data-table-exploration,
-  .systems-demo {
-    .plate-label,
-    .plate-caption {
-      text-align: center;
-      width: 100%;
-      display: block;
-    }
-  }
-  .data-table-exploration {
-    img {
-      width: 90%;
-      max-width: 920px;
-      margin: 0 auto;
-    }
-
-    p {
-      max-width: var(--max-width-narrow-small);
-      margin: var(--spacing-double) auto;
-    }
-  }
-
-  .systems-demo {
-    .contracts-demo-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--spacing-base);
-      position: relative;
-      padding: var(--spacing-double) 0 var(--spacing-base);
-      z-index: 1;
-
-      @include desktop-reverse {
-        flex-direction: row;
-      }
-
-      img {
-        max-width: 580px;
-        height: auto;
-        border: 10px solid rgba(255, 255, 255, 0.5);
-        border-radius: 10px;
-        box-shadow: 0 12px 20px -12px rgba(81, 64, 41, 0.4);
-        transition: all 0.3s ease-in-out;
-
-        @include desktop-reverse {
-          cursor: pointer;
-          max-width: 800px;
-          &:first-child {
-            position: absolute;
-            top: 10%;
-            left: 0;
-
-            &:hover {
-              z-index: 1;
-
-              & ~ img {
-                z-index: 0;
-                opacity: 0.5;
-              }
-            }
-          }
-
-          &:last-child {
-            z-index: 1;
-            margin-top: 20%;
-            margin-left: 50%;
-          }
-        }
-
-        @include tablet {
-          max-width: 90%;
-        }
-      }
-    }
-
-    .tooltips-container {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: var(--spacing-base);
-      position: relative;
-      z-index: 1;
-      padding: var(--spacing-double) 0 var(--spacing-base);
-
-      @include tablet {
-        flex-direction: column;
-        padding-bottom: 0;
-      }
-
-      figure {
-        height: auto;
-        z-index: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        img {
-          width: auto;
-          height: auto;
-        }
-
-        @include desktop-reverse {
-          width: 25%;
-          min-width: 280px;
-        }
-      }
-    }
-  }
-</style>
