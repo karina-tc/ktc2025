@@ -11,6 +11,7 @@ interface Props {
   caption?: string;
   maxWidth?: number;
   imageStyles?: string;
+  minHeight?: number;
 }
 
 const {
@@ -23,13 +24,21 @@ const {
   caption,
   maxWidth,
   imageStyles,
+  minHeight = 520,
 } = Astro.props;
 ---
 
-<div class:list={["snippets-gallery-item", { large }]}>
-  {interactive && <span class="interactive-label">{interactiveLabel}</span>}
-  {title && <p class="plate-label">{title}</p>}
-  <div class="gallery-inner" data-intersection-observer={true}>
+<div class:list={[
+  "snippets-gallery-item w-full bg-surface p-5 max-md:p-3 border-4 border-surface rounded-xl overflow-hidden transition-all duration-300 hover:border-paper hover:shadow-[0px_10px_10px_-5px_rgba(108,108,108,0.25)]",
+  { "lg:col-span-2 md:col-span-1": large }
+]}>
+  {interactive && <span class="interactive-label block w-full text-center text-xs font-semibold font-mono uppercase tracking-[0.05em] text-chocolate opacity-70 transition-all duration-300 group-hover:opacity-100">{interactiveLabel}</span>}
+  {title && <p class="plate-label !text-ink-tertiary">{title}</p>}
+  <div 
+    class="gallery-inner w-full h-auto flex flex-col items-center justify-between max-sm:!min-h-auto" 
+    style={`min-height: ${minHeight}px`}
+    data-intersection-observer={true}
+  >
     {
       image ? (
         <Image
@@ -38,88 +47,13 @@ const {
           draggable="false"
           width={440}
           loading="lazy"
+          class="m-auto w-full h-auto object-contain md:w-full md:h-auto md:object-contain"
           style={`max-width: ${maxWidth}px; ${imageStyles}`}
         />
       ) : (
         <slot />
       )
     }
-    {caption && <span class="plate-caption">{caption}</span>}
+    {caption && <span class="plate-caption !text-ink-tertiary">{caption}</span>}
   </div>
 </div>
-
-<style lang="scss">
-  @import "../../../styles/base/_breakpoints.scss";
-
-  .snippets-gallery-item {
-    width: 100%;
-    background-color: var(--color-surface);
-    padding: var(--spacing-base);
-    border: 4px solid var(--color-surface);
-    border-radius: var(--border-radius-large);
-    overflow: hidden;
-    transition: all var(--transition-base);
-
-    &:hover {
-      border-color: var(--color-paper);
-      box-shadow: 0px 10px 10px -5px rgba(108, 108, 108, 0.25);
-
-      .interactive-label {
-        opacity: 1;
-      }
-    }
-
-    &.large {
-      @include tablet-reverse {
-        grid-column: span 2;
-      }
-
-      @include tablet {
-        grid-column: span 1;
-      }
-    }
-
-    .interactive-label {
-      display: block;
-      width: 100%;
-      text-align: center;
-      font-size: var(--font-size-xsmall);
-      font-weight: 600;
-      font-family: var(--font-mono);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--color-chocolate);
-      opacity: 0.7;
-      transition: all var(--transition-base);
-    }
-
-    .gallery-inner {
-      width: 100%;
-      height: auto;
-      min-height: 520px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-
-      :global(img) {
-        margin: auto;
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-
-        @include tablet {
-          width: 100%;
-          height: auto;
-          object-fit: contain;
-        }
-
-        @include mobile {
-          width: 100%;
-          height: auto;
-          object-fit: contain;
-        }
-      }
-    }
-  }
-</style> 

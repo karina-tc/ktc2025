@@ -1,0 +1,20 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+}
+
+const { src, alt } = Astro.props;
+---
+
+<div class="cs-image absolute w-400 h-auto inset-0 z-0 flex justify-center items-center md:hidden">
+  <Image
+    src={src}
+    alt={alt}
+    class="w-full h-auto object-contain opacity-50"
+    loading="lazy"
+    draggable="false"
+  />
+</div> 

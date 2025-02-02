@@ -6,12 +6,21 @@ import SnippetsGallery from "../components/work/Elements/SnippetsGallery.astro";
 import SnippetsGalleryItem from "../components/work/Elements/SnippetsGalleryItem.astro";
 import DraggableScreens from "../components/work/Elements/DraggableScreens.astro";
 import GalleryIntroCard from "../components/work/Elements/GalleryIntroCard.astro";
+import MobileImage from "../components/work/Elements/MobileImage.astro";
 
 // Assets
 import { Image } from "astro:assets";
 import scribble from "../assets/scribbles/loopy.svg";
 import contractsDemo01 from "../assets/backgrounds/noise-1.png";
 import contractsDemo02 from "../assets/backgrounds/noise-2.png";
+
+// Gallery Assets
+import gallery01 from "../assets/case-studies/gallery/gallery-01.png";
+import gallery02 from "../assets/case-studies/gallery/gallery-02.png";
+import gallery03 from "../assets/case-studies/gallery/gallery-03.png";
+import gallery04 from "../assets/case-studies/gallery/gallery-04.png";
+import gallery05 from "../assets/case-studies/gallery/gallery-05.png";
+import gallery06 from "../assets/case-studies/gallery/gallery-06.png";
 
 // Data
 import { testimonials } from "../data/testimonials";
@@ -53,12 +62,15 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
   <SnippetsGallery>
     <!-- Tropic: Supplierverse -->
     <SnippetsGalleryItem large>
-      <div class="cs-wrapper w-full h-full flex flex-row md:flex-col gap-4 items-center justify-center relative">
+      <div
+        class="cs-wrapper w-full h-full flex flex-row md:flex-col gap-4 items-center justify-center relative"
+      >
         <GalleryIntroCard
           titleMain="Beyond Contracts"
           titleSecondary="Building Financial Clarity"
           description="How we rebuilt Tropic to make suppliers the heart of our platform. Evolving from contract focused to a true spend management solution."
           href="/work/beyond-contracts"
+          status="ready"
         />
         <div
           class="cs-image absolute w-full h-full inset-0 z-0 flex justify-center items-center max-md:!hidden"
@@ -105,6 +117,7 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
             ]}
           />
         </div>
+        <MobileImage src={bcDataMapping} alt="Tropic Data Matching" />
       </div>
     </SnippetsGalleryItem>
   </SnippetsGallery>
@@ -114,12 +127,15 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
   <SnippetsGallery>
     <!-- Tropic: Ask Tropic -->
     <SnippetsGalleryItem large>
-      <div class="cs-wrapper w-full h-full flex flex-row md:flex-col gap-4 items-center justify-center relative">
+      <div
+        class="cs-wrapper w-full h-full flex flex-row md:flex-col gap-4 items-center justify-center relative"
+      >
         <GalleryIntroCard
           titleMain="Ask Tropic"
           titleSecondary="Assisted Intelligence"
           description="How we created a new AI-powered assistant to help Tropic customers get answers to their questions."
           href="/work/ask-tropic"
+          status="ready"
         />
         <div
           class="cs-image absolute w-full h-full inset-0 z-0 flex justify-center items-center max-md:!hidden"
@@ -166,6 +182,7 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
             ]}
           />
         </div>
+        <MobileImage src={bcDataMapping} alt="Tropic Data Matching" />
       </div>
     </SnippetsGalleryItem>
   </SnippetsGallery>
@@ -175,12 +192,15 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
   <SnippetsGallery>
     <!-- Tropic: Supplier Intelligence -->
     <SnippetsGalleryItem large>
-      <div class="cs-wrapper w-full h-full flex flex-row md:flex-col gap-4 items-center justify-center relative">
+      <div
+        class="cs-wrapper w-full h-full flex flex-row md:flex-col gap-4 items-center justify-center relative"
+      >
         <GalleryIntroCard
-          titleMain="Supplier Intelligence"
-          titleSecondary="Data as a Service"
-          description="How we created a new product for Tropic that highlighted its data and created a new intelligent platform."
+          titleMain="Price Benchmarks"
+          titleSecondary="Making Data Accessible"
+          description="How we evolved and Tropic's Price Benchmarks to showcase our data and help businesses save money in their price negotiations."
           href="/work/supplier-intelligence"
+          status="coming-soon"
         />
         <div
           class="cs-image absolute w-full h-full inset-0 z-0 flex justify-center items-center max-md:!hidden"
@@ -227,6 +247,7 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
             ]}
           />
         </div>
+        <MobileImage src={bcDataMapping} alt="Tropic Data Matching" />
       </div>
     </SnippetsGalleryItem>
   </SnippetsGallery>
@@ -236,12 +257,15 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
   <SnippetsGallery>
     <!-- Glue -->
     <SnippetsGalleryItem large>
-      <div class="cs-wrapper w-full h-full flex flex-row md:flex-col gap-4 items-center justify-center relative">
+      <div
+        class="cs-wrapper w-full h-full flex flex-row md:flex-col gap-4 items-center justify-center relative"
+      >
         <GalleryIntroCard
           titleMain="People as Glue"
           titleSecondary="Connecting Employees"
           description="How we rebranded and redesigned Mystery into Glue to help companies create a more connected and engaged workforce."
           href="/work/people-glue"
+          status="coming-soon"
         />
         <div
           class="cs-image absolute w-full h-full inset-0 z-0 flex justify-center items-center max-md:!hidden"
@@ -288,6 +312,7 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
             ]}
           />
         </div>
+        <MobileImage src={bcDataMapping} alt="Tropic Data Matching" />
       </div>
     </SnippetsGalleryItem>
   </SnippetsGallery>
@@ -295,7 +320,7 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
   <section
     class="neue-container my-40 flex flex-col items-center justify-center gap-5"
   >
-    <h2 class="caramel-text">Testimonials</h2>
+    <h3 class="caramel-text">Testimonials</h3>
     <div class="testimonials-container relative w-full">
       <div
         class="testimonials-listing relative flex flex-col gap-10 w-full pt-5 pb-14 max-sm:hidden"
@@ -326,38 +351,64 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
     </div>
   </section>
 
-  <section class="mb-40 flex flex-col items-center justify-center">
-    <h2 class="caramel-text mb-14">Gallery</h2>
-    <SnippetsGallery>
+  <section class="mb-40 max-md:px-10 flex flex-col items-center justify-center">
+    <h3 class="caramel-text mb-14">Mini Gallery</h3>
+    
+    <SnippetsGallery columns={3}>
       <SnippetsGalleryItem
-        image={contractsDemo01}
-        imageAlt="contracts-demo-01"
-        maxWidth={880}
+        image={gallery01}
+        imageAlt="gallery-01"
+        maxWidth={320}
+        minHeight={420}
+        caption="Currency Exchange UI"
       />
 
       <SnippetsGalleryItem
-        image={contractsDemo02}
-        imageAlt="contracts-demo-02"
-        maxWidth={880}
+        image={gallery02}
+        imageAlt="gallery-02"
+        maxWidth={320}
+        minHeight={420}
+        caption="Task Reassignment Pieces"
       />
 
       <SnippetsGalleryItem
-        image={contractsDemo01}
-        imageAlt="contracts-demo-01"
-        maxWidth={880}
+        image={gallery03}
+        imageAlt="gallery-03"
+        maxWidth={320}
+        minHeight={420}
+        caption="Dynamic To-do List"
       />
 
       <SnippetsGalleryItem
-        image={contractsDemo02}
-        imageAlt="contracts-demo-02"
-        maxWidth={880}
+        image={gallery04}
+        imageAlt="gallery-04"
+        maxWidth={320}
+        minHeight={420}
+        caption="Universal Search Menu"
+      />
+
+      <SnippetsGalleryItem
+        image={gallery05}
+        imageAlt="gallery-05"
+        maxWidth={300}
+        minHeight={420}
+        caption="People Engagement Analytics"
+      />
+
+      <SnippetsGalleryItem
+        image={gallery06}
+        imageAlt="gallery-06"
+        maxWidth={320}
+        minHeight={420}
+        caption="PPC Sales Dashboard"
       />
     </SnippetsGallery>
+
     <div class="mt-10">
       <a
         href={bookingLink}
         target="_blank"
-        class="block mt-10 p-4 px-8 bg-accent-light text-paper font-instrument-serif text-4xl rounded-full transition-all duration-300 ease-in-out hover:bg-accent active:bg-accent focus:bg-accent hover:shadow-lg"
+        class="block mt-10 p-4 px-8 bg-accent-light text-paper font-instrument-serif text-2xl md:text-4xl rounded-full transition-all duration-300 ease-in-out hover:bg-accent active:bg-accent focus:bg-accent hover:shadow-lg"
       >
         <span class="text-center">Let's work together</span>
       </a>
@@ -366,4 +417,3 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
 
   <div class="spacer-large"></div>
 </BaseLayout>
-

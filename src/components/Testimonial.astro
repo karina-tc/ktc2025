@@ -77,7 +77,7 @@ const {
     class="testimonial-header flex flex-col px-4 md:px-8 pt-4 border-b border-dashed border-coffee transition-all duration-300"
   >
     <div
-      class="testimonial-reference flex justify-between items-center text-sm font-mono [backface-visibility:hidden]"
+      class="testimonial-reference flex justify-between items-center text-xs md:text-sm font-mono [backface-visibility:hidden]"
     >
       <span
         class="uppercase tracking-widest font-extrabold opacity-75 transition-all duration-200 group-hover:text-coffee group-hover:opacity-100"
@@ -99,7 +99,7 @@ const {
 
     <div
       class="testimonial-title flex-grow flex flex-col [backface-visibility:hidden]">
-      <span class="font-instrument-serif text-4xl text-ink-tertiary mb-4 pb-2 transition-all duration-300">{quote.title}</span>
+      <span class="font-instrument-serif text-3xl md:text-4xl text-ink-tertiary mb-4 pb-2 transition-all duration-300">{quote.title}</span>
     </div>
   </div>
 
@@ -113,7 +113,7 @@ const {
   <div
     class="testimonial-quote flex-grow flex gap-4 flex-col p-4 md:px-8 opacity-0 transition-all duration-300"
   >
-    <p class="mt-2">{quote.content}</p>
+    <p class="mt-2 max-md:text-sm">{quote.content}</p>
     <div
       class="testimonial-author flex items-start md:items-center py-2 gap-2 md:gap-4 md:flex-row flex-col"
     >
@@ -149,7 +149,7 @@ const {
   </div>
 
   <div
-    class="testimonial-special-ability flex flex-row max-md:flex-col items-center text-sm font-mono text-ink-tertiary font-medium uppercase tracking-widest mt-4 -mb-0.5 md:-mb-1.5 border-t border-border bg-paper transition-all duration-200"
+    class="testimonial-special-ability flex flex-row max-md:flex-col items-center text-xs md:text-sm font-mono text-ink-tertiary font-medium uppercase tracking-widest mt-4 -mb-0.5 md:-mb-1.5 border-t border-border bg-paper transition-all duration-200"
   >
     <div
       class="block inline-flex items-center justify-start gap-2 py-3 px-5 border-r max-md:border-r-0 max-md:border-b border-border flex-grow max-md:w-full"
