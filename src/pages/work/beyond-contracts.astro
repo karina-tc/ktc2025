@@ -18,6 +18,8 @@ import RocketShipPlate from "../../components/_partials/work/RocketShipPlate.ast
 import BackToTop from "../../components/BackToTop.astro";
 import SnippetsGallery from "../../components/work/Elements/SnippetsGallery.astro";
 import SnippetsGalleryItem from "../../components/work/Elements/SnippetsGalleryItem.astro";
+import SplitPanels from "../../components/_partials/work/SplitPanels.astro";
+
 
 //Assets
 import showcaseBackground from "../../assets/backgrounds/noise-2.png";
@@ -287,6 +289,8 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
         to tackle the data quality challenge.
       </p>
 
+      <div class="spacer-small"></div>
+
       <h3>Data Integrations</h3>
       <p>
         We began with the foundation: data integrations, which are the primary
@@ -378,10 +382,6 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       title="Figure III."
       caption="Finance and Procurement Conquering Planet Spend"
     >
-      <div slot="extra" class="astronauts-text">
-        <span>Overspending is dangerous</span>
-        <span>Together, we'll command it!</span>
-      </div>
       <Image
         class="astronauts"
         src={astronauts}
@@ -393,40 +393,25 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
     </Work.ImageShot>
   </Work.StorySection>
 
-  <section class="open-canvas split-panels" data-intersection-observer={true}>
-    <div class="canvas-container panel-container">
-      <div class="panel">
-        <h3 class="title-heading">Explore</h3>
-        <Image
-          src={exploreIllustration}
-          alt="Explore"
-          width={418}
-          draggable={false}
-          loading="lazy"
-        />
-      </div>
-      <div class="panel">
-        <h3 class="title-heading">Derisk</h3>
-        <Image
-          src={deriskIllustration}
-          alt="Derisk"
-          width={371}
-          draggable={false}
-          loading="lazy"
-        />
-      </div>
-      <div class="panel">
-        <h3 class="title-heading">Plan</h3>
-        <Image
-          src={planIllustration}
-          alt="Plan"
-          width={455}
-          draggable={false}
-          loading="lazy"
-        />
-      </div>
-    </div>
-  </section>
+  <SplitPanels
+    panels={[
+      {
+        title: "Explore",
+        image: exploreIllustration,
+        imageWidth: 418,
+      },
+      {
+        title: "Derisk",
+        image: deriskIllustration,
+        imageWidth: 371,
+      },
+      {
+        title: "Plan",
+        image: planIllustration,
+        imageWidth: 455,
+      },
+    ]}
+  />
 
   <Work.StorySection subtitle="Data Reporting" spacing="none">
     <p>
@@ -656,44 +641,6 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
     margin-top: -40px;
     margin-bottom: -40px;
   }
-
-  .astronauts-text span {
-    color: var(--color-ink-tertiary);
-    font-size: var(--font-size-small);
-    font-weight: 500;
-    font-style: italic;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-
-    &:first-child {
-      top: 18%;
-      left: 10%;
-    }
-    &:last-child {
-      top: 28%;
-      left: 75%;
-    }
-
-    @include mobile {
-      font-size: var(--font-size-xsmall);
-      line-height: 1.2;
-      &:first-child {
-        top: 20%;
-        left: 10%;
-        max-width: 100px;
-      }
-      &:last-child {
-        top: 28%;
-        left: 75%;
-        max-width: 100px;
-      }
-    }
-  }
-
   .open-canvas {
     width: 100%;
     margin: var(--spacing-quad) 0;
