@@ -127,6 +127,17 @@ ul li {
 
 /* End of Base Styles */
 
+/* Helper classes */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+/* End of Helper classes */
+
 /* Blog Styles */
 @layer components {
   .blog-post-content {
