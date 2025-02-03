@@ -5,7 +5,7 @@ import { Image } from "astro:assets";
 import CaseStudyHeader from "../../components/work/CaseStudyHeader.astro";
 import { getCaseStudy } from "../../data/case-study-details";
 import * as Work from "../../components/work/index.js";
-
+import BookingCTA from "../../components/BookingCTA.astro";
 //Assets
 import showcaseImage from "../../assets/case-studies/tropic/ask-ai/ask-ai-showcase.png";
 import showcaseBackground from "../../assets/backgrounds/noise-3.png";
@@ -255,4 +255,6 @@ const caseStudy = getCaseStudy("supplierIntelligence");
       business-critical one.
     </p>
   </Work.StorySection>
+
+  <BookingCTA include_classes="my-20 mx-auto flex justify-center" />
 </BaseLayout>

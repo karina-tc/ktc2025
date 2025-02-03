@@ -11,6 +11,7 @@ import AskAIChatPreview from "../../components/work/Demos/AskAIChatPreview.astro
 import SnippetsGallery from "../../components/work/Elements/SnippetsGallery.astro";
 import SnippetsGalleryItem from "../../components/work/Elements/SnippetsGalleryItem.astro";
 import AskAiCanvas from "../../components/_partials/work/AskAiCanvas.astro";
+import BookingCTA from "../../components/BookingCTA.astro";
 
 //Assets
 import showcaseImage from "../../assets/case-studies/tropic/ask-ai/ask-ai-showcase.png";
@@ -216,6 +217,8 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       priority
     />
   </Work.LargeShowcase>
+
+  <BookingCTA include_classes="my-20 mx-auto flex justify-center" />
 
   <!-- Footer -->
   <Work.Footer />

@@ -9,7 +9,7 @@ const caseStudy = getCaseStudy("beyondContracts");
 
 // Case Study Components
 import * as Work from "../../components/work/index.js";
-
+import BookingCTA from "../../components/BookingCTA.astro";
 // Partials
 import QuadrantChart from "../../components/_partials/work/QuadrantChart.astro";
 import DataClusters from "../../components/_partials/work/DataClusters.astro";
@@ -630,6 +630,8 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
       priority
     />
   </Work.LargeShowcase>
+
+  <BookingCTA include_classes="my-20 mx-auto flex justify-center" />
 
   <Work.Footer />
 </BaseLayout>

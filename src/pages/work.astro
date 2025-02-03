@@ -7,12 +7,11 @@ import SnippetsGalleryItem from "../components/work/Elements/SnippetsGalleryItem
 import DraggableScreens from "../components/work/Elements/DraggableScreens.astro";
 import GalleryIntroCard from "../components/work/Elements/GalleryIntroCard.astro";
 import MobileImage from "../components/work/Elements/MobileImage.astro";
+import BookingCTA from "../components/BookingCTA.astro";
 
 // Assets
 import { Image } from "astro:assets";
 import scribble from "../assets/scribbles/loopy.svg";
-import contractsDemo01 from "../assets/backgrounds/noise-1.png";
-import contractsDemo02 from "../assets/backgrounds/noise-2.png";
 
 // Gallery Assets
 import gallery01 from "../assets/case-studies/gallery/gallery-01.png";
@@ -24,7 +23,6 @@ import gallery06 from "../assets/case-studies/gallery/gallery-06.png";
 
 // Data
 import { testimonials } from "../data/testimonials";
-const bookingLink = "https://cal.com/karina-tovar/quick-chat";
 
 // Import the images
 import bcDataMapping from "../assets/case-studies/tropic/bc-data-mapping.png";
@@ -404,15 +402,7 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
       />
     </SnippetsGallery>
 
-    <div class="mt-10">
-      <a
-        href={bookingLink}
-        target="_blank"
-        class="block mt-10 p-4 px-8 bg-accent-light text-paper font-instrument-serif text-2xl md:text-4xl rounded-full transition-all duration-300 ease-in-out hover:bg-accent active:bg-accent focus:bg-accent hover:shadow-lg"
-      >
-        <span class="text-center">Let's work together</span>
-      </a>
-    </div>
+    <BookingCTA include_classes="mt-20" />
   </section>
 
   <div class="spacer-large"></div>

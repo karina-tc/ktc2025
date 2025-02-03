@@ -1,0 +1,24 @@
+---
+interface Props {
+  text?: string;
+  bookingLink?: string;
+  include_classes?: string;
+}
+
+const { 
+  text = "Let's work together",
+  bookingLink = "https://cal.com/karina-tovar/quick-chat",
+  include_classes = ""
+} = Astro.props;
+
+---
+
+<div class={`${include_classes}`}>
+  <a
+    href={bookingLink}
+    target="_blank"
+    class="block p-4 px-8 bg-accent-light text-paper font-instrument-serif text-2xl md:text-4xl rounded-full transition-all duration-300 ease-in-out hover:bg-accent active:bg-accent focus:bg-accent hover:shadow-lg max-w-fit"
+  >
+    <span class="text-center">{text}</span>
+  </a>
+</div> 
