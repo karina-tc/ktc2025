@@ -22,28 +22,37 @@ const greeting = reader ? `${reader}` : "friend";
   includeNavigation={false}
   includeFooter={false}
 >
-  <div class="main-wrapper">
+  <div class="main-wrapper relative flex flex-col items-start justify-start gap-5 mx-auto mt-15 z-10">
     <!-- Content -->
-    <div class="content-wrapper">
-      <a href="/"><Atom /></a>
-      <h1 id="greeting">Hello {greeting}</h1>
+    <div class="content-wrapper w-4/5 max-w-[420px] mx-auto">
+      <a href="/" class="dark:hidden"><Atom /></a>
+      <a href="/" class="hidden dark:!block"><Atom color="#FFF" /></a>
+      <h2 id="greeting" class="my-5 text-chocolate dark:text-white">Hello {greeting}</h2>
     </div>
 
     <!-- Details -->
-    <div class="details-wrapper">
+    <div class="details-wrapper w-4/5 max-w-[420px] mx-auto">
       <ShareDetails reader={reader} />
     </div>
 
     <!-- Footnote -->
-    <button class="footnote" onclick="setTimeout(() => window.scrollTo({top: 0, behavior: 'smooth'}), 1500)">
-      <span>Have a minute of joy</span>
+    <button 
+      class="footnote w-4/5 max-w-[420px] mx-auto -mt-3 mb-15 flex backdrop-blur-sm p-1 rounded-md 
+      text-ink-tertiary bg-sky hover:bg-paper transition-all duration-300 cursor-pointer"
+      onclick="setTimeout(() => window.scrollTo({top: 0, behavior: 'smooth'}), 1500)"
+    >
+      <span class="w-full relative z-[1] p-1 text-xs font-extrabold font-sans uppercase tracking-widest">
+        Have a minute of joy
+      </span>
     </button>
 
     <!-- Poem -->
     <Poem />
   </div>
 
-  <div class="background-wrapper"></div>
+  <div class="background-wrapper fixed inset-0 w-screen h-screen blur-[50px] bg-[url('../assets/backgrounds/poem/joy01.png')] 
+    bg-cover bg-center bg-no-repeat bg-fixed transition-[background-image] duration-500">
+  </div>
 </BaseLayout>
 
 <script>
@@ -60,140 +69,42 @@ const greeting = reader ? `${reader}` : "friend";
   }
 </script>
 
-<style lang="scss">
-  @import "../styles/base/_breakpoints.scss";
-
-  // Hidden
+<style>
   .hidden {
     display: none !important;
   }
 
-  // Layout
-  .main-wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: var(--spacing-base);
-    margin: var(--spacing-triple) auto 0;
-    z-index: 10;
-  }
-
-  // Content section
   .content-wrapper {
     opacity: 0;
     animation: fadeInDown 0.5s ease-in-out forwards;
     animation-delay: 0.3s;
-    width: 80%;
-    max-width: 420px;
-    margin: 0 auto;
-
-    h1 {
-      margin: var(--spacing-base) 0;
-      color: var(--color-chocolate);
-      font-size: clamp(2.5rem, 5vw, 3rem);
-    }
   }
 
-  // Details section
   .details-wrapper {
     opacity: 0;
     animation: fadeInUp 0.5s ease-in-out forwards;
     animation-delay: 0.3s;
-    width: 80%;
-    max-width: 420px;
-    margin: 0 auto;
-
-    :global(.subtitle) {
-      margin-top: 10px;
-      font-family: var(--font-headings);
-    }
   }
 
-  // Footnote
   .footnote {
-    width: 80%;
-    max-width: 420px;
-    margin: -12px auto var(--spacing-triple);
-    display: flex;
-    backdrop-filter: blur(2px);
     opacity: 0;
-    padding: 4px 6px;
-    border-radius: 6px;
-    color: var(--color-ink-tertiary);
-    background-color: var(--color-sky);
     animation: fadeInUp 0.5s ease-in-out forwards;
     animation-delay: 0.8s;
-    transition: all 0.3s ease-in-out;
-
-    span {
-      width: 100%;
-      position: relative;
-      z-index: 1;
-      padding: 4px 6px;
-      font-size: var(--font-size-xsmall);
-      font-family: var(--font-sans);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    &:hover {
-      background-color: var(--color-paper);
-    }
   }
 
-  // Background
   .background-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
     opacity: 0;
-    filter: blur(50px) !important;
-    background-image: url("../assets/backgrounds/poem/joy01.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
     animation: fadeIn 0.5s ease-in-out forwards;
-    transition: background-image 0.5s ease-in-out;
-
-    &.joy {
-      animation: none;
-      opacity: 0.5;
-      background-blend-mode: overlay;
-      animation: joyBg 60s ease-in-out;
-      animation-direction: alternate;
-    }
   }
 
-  @keyframes joyBg {
-    0%,
-    15% {
-      background-image: url("../assets/backgrounds/poem/joy02.png");
-    }
-    20%,
-    35% {
-      background-image: url("../assets/backgrounds/poem/joy03.png");
-    }
-    40%,
-    55% {
-      background-image: url("../assets/backgrounds/poem/joy04.png");
-    }
-    60%,
-    75% {
-      background-image: url("../assets/backgrounds/poem/joy02.png");
-    }
-    80%,
-    100% {
-      background-image: url("../assets/backgrounds/poem/joy01.png");
-    }
+  .background-wrapper.joy {
+    animation: none;
+    opacity: 0.5;
+    background-blend-mode: overlay;
+    animation: joyBg 60s ease-in-out;
+    animation-direction: alternate;
   }
 
-  // Animations
   @keyframes fadeInDown {
     from {
       opacity: 0;
@@ -225,5 +136,13 @@ const greeting = reader ? `${reader}` : "friend";
       opacity: 0.5;
       filter: blur(5px);
     }
+  }
+
+  @keyframes joyBg {
+    0%, 15% { background-image: url("../assets/backgrounds/poem/joy02.png"); }
+    20%, 35% { background-image: url("../assets/backgrounds/poem/joy03.png"); }
+    40%, 55% { background-image: url("../assets/backgrounds/poem/joy04.png"); }
+    60%, 75% { background-image: url("../assets/backgrounds/poem/joy02.png"); }
+    80%, 100% { background-image: url("../assets/backgrounds/poem/joy01.png"); }
   }
 </style>
