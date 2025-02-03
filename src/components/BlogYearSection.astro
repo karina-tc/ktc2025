@@ -14,12 +14,12 @@ const thoughtText = posts.length === 1 ? "Thought" : "Thoughts";
 <div class="year-section">
   <Subtitle title={year} description={`${posts.length} ${thoughtText}`} />
   <ul
-    class="list-section flex flex-col gap-5 list-none ml-0 list-none !mx-0"
+    class="list-section flex flex-col list-none ml-0 list-none !mx-0"
     data-intersection-observer={true}
   >
     {
       posts.map((post) => (
-        <li class="flex items-center justify-between py-5 border-b border-border dark:border-chocolate-light hover:bg-surface dark:hover:bg-ink-secondary hover:px-5 transition-all duration-300 ease-in-out">
+        <li class="flex items-center justify-between py-5 !mb-0 border-b border-border dark:border-chocolate-light hover:bg-surface dark:hover:bg-ink-secondary hover:px-5 transition-all duration-300 ease-in-out">
           <a
             class="hover:underline hover:underline-offset-4 transition-all duration-300 ease-in-out"
             href={`/blog/${post.slug}`}
