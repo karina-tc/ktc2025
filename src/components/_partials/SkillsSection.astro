@@ -28,165 +28,27 @@ const skillsItems = [
 
 <section class="skills-section">
   <Subtitle title="Some of My Skills" />
-  <div class="skills-list">
+  <div class="skills-list mt-10 flex flex-col gap-10">
     {
-      skillsItems.map(({ title, description }, index) => (
-        <div class={`skill-item ${index === 0 ? "active" : ""}`} data-skill-item>
-          <div class="top-corners">
-            <span class="left" />
-            <span class="right" />
+      skillsItems.map(({ title, description }) => (
+        <div
+          class="skill-item relative p-10 bg-surface dark:bg-ink-secondary border-2 border-coffee cursor-pointer transition-all duration-300 ease-in-out group hover:bg-surface dark:hover:bg-ink-secondary"
+          data-skill-item
+        >
+          <div class="absolute left-0 top-0 flex h-full w-full justify-between pointer-events-none group-hover:-mt-[5px]">
+            <span class="relative h-5 w-5 -ml-0.5 -mt-0.5 bg-paper border-2 border-coffee transition-all duration-300 ease-in-out group-hover:bg-coffee group-hover:scale-120 group-hover:border-0 group-hover:-ml-2.5 group-hover:-mt-1.5" />
+            <span class="relative h-5 w-5 -mr-0.5 -mt-0.5 bg-paper border-2 border-coffee transition-all duration-300 ease-in-out group-hover:bg-coffee group-hover:scale-120 group-hover:border-0 group-hover:-mr-2.5 group-hover:-mt-1.5" />
           </div>
-          <h3>{title}</h3>
-          <p>{description}</p>
-          <div class="bottom-corners">
-            <span class="left" />
-            <span class="right" />
+          
+          <h4 class="m-0 mb-4 font-headings text-chocolate">{title}</h4>
+          <p class="m-0">{description}</p>
+          
+          <div class="absolute left-0 top-[calc(100%-20px)] flex h-full w-full justify-between pointer-events-none group-hover:mt-[5px]">
+            <span class="relative h-5 w-5 -ml-0.5 mt-0.5 bg-paper border-2 border-coffee transition-all duration-300 ease-in-out group-hover:bg-coffee group-hover:scale-120 group-hover:border-0 group-hover:-ml-2.5 group-hover:mt-1.5" />
+            <span class="relative h-5 w-5 -mr-0.5 mt-0.5 bg-paper border-2 border-coffee transition-all duration-300 ease-in-out group-hover:bg-coffee group-hover:scale-120 group-hover:border-0 group-hover:-mr-2.5 group-hover:mt-1.5" />
           </div>
         </div>
       ))
     }
   </div>
 </section>
-
-<script>
-  // Get all skill items
-  const skillItems = document.querySelectorAll('[data-skill-item]');
-  const skillsList = document.querySelector('.skills-list');
-  const firstSkill = skillItems[0];
-
-  // Add hover listeners to all items except the first one
-  skillItems.forEach((item, index) => {
-    if (index !== 0) {
-      item.addEventListener("mouseenter", () => {
-        firstSkill.classList.remove("active");
-      });
-
-      item.addEventListener("mouseleave", () => {
-        // Only add active class back if no other items are being hovered
-        const isAnyHovered = Array.from(skillItems).some((item, i) => {
-          return i !== 0 && item.matches(":hover");
-        });
-
-        if (!isAnyHovered) {
-          // Check if we're actually hovering a skill item, not just the container
-          const isHoveringSkillItem = Array.from(skillItems).some(item => 
-            item.matches(":hover")
-          );
-          
-          if (isHoveringSkillItem) {
-            firstSkill.classList.add("active");
-          }
-        }
-      });
-    }
-  });
-
-  // Add mouseleave listener to the container
-  skillsList?.addEventListener("mouseleave", () => {
-    firstSkill.classList.add("active");
-  });
-</script>
-
-<style lang="scss">
-  .skills-list {
-    margin-top: var(--spacing-double);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-double);
-  }
-
-  .skill-item {
-    position: relative;
-    padding: var(--spacing-double);
-    background: var(--color-paper);
-    border: 2px solid var(--color-coffee);
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-
-    h3 {
-      margin: 0;
-      font-family: var(--font-headings);
-      font-size: 1.5rem;
-      color: var(--color-chocolate);
-      margin-bottom: var(--spacing-base);
-    }
-
-    p {
-      margin: 0;
-    }
-
-    .top-corners,
-    .bottom-corners {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: space-between;
-      pointer-events: none;
-
-      span {
-        position: relative;
-        width: 20px;
-        height: 20px;
-        background: var(--color-paper);
-        border: 2px solid var(--color-coffee);
-        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-
-        &.left {
-          margin-left: -2px;
-        }
-
-        &.right {
-          margin-right: -2px;
-        }
-      }
-    }
-
-    .top-corners {
-      top: 0;
-
-      span {
-        margin-top: -2px;
-      }
-    }
-
-    .bottom-corners {
-      top: calc(100% - 20px);
-
-      span {
-        margin-top: 2px;
-      }
-    }
-
-    &:hover,
-    &.active {
-      background: var(--color-surface);
-
-      .top-corners {
-        margin-top: -5px;
-      }
-
-      .bottom-corners {
-        margin-top: 5px;
-      }
-
-      .top-corners,
-      .bottom-corners {
-        span {
-          background: var(--color-coffee);
-          transform: scale(1.2);
-          border: 0px;
-
-          &.left {
-            margin-left: -10px;
-          }
-
-          &.right {
-            margin-right: -10px;
-          }
-        }
-      }
-    }
-  }
-</style>

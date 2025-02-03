@@ -29,178 +29,94 @@ const books = [
 ];
 ---
 
-<div class="personal-container">
-  <div class="personal-text">
-    <Subtitle title="On the People Side" />
-    <p>
-      Outside of work, I like to watch dark psychological thrillers. Watch
-      soccer games and baking shows. I enjoy time away from my keyboard by
-      playing with my kid and talking walks with my dog.
-    </p>
-    <p>
-      I live in the East Coast of the USA with my wife and its <WeatherPill /> where
-      we are. I am happy to enjoy the every day. While working very hard for my family.
-    </p>
+
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center justify-center">
+    <div class="flex flex-col gap-5 max-md:mb-10">
+      <Subtitle title="On the People Side" />
+      <p>
+        Outside of work, I like to watch dark psychological thrillers. Watch
+        soccer games and baking shows. I enjoy time away from my keyboard by
+        playing with my kid and talking walks with my dog.
+      </p>
+      <p>
+        I live in the East Coast of the USA with my wife and its <WeatherPill />
+        where we are. I am happy to enjoy the every day. While working very hard
+        for my family.
+      </p>
+    </div>
+    <PersonalImage />
   </div>
-  <PersonalImage />
-</div>
 
-<div class="currently-on-repeat">
-  <h4>Currently on Repeat</h4>
-  <iframe
-    style="border-radius:12px"
-    src="https://open.spotify.com/embed/track/77RNVzAVwqWiZrZuWqMV2i?utm_source=generator"
-    width="100%"
-    height="152"
-    frameborder="0"
-    allowfullscreen=""
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-    loading="lazy"></iframe>
-</div>
+  <div class="currently-on-repeat my-10">
+    <h4 class="mb-5">Currently on Repeat</h4>
+    <iframe
+      style="border-radius:12px"
+      src="https://open.spotify.com/embed/track/77RNVzAVwqWiZrZuWqMV2i?utm_source=generator"
+      width="100%"
+      height="152"
+      frameborder="0"
+      allowfullscreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"></iframe>
+  </div>
 
-<div class="currently-reading">
-  <h4>Currently Reading</h4>
-  <div class="currently-reading-list">
-    {
-      books.map(({ title, image, progress }) => (
-        <div class="book-container">
-          <div class="book-artwork">
-            <div
-              class={`book-lighting ${title.toLowerCase().replace(/\s+/g, "-")}`}
-            >
-              <Image
-                src={image}
-                alt={title}
-                width={268}
-                height={402}
-                draggable={false}
-              />
+  <div class="mb-10">
+    <h4 class="mb-5">Currently Reading</h4>
+    <div
+      class="currently-reading-list flex rounded-md gap-5 p-5 pb-2 bg-surface dark:bg-chocolate-light"
+    >
+      {
+        books.map(({ title, image, progress }) => (
+          <div class="book-container group">
+            <div class="relative w-32 max-sm:w-20 max-sm:h-32 h-48 bg-surface rounded-md overflow-hidden transition-all duration-300 shadow-md group-hover:-mt-2 group-hover:mb-2 transition-all duration-300">
+              <div
+                class={`book-lighting relative w-full h-full pl-2 bg-surface ${title.toLowerCase().replace(/\s+/g, "-")}`}
+              >
+                <Image
+                  src={image}
+                  alt={title}
+                  width={268}
+                  height={402}
+                  draggable={false}
+                  class="w-full h-full min-h-[191px] max-sm:min-h-[100px] object-cover border-l-1 border-l-white/15"
+                />
+              </div>
+            </div>
+            <div class="book-completion">
+              <div class="book-completion-bar flex items-center justify-between gap-2 mt-2 opacity-0 transform -translateY-20 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                {progress > 0 ? (
+                  <>
+                    <div class="book-completion-bar-fill w-full h-1 rounded-md bg-paper shadow-inner relative overflow-hidden">
+                      <div
+                        class="book-completion-bar-fill-inner absolute inset-0 bg-coffee w-full h-full"
+                        style={`width: ${progress}%;`}
+                      />
+                    </div>
+                    <span class="text-xxs font-mono font-medium text-chocolate">
+                      {progress}%
+                    </span>
+                  </>
+                ) : (
+                  <span class="text-xxs font-mono font-medium text-chocolate opacity-50">
+                    NOT STARTED
+                  </span>
+                )}
+              </div>
             </div>
           </div>
-          <div class="book-completion">
-            <div class="book-completion-bar">
-              {progress > 0 ? (
-                <>
-                  <div class="book-completion-bar-fill">
-                    <div
-                      class="book-completion-bar-fill-inner"
-                      style={`width: ${progress}%;`}
-                    />
-                  </div>
-                  <span>{progress}%</span>
-                </>
-              ) : (
-                <span class="muted">NOT STARTED</span>
-              )}
-            </div>
-          </div>
-        </div>
-      ))
-    }
+        ))
+      }
+    </div>
   </div>
-</div>
 
-<SignatureSection />
+  <SignatureSection />
+
 
 <style lang="scss">
   @import "../../styles/base/_breakpoints.scss";
-
-  .personal-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-base);
-    align-items: center;
-    justify-content: center;
-
-    @include tablet {
-      grid-template-columns: 1fr;
-    }
-
-    .personal-text {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-base);
-
-      @include tablet {
-        margin-bottom: var(--spacing-base);
-      }
-    }
-  }
-
-  .currently-on-repeat {
-    margin-top: var(--spacing-quad);
-
-    h4 {
-      font-family: var(--font-sans);
-      color: var(--color-coffee);
-      font-size: var(--font-size-small);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 600;
-      margin-bottom: var(--spacing-base);
-    }
-  }
-
-  .currently-reading {
-    margin-top: var(--spacing-double);
-
-    h4 {
-      font-family: var(--font-sans);
-      color: var(--color-coffee);
-      font-size: var(--font-size-small);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 600;
-      margin-bottom: var(--spacing-base);
-    }
-  }
-
-  .currently-reading-list {
-    display: flex;
-    border-radius: var(--border-radius-base);
-    gap: var(--spacing-base);
-    padding: var(--spacing-base) var(--spacing-base) var(--spacing-xsmall);
-    background: var(--color-surface);
-
-    .book-container {
-      &:hover .book-artwork {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 10px -5px rgba(91, 72, 72, 0.5);
-      }
-
-      &:hover .book-completion-bar {
-        opacity: 1;
-        transform: translateY(-8px);
-      }
-    }
-  }
-
-  .book-artwork {
-    position: relative;
-    width: 134px;
-    height: 191px;
-    background: var(--color-surface);
-    border-radius: var(--border-radius-base);
-    overflow: hidden;
-    transition: var(--transition-base);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-    img {
-      width: 100%;
-      height: 100%;
-      min-height: 191px;
-      object-fit: cover;
-      border-left: 1px dotted rgba(255, 255, 255, 0.15);
-    }
-  }
-
+  // Keeping this as CSS for now.
   .book-lighting {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    padding-left: 10px;
-    background: var(--color-surface);
-
     &::before {
       content: "";
       position: absolute;
@@ -223,48 +139,6 @@ const books = [
     &.i-human {
       opacity: 0.5;
       background: #00b4d8;
-    }
-  }
-
-  .book-completion-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-small);
-    margin-top: var(--spacing-small);
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: var(--transition-base);
-
-    span {
-      font-size: var(--font-size-xsmall);
-      color: var(--color-chocolate);
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      font-family: var(--font-mono);
-
-      &.muted {
-        opacity: 0.5 !important;
-      }
-    }
-
-    .book-completion-bar-fill {
-      width: 100%;
-      height: 4px;
-      border-radius: var(--border-radius-base);
-      background: var(--color-paper);
-      box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
-      position: relative;
-      overflow: hidden;
-
-      .book-completion-bar-fill-inner {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--color-coffee);
-      }
     }
   }
 </style>

@@ -6,39 +6,48 @@ import aiIconOptions from "../../../assets/case-studies/tropic/ask-ai/ai-icon-op
 import aiIconNewThread from "../../../assets/case-studies/tropic/ask-ai/ai-icon-thread.svg";
 ---
 
-<div class="holder">
-  <span class="poof">Poof!</span>
+<div class="holder relative w-full h-full min-h-full m-auto flex flex-col items-center justify-center">
+  <span class="poof min-w-[100px] block italic text-center bg-paper p-2 rounded-[12px_0_12px_12px] text-xs font-medium text-ink absolute top-[calc(50%-12px)] left-[calc(50%-50px)] z-20 opacity-0 border border-white shadow-[0px_10px_10px_-5px_rgba(108,108,108,0.25)] [&.animate]:animate-poof !text-ink">Poof!</span>
 
-  <div class="chat-input">
+  <div class="chat-input w-full max-w-[400px] mx-auto flex flex-col items-center justify-center font-instrument-sans text-sm shadow-md relative mt-auto">
     <!-- Context -->
-    <div class="chat-input-context">
-      <Image src={aiIconContext} alt="ai-icon-context" />
+    <div class="chat-input-context w-full flex flex-row items-center justify-start gap-2 text-xs font-medium text-white bg-[#241065] border border-[#241065] rounded-t-lg p-2 transition-all duration-300 absolute top-5 opacity-0 translate-y-0">
+      <Image src={aiIconContext} alt="ai-icon-context" class="w-5 h-5 m-0" />
       <span>General Knowledge</span>
     </div>
     <!-- Form -->
-    <div class="chat-input-form">
+    <div class="chat-input-form w-full flex flex-col items-center justify-center gap-2 bg-white relative border border-[#795cf6] overflow-hidden rounded-lg transition-all duration-300 z-10 [&.active]:rounded-t-none [&.active]:rounded-b-lg">
       <!-- Input -->
-      <textarea class="ai-input" placeholder="Ask away..."></textarea>
+      <textarea 
+        class="ai-input w-full h-full min-h-[100px] max-h-[100px] resize-none border-0 outline-none font-instrument-sans text-sm leading-[1.6] p-2 caret-[#241065] !text-ink" 
+        placeholder="Ask away..."
+      ></textarea>
       <!-- Submit -->
-      <button class="chat-input-submit" type="button">
-        <div class="submit-icon">
-          <span><Image src={aiIconArrow} alt="ai-icon-arrow" /></span>
+      <button 
+        class="chat-input-submit w-[52px] h-[52px] flex flex-row items-center justify-center bg-white/50 rounded-full shadow-md absolute bottom-[10px] right-[10px] z-10 cursor-pointer" 
+        type="button"
+      >
+        <div class="submit-icon w-10 h-10 min-w-[40px] min-h-[40px] outline-none bg-black rounded-full flex items-center justify-center transition-all duration-300 hover:bg-[#241065] focus:bg-[#241065] before:content-[''] before:absolute before:top-[calc(50%-24px)] before:left-[calc(50%-24px)] before:w-12 before:h-12 before:bg-transparent before:border-4 before:border-white/50 before:blur-[2px] before:rounded-full before:z-[1]">
+          <span class="w-10 h-10 flex items-center justify-center rounded-full overflow-hidden pointer-events-none">
+            <Image src={aiIconArrow} alt="ai-icon-arrow" class="w-5 h-5 transition-all duration-300" />
+          </span>
         </div>
       </button>
       <!-- Actions -->
-      <div class="chat-input-form-actions">
-        <button type="button">
-          <Image src={aiIconOptions} alt="ai-icon-options" />
+      <div class="chat-input-form-actions w-full flex flex-row items-start justify-start p-2 pb-2 gap-2 opacity-50 transition-all duration-300 [&.active]:opacity-100 !text-ink">
+        <button type="button" class="max-w-fit flex flex-row items-center justify-center gap-1 mb-1 text-xs font-medium p-1 px-3 bg-[#efefef] rounded-md shadow-inner transition-all duration-300 hover:shadow-inner-md">
+          <Image src={aiIconOptions} alt="ai-icon-options" class="w-4 h-4 m-0 max-w-4 max-h-4 min-w-4 min-h-4" />
           <span>Options</span>
         </button>
-        <button type="button">
-          <Image src={aiIconNewThread} alt="ai-icon-new-thread" />
+        <button type="button" class="max-w-fit flex flex-row items-center justify-center gap-1 mb-1 text-xs font-medium p-1 px-3 bg-[#efefef] rounded-md shadow-inner transition-all duration-300 hover:shadow-inner-md">
+          <Image src={aiIconNewThread} alt="ai-icon-new-thread" class="w-4 h-4 m-0 max-w-4 max-h-4 min-w-4 min-h-4" />
           <span>New Thread</span>
         </button>
       </div>
     </div>
   </div>
 </div>
+
 <script>
   const chatInputs = document.querySelectorAll(".chat-input");
 
@@ -48,7 +57,9 @@ import aiIconNewThread from "../../../assets/case-studies/tropic/ask-ai/ai-icon-
     const form = chatInput.querySelector(".chat-input-form");
     const actions = chatInput.querySelector(".chat-input-form-actions");
     const submit = chatInput.querySelector(".chat-input-submit");
+    const submitIcon = chatInput.querySelector(".submit-icon");
     const poof = document.querySelector(".poof");
+
     const updateClasses = () => {
       if (!textarea) return;
       const hasValue = (textarea as HTMLTextAreaElement).value.length > 0;
@@ -57,31 +68,29 @@ import aiIconNewThread from "../../../assets/case-studies/tropic/ask-ai/ai-icon-
         context?.classList.add("active");
         actions?.classList.add("active");
         submit?.classList.add("active");
-
-        setTimeout(() => {
-          form?.classList.add("active");
-        }, 100);
+        submitIcon?.classList.add("active");
+        form?.classList.add("active");
       } else {
         context?.classList.remove("active");
         actions?.classList.remove("active");
         submit?.classList.remove("active");
         submit?.classList.remove("send");
+        submitIcon?.classList.remove("active");
         form?.classList.remove("active");
       }
     };
 
-    // Handle value-dependent classes
     textarea?.addEventListener("input", updateClasses);
 
-    // Handle submit button click
     submit?.addEventListener("click", () => {
       if ((textarea as HTMLTextAreaElement).value.length > 0) {
-        submit?.classList.add("send");
+        submit.classList.add("send");
+        submitIcon?.classList.add("send");
         poof?.classList.add("animate");
-        // Reset form after animation
         setTimeout(() => {
           (textarea as HTMLTextAreaElement).value = "";
-          submit?.classList.remove("send");
+          submit.classList.remove("send");
+          submitIcon?.classList.remove("send");
           poof?.classList.remove("animate");
           updateClasses();
         }, 1800);
@@ -91,17 +100,6 @@ import aiIconNewThread from "../../../assets/case-studies/tropic/ask-ai/ai-icon-
 </script>
 
 <style lang="scss">
-  .holder {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
 
   .poof {
     min-width: 100px;
@@ -143,45 +141,8 @@ import aiIconNewThread from "../../../assets/case-studies/tropic/ask-ai/ai-icon-
   }
 
   .chat-input {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-sans);
-    font-size: var(--font-size-small);
-    box-shadow: 0px 10px 10px -5px rgba(108, 108, 108, 0.25);
-    position: relative;
-    margin-top: auto;
 
     .chat-input-context {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      gap: var(--spacing-small);
-      font-size: var(--font-size-xsmall);
-      font-weight: 500;
-      color: white;
-      background-color: #241065;
-      border: 1px solid #241065;
-      border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
-      padding: var(--spacing-small);
-      transition: all var(--transition-base);
-      position: absolute;
-      top: 20px;
-      opacity: 0;
-      transform: translateY(0);
-
-      img {
-        width: 20px;
-        height: 20px;
-        margin: 0;
-      }
-
       &.active {
         opacity: 1;
         position: relative;
@@ -192,104 +153,7 @@ import aiIconNewThread from "../../../assets/case-studies/tropic/ask-ai/ai-icon-
     }
 
     .chat-input-form {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--spacing-small);
-      background-color: white;
-      position: relative;
-      border: 1px solid #795cf6;
-      overflow: hidden;
-      border-radius: var(--border-radius-large);
-      transition: all var(--transition-base);
-      z-index: 10;
-
-      &.active {
-        border-radius: 0 0 var(--border-radius-large) var(--border-radius-large);
-      }
-
-      textarea.ai-input {
-        width: 100%;
-        height: 100%;
-        min-height: 100px;
-        max-height: 100px;
-        resize: none;
-        border: 0;
-        outline: none;
-        font-family: var(--font-sans);
-        font-size: var(--font-size-small);
-        line-height: 1.6;
-        padding: var(--spacing-small);
-        caret-color: #241065;
-      }
-
       .chat-input-submit {
-        width: 52px;
-        height: 52px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        background-color: rgba(255, 255, 255, 0.5);
-        border-radius: 50%;
-        box-shadow: 0px 1px 4px -1px rgba(108, 108, 108, 0.25);
-
-        position: absolute;
-        top: calc(100% - 62px);
-        left: calc(100% - 62px);
-        z-index: 10;
-
-        .submit-icon {
-          width: 40px;
-          height: 40px;
-          min-width: 40px;
-          min-height: 40px;
-          outline: none;
-          background-color: #000;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all var(--transition-base);
-
-          span {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            overflow: hidden;
-            pointer-events: none;
-          }
-          img {
-            width: 20px;
-            height: 20px;
-            transition: all var(--transition-base);
-          }
-
-          &::before {
-            content: "";
-            position: absolute;
-            top: calc(50% - 24px);
-            left: calc(50% - 24px);
-            width: 48px;
-            height: 48px;
-            background: transparent;
-            border: 4px solid rgba(255, 255, 255, 0.5);
-            filter: blur(2px);
-            border-radius: 50%;
-            z-index: 1;
-          }
-
-          &:hover,
-          &:focus {
-            background-color: #241065;
-          }
-        }
-
         &::before,
         &::after {
           content: "";
@@ -304,7 +168,7 @@ import aiIconNewThread from "../../../assets/case-studies/tropic/ask-ai/ai-icon-
           filter: blur(8px);
           opacity: 0;
           transform: scale(0.75);
-          transition: all var(--transition-base);
+          transition: all .3s ease-in-out;
         }
 
         &::after {
@@ -315,7 +179,8 @@ import aiIconNewThread from "../../../assets/case-studies/tropic/ask-ai/ai-icon-
 
         &:hover::before,
         &:focus::before,
-        &.send::before {
+        &.send::before,
+        &.active::before {
           opacity: 1;
           transform: scale(0.85);
           animation: pulseBefore 1s ease-in-out infinite;
@@ -323,7 +188,8 @@ import aiIconNewThread from "../../../assets/case-studies/tropic/ask-ai/ai-icon-
 
         &:hover::after,
         &:focus::after,
-        &.send::after {
+        &.send::after,
+        &.active::after {
           opacity: 1;
           transform: scale(0.85);
           animation: pulseAfter 1s ease-in-out infinite;
@@ -369,53 +235,6 @@ import aiIconNewThread from "../../../assets/case-studies/tropic/ask-ai/ai-icon-
         }
         100% {
           background: linear-gradient(to right, #fbb1bc, #ffcb77);
-        }
-      }
-    }
-
-    .chat-input-form-actions {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: flex-start;
-      padding: 0 var(--spacing-small) var(--spacing-small);
-      gap: var(--spacing-small);
-      opacity: 0.5;
-      transition: all var(--transition-base);
-
-      &.active {
-        opacity: 1;
-      }
-
-      button {
-        max-width: fit-content;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: var(--spacing-xsmall);
-        margin-bottom: var(--spacing-xsmall);
-        font-size: var(--font-size-xsmall);
-        font-weight: 500;
-        padding: 4px 12px;
-        background-color: #efefef;
-        border-radius: 20px;
-        box-shadow: 0px 1px 4px -1px rgba(108, 108, 108, 0.25) inset;
-        transition: all var(--transition-base);
-
-        &:hover {
-          box-shadow: 0px 1px 4px -1px rgba(108, 108, 108, 0.5) inset;
-        }
-        
-        img {
-          width: 16px;
-          height: 16px;
-          margin: 0;
-          max-width: 16px;
-          max-height: 16px;
-          min-width: 16px;
-          min-height: 16px;
         }
       }
     }

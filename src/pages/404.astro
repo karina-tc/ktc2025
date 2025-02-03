@@ -13,10 +13,12 @@ import Atom from "../components/Atom.astro";
   includeNavigation={false}
   includeFooter={false}
 >
-  <div class="section-container">
+  <div
+    class="w-full h-screen flex flex-col items-center justify-center text-center"
+  >
     <a href="/"><Atom size="140px" /></a>
-    <h1>Sorry</h1>
-    <p>I'm afraid this page might not exist.</p>
+    <h1 class="my-10 mx-5">Sorry</h1>
+    <p class="mb-5 text-lg">I'm afraid this page might not exist.</p>
     <a class="action-link" id="backButton" href="/">Take me back</a>
   </div>
 </BaseLayout>
@@ -37,24 +39,3 @@ import Atom from "../components/Atom.astro";
     console.log("No valid last URL found, using home page");
   }
 </script>
-
-<style lang="scss">
-  .section-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    padding: var(--spacing-quad);
-    text-align: center;
-
-    h1 {
-      margin: var(--spacing-double) 0 var(--spacing-base);
-    }
-
-    p {
-      font-size: var(--font-size-huge);
-      margin-bottom: var(--spacing-base);
-    }
-  }
-</style>

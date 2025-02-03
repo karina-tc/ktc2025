@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-ink: #2B2627;
+  --color-ink-secondary: #463629;
+  --color-ink-tertiary: #826C5F;
+  --color-paper: #fffdfa;
+  --color-accent: #D85640;
+  --color-accent-light: #FF6632;
+  --color-lines: #EBD4BD;
+  --color-surface: #F0E9E1;
+  --color-border: #DCCCC3;
+  --color-lime: #E1EBA9;
+  --color-coal: #060403;
+  --color-coal-light: #81766d;
+  --color-coffee: #B29483;
+  --color-chocolate: #795548;
+  --color-chocolate-light: #d1ae95;
+  --color-gold: #C69E6A;
+  --color-sky: #CDE4F6;
+
+  /* Typography */
+  --font-instrument-sans: "Instrument Sans", sans-serif;
+  --font-instrument-serif: "Instrument Serif", serif;
+  --font-newsreader: "Newsreader", serif;
+  --font-mono: monospace;
+}
+
+/* Base Styles */
+html,
+body {
+  @apply w-full h-full m-0 p-0 relative font-instrument-sans;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+
+  @apply text-ink leading-normal font-newsreader;
+  @apply bg-paper dark:bg-chocolate  dark:text-surface;
+}
+
+h1,
+h2 {
+  @apply font-instrument-serif;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  @apply font-instrument-sans;
+}
+
+h1 {
+  @apply text-6xl md:text-8xl text-balance leading-[.9];
+}
+
+h2 {
+  @apply text-4xl md:text-6xl leading-[1] text-balance;
+}
+
+h3 {
+  @apply text-3xl md:text-4xl font-instrument-serif text-ink-tertiary dark:text-chocolate-light;
+}
+
+h4 {
+  @apply text-sm font-mono uppercase text-ink-tertiary dark:text-chocolate-light font-semibold tracking-widest;
+}
+
+h5 {
+  @apply text-xs font-mono uppercase text-ink-tertiary dark:text-chocolate-light font-semibold tracking-widest;
+}
+
+p {
+  @apply text-pretty leading-[2];
+}
+
+
+.neue-container {
+  @apply w-full max-w-5xl mx-auto px-10;
+}
+
+.caramel-text {
+  @apply text-ink-tertiary dark:text-chocolate-light;
+}
+
+strong.highlighted {
+  @apply py-1 px-0.5 rounded-sm text-ink-secondary;
+  background-color: #fbe8cc;
+}
+
+strong.highlighted.green {
+  background-color: #dff2c8;
+}
+
+strong.highlighted.red {
+  @apply text-paper;
+  background-color: #FF5722;
+}
+
+.plate-label,
+.plate-caption {
+  @apply text-ink-tertiary dark:text-chocolate-light w-fit mx-auto my-10 text-center;
+}
+
+.plate-caption {
+  @apply text-sm font-medium italic;
+}
+
+ol,
+ul {
+  @apply ml-5 list-outside;
+}
+
+ol {
+  @apply list-decimal;
+}
+
+ul {
+  @apply list-disc;
+}
+
+ol li,
+ul li {
+  @apply mb-5 text-balance;
+}
+
+/* End of Base Styles */
+
+/* Helper classes */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+/* End of Helper classes */
+
+/* Blog Styles */
+@layer components {
+  .blog-post-content {
+    h1, h2, h3, h4 {
+      @apply mb-10;
+    }
+
+    h2 {
+      @apply text-4xl md:text-6xl leading-[1] text-balance text-ink-tertiary dark:text-chocolate-light relative pt-8 mt-20 [&:first-of-type]:mt-0;
+    }
+
+    h2::before {
+      @apply content-[""] absolute top-0 left-0 w-[82px] h-[6px];
+      @apply flex items-start justify-start;
+      @apply bg-[url("/assets/swash.svg")] bg-center bg-no-repeat bg-contain;
+    }
+
+    h2 + h3 {
+      @apply mt-10;
+    }
+
+    h3 {
+      @apply text-3xl md:text-4xl font-instrument-serif text-ink-tertiary dark:text-chocolate-light;
+    }
+    
+    h4 {
+      @apply text-sm font-mono uppercase text-ink-tertiary dark:text-chocolate-light font-semibold tracking-widest;
+    }
+    
+    h5 {
+      @apply text-xs font-mono uppercase text-ink-tertiary dark:text-chocolate-light font-semibold tracking-widest;
+    }
+
+    p {
+      @apply text-pretty leading-[2] mb-5;
+    }
+
+    p + h3 {
+      @apply mt-10;
+    }
+
+    code:not(pre code) {
+      @apply font-mono leading-tight font-normal bg-surface text-ink;
+      @apply p-1 rounded-md dark:bg-ink-secondary dark:text-surface;
+    }
+
+    pre {
+      @apply relative my-10 border border-lines border-t-6 rounded-lg p-5 shadow-md;
+    }
+
+    pre code {
+      @apply text-sm leading-[1]
+    }
+  }
+}
+/* End of Blog Styles */

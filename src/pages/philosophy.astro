@@ -175,7 +175,7 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
           </p>
         </section>
         <section data-section="why-hire-me">
-          <h1>
+          <h1 class="!leading-[1.2em]">
             <a href="mailto:hello@karinatovar.com" target="_blank">Hire me</a> if
             you want to dream big and <em>build bold products</em> that make people’s
             days <em>suck less</em>.
@@ -285,7 +285,7 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
   .manifesto-background {
     position: fixed;
     inset: 0;
-    background-color: var(--color-paper);
+    background-color: #F0E9E1;
     opacity: 0;
     animation: fadeIn 0.5s ease-out 0.2s forwards;
   }
@@ -293,7 +293,7 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
   .manifesto-content {
     position: relative;
     margin: 0 auto;
-    padding: var(--spacing-double) 0;
+    padding: 80px 0;
     height: 100vh;
     overflow-y: auto;
     opacity: 0;
@@ -305,20 +305,21 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
     // Adds scroll snapping
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    color: #2B2627;
   }
 
   p {
     font-size: clamp(1rem, 2vw, 1.5rem);
     line-height: 1.5;
     font-weight: 400;
-    margin: var(--spacing-double) 0;
+    margin: 40px 0;
 
     em {
       font-weight: 500;
-      color: var(--color-ink-tertiary);
+      color: #826C5F;
 
       &.light {
-        color: var(--color-lime);
+        color: #E1EBA9;
       }
     }
   }
@@ -339,7 +340,7 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
     align-items: center;
     justify-content: start;
     padding-top: 80px;
-    gap: var(--spacing-base);
+    gap: 20px;
 
     // Add scroll snapping to header
     scroll-snap-align: start;
@@ -348,17 +349,17 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
     h4 {
       font-size: clamp(0.7rem, 2vw, 0.9rem);
       font-weight: 600;
-      color: var(--color-ink-tertiary);
-      font-family: var(--font-sans);
+      color: #826C5F;
+      font-family: "Instrument Sans", sans-serif;
       text-transform: uppercase;
       text-align: center;
       max-width: min(720px, 90vw);
       letter-spacing: 0.1em;
       line-height: 2;
-      margin: var(--spacing-small) auto;
+      margin: 10px auto;
 
       &:last-of-type {
-        margin-top: var(--spacing-double);
+        margin-top: 40px;
       }
     }
 
@@ -373,15 +374,15 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
     .scroll-down {
       font-size: 40px;
       font-weight: 600;
-      color: var(--color-coffee);
-      font-family: var(--font-sans);
+      color: #B29483;
+      font-family: "Instrument Sans", sans-serif;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin: -2rem auto var(--spacing-base);
+      margin: -2rem auto 40px;
     }
 
     @include tablet {
-      padding: 80px var(--spacing-double) var(--spacing-double);
+      padding: 80px 40px 40px;
     }
   }
 
@@ -401,28 +402,28 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
       scroll-snap-stop: always;
 
       &[data-section="introduction"] {
-        background-color: var(--color-surface);
+        background-color: #F0E9E1;
       }
       &[data-section="simplicity"] {
-        background-color: var(--color-paper);
+        background-color: #F0E9E1;
       }
       &[data-section="empathy"] {
-        color: var(--color-paper);
-        background-color: var(--color-chocolate);
+        color: #F0E9E1;
+        background-color: #795548;
         z-index: 10;
 
         em {
-          color: var(--color-chocolate-light);
+          color: #d1ae95;
         }
 
         .redacted {
-          color: var(--color-chocolate-light);
+          color: #d1ae95;
         }
         .redacted::before {
-          color: var(--color-chocolate);
+          color: #795548;
         }
         .redacted::after {
-          background-color: var(--color-chocolate-light);
+          background-color: #d1ae95;
         }
 
         .atom-container {
@@ -446,32 +447,32 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
         }
       }
       &[data-section="learning"] {
-        background-color: var(--color-paper);
+        background-color: #F0E9E1;
       }
       &[data-section="personality"] {
-        background-color: var(--color-surface);
+        background-color: #F0E9E1;
       }
       &[data-section="why-hire-me"] {
         z-index: 10;
-        color: var(--color-paper);
-        background-color: var(--color-chocolate);
+        color: #F0E9E1;
+        background-color: #795548;
         h1 {
           font-size: clamp(3rem, 8vw, 4rem);
           line-height: 0.9;
           a {
             text-decoration: underline;
-            text-decoration-color: var(--color-chocolate-light);
+            text-decoration-color: #d1ae95;
             text-decoration-thickness: 6px;
             text-underline-offset: 8px;
             text-decoration-style: dashed;
             transition: all 0.3s ease-in-out;
             &:hover {
-              color: var(--color-chocolate-light);
-              text-decoration-color: var(--color-paper);
+              color: #d1ae95;
+              text-decoration-color: #F0E9E1;
             }
           }
           em {
-            color: var(--color-chocolate-light);
+            color: #d1ae95;
           }
         }
       }
@@ -481,8 +482,8 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
           text-align: left;
           font-size: clamp(2rem, 8vw, 3rem);
           line-height: 1.2;
-          font-family: var(--font-serif);
-          color: var(--color-coffee);
+          font-family: "Instrument Serif", serif;
+          color: #826C5F;
           opacity: 0.75;
         }
       }
@@ -501,16 +502,16 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
         text-align: left;
         font-size: clamp(0.7rem, 2vw, 0.9rem);
         font-weight: 600;
-        color: var(--color-coffee);
-        font-family: var(--font-sans);
+        color: #B29483;
+        font-family: "Instrument Sans", sans-serif;
         text-transform: uppercase;
         letter-spacing: 0.1em;
         line-height: 2;
-        margin: var(--spacing-double) auto 0;
+        margin: 40px auto 0;
       }
 
       p {
-        margin-top: var(--spacing-small);
+        margin-top: 10px;
       }
 
       &:first-of-type {
@@ -519,13 +520,13 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
           font-size: clamp(3rem, 8vw, 4.5rem);
           line-height: 0.8;
           margin: 0.2em 0.1em 0 0;
-          font-family: var(--font-serif);
-          color: var(--color-ink-tertiary);
+          font-family: "Instrument Serif", serif;
+          color: #826C5F;
         }
       }
 
       @include tablet {
-        padding: var(--spacing-double);
+        padding: 40px;
       }
     }
   }
@@ -533,14 +534,14 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
   // UI Elements
   .close-button {
     position: fixed;
-    top: var(--spacing-base);
-    right: var(--spacing-base);
-    color: var(--color-ink-tertiary);
+    top: 20px;
+    right: 20px;
+    color: #826C5F;
     text-decoration: underline;
-    text-decoration-color: var(--color-ink-tertiary);
+    text-decoration-color: #826C5F;
     text-underline-offset: 4px;
     text-decoration-thickness: 1px;
-    padding: var(--spacing-small) var(--spacing-base);
+    padding: 10px 20px;
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
     border-radius: 40px;
@@ -548,8 +549,8 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
     transition: all 0.3s ease-in-out;
     &:hover {
       background: rgba(255, 255, 255, 1);
-      color: var(--color-ink);
-      text-decoration-color: var(--color-ink);
+      color: #2B2627;
+      text-decoration-color: #2B2627;
     }
   }
 
@@ -677,7 +678,7 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
       width: 100%;
       height: 100%;
       max-height: 28px;
-      color: var(--color-ink);
+      color: #2B2627;
       z-index: 1;
       overflow: hidden;
       transition: all 0.4s ease-in-out;
@@ -691,12 +692,12 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
       width: 100%;
       height: 100%;
       max-height: 28px;
-      background-color: var(--color-coffee);
+      background-color: #B29483;
       transition: all 0.4s ease-in-out;
     }
 
     &:hover {
-      color: var(--color-ink-tertiary);
+      color: #826C5F;
       &::before {
         opacity: 0;
         top: 20%;
@@ -719,14 +720,13 @@ const greeting = reader ? `MY PHILOSOPHY (HI ${reader} 👋)` : "MY PHILOSOPHY";
     z-index: 100;
     animation: progressBar 2s ease-in-out forwards;
 
-
     .progress-bar-inner {
       position: absolute;
       top: 0;
       left: 0;
       width: 0px;
       height: 100%;
-      background-color: var(--color-coffee);
+      background-color: #B29483;
     }
   }
 

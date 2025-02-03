@@ -3,11 +3,15 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import { getCaseStudy } from "../../data/case-study-details";
+
 // Case Study Components
 import * as Work from "../../components/work/index.js";
 import BackToTop from "../../components/BackToTop.astro";
 import AskAIChatPreview from "../../components/work/Demos/AskAIChatPreview.astro";
-import ProductShot from "../../components/work/Elements/ProductShot.astro";
+import SnippetsGallery from "../../components/work/Elements/SnippetsGallery.astro";
+import SnippetsGalleryItem from "../../components/work/Elements/SnippetsGalleryItem.astro";
+import AskAiCanvas from "../../components/_partials/work/AskAiCanvas.astro";
+
 //Assets
 import showcaseImage from "../../assets/case-studies/tropic/ask-ai/ask-ai-showcase.png";
 import showcaseBackground from "../../assets/backgrounds/noise-5.png";
@@ -21,8 +25,6 @@ import aiMessageBlock from "../../assets/case-studies/tropic/ask-ai/ai-message-b
 import threadBlock from "../../assets/case-studies/tropic/ask-ai/thread-block.png";
 import chatReferences from "../../assets/case-studies/tropic/ask-ai/chat-references.png";
 import optionsBlock from "../../assets/case-studies/tropic/ask-ai/options-block.png";
-import SnippetsGallery from "../../components/work/Elements/SnippetsGallery.astro";
-import SnippetsGalleryItem from "../../components/work/Elements/SnippetsGalleryItem.astro";
 
 // Data
 const caseStudy = getCaseStudy("askTropic");
@@ -107,52 +109,17 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
     />
   </Work.StorySection>
 
-  <section class="open-canvas mockups" data-intersection-observer={true}>
-    <div class="canvas-container">
-      <span class="plate-label">Figure I.</span>
-      <div class="hallway">
-        <Image
-          src={askTropicHallway03}
-          alt="ask-tropic-hallway-0"
-          draggable="false"
-          width={640}
-          priority
-        />
-        <Image
-          src={askTropicHallway04}
-          alt="ask-tropic-hallway-02"
-          draggable="false"
-          width={580}
-          priority
-        />
-        <Image
-          src={askTropicHallway05}
-          alt="ask-tropic-hallway-03"
-          draggable="false"
-          width={880}
-          priority
-        />
-        <Image
-          src={askTropicHallway02}
-          alt="ask-tropic-hallway-04"
-          draggable="false"
-          width={950}
-          priority
-        />
-        <Image
-          src={askTropicHallway01}
-          alt="ask-tropic-hallway-05"
-          draggable="false"
-          width={900}
-          priority
-        />
-      </div>
-    </div>
-    <span class="plate-caption"
-      >Mid-fidelity wireframes of Tropic's Ask AI feature. High fidelity was
-      done in code.</span
-    >
-  </section>
+  <AskAiCanvas
+    images={[
+      askTropicHallway03,
+      askTropicHallway04,
+      askTropicHallway05,
+      askTropicHallway02,
+      askTropicHallway01,
+    ]}
+    label="Figure I."
+    caption="Mid-fidelity wireframes of Tropic's Ask AI feature. High fidelity was done in code."
+  />
 
   <!-- Development -->
   <Work.StorySection kicker="Development" title="Shapping Tropic's Assistant">
@@ -182,7 +149,9 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
   <SnippetsGallery>
     <SnippetsGalleryItem interactive>
       <AskAIChatPreview />
-      <span class="plate-caption">Figure II. Tropic's Ask AI Input Demo</span>
+      <span class="plate-caption !text-ink-tertiary"
+        >Figure II. Tropic's Ask AI Input Demo</span
+      >
     </SnippetsGalleryItem>
 
     <SnippetsGalleryItem
@@ -255,56 +224,6 @@ if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
 <style lang="scss">
   // Breakpoint mixins
   @import "../../styles/base/_breakpoints.scss";
-
-  .back-to-top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-
-    font-size: var(--font-size-xsmall);
-    font-weight: 600;
-    font-family: var(--font-sans);
-    color: var(--color-ink);
-    cursor: pointer;
-
-    background-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    padding: var(--spacing-small) var(--spacing-base);
-    border-radius: var(--border-radius-base);
-
-    transition: all var(--transition-base);
-
-    &:hover {
-      background-color: var(--color-chocolate);
-      color: var(--color-paper);
-    }
-
-    &:focus {
-      outline: none;
-      background-color: var(--color-chocolate);
-      color: var(--color-paper);
-
-      .back-to-top--initial-text {
-        display: none;
-      }
-
-      .back-to-top--secondary-text {
-        display: block;
-      }
-    }
-
-    &--initial-text {
-      display: block;
-    }
-
-    &--secondary-text {
-      display: none;
-    }
-  }
 
   .open-canvas {
     width: 100%;

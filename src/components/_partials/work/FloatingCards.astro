@@ -13,83 +13,24 @@ interface Props {
 const { leftCard, rightCard } = Astro.props;
 ---
 
-<div class="floating-cards">
-  <div class="floating-cards-cell left">
-    <h5>{leftCard.type}</h5>
-    <p class="title">{leftCard.title}</p>
-    <p class="description">{leftCard.description}</p>
+<div
+  class="flex justify-between gap-8 py-16 cursor-pointer max-md:cursor-default md:flex-row flex-col md:gap-8 gap-4 hover:[&>div]:rotate-0 hover:[&>div]:shadow-lg hover:[&>div]:z-[3] hover:[&>div]:delay-300"
+>
+  <div
+    class="flex-1 bg-white dark:bg-ink-secondary p-4 rounded-lg shadow-md border-l-4 border-l-accent transition-all duration-300 relative z-[1] md:-rotate-10 md:ml-10">
+    <h5 class="text-coffee font-sans text-sm mb-1">{leftCard.type}</h5>
+    <span class="block font-instrument-serif text-3xl leading-tight my-2">
+      {leftCard.title}
+    </span>
+    <p class="mt-1 text-sm leading-tightest">{leftCard.description}</p>
   </div>
-  <div class="floating-cards-cell right">
-    <h5>{rightCard.type}</h5>
-    <p class="title">{rightCard.title}</p>
-    <p class="description">{rightCard.description}</p>
+  <div
+    class="flex-1 bg-white dark:bg-ink-secondary p-4 rounded-lg shadow-md border-l-4 border-l-accent transition-all duration-300 relative z-[1] md:rotate-10 md:ml-10"
+  >
+    <h5 class="text-coffee font-sans text-sm mb-1">{rightCard.type}</h5>
+    <span class="block font-instrument-serif text-3xl leading-tight my-2">
+      {rightCard.title}
+    </span>
+    <p class="mt-1 text-sm leading-tightest">{rightCard.description}</p>
   </div>
 </div>
-
-<style lang="scss">
-  @use "../../../styles/base/_breakpoints.scss" as *;
-
-  .floating-cards {
-    --card-bg: white;
-    --card-border: var(--color-accent);
-
-    display: flex;
-    justify-content: space-between;
-    gap: var(--spacing-double);
-    padding: var(--spacing-quad) 0;
-    cursor: pointer;
-
-    @include mobile {
-      flex-direction: column;
-      gap: var(--spacing-base);
-    }
-
-    &:hover .floating-cards-cell {
-      transform: rotate(0deg);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      z-index: 3;
-      transition-delay: 0.3s;
-    }
-  }
-
-  .floating-cards-cell {
-    flex: 1;
-    background: var(--card-bg);
-    padding: var(--spacing-base);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-left: 4px solid var(--card-border);
-    transition: all 0.3s ease;
-    position: relative;
-    z-index: 1;
-
-    @include tablet-reverse {
-      &.left {
-        transform: rotate(-10deg);
-      }
-
-      &.right {
-        transform: rotate(10deg);
-      }
-    }
-
-    h5 {
-      color: var(--color-coffee);
-      font-size: var(--font-size-small);
-      font-family: var(--font-sans);
-
-      margin-bottom: var(--spacing-xsmall);
-    }
-
-    .title {
-      display: block;
-      font-family: var(--font-headings);
-      font-size: var(--font-size-massive);
-    }
-
-    .description {
-      margin-top: var(--spacing-xsmall);
-      font-size: var(--font-size-small);
-    }
-  }
-</style>

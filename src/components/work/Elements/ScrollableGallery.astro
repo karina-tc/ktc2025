@@ -16,12 +16,12 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div class="scrollable-gallery-wrapper">
-  <div class="faders"></div>
-  <div class="scrollable-gallery">
+<div class="scrollable-gallery-wrapper relative w-full -mt-[100px] mb-20 bg-surface overflow-hidden">
+  <div class="absolute inset-0 z-10 pointer-events-none max-md:hidden before:absolute before:top-0 before:left-0 before:w-[200px] before:h-full before:bg-gradient-to-r before:from-surface before:to-transparent after:absolute after:top-0 after:right-0 after:w-[200px] after:h-full after:bg-gradient-to-l after:from-surface after:to-transparent"></div>
+  <div class="scrollable-gallery w-full p-10 md:py-20 flex flex-col md:flex-row overflow-x-auto overflow-y-hidden gap-8 scrollbar-hide md:px-20 xl:px-32 md:flex-row md:gap-8">
     {
       items.map((item) => (
-        <figure class="scrollable-gallery-item">
+        <figure class="flex-1 md:min-w-[820px] flex flex-col justify-start items-start gap-5">
           {item.image && (
             <Image
               src={item.image}
@@ -29,156 +29,24 @@ const { items } = Astro.props;
               width={820}
               height={578}
               loading="lazy"
+              class="w-full h-auto rounded-xl border-[10px] border-white/50 shadow-lg"
             />
           )}
           {item.video && (
-            <video src={item.video} autoplay="true" muted="true" loop="true" />
+            <video 
+              src={item.video} 
+              autoplay="true" 
+              muted="true" 
+              loop="true"
+              class="w-full h-auto rounded-xl border-[10px] border-white/50 shadow-lg" 
+            />
           )}
-          <figcaption class="scrollable-gallery-item-caption">
-            {item.title && <p class="title">{item.title}</p>}
-            {item.description && <p class="description">{item.description}</p>}
+          <figcaption class="flex flex-col gap-2.5 max-w-[600px] text-ink-secondary">
+            {item.title && <h5 class="!text-ink-tertiary mt-4 mb-2">{item.title}</h5>}
+            {item.description && <p class="text-sm">{item.description}</p>}
           </figcaption>
         </figure>
       ))
     }
   </div>
 </div>
-
-<style lang="scss">
-  @use "../../../styles/base/_breakpoints.scss" as *;
-
-  .scrollable-gallery-wrapper {
-    width: 100%;
-    margin: -100px auto var(--spacing-double);
-    position: relative;
-    background: var(--color-surface);
-    overflow: hidden; // Contain the faders
-  }
-
-  .scrollable-gallery {
-    width: 100%;
-    padding: 80px calc(25vw - 340px) var(--spacing-double);
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    overflow-y: hidden;
-    gap: var(--spacing-double);
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-
-    .scrollable-gallery-item {
-      flex: 1;
-      min-width: 820px;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-      gap: var(--spacing-base);
-
-      img,
-      video {
-        width: 100%;
-        height: auto;
-        border-radius: 12px;
-        border: 10px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .scrollable-gallery-item-caption {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-small);
-        max-width: 600px;
-        color: var(--color-ink-secondary);
-
-        .title {
-          font-family: var(--font-headings);
-          font-size: clamp(1rem, 2.5vw, 1.25rem);
-          margin-bottom: 0px;
-        }
-        .description {
-          font-size: var(--font-size-small);
-        }
-      }
-    }
-
-    @include tablet {
-      padding: var(--spacing-double);
-
-      .scrollable-gallery-item {
-        min-width: 600px;
-      }
-    }
-
-    @include mobile {
-      padding: var(--spacing-double);
-      flex-direction: column;
-      gap: var(--spacing-base);
-
-      .scrollable-gallery-item {
-        min-width: 100%;
-      }
-    }
-  }
-
-  .faders {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 10;
-    pointer-events: none;
-
-    &::before,
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      width: 200px;
-      height: 100%;
-    }
-
-    &::before {
-      left: 0;
-      background: linear-gradient(
-        90deg,
-        var(--color-surface) 0%,
-        transparent 100%
-      );
-    }
-
-    &::after {
-      right: 0;
-      background: linear-gradient(
-        270deg,
-        var(--color-surface) 0%,
-        transparent 100%
-      );
-    }
-  }
-
-  @include tablet {
-    .scrollable-gallery {
-      padding: var(--spacing-double);
-    }
-  }
-
-  @include mobile {
-    .scrollable-gallery {
-      padding: var(--spacing-double);
-      flex-direction: column;
-      gap: var(--spacing-base);
-    }
-
-    .faders {
-      display: none;
-    }
-  }
-</style>

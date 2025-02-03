@@ -3,6 +3,7 @@ import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import Plate from "./Plate.astro";
 import Divider from "../Divider.astro";
+
 interface Props {
   kicker?: string;
   title?: string;
@@ -18,7 +19,7 @@ interface Props {
     caption?: string;
     className?: string;
   };
-  spacing?: 'small' | 'base' | 'double' | 'quad' | 'none';
+  spacing?: "small" | "base" | "double" | "quad" | "none";
 }
 
 const {
@@ -34,21 +35,44 @@ const {
 
 <div
   class:list={[
-    "story-container",
-    title ? "" : "no-title",
+    "neue-container flex flex-col gap-5",
+    {
+      "mt-0": !title,
+      "mx-auto": true,
+      "my-5": spacing === "small",
+      "my-10": spacing === "base",
+      "my-20": spacing === "double",
+      "my-40": spacing === "quad",
+      "m-0": spacing === "none",
+    },
     className,
-    `spacing-${spacing}`,
   ]}
   data-intersection-observer={true}
 >
-  {kicker && (
-    <div class="kicker-container">
-      <Divider color="var(--color-accent)" width={82} height={6} />
-      <h4>{kicker}</h4>
-    </div>
-  )}
-  {title && <h2>{title}</h2>}
-  {subtitle && <h3>{subtitle}</h3>}
+  {
+    kicker && (
+      <div class="flex flex-col">
+        <Divider color="#FF6632" width={82} height={6} />
+        <h4 class="font-sans text-sm font-semibold uppercase tracking-[0.1em] text-ink-tertiary mt-10 mb-2">
+          {kicker}
+        </h4>
+      </div>
+    )
+  }
+  {
+    title && (
+      <h2 class="mb-5">
+        {title}
+      </h2>
+    )
+  }
+  {
+    subtitle && (
+      <h3 class="caramel-text mt-5">
+        {subtitle}
+      </h3>
+    )
+  }
 
   <!-- Main content slot -->
   <slot />
@@ -56,7 +80,7 @@ const {
   <!-- Artwork section if provided -->
   {
     artwork && !plate && (
-      <div class="artwork">
+      <div class="flex items-center justify-center mx-auto">
         <Image
           src={artwork.image}
           alt={artwork.alt}
@@ -77,93 +101,3 @@ const {
     )
   }
 </div>
-
-<style lang="scss">
-  @use "../../styles/base/_breakpoints.scss" as *;
-
-  .story-container {
-    width: 90%;
-    max-width: 820px;
-    padding: var(--spacing-double) 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-base);
-
-    &.spacing-quad {
-      margin: var(--spacing-quad) auto;
-    }
-
-    &.spacing-double {
-      margin: var(--spacing-double) auto;
-    }
-
-    &.spacing-base {
-      margin: var(--spacing-base) auto;
-    }
-
-    &.spacing-small {
-      margin: var(--spacing-small) auto;
-    }
-
-    &.spacing-none {
-      margin: 0 auto;
-    }
-
-    &.no-title {
-      margin-top: 0;
-    }
-
-    p {
-      font-size: var(--font-size-base);
-    }
-
-    h4 {
-      color: var(--color-ink-tertiary);
-      font-family: var(--font-sans);
-      font-size: var(--font-size-small);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin: var(--spacing-double) 0 var(--spacing-xsmall);
-    }
-
-    :global(h3) {
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
-      color: var(--color-ink-tertiary);
-      font-family: var(--font-headings);
-      margin: var(--spacing-base) 0 0;
-    }
-
-    h2 {
-      color: var(--color-ink-secondary);
-      font-family: var(--font-headings);
-      font-size: clamp(2rem, 5vw, 3rem);
-      margin: 0 0 var(--spacing-base);
-      letter-spacing: -0.02em;
-    }
-
-    // Artwork styles
-    .artwork {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-    }
-
-    // Ordered list styles
-    :global(ol),
-    :global(ul) {
-      margin-left: var(--spacing-base);
-    }
-
-    :global(ol li),
-    :global(ul li) {
-      margin: 0 0 var(--spacing-xsmall);
-      text-wrap: balance;
-    }
-
-    :global(p) {
-      text-wrap: pretty;
-    }
-  }
-</style>

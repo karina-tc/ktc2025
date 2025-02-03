@@ -5,6 +5,7 @@ import netlify from '@astrojs/netlify/functions';
 import mdx from '@astrojs/mdx';
 import yaml from '@rollup/plugin-yaml';
 import partytown from '@astrojs/partytown';
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,11 +18,11 @@ export default defineConfig({
         partytown({
             config: {
                 forward: ["dataLayer.push"],
-            },
+            }
         }),
     ],
     vite: {
-        plugins: [yaml()],
+        plugins: [yaml(), tailwindcss()],
         css: {
             preprocessorOptions: {
                 scss: {

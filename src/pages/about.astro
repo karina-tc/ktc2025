@@ -18,59 +18,56 @@ import PersonalSection from "../components/_partials/PersonalSection.astro";
   description="Karina Tovar is a Lead Product Designer."
 >
   <!-- About Me Top -->
-  <div class="grid-container" data-intersection-observer={true}>
-    <div class="grid-content">
-      <div class="text-content">
-        <h2>About Me</h2>
-        <h1>Building joyful high-tech solutions</h1>
-        <p>
-          I am an artist, turned product designer, who likes to code and make
-          things. That just means that I am obsessed over how technology can be
-          used to make people truly happier. One pixel, one bit, one thought at
-          a time.
+  <section class="neue-container pt-20" data-intersection-observer={true}>
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-4">
+      <div class="flex-1 flex flex-col gap-4">
+        <h4>About Me</h4>
+        <h1 class="mt-4 !leading-[1]">Building joyful high-tech solutions</h1>
+        <p class="md:max-w-xl mt-4 caramel-text text-pretty">
+          I am obsessed over how technology can be used to make people truly
+          happier. One pixel, one bit, one thought at a time.
         </p>
       </div>
+      <div
+        class="flex-1 md:max-w-md justify-center items-center hidden md:flex"
+      >
+        <Image src={loop} alt="Loop" loading="eager" draggable={false} />
+      </div>
     </div>
-
-    <div class="visual">
-      <Image src={loop} alt="Loop" loading="eager" />
-    </div>
-  </div>
+  </section>
 
   <!-- Currently -->
-  <div class="section-container">
-    <div class="cards-container">
-      <div class="card">
-        <h5>currently</h5>
-        <p>Tropic App</p>
-      </div>
-      <div class="card">
-        <h5>role</h5>
-        <p>Lead Product Designer</p>
-      </div>
-      <div class="card">
-        <h5>location</h5>
-        <p>East Coast, USA</p>
-      </div>
+  <div class="neue-container p-10">
+    <div class="cards-container grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {
+        [
+          { title: "currently", content: "Tropic App" },
+          { title: "role", content: "Lead Product Designer" },
+          { title: "location", content: "East Coast, USA" },
+        ].map((item) => (
+          <div class="card flex flex-col justify-center items-center text-center p-4 rounded-md bg-surface dark:!bg-ink-secondary">
+            <h5 class="caramel-text mb-1">{item.title}</h5>
+            <p class="max-md:text-sm">{item.content}</p>
+          </div>
+        ))
+      }
     </div>
   </div>
 
-  <!-- Spacer -->
-  <div class="spacer-large"></div>
-
   <!-- Philosophy -->
-  <div class="section-container">
+  <div class="neue-container my-24">
     <PhilosophySection />
   </div>
 
-  <!-- Spacer -->
-  <div class="spacer-large"></div>
-
   <!-- Thesis -->
-  <div class="section-container">
-    <div class="thesis-container">
+  <div class="neue-container my-24">
+    <div
+      class="thesis-container flex flex-col gap-5 items-center justify-center"
+    >
       <SelfCard showTags={true} />
-      <div class="thesis-text">
+      <div
+        class="thesis-text grid grid-cols-1 md:grid-cols-2 md:gap-10 [&>div>p]:mb-5"
+      >
         <div>
           <p>
             As a designer, I want to build a world where each person is not
@@ -99,83 +96,15 @@ import PersonalSection from "../components/_partials/PersonalSection.astro";
     </div>
   </div>
 
-  <!-- Spacer -->
-  <div class="spacer-large"></div>
-
   <!-- Skills -->
-  <div class="section-container">
+  <div class="neue-container my-24 mb-40">
     <SkillsSection />
   </div>
 
-  <!-- Spacer -->
-  <div class="spacer-huge"></div>
 
   <!-- Personal -->
-  <div class="section-container">
+  <div class="neue-container my-24">
     <PersonalSection />
   </div>
 </BaseLayout>
 
-<style lang="scss">
-  // Breakpoint mixins
-  @import "../styles/base/_breakpoints.scss";
-
-  // Visual section
-  .visual {
-  }
-
-  // Cards container
-  .cards-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-base);
-
-    @include tablet {
-      grid-template-columns: 1fr;
-    }
-
-    .card {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-
-      background-color: var(--color-surface);
-      padding: var(--spacing-small);
-      border-radius: var(--spacing-small);
-
-      h5 {
-        font-size: var(--font-size-xxs);
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        font-family: var(--font-sans);
-        margin: 4px 0;
-      }
-    }
-  }
-
-  .thesis-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-base);
-    align-items: center;
-    justify-content: center;
-
-    .thesis-text {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-base);
-
-      @include tablet {
-        grid-template-columns: 1fr;
-        gap: 0;
-      }
-
-      p {
-        margin: 0 0 var(--spacing-base);
-      }
-    }
-  }
-</style>
