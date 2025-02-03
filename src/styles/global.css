@@ -52,11 +52,11 @@ h6 {
 }
 
 h1 {
-  @apply text-6xl md:text-8xl text-balance leading-[.9];
+  @apply text-6xl md:text-8xl text-balance tracking-tight leading-[.9];
 }
 
 h2 {
-  @apply text-4xl md:text-6xl leading-[1] text-balance;
+  @apply text-4xl md:text-6xl leading-[1] !tracking-tight text-balance;
 }
 
 h3 {

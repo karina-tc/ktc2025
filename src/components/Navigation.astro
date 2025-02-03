@@ -1,5 +1,6 @@
 ---
 import Atom from "./Atom.astro";
+import Logo from "./Logo.astro";
 const pathname = new URL(Astro.request.url).pathname;
 ---
 
@@ -13,7 +14,7 @@ const pathname = new URL(Astro.request.url).pathname;
       class="nav-logo flex items-center outline-none border-none bg-transparent cursor-pointer transition-all duration-300 ease-in-out"
       href="/"
     >
-      <Atom color="var(--color-coffee)" />
+      <Atom />
     </a>
 
     <!-- Hamburger Menu Button -->

@@ -4,10 +4,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import CaseStudyHeader from "../../components/work/CaseStudyHeader.astro";
 import { getCaseStudy } from "../../data/case-study-details";
-
+import * as Work from "../../components/work/index.js";
 
 //Assets
-
+import showcaseImage from "../../assets/case-studies/tropic/ask-ai/ask-ai-showcase.png";
+import showcaseBackground from "../../assets/backgrounds/noise-3.png";
+import showcaseLogo from "../../assets/icons/cv-tropic.png";
 
 // Data
 const caseStudy = getCaseStudy("supplierIntelligence");
@@ -17,4 +19,240 @@ const caseStudy = getCaseStudy("supplierIntelligence");
   <!-- Case Study Header -->
   <CaseStudyHeader {...caseStudy} />
 
+  <!-- Showcase -->
+  <Work.LargeShowcase
+    background={showcaseBackground}
+    caption={{
+      icon: showcaseLogo,
+      title: "What is Tropic?",
+      description:
+        "Tropic is an intake-to-procure platform that helps companies of all sizes—from startups to enterprises like OpenAI—manage their supplier relationships and reduce unnecessary spending.",
+    }}
+  >
+    <Image
+      src={showcaseImage}
+      alt="show case image"
+      draggable="false"
+      width={1220}
+      priority
+    />
+  </Work.LargeShowcase>
+
+  <div class="spacer-large"></div>
+
+  <!-- Impact -->
+  <Work.ImpactSection
+    metrics={[
+      {
+        metric: "Time Savings",
+        value: "+XX",
+        description: "per week per customer",
+      },
+      {
+        metric: "Number of Benchmarks",
+        value: "+XX",
+        description: "increase from XXX",
+      },
+    ]}
+  />
+
+  <!-- Background -->
+  <Work.StorySection kicker="Background" title="Making Price Data Accessible">
+    <p>
+      Tropic’s Price Benchmarks help customers save money in negotiations, but
+      accessing them was cumbersome. The process required multiple steps and
+      delivered only partial insights—a legacy of the platform’s
+      service-oriented origins.
+    </p>
+    <p>
+      As we shifted toward a data-as-a-service model, <strong
+        >we needed to streamline access and make insights more actionable.</strong
+      > When I joined the project, it was already in motion, and I focused on refining
+      the UX where possible. Initially, I had concerns about the direction, but after
+      discussions, I understood this was just the start of a larger initiative.
+    </p>
+    <div class="spacer-small"></div>
+    <h4>Our Goals:</h4>
+    <Work.GridFeatures
+      features={[
+        {
+          title: "Speed to Insight",
+          description: "Make data access faster and more seamless.",
+        },
+        {
+          title: "Ease of Use",
+          description:
+            "Avoid adding complexity to an already complicated process.",
+        },
+        {
+          title: "Clear Data",
+          description:
+            "Ensure users can easily compare their price to benchmarks.",
+        },
+      ]}
+    />
+  </Work.StorySection>
+
+  <Work.StorySection
+    kicker="Procurement 101"
+    title="How Procurement Teams Use Benchmarks to Negotiate Prices"
+  >
+    <p>
+      For procurement teams, <strong>data is leverage</strong>. When negotiating
+      software pricing, they rely on benchmarks to:
+    </p>
+    <ul>
+      <li>
+        <strong>Validate Pricing</strong> → Is this offer competitive, or are we
+        overpaying?
+      </li>
+      <li>
+        <strong>Strengthen Negotiation Power</strong> → Benchmark data gives teams
+        an evidence-based position to push for better deals.
+      </li>
+      <li>
+        <strong>Identify Savings Opportunities</strong> → By comparing proposals
+        against industry norms, teams can spot where they should be asking for discounts.
+      </li>
+      <li>
+        <strong>Justify Decisions Internally</strong> → Procurement teams often need
+        to report back to finance and leadership. Having data-backed insights makes
+        it easier to advocate for the right pricing strategy.
+      </li>
+    </ul>
+    <p>
+      However, benchmarks only work if they are <strong
+        >accessible, clear, and directly comparable</strong
+      > to a company’s unique contract or proposal. That’s why making <strong
+        >Price Benchmarks easier to access and interpret</strong
+      > was crucial to this redesign.
+    </p>
+  </Work.StorySection>
+
+  <!-- Problem -->
+  <Work.StorySection kicker="Problem" title="Barriers to Effective Negotiation">
+    <p>
+      Through usability research and customer interviews, we identified three
+      key challenges:
+    </p>
+    <ol>
+      <li>
+        <strong>Slow Access to Insights</strong>: Users had to navigate lengthy
+        forms just to see basic analytics.
+      </li>
+      <li>
+        <strong>Lack of Context</strong>: Data wasn't clearly tied to contracts
+        or proposals, making it hard to interpret.
+      </li>
+      <li>
+        <strong>Limited Sharing & Portability</strong>: Price Benchmarks weren't
+        easily shareable across negotiation teams.
+      </li>
+    </ol>
+    <p>SHOW PREVIOUS VERSIONS HERE</p>
+    <p>
+      o address these pain points, I focused on ensuring insights could be
+      revisited and shared. Negotiation is a team sport, so I helped establish a
+      system to embed Price Benchmarks across the platform, ensuring data was
+      portable and accessible at the right time.
+    </p>
+    <p>SHOW MAPPING OF WHERE PRICE BENCHMARKS CAN BE USED</p>
+  </Work.StorySection>
+
+  <!-- Research -->
+  <Work.StorySection
+    kicker="Research"
+    title="What Matters in a Price Negotiation?"
+  >
+    <p>
+      To improve the experience, we conducted <strong>customer interviews and internal stakeholder research</strong>. One key insight stood out: <strong>customers often verify pricing by reaching out to their network</strong>. This led to a core idea—<strong>Tropic should feel like an all-knowing friend who can provide benchmark insights effortlessly</strong>.
+    </p>
+    <p>
+      In addition to qualitative research, we analyzed how much data we had and
+      what structure we needed to make it actionable.
+    </p>
+    <p>SHOW RESEARCH HERE</p>
+  </Work.StorySection>
+
+  <!-- Design -->
+  <Work.StorySection kicker="Solution" title="A New Price Benchmark Experience">
+    <p>We redesigned Price Benchmarks with three guiding principles:</p>
+    <ol>
+      <li>
+        <strong>Speed to Insight</strong>: Removed unnecessary steps and
+        automatically pulled data from a customer's most recent contract.
+      </li>
+      <li>
+        <strong>Clarity & Comparability</strong>: Clearly showed where customers
+        stood in relation to similar contracts.
+      </li>
+      <li>
+        <strong>Portability</strong>: Enabled embedding Price Benchmarks across
+        the platform, making insights easily shareable.
+      </li>
+    </ol>
+    <p>SHOW DESIGN HERE</p>
+  </Work.StorySection>
+
+  <!-- Usability Changes -->
+  <Work.StorySection
+    kicker="Usability Changes"
+    title="Getting to the Right Place"
+  >
+    <p>
+      With a <strong>tight deadline</strong>, we moved fast. While we tested as
+      thoroughly as possible, the real test came when customers interacted with
+      a working version in code. Once we reached that stage, we uncovered a few key issues:
+    </p>
+    <p>
+      First, <strong>initial analytics lacked clarity</strong>—customers weren't used to seeing benchmark results immediately, so they didn't immediately recognize the value. Second, <strong>the form was getting lost</strong>—in our effort to create a simple, first-class analytics tool, we unintentionally buried the form inputs, making it hard for users to input their own data.
+    </p>
+    <h3>The Fix</h3>
+    <p>
+      To solve these issues, we <strong>made the form more prominent</strong> to ensure users knew where to input their data. We also <strong>added more context to the analytics</strong> by showing empty state messaging when there was no user context, and clear recommendations when we had enough data to make a suggestion.
+    </p>
+    <p>SHOW USABILITY CHANGES HERE</p>
+  </Work.StorySection>
+
+  <p class="neue-container">SHOW THE NEW PRICE BENCHMARKS HERE</p>
+
+  <!-- The Impact -->
+  <Work.StorySection kicker="Impact" title="Accelerating Negotiations">
+    <p>
+      Redesigning Tropic’s Price Benchmarks wasn’t just about improving
+      usability—it was about making negotiation data more actionable and
+      accessible. By streamlining access, improving clarity, and enabling better
+      data-sharing, we helped procurement teams negotiate with more confidence
+      and efficiency.
+    </p>
+    <ul>
+      <li>
+        <strong>Faster access to insights</strong> → Eliminated unnecessary steps.
+      </li>
+      <li>
+        <strong>Increased engagement</strong> → Users interacted with benchmarks
+        more frequently.
+      </li>
+      <li>
+        <strong>Improved decision-making</strong> → Procurement teams could justify
+        negotiations more easily.
+      </li>
+    </ul>
+
+    <div class="spacer-small"></div>
+
+    <h3>What's Next?</h3>
+    <p>
+      This project was just the beginning. My team has already <strong
+        >built on this work to further automate benchmark creation</strong
+      >, ensuring procurement teams can access relevant insights at the right
+      moment in their workflow.
+    </p>
+    <p>
+      This experience reinforced a key lesson for me: <strong
+        >even the best data is only as valuable as its usability</strong
+      >. Making insights faster and clearer isn’t just a UX challenge—it’s a
+      business-critical one.
+    </p>
+  </Work.StorySection>
 </BaseLayout>

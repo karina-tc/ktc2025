@@ -33,17 +33,17 @@ export const caseStudies: Record<string, CaseStudyMeta> = {
     status: "In Beta",
     timeline: "December 2024",
     focusAreas: "Product Design, Information Architecture, Design Engineering",
-    lastUpdated: "January 2025"
+    lastUpdated: "February 2025"
   },
   // Tropic Supplier Intelligence
   supplierIntelligence: {
-    title: "Supplier Intelligence",
-    description: "How we created a new product for Tropic that highlighted its data and created a new intelligent platform.",
-    subheading: "Data as a Service",
+    title: "Price Benchmarks",
+    description: "How we evolved Tropic's Price Benchmarks to showcase our data and help businesses save money in their price negotiations.",
+    subheading: "Making Data Accessible",
     company: "Tropic",
     role: "Lead Product Designer",
     status: "Launched",
-    timeline: "Q1 2024 - Q3 2024",
+    timeline: "Q3 2024",
     focusAreas: "Product Design, Strategy, Information Architecture, Systems Design, UXR",
     lastUpdated: "January 2025"
   },
