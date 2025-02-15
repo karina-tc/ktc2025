@@ -1,0 +1,44 @@
+---
+interface TableRow {
+  tool: {
+    name: string;
+    url: string;
+  };
+  description: string;
+}
+
+interface Props {
+  headers: {
+    col1: string;
+    col2: string;
+  };
+  rows: TableRow[];
+}
+
+const { headers, rows } = Astro.props;
+---
+
+<div class="overflow-x-auto">
+  <table class="w-full border-collapse">
+    <thead class="hidden md:table-header-group">
+      <tr class="border-b-2 border-border dark:border-ink-tertiary">
+        <th class="py-4 px-4 text-left font-mono uppercase text-sm font-semibold text-ink-tertiary">{headers.col1}</th>
+        <th class="py-4 px-4 text-left font-mono uppercase text-sm font-semibold text-ink-tertiary">{headers.col2}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(row => (
+        <tr class="border-b border-border dark:border-ink-tertiary hover:bg-surface dark:hover:bg-ink-secondary transition-colors block md:table-row">
+          <td class="py-4 px-4 block md:table-cell">
+            <span class="font-mono text-xs uppercase text-ink-tertiary mb-2 block md:hidden">{headers.col1}</span>
+            <a href={row.tool.url} class="underline underline-offset-4 decoration-border" target="_blank">{row.tool.name}</a>
+          </td>
+          <td class="py-4 px-4 block md:table-cell">
+            <span class="font-mono text-xs uppercase text-ink-tertiary mb-2 block md:hidden">{headers.col2}</span>
+            {row.description}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div> 

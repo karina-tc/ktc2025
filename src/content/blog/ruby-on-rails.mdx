@@ -4,6 +4,7 @@ title: "Ruby on Rails Patterns"
 startedDate: 2024-12-01
 publishDate: 2024-12-20
 tags: ["notebook"]
+category: "Development"
 image: "ruby-on-rails.png"
 imageDescription: "Ruby in the sky, ruby on my mind."
 description: "A guide to Ruby on Rails patterns and conventions"
@@ -60,7 +61,7 @@ The form_with helper ties your form directly to your model, so all you need to w
 <% end %>
 ```
 
----
+
 
 ### Link helpers
 
@@ -70,7 +71,7 @@ Forget writing raw link tags. Rails’ link_to helper makes links intuitive and 
 <%= link_to "Home", root_path, class: "btn btn-primary" %>
 ```
 
----
+
 
 ### Tag helpers
 
@@ -133,7 +134,7 @@ export default class extends Controller {
 }
 ```
 
----
+
 
 Hook It Up: Attach your controller to HTML elements with data-controller attributes:
 
@@ -141,11 +142,13 @@ Hook It Up: Attach your controller to HTML elements with data-controller attribu
 <div data-controller="example" data-example-name-value="Rails"></div>
 ```
 
---- 
+
 
 Enjoy the Magic: Open your browser console and see your Stimulus controller in action.
 
 Stimulus keeps your front-end JavaScript snappy without dragging in an entire framework. It’s a win-win.
+
+
 
 ## Separation of Concerns
 
@@ -166,3 +169,133 @@ Let Stimulus handle interactivity instead of cramming JavaScript directly into y
 ### Follow MVC Principles:
 
 Stick to the Model-View-Controller pattern for structure that scales.
+
+## Building Pieces
+
+### Routes
+Routes in Rails map URLs to controller actions. Add them in `config/routes.rb`:
+
+```ruby
+Rails.application.routes.draw do
+  # Basic route
+  get '/posts', to: 'posts#index'
+  
+  # RESTful resource routes
+  resources :posts
+  
+  # Nested routes
+  resources :posts do
+    resources :comments
+  end
+  
+  # Custom route with params
+  get '/posts/:status', to: 'posts#filter'
+end
+```
+
+### Controllers
+Controllers handle incoming requests. Create them using the generator or manually in `app/controllers/`:
+
+```ruby
+# Generate via CLI
+rails generate controller Posts index show
+
+# Or create manually in app/controllers/posts_controller.rb
+class PostsController < ApplicationController
+  def index
+    @posts = Post.all
+  end
+  
+  def show
+    @post = Post.find(params[:id])
+  end
+  
+  def create
+    @post = Post.new(post_params)
+    
+    if @post.save
+      redirect_to @post, notice: 'Post created!'
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+  
+  private
+  
+  def post_params
+    params.require(:post).permit(:title, :content)
+  end
+end
+```
+
+### Models
+Models handle data and business logic. Generate them or create manually in `app/models/`:
+
+```ruby
+# Generate via CLI
+rails generate model Post title:string content:text published:boolean
+
+# Or create manually in app/models/post.rb
+class Post < ApplicationRecord
+  # Validations
+  validates :title, presence: true
+  validates :content, length: { minimum: 10 }
+  
+  # Associations
+  belongs_to :user
+  has_many :comments
+  
+  # Scopes
+  scope :published, -> { where(published: true) }
+  scope :recent, -> { order(created_at: :desc) }
+  
+  # Custom methods
+  def summary
+    content.truncate(100)
+  end
+end
+```
+
+### Views
+Views render the UI. Create them in `app/views/` using ERB templates:
+
+```erb
+<!-- app/views/posts/index.html.erb -->
+<div class="posts-container">
+  <h1>Blog Posts</h1>
+  
+  <%= render "shared/flash" %>
+  
+  <div class="posts-grid">
+    <% @posts.each do |post| %>
+      <%= render "post", post: post %>
+    </div>
+  <% end %>
+</div>
+
+<!-- app/views/posts/_post.html.erb (partial) -->
+<article class="post-card">
+  <h2><%= post.title %></h2>
+  <p><%= post.summary %></p>
+  <%= link_to "Read more", post_path(post), class: "btn btn-primary" %>
+</article>
+```
+
+### Putting It All Together
+A typical workflow for adding a new feature:
+
+1. Add routes in `config/routes.rb`
+2. Generate or create the controller
+3. Create the model with migrations
+4. Add views and partials
+5. Test the feature end-to-end
+
+Remember to run migrations after model changes:
+```ruby
+rails db:migrate
+```
+
+And check routes with:
+```ruby
+rails routes
+```
