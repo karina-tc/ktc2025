@@ -1,9 +1,6 @@
 export function checkAccess(url: string): boolean {
   // List of protected case studies
   const protectedPaths = [
-    '/work/ask-tropic',
-    '/work/beyond-contracts',
-    '/work/supplier-intelligence',
     // Add more protected paths as needed
   ];
 

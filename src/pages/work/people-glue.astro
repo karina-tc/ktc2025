@@ -9,16 +9,6 @@ import { getCaseStudy } from "../../data/case-study-details";
 
 // Data
 const caseStudy = getCaseStudy("peopleGlue");
-
-// Check access
-import { checkAccess, hasValidAccessToken } from "../../middleware/checkAccess";
-if (Astro.url.pathname && checkAccess(Astro.url.pathname)) {
-  const cookies = Astro.request.headers.get("cookie") || "";
-
-  if (!hasValidAccessToken(cookies)) {
-    return Astro.redirect(`/work/access?redirect=${Astro.url.pathname}`);
-  }
-}
 ---
 
 <BaseLayout title={caseStudy.title} description={caseStudy.description}>

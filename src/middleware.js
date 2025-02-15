@@ -1,6 +1,6 @@
-export const config = {
-  matcher: '/work/*'  // Only run on /work routes
-};
+//export const config = {
+ // matcher: '/work/*'  // Only run on /work routes
+//};
 
 // Import at the top level instead
 import { checkAccess } from "./middleware/checkAccess";
