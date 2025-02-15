@@ -80,6 +80,10 @@ p {
   @apply w-full max-w-5xl mx-auto px-10;
 }
 
+.neue-container-sm {
+  @apply w-full max-w-3xl mx-auto px-10;
+}
+
 .caramel-text {
   @apply text-ink-tertiary dark:text-chocolate-light;
 }

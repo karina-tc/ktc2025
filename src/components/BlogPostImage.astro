@@ -10,7 +10,7 @@ interface Props {
 const { image, title, description } = Astro.props;
 ---
 
-<div class="post-image flex flex-col gap-2 my-10" data-intersection-observer={true}>
+<div class="post-image flex flex-col gap-2 my-10 xl:min-w-[820px] xl:max-h-[520px] xl:ml-[calc(25%-270px)]" data-intersection-observer={true}>
   <figure class="flex justify-center items-center border-4 border-lines rounded-xl overflow-hidden shadow-lg">
     <Image
       src={image}
@@ -18,10 +18,11 @@ const { image, title, description } = Astro.props;
       width={800}
       height={400}
       loading="eager"
+      draggable={false}
       class="w-full h-auto object-cover -mb-1"
     />
   </figure>
-  <figcaption class="text-sm text-ink-tertiary dark:text-surface italic">
+  <figcaption class="text-sm text-ink-tertiary dark:text-surface xl:text-center italic">
     {description && <p>{description}</p>}
   </figcaption>
 </div>
