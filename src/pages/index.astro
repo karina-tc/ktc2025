@@ -62,10 +62,19 @@ const navItems = [
 		<div class="container mx-auto flex flex-col-reverse md:flex-row gap-4">
 			<div class="flex-1 md:max-w-3xl flex flex-col gap-4 md:justify-between">
 				<h4>Karina Tovar</h4>
-				<h1 class="mt-4">Pixel Philosopher <em class="caramel-text opacity-75">&</em> Cautious Technologist</h1>
+				<h1 class="mt-4">
+					Pixel Philosopher <em class="caramel-text opacity-75">&</em> Cautious Technologist
+				</h1>
 				<p class="md:max-w-xl mt-8 mb-4 text-lg">
-					I build products that <strong class="font-semibold">help people have happier days</strong>—because
-					life’s too short for bad experiences. <strong class="font-semibold">My specialty is turning complex workflows into simple, intuitive interactions</strong>. With over a decade of experience in startups across FinTech, AdTech, and MarTech, I bring clarity to chaos—making businesses stronger and customers happier.
+					I build products that <strong class="font-semibold"
+						>help people have happier days</strong
+					>—because life’s too short for bad experiences. <strong
+						class="font-semibold"
+						>My specialty is turning complex workflows into simple, intuitive
+						interactions</strong
+					>. With over a decade of experience in startups across FinTech,
+					AdTech, and MarTech, I bring clarity to chaos—making businesses
+					stronger and customers happier.
 				</p>
 				<Subtitle title="Get Started" />
 				<ul
@@ -106,7 +115,7 @@ const navItems = [
 				class="flex-1 flex justify-start md:justify-end items-center max-md:mb-10"
 			>
 				<a
-					class="w-full max-w-md md:h-full h-[500px] max-w-400px overflow-hidden relative flex justify-center items-end rounded-t-[300px] animate-[slideUp_1s_ease-in-out] bg-[url('../assets/backgrounds/bg04.png')] bg-center bg-no-repeat bg-cover transition-all duration-300 ease-in-out"
+					class="w-full max-w-md md:h-full md:max-h-[920px] md:mb-auto md:mt-14 h-[500px] max-w-400px overflow-hidden relative flex justify-center items-end rounded-t-[300px] animate-[slideUp_1s_ease-in-out] bg-[url('../assets/backgrounds/bg04.png')] bg-center bg-no-repeat bg-cover transition-all duration-300 ease-in-out"
 					href="/philosophy"
 				>
 					<div
@@ -115,7 +124,8 @@ const navItems = [
 						<Image
 							src={karina}
 							alt="Karina"
-							class="object-contain md:min-w-[700px] md:translate-x-[300px]"
+							class="object-contain md:min-w-[700px] md:translate-x-[300px] translate-x-[40px] hover:translate-x-[20px] md:hover:translate-x-[260px] transition-all duration-500 delay-100 ease-in-out"
+							style="filter: drop-shadow(0px 12px 12px black)"
 						/>
 					</div>
 				</a>
