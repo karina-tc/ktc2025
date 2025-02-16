@@ -27,7 +27,7 @@ const {
 <div class="neue-container grid grid-cols-1 md:grid-cols-2 my-20" data-intersection-observer={true}>
   <div class="text-content xl:min-w-[650px]">
       <h4>{company}</h4>
-      <h1 class="my-5">
+      <h1 class="my-5 space-y-2">
         <span class="block">{title}</span>
         {
           subheading && (
@@ -37,7 +37,7 @@ const {
           )
         }
       </h1>
-      <p>{description}</p>
+      <p class="mt-10 leading-tight">{description}</p>
       <h5 class="last-updated caramel-text mt-10">Last Updated: {lastUpdated}</h5>
   </div>
 
