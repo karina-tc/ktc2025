@@ -115,8 +115,10 @@ try {
   </section>
 
   <!-- End of blog post -->
-  <section class="neue-container-sm text-2xl md:text-4xl mt-24" data-intersection-observer={true}>
-    <p class="caramel-text">El fin. &mdash; byeeee!</p>
+  <section class="neue-container-sm text-2xl md:text-4xl {post.data.category === 'blog' ? 'mt-24' : 'mt-12'}" data-intersection-observer={true}>
+    {post.data.category === 'blog' && (
+      <p class="caramel-text">El fin. &mdash; byeeee!</p>
+    )}
   </section>
 
   <!-- Navigation -->
