@@ -1,0 +1,98 @@
+---
+interface Props {
+  content: string;
+  direction?: 'top' | 'bottom';
+  dotColor?: string;
+  dotSize?: string;
+  pulseColor?: string;
+  maxWidth?: string;
+  tooltipBg?: string;
+}
+
+const {
+  content,
+  direction = 'top',
+  dotColor = "bg-accent-light",
+  dotSize = "w-2 h-2",
+  pulseColor = "bg-accent-light/50",
+  maxWidth = "200px",
+  tooltipBg = "bg-gray-900",
+} = Astro.props;
+
+const tooltipPosition = direction === 'top' 
+  ? 'bottom-full mb-2' 
+  : 'top-full mt-2';
+
+const arrowPosition = direction === 'top'
+  ? 'bottom-0 translate-y-full border-t-gray-900'
+  : 'top-0 -translate-y-full border-b-gray-900';
+---
+
+<div class="relative group z-50">
+  <span 
+    class={`beacon-dot block ${dotSize} min-${dotSize} relative ${dotColor} rounded-full cursor-pointer`}
+  >
+    <span 
+      class={`absolute inset-0 -ml-1 -mt-1 w-4 h-4 
+      ${pulseColor} rounded-full animate-pulse -z-[1]`}
+    />
+  </span>
+  <div 
+    class={`pointer-events-none absolute left-1/2 -translate-x-1/2 px-3 py-1 
+    text-xs text-white ${tooltipBg} rounded-md opacity-0 
+    invisible group-hover:opacity-100 group-hover:visible transition-all 
+    duration-200 text-wrap break-words ${tooltipPosition}`}
+    style={`width: ${maxWidth}; max-width: ${maxWidth};`}
+  >
+    {content}
+    <div 
+      class={`border-4 border-transparent absolute left-1/2 -translate-x-1/2 ${arrowPosition}`} 
+    />
+  </div>
+</div>
+
+<script>
+  const tooltips = document.querySelectorAll('.beacon-tooltip');
+  
+  tooltips.forEach(tooltip => {
+    const arrow = tooltip.querySelector('.beacon-arrow');
+    
+    const updatePosition = () => {
+      const rect = tooltip.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const spaceAbove = rect.top;
+      const spaceBelow = viewportHeight - rect.bottom;
+
+      tooltip.classList.remove('bottom-full', 'top-full', 'mb-2', 'mt-2');
+      arrow?.classList.remove('border-t-gray-900', 'border-b-gray-900', 'bottom-0', 'top-0', 'translate-y-full', '-translate-y-full');
+
+      if (spaceBelow > spaceAbove || spaceAbove < 100) {
+        tooltip.classList.add('top-full', 'mt-2');
+        arrow?.classList.add('border-b-gray-900', 'top-0', '-translate-y-full');
+      } else {
+        tooltip.classList.add('bottom-full', 'mb-2');
+        arrow?.classList.add('border-t-gray-900', 'bottom-0', 'translate-y-full');
+      }
+    };
+
+    const parent = tooltip.parentElement;
+    parent?.addEventListener('mouseenter', updatePosition);
+
+    // Clean up event listeners when element is removed
+    return () => {
+      parent?.removeEventListener('mouseenter', updatePosition);
+      window.removeEventListener('scroll', updatePosition);
+      window.removeEventListener('resize', updatePosition);
+    };
+  });
+</script>
+
+<style>
+  .beacon-arrow {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: inherit;
+    transform: rotate(45deg);
+  }
+</style> 

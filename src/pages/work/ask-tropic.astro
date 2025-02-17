@@ -15,6 +15,7 @@ import BookingCTA from "../../components/BookingCTA.astro";
 
 //Assets
 import showcaseImage from "../../assets/case-studies/tropic/ask-ai/ask-ai-showcase.png";
+import showcaseVideo from "../../assets/case-studies/tropic/ask-ai/demo01.mp4";
 import showcaseBackground from "../../assets/backgrounds/noise-5.png";
 import showcaseLogo from "../../assets/icons/cv-tropic.png";
 import askTropicHallway01 from "../../assets/case-studies/tropic/ask-ai/ask-tropic-hallway01.png";
@@ -22,6 +23,8 @@ import askTropicHallway02 from "../../assets/case-studies/tropic/ask-ai/ask-trop
 import askTropicHallway03 from "../../assets/case-studies/tropic/ask-ai/ask-tropic-hallway03.png";
 import askTropicHallway04 from "../../assets/case-studies/tropic/ask-ai/ask-tropic-hallway04.png";
 import askTropicHallway05 from "../../assets/case-studies/tropic/ask-ai/ask-tropic-hallway05.png";
+import upload from "../../assets/case-studies/tropic/ask-ai/upload.mp4";
+import tips from "../../assets/case-studies/tropic/ask-ai/tips.mp4";
 import aiMessageBlock from "../../assets/case-studies/tropic/ask-ai/ai-message-block.png";
 import threadBlock from "../../assets/case-studies/tropic/ask-ai/thread-block.png";
 import chatReferences from "../../assets/case-studies/tropic/ask-ai/chat-references.png";
@@ -138,7 +141,12 @@ const caseStudy = getCaseStudy("askTropic");
   </Work.StorySection>
 
   <SnippetsGallery>
-    <SnippetsGalleryItem interactive>
+    <SnippetsGalleryItem
+      large
+      interactive
+      overflowHidden={false}
+      minHeight={640}
+    >
       <AskAIChatPreview />
       <span class="plate-caption !text-ink-tertiary"
         >Figure II. Tropic's Ask AI Input Demo</span
@@ -167,12 +175,26 @@ const caseStudy = getCaseStudy("askTropic");
     />
 
     <SnippetsGalleryItem
+      video={upload}
+      caption="Figure VI. Uploading a File"
+      maxWidth={440}
+    />
+
+    <SnippetsGalleryItem
       large
       image={optionsBlock}
       imageAlt="options-block"
-      caption="Figure VI. Suggestions Panel"
+      caption="Figure VII. Suggestions Panel"
       maxWidth={440}
       imageStyles="block; margin: 40px 0;"
+    />
+
+    <SnippetsGalleryItem
+      large
+      video={tips}
+      caption="Figure VIII. Accessing Tips"
+      maxWidth={1140}
+      minHeight={740}
     />
   </SnippetsGallery>
 
@@ -199,12 +221,12 @@ const caseStudy = getCaseStudy("askTropic");
 
   <!-- Showcase -->
   <Work.LargeShowcase background={showcaseBackground} backgroundFull={true}>
-    <Image
-      src={showcaseImage}
-      alt="show case image"
-      draggable="false"
+    <video
+      src={showcaseVideo}
+      autoplay
+      loop
+      muted
       width={1220}
-      priority
     />
   </Work.LargeShowcase>
 

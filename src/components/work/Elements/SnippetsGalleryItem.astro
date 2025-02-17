@@ -7,12 +7,14 @@ interface Props {
   interactiveLabel?: string;
   image?: ImageMetadata;
   imageAlt?: string;
+  video?: string;
   title?: string;
   caption?: string;
   startingImageWidth?: number;
   maxWidth?: number;
   imageStyles?: string;
   minHeight?: number;
+  overflowHidden?: boolean;
 }
 
 const {
@@ -20,6 +22,7 @@ const {
   interactive = false,
   interactiveLabel = "Play With It!",
   image,
+  video,
   imageAlt = "",
   title,
   caption,
@@ -27,22 +30,33 @@ const {
   maxWidth,
   imageStyles,
   minHeight = 520,
+  overflowHidden = true,
 } = Astro.props;
 ---
 
-<div class:list={[
-  "snippets-gallery-item w-full bg-surface p-5 max-md:p-3 border-4 border-surface rounded-xl overflow-hidden transition-all duration-300 hover:border-paper hover:shadow-[0px_10px_10px_-5px_rgba(108,108,108,0.25)]",
-  { "lg:col-span-2 md:col-span-1": large }
-]}>
-  {interactive && <span class="interactive-label block w-full text-center text-xs font-semibold font-mono uppercase tracking-[0.05em] text-chocolate opacity-70 transition-all duration-300 group-hover:opacity-100">{interactiveLabel}</span>}
+<div
+  class:list={[
+    "snippets-gallery-item w-full bg-surface p-5 max-md:p-3 border-4 border-surface rounded-xl overflow-hidden transition-all duration-300 hover:border-paper hover:shadow-[0px_10px_10px_-5px_rgba(108,108,108,0.25)]",
+    { "lg:col-span-2 md:col-span-1": large },
+  ]}
+  style={`overflow: ${overflowHidden ? "hidden" : "visible"};`}
+>
+  {
+    interactive && (
+      <span class="interactive-label block w-full text-center text-xs font-semibold font-mono uppercase tracking-[0.05em] text-chocolate opacity-70 transition-all duration-300 group-hover:opacity-100">
+        {interactiveLabel}
+      </span>
+    )
+  }
   {title && <p class="plate-label !text-ink-tertiary">{title}</p>}
-  <div 
-    class="gallery-inner w-full h-auto flex flex-col items-center justify-between max-sm:!min-h-auto" 
-    style={`min-height: ${minHeight}px`}
+  <div
+    class="gallery-inner w-full h-auto flex flex-col items-center justify-between max-sm:!min-h-auto"
+    style={`min-height: ${minHeight}px !important`}
     data-intersection-observer={true}
   >
     {
-      image ? (
+      // Render image if provided
+      image && (
         <Image
           src={image}
           alt={imageAlt}
@@ -52,9 +66,24 @@ const {
           class="m-auto w-full h-auto object-contain md:w-full md:h-auto md:object-contain"
           style={`max-width: ${maxWidth}px; ${imageStyles}`}
         />
-      ) : (
-        <slot />
       )
+    }
+    {
+      // Render video if provided and no image
+      !image && video && (
+        <video
+          src={video}
+          class="m-auto w-full h-auto object-contain md:w-full md:h-auto md:object-contain"
+          style={`max-width: ${maxWidth}px; ${imageStyles}`}
+          autoplay
+          loop
+          muted
+        />
+      )
+    }
+    {
+      // Render slot if neither image nor video provided
+      !image && !video && <slot />
     }
     {caption && <span class="plate-caption !text-ink-tertiary">{caption}</span>}
   </div>

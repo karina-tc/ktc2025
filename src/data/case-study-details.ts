@@ -31,9 +31,9 @@ export const caseStudies: Record<string, CaseStudyMeta> = {
     company: "Tropic",
     role: "Lead Product Designer",
     status: "In Beta",
-    timeline: "December 2024",
+    timeline: "Nov-Dec 2024",
     focusAreas: "Product Design, Information Architecture, Design Engineering",
-    lastUpdated: "February 2025"
+    lastUpdated: "December 2024"
   },
   // Tropic Supplier Intelligence
   supplierIntelligence: {
