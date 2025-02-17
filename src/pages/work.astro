@@ -24,11 +24,16 @@ import gallery06 from "../assets/case-studies/gallery/gallery-06.png";
 // Data
 import { testimonials } from "../data/testimonials";
 
-// Import the images
+// Supplierverse
 import bcDataMapping from "../assets/case-studies/tropic/bc-data-mapping.png";
 import bcIntegrations from "../assets/case-studies/tropic/bc-integrations.png";
 import bcCva from "../assets/case-studies/tropic/bc-cva.png";
 import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png";
+
+// Ask Tropic
+import askTropic01 from "../assets/case-studies/tropic/ask-ai/ai-message-block.png";
+import askTropic02 from "../assets/case-studies/tropic/ask-ai/chat-references.png";
+import askTropic03 from "../assets/case-studies/tropic/ask-ai/thread-block.png";
 ---
 
 <BaseLayout
@@ -142,40 +147,31 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
             instanceId="ask-tropic"
             screens={[
               {
-                src: bcDataMapping.src,
+                src: askTropic01.src,
                 alt: "Tropic Data Matching",
-                width: 527,
+                width: 450,
                 rotation: 0,
                 zIndex: 1,
-                initialX: 55,
+                initialX: 0,
                 initialY: 60,
               },
               {
-                src: bcIntegrations.src,
+                src: askTropic02.src,
                 alt: "Tropic Integrations",
-                width: 474,
+                width: 470,
                 rotation: 0,
                 zIndex: 1,
-                initialX: 2,
-                initialY: 2,
+                initialX: 0,
+                initialY: 15,
               },
               {
-                src: bcCva.src,
+                src: askTropic03.src,
                 alt: "Spend Insights",
-                width: 500,
+                width: 450,
                 rotation: 0,
                 zIndex: 1,
-                initialX: 57,
-                initialY: 0,
-              },
-              {
-                src: bcSpendinsights.src,
-                alt: "Spend Insights",
-                width: 200,
-                rotation: 0,
-                zIndex: 1,
-                initialX: 10,
-                initialY: 60,
+                initialX: 60,
+                initialY: 30,
               },
             ]}
           />
@@ -256,8 +252,7 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
     <!-- Glue -->
     <SnippetsGalleryItem large>
       <div
-        class="cs-wrapper w-full h-full flex flex-row md:flex-col gap-4 items-center justify-center relative"
-      >
+        class="cs-wrapper w-full h-full flex flex-row md:flex-col gap-4 items-center justify-center relative">
         <GalleryIntroCard
           titleMain="People as Glue"
           titleSecondary="Connecting Employees"
@@ -265,52 +260,6 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
           href="/work/people-glue"
           status="coming-soon"
         />
-        <div
-          class="cs-image absolute w-full h-full inset-0 z-0 flex justify-center items-center max-md:!hidden"
-        >
-          <DraggableScreens
-            instanceId="people-glue"
-            screens={[
-              {
-                src: bcDataMapping.src,
-                alt: "Tropic Data Matching",
-                width: 527,
-                rotation: 0,
-                zIndex: 1,
-                initialX: 55,
-                initialY: 60,
-              },
-              {
-                src: bcIntegrations.src,
-                alt: "Tropic Integrations",
-                width: 474,
-                rotation: 0,
-                zIndex: 1,
-                initialX: 2,
-                initialY: 2,
-              },
-              {
-                src: bcCva.src,
-                alt: "Spend Insights",
-                width: 500,
-                rotation: 0,
-                zIndex: 1,
-                initialX: 57,
-                initialY: 0,
-              },
-              {
-                src: bcSpendinsights.src,
-                alt: "Spend Insights",
-                width: 200,
-                rotation: 0,
-                zIndex: 1,
-                initialX: 10,
-                initialY: 60,
-              },
-            ]}
-          />
-        </div>
-        <MobileImage src={bcDataMapping} alt="Tropic Data Matching" />
       </div>
     </SnippetsGalleryItem>
   </SnippetsGallery>
