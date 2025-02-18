@@ -61,46 +61,47 @@ const caseStudy = getCaseStudy("askTropic");
   </Work.LargeShowcase>
 
   <!-- Background -->
-  <Work.StorySection kicker="Background" title="Assisted Intelligence">
+  <Work.StorySection kicker="Background" title="The Problem">
+    <h3>Finding Answers Wasn't Easy</h3>
     <p>
-      <strong
-        >In a little over a month, we designed and developed Tropic's Ask AI
-        feature—a chat interface that helps customers quickly find information.</strong
-      >
-      This feature uses multiple specialized AI agents to assist customers with tasks
-      like creating requests, analyzing account data, and reviewing procurement policies
-      against contracts and requests.
+      Before Ask AI, customers had to search across multiple resources to find
+      procurement-related answers. Whether it was navigating policies, tracking
+      the status of software purchase requests, or analyzing vendor spend. This
+      process was time-consuming and frustrating. Our goal was to streamline
+      these workflows by introducing an AI-powered assistant that could surface
+      relevant insights and point people on the right direction instantly.
     </p>
-    <p>
-      <strong class="highlighted green"
-        >I led the creation of a foundational system that other teams could use
-        to help users interact with their agents</strong
-      >, while also designing the core Ask AI experience. To create this Ask AI
-      system, I focused on the following:
-    </p>
-
     <div class="spacer-base"></div>
+    <h3>Assisted Intelligence</h3>
+    <p>
+      <strong>In just over a month</strong>, we designed and developed Tropic's
+      Ask AI feature. This feature uses multiple specialized AI agents to assist
+      customers with tasks like creating requests, analyzing account data, and
+      reviewing procurement policies against contracts and requests.
+    </p>
+    <p>
+      I led the creation of a <strong>foundational design system</strong> that ensured
+      AI-driven interactions felt intuitive, scalable, and consistent across the
+      platform. My work focused on:
+    </p>
 
-    <Work.GridFeatures
-      features={[
-        {
-          title: "Structure",
-          description:
-            "Designed a structured framework that lets customers seamlessly interact with our AI agents within their natural platform workflows.",
-        },
-        {
-          title: "Branding",
-          description:
-            "Developed a visual identity for our AI feature that integrated seamlessly with the application while standing out with a modern aesthetic.",
-        },
-        {
-          title: "Information Architecture",
-          description:
-            "Designed ways to help customers interact with this new feature. Created patterns for AI agents to clearly communicate their context when solving customer questions. Built frameworks for users to easily access conversation history, receive suggested tips and actions, and understand our agents' full capabilities.",
-        },
-      ]}
-      stackThird={true}
-    />
+    <ul>
+      <li>
+        <strong>Structure</strong><br />Designed the framework that lets
+        customers seamlessly interact with AI agents within their natural mental
+        workflows.
+      </li>
+      <li>
+        <strong>Branding</strong><br />Developed a visual identity for our AI so
+        that it merged seamlessly with our application while standing out with
+        our modern aesthetic.
+      </li>
+      <li>
+        <strong>Information Architecture</strong><br />Created interaction
+        patterns that made AI capabilities clear, surfaced conversation history,
+        and suggested next steps based on user input.
+      </li>
+    </ul>
   </Work.StorySection>
 
   <AskAiCanvas
@@ -115,29 +116,48 @@ const caseStudy = getCaseStudy("askTropic");
     caption="Mid-fidelity wireframes of Tropic's Ask AI feature. High fidelity was done in code."
   />
 
+  <div class="spacer-large"></div>
+
   <!-- Development -->
-  <Work.StorySection kicker="Development" title="Shapping Tropic's Assistant">
+  <Work.StorySection
+    kicker="Development"
+    title="Shapping Tropic's Assistant"
+    spacing="base"
+  >
     <p>
-      <strong
-        >I was also lucky to be given the opportunity to play with code and so I
-        contributed to the front-end development</strong
-      >, working alongside another developer who handled back-end integration
-      and optimization.
+      I had the opportunity to contribute to the <strong
+        >front-end development</strong
+      >. Collaborating closely with another developer responsible for back-end
+      integration and optimization. Together, in <strong>just two weeks</strong
+      >, we built a code prototype to test and refine the user experience.
     </p>
     <p>
-      In the span of two weeks, we developed a code prototype that allowed our
-      team to test and refine the intended user experience. This <strong
-        >hands-on approach helped us evaluate performance requirements and
-        optimize the build</strong
-      >. While we started with design mockups, much of the real design work
-      happened directly in code—enabling me to fine-tune the UI and create a
-      polished, distinctive experience within our application.
+      This hands-on approach allowed us to fine-tune performance and polish the
+      interface, ensuring AI interactions felt seamless and natural. While
+      giving other teams involved in this feature a sandbox to play with.
     </p>
     <p>
-      One of my favorite aspects of this project was enhancing the UI with
-      subtle interactions that gave it a more polished, established feel to
-      hopefully spark some joy in our customers' experience.
+      While we started with design mockups, much of the <strong
+        >real design work happened directly in code</strong
+      >. This enabled me to fine-tune the UX, optimize for clarity, and craft
+      subtle interactions that made the assistant feel more polished and
+      engaging.
     </p>
+    <p>Some key contributions I made to the UI included:</p>
+    <ul>
+      <li>
+        <strong>Enhancing visual hierarchy</strong> to clearly differentiate AI responses
+        from user input.
+      </li>
+      <li>
+        <strong>Designing micro-interactions</strong> that added delight in interacting
+        with our chat and in AI-generated responses.
+      </li>
+      <li>
+        <strong>Optimizing layout responsiveness</strong> to ensure a seamless experience
+        across different screen sizes and information density complexities.
+      </li>
+    </ul>
   </Work.StorySection>
 
   <SnippetsGallery>
@@ -201,122 +221,124 @@ const caseStudy = getCaseStudy("askTropic");
   <!-- Reception -->
   <Work.StorySection kicker="Reception" title="Making it Beta">
     <p>
-      This feature has just been released and is in beta—we're using this period
-      to fine-tune our agents and optimize experiences that required more
-      development time. As Tropic's biggest user of our own platform for spend
-      management, we're thoroughly dogfooding this feature.
+      Ask AI is now in <strong>beta</strong>, and we're using this period to refine agent
+      responses and optimize the experience further. As <strong>Tropic's biggest user of
+      our own platform</strong>, we're rigorously dogfooding this feature.
+    </p>
+    <h3 class="mt-5">Early Insights from Beta Testing</h3>
+    <ul>
+      <li style="text-wrap: auto;">
+        Customers are <strong>spending more time</strong> engaging with our AI assistant than our command K functionality. Reducing time spent locating information.
+      </li>
+      <li>
+        <strong>Feedback on AI clarity</strong> has been valuable—some areas
+        still need better explanations, and we’re iterating quickly.
+      </li>
+    </ul>
+    <p>
+      While there are some expected rough edges (as with any beta), the volume
+      of customer engagement has been a strong early signal of adoption.
     </p>
     <p>
-      Initial feedback has been overwhelmingly positive from both Tropic and
-      customers. We've received an exceptional amount of customer feedback on
-      this feature—a strong signal of successful adoption.
-    </p>
-    <p>
-      While there are some expected rough edges, that's exactly what beta
-      testing and dogfooding are designed to address. I cannot take credit for
-      the mazing work that other teams did on this feature, but I am surely
-      proud of the amount of love and care that we put into this experience.
+      I can’t take credit for the incredible work done by other teams, but I’m
+      proud of the <strong>thoughtful details and care</strong> we put into
+      making Ask AI an intuitive and engaging experience.
     </p>
   </Work.StorySection>
 
-  <!-- Showcase -->
-  <Work.LargeShowcase background={showcaseBackground} backgroundFull={true}>
-    <video
-      src={showcaseVideo}
-      autoplay
-      loop
-      muted
-      width={1220}
-    />
-  </Work.LargeShowcase>
+    <!-- Showcase -->
+    <Work.LargeShowcase background={showcaseBackground} backgroundFull={true}>
+      <video src={showcaseVideo} autoplay loop muted width={1220}></video>
+    </Work.LargeShowcase>
 
-  <BookingCTA include_classes="my-20 mx-auto flex justify-center" />
+    <BookingCTA include_classes="my-20 mx-auto flex justify-center" />
 
-  <!-- Footer -->
-  <Work.Footer />
-</BaseLayout>
+    <!-- Footer -->
+    <Work.Footer />
+  </Work.StorySection>
 
-<style lang="scss">
-  // Breakpoint mixins
-  @import "../../styles/base/_breakpoints.scss";
+  <style lang="scss">
+    // Breakpoint mixins
+    @import "../../styles/base/_breakpoints.scss";
 
-  .open-canvas {
-    width: 100%;
-    margin: var(--spacing-quad) 0;
-    padding: var(--spacing-double) var(--spacing-base);
-    background-color: var(--color-surface);
-
-    .canvas-container {
-      width: 90%;
-      max-width: 1220px;
-      margin: 0 auto;
-    }
-
-    :global(.plate-label),
-    :global(.plate-caption) {
-      display: block;
+    .open-canvas {
       width: 100%;
-      text-align: center;
-      color: var(--color-surface);
-    }
+      margin: var(--spacing-quad) 0;
+      padding: var(--spacing-double) var(--spacing-base);
+      background-color: var(--color-surface);
 
-    &.mockups {
-      background-color: var(--color-chocolate);
-
-      @include desktop-reverse {
-        padding: var(--spacing-quad) 0;
-      }
-    }
-
-    &.mockups .canvas-container {
-      min-width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--spacing-xxs);
-      overflow: hidden;
-
-      @include desktop-reverse {
-        gap: var(--spacing-base);
-      }
-
-      .hallway {
-        width: 95%;
+      .canvas-container {
+        width: 90%;
+        max-width: 1220px;
         margin: 0 auto;
-        padding: var(--spacing-base) 0;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: var(--spacing-quad);
-        overflow-x: scroll;
+      }
 
-        -webkit-overflow-scrolling: touch;
-        -webkit-scrollbar {
-          display: none;
+      :global(.plate-label),
+      :global(.plate-caption) {
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: var(--color-surface);
+      }
+
+      &.mockups {
+        background-color: var(--color-chocolate);
+
+        @include desktop-reverse {
+          padding: var(--spacing-quad) 0;
+        }
+      }
+
+      &.mockups .canvas-container {
+        min-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-xxs);
+        overflow: hidden;
+
+        @include desktop-reverse {
+          gap: var(--spacing-base);
         }
 
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+        .hallway {
+          width: 95%;
+          margin: 0 auto;
+          padding: var(--spacing-base) 0;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: var(--spacing-quad);
+          overflow-x: scroll;
 
-        img {
-          width: 100%;
-          height: auto;
-          object-fit: contain;
-
-          @include tablet {
-            min-width: 600px;
+          -webkit-overflow-scrolling: touch;
+          -webkit-scrollbar {
+            display: none;
           }
 
-          @include mobile {
-            min-width: 300px;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+
+          img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+
+            @include tablet {
+              min-width: 600px;
+            }
+
+            @include mobile {
+              min-width: 300px;
+            }
           }
         }
       }
     }
-  }
 
-  .testing {
-    margin: 100px auto;
-  }
-</style>
+    .testing {
+      margin: 100px auto;
+    }
+  </style>
+</BaseLayout>
