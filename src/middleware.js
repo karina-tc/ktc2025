@@ -16,7 +16,7 @@ export function onRequest({ request }, next) {
   if (url.pathname === '/work' || 
       url.pathname === '/work/access' || 
       url.pathname.startsWith('/api/') ||
-      url.pathname.startsWith('/blog/')) {
+      url.pathname.startsWith('/.well-known/')) {
     console.log('Skipping middleware for excluded path');
     return next();
   }
