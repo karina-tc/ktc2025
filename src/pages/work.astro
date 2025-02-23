@@ -34,6 +34,13 @@ import bcSpendinsights from "../assets/case-studies/tropic/bc-spendinsights.png"
 import askTropic01 from "../assets/case-studies/tropic/ask-ai/ai-message-block.png";
 import askTropic02 from "../assets/case-studies/tropic/ask-ai/chat-references.png";
 import askTropic03 from "../assets/case-studies/tropic/ask-ai/thread-block.png";
+
+// Price Benchmarks
+import priceBenchmarks01 from "../assets/case-studies/tropic/benchmarks/benchmark-01.png";
+import priceBenchmarks02 from "../assets/case-studies/tropic/benchmarks/benchmark-02.png";
+import priceBenchmarks03 from "../assets/case-studies/tropic/benchmarks/benchmark-03.png";
+import priceBenchmarks04 from "../assets/case-studies/tropic/benchmarks/benchmark-04.png";
+import priceBenchmarks05 from "../assets/case-studies/tropic/benchmarks/benchmark-05.png";
 ---
 
 <BaseLayout
@@ -194,7 +201,7 @@ import askTropic03 from "../assets/case-studies/tropic/ask-ai/thread-block.png";
           titleSecondary="Making Data Accessible"
           description="How we evolved Tropic's Price Benchmarks to showcase our data and help businesses save money in their price negotiations."
           href="/work/supplier-intelligence"
-          status="ready"
+          status="coming-soon"
         />
         <div
           class="cs-image absolute w-full h-full inset-0 z-0 flex justify-center items-center max-md:!hidden"
@@ -203,40 +210,40 @@ import askTropic03 from "../assets/case-studies/tropic/ask-ai/thread-block.png";
             instanceId="supplier-intelligence"
             screens={[
               {
-                src: bcDataMapping.src,
-                alt: "Tropic Data Matching",
-                width: 527,
+                src: priceBenchmarks01.src,
+                alt: "Price Benchmarks",
+                width: 540,
                 rotation: 0,
                 zIndex: 1,
-                initialX: 55,
-                initialY: 60,
-              },
-              {
-                src: bcIntegrations.src,
-                alt: "Tropic Integrations",
-                width: 474,
-                rotation: 0,
-                zIndex: 1,
-                initialX: 2,
-                initialY: 2,
-              },
-              {
-                src: bcCva.src,
-                alt: "Spend Insights",
-                width: 500,
-                rotation: 0,
-                zIndex: 1,
-                initialX: 57,
+                initialX: 0,
                 initialY: 0,
               },
               {
-                src: bcSpendinsights.src,
-                alt: "Spend Insights",
-                width: 200,
+                src: priceBenchmarks02.src,
+                alt: "Price Benchmarks",
+                width: 340,
                 rotation: 0,
                 zIndex: 1,
                 initialX: 10,
-                initialY: 60,
+                initialY: 56,
+              },
+              {
+                src: priceBenchmarks03.src,
+                alt: "Price Benchmarks",
+                width: 540,
+                rotation: 0,
+                zIndex: 1,
+                initialX: 53,
+                initialY: 42,
+              },
+              {
+                src: priceBenchmarks04.src,
+                alt: "Price Benchmarks",
+                width: 440,
+                rotation: 0,
+                zIndex: 1,
+                initialX: 52,
+                initialY: 10,
               },
             ]}
           />
@@ -252,7 +259,8 @@ import askTropic03 from "../assets/case-studies/tropic/ask-ai/thread-block.png";
     <!-- Glue -->
     <SnippetsGalleryItem large>
       <div
-        class="cs-wrapper w-full h-full flex flex-row md:flex-col gap-4 items-center justify-center relative">
+        class="cs-wrapper w-full h-full flex flex-row md:flex-col gap-4 items-center justify-center relative"
+      >
         <GalleryIntroCard
           titleMain="People as Glue"
           titleSecondary="Connecting Employees"
@@ -300,7 +308,7 @@ import askTropic03 from "../assets/case-studies/tropic/ask-ai/thread-block.png";
 
   <section class="mb-40 max-md:px-10 flex flex-col items-center justify-center">
     <h3 class="caramel-text mb-14">Mini Gallery</h3>
-    
+
     <SnippetsGallery columns={3}>
       <SnippetsGalleryItem
         image={gallery01}
