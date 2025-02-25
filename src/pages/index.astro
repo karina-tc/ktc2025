@@ -78,12 +78,12 @@ const navItems = [
 				</p>
 				<Subtitle title="Get Started" />
 				<ul
-					class="list-section flex flex-col list-none p-0 -mt-8 ml-0 list-none !mx-0"
+					class="list-section flex flex-col list-none p-0 -mt-8 ml-0 mb-5 list-none !mx-0"
 					data-intersection-observer={true}
 				>
 					{
 						navItems.map(({ icon, iconLight, alt, text, href, type, data }) => (
-							<li class="flex items-center gap-2 p-2 border-b border-border dark:border-chocolate-light transition-colors duration-200 ease-in-out hover:bg-surface dark:hover:bg-ink-secondary">
+							<li class="flex items-center gap-2 p-4 !mb-0 border-b border-border dark:border-chocolate-light transition-colors duration-200 ease-in-out hover:bg-surface dark:hover:bg-ink-secondary">
 								<Image src={icon} alt={alt} class="w-10 h-10 dark:hidden" />
 								<Image
 									src={iconLight}
